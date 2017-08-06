@@ -20,6 +20,15 @@ public class ObjectRotator : MonoBehaviour
 
 	void Update()
 	{
+	// Temporary disabling of rotate
+		if(Input.GetKeyDown(KeyCode.Q)){
+			GetComponent<BoxCollider>().enabled = false;
+		}
+		if(Input.GetKeyDown(KeyCode.W)){
+			GetComponent<BoxCollider>().enabled = true;
+		}
+
+
 		if(_isRotating)
 		{
 			// offset
