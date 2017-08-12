@@ -23,14 +23,20 @@ public class OpenDrawer : MonoBehaviour {
 		} else {
 			transform.localPosition = Vector3.Lerp(_tempPos, _closePos, _drawerTimer.PercentTimePassed);
 		}
-	}
 
-	void OnMouseDown()
-	{
-		_tempPos = transform.localPosition;
-		_isOpening = !_isOpening;
-		_drawerTimer.Reset();
-		_audioSource.Play();
+
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+		if(Input.GetMouseButtonDown(0)){
+			if(Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Box"))){
+				if(hit.collider.gameObject.tag == "Drawer"){
+					_tempPos = transform.localPosition;
+					_isOpening = !_isOpening;
+					_drawerTimer.Reset();
+					_audioSource.Play();
+				}
+			}
+		}
 	}
 
 }

@@ -29,10 +29,20 @@ public class ObjectRotator : MonoBehaviour
 		}
 
 
-		if(_isRotating)
-		{
-			// offset
-			_mouseOffset = (Input.mousePosition - _mouseReference);
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+		if(Input.GetMouseButtonDown(0)){
+			if(Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Traversal"))){
+				if(hit.collider.gameObject.name == "Traversal"){
+					_isRotating = true;
+					_mouseReference = Input.mousePosition;
+				}
+			}
+		}
+	}
+	void OnMouseDrag(){
+	if(_isRotating){
+		_mouseOffset = (Input.mousePosition - _mouseReference);
 
 			// apply rotation
 			_rotation.y = (_mouseOffset.x) * _sensitivity;
@@ -60,17 +70,9 @@ public class ObjectRotator : MonoBehaviour
 
 			// store mouse
 			_mouseReference = Input.mousePosition;
-		}
+			}
 	}
 
-	void OnMouseDown()
-	{
-		// rotating flag
-		_isRotating = true;
-
-		// store mouse
-		_mouseReference = Input.mousePosition;
-	}
 
 	void OnMouseUp()
 	{
