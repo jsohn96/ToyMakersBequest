@@ -9,10 +9,14 @@ public class PickupHandler : MonoBehaviour {
 	[SerializeField] float _distance;
 	[SerializeField] float _smooth;
 
+	Timer _pickUpTimer;
+	[SerializeField] float _pickUpDuration = 2.0f;
+
 	Vector3 _forwardRotation = new Vector3 (90.0f, 0.0f, 0.0f);
 
 	void Awake () {
 			_mainCamera = Camera.main;
+			_pickUpTimer = new Timer (_pickUpDuration);
 	}
 	
 	// Update is called once per frame
@@ -30,9 +34,12 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void Carry(GameObject carriedObject){
-		carriedObject.transform.position = Vector3.Lerp(carriedObject.transform.position, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, Time.deltaTime * _smooth);
+
+		carriedObject.transform.position = Vector3.Lerp(carriedObject.transform.position, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, _pickUpTimer.PercentTimePassed);
 		// have this stop after completion
-		carriedObject.transform.rotation = Quaternion.Lerp (carriedObject.transform.rotation, Quaternion.Euler (_forwardRotation), Time.deltaTime * _smooth);
+		if(!_pickUpTimer.IsOffCooldown){
+			carriedObject.transform.rotation = Quaternion.Lerp (carriedObject.transform.rotation, Quaternion.Euler (_forwardRotation), _pickUpTimer.PercentTimePassed);
+		}
 	}
 
 	void Pickup(){
@@ -42,6 +49,7 @@ public class PickupHandler : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit)){
 				Pickupable p = hit.collider.GetComponent<Pickupable>();
 				if(p != null){
+					_pickUpTimer.Reset();
 					_carrying = true;
 					_carriedObject = p.gameObject;
 					p.GetComponent<Rigidbody>().isKinematic = true;
