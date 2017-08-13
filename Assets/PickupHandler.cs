@@ -13,6 +13,8 @@ public class PickupHandler : MonoBehaviour {
 	[SerializeField] float _pickUpDuration = 2.0f;
 
 	Vector3 _forwardRotation = new Vector3 (90.0f, 0.0f, 0.0f);
+	Quaternion _tempOriginRotation;
+	Vector3 _tempOriginPosition;
 
 	// Set Layer Mask to Traversal
 	int _traversalExclusionLayerMask = 1 << 8;
@@ -40,7 +42,7 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void Carry(GameObject carriedObject){
-		carriedObject.transform.position = Vector3.Lerp(carriedObject.transform.position, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, _pickUpTimer.PercentTimePassed);
+		carriedObject.transform.position = Vector3.Lerp(_tempOriginPosition, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, _pickUpTimer.PercentTimePassed);
 		// have this stop after completion
 		if(!_pickUpTimer.IsOffCooldown){
 			MaintainRotation(carriedObject);
@@ -50,7 +52,7 @@ public class PickupHandler : MonoBehaviour {
 	// Keeps the rotation of the picked up object consistent during Camera Rotation
 	void MaintainRotation(GameObject carriedObject){
 		Vector3 adjustedForwardRotation = _mainCamera.transform.rotation.eulerAngles + _forwardRotation;
-		carriedObject.transform.rotation = Quaternion.Lerp (carriedObject.transform.rotation, Quaternion.Euler (adjustedForwardRotation), _pickUpTimer.PercentTimePassed);
+		carriedObject.transform.rotation = Quaternion.Lerp (_tempOriginRotation, Quaternion.Euler (adjustedForwardRotation), _pickUpTimer.PercentTimePassed);
 	}
 
 	void Pickup(){
@@ -63,6 +65,8 @@ public class PickupHandler : MonoBehaviour {
 					_pickUpTimer.Reset();
 					_carrying = true;
 					_carriedObject = p.gameObject;
+					_tempOriginPosition = _carriedObject.transform.localPosition;
+					_tempOriginRotation = _carriedObject.transform.rotation;
 					p.GetComponent<Rigidbody>().isKinematic = true;
 				}
 			}
