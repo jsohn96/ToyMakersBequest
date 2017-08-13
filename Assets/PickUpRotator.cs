@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PickUpRotator : MonoBehaviour 
 {
-
 	[SerializeField] float _sensitivity;
 	Vector3 _mouseReference;
 	Vector3 _mouseOffset;
@@ -13,6 +12,9 @@ public class PickUpRotator : MonoBehaviour
 
 	Vector3 _tempRot;
 
+	// pickupable layer mask
+	int _pickUpLayerMask = 1 << 9;
+
 	void Start ()
 	{
 		_rotation = Vector3.zero;
@@ -20,6 +22,19 @@ public class PickUpRotator : MonoBehaviour
 
 	void Update()
 	{
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		if(Input.GetMouseButtonDown(0)){
+			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _pickUpLayerMask)){
+				_isRotating = true;
+				_mouseReference = Input.mousePosition;
+			}
+		} else if (Input.GetMouseButtonUp(0)){
+			_isRotating = false;
+		}
+	}
+
+	void OnMouseDrag() {
 		if(_isRotating)
 		{
 			
@@ -34,12 +49,12 @@ public class PickUpRotator : MonoBehaviour
 			transform.Rotate(_rotation, Space.Self);
 
 			// prevent Z axis from rotating
-			/*Vector3 pos = Camera.main.transform.position;
-			Vector3 dir = (this.transform.position - pos).normalized;
-
-			Quaternion currentRotation = transform.rotation; 
-			currentRotation = Quaternion.LookRotation(dir); 
-			transform.rotation = currentRotation;*/
+//			Vector3 pos = Camera.main.transform.position;
+//			Vector3 dir = (this.transform.position - pos).normalized;
+//
+//			Quaternion currentRotation = transform.rotation; 
+//			currentRotation = Quaternion.LookRotation(dir); 
+//			transform.rotation = currentRotation;
 
 			//clamp Rotation
 			_tempRot = transform.rotation.eulerAngles;
@@ -54,21 +69,4 @@ public class PickUpRotator : MonoBehaviour
 			_mouseReference = Input.mousePosition;
 		}
 	}
-
-	void OnMouseDown()
-	{
-		// rotating flag
-		_isRotating = true;
-
-
-		// store mouse
-		_mouseReference = Input.mousePosition;
-	}
-
-	void OnMouseUp()
-	{
-		// rotating flag
-		_isRotating = false;
-	}
-
 }

@@ -12,6 +12,14 @@ public class ObjectRotator : MonoBehaviour
 	bool _isRotating;
 
 	Vector3 _tempRot;
+	// Set Layer Mask to Traversal
+	int _traversalLayerMask = 1 << 8;
+	int _pickUpLayerMask = 1 << 9;
+	int _combinedLayerMask;
+
+	void Awake(){
+		_combinedLayerMask = _traversalLayerMask | _pickUpLayerMask;
+	}
 
 	void Start ()
 	{
@@ -30,14 +38,17 @@ public class ObjectRotator : MonoBehaviour
 
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
+		RaycastHit hit;
 		if(Input.GetMouseButtonDown(0)){
-			if(Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Traversal"))){
+			if(Physics.Raycast(ray, out hit,  Mathf.Infinity,  _combinedLayerMask)){
 				if(hit.collider.gameObject.name == "Traversal"){
 					_isRotating = true;
 					_mouseReference = Input.mousePosition;
 				}
 			}
+		} else if(Input.GetMouseButtonUp(0)){
+			// rotating flag
+			_isRotating = false;
 		}
 	}
 	void OnMouseDrag(){
@@ -72,12 +83,4 @@ public class ObjectRotator : MonoBehaviour
 			_mouseReference = Input.mousePosition;
 			}
 	}
-
-
-	void OnMouseUp()
-	{
-		// rotating flag
-		_isRotating = false;
-	}
-
 }

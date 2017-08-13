@@ -14,9 +14,15 @@ public class PickupHandler : MonoBehaviour {
 
 	Vector3 _forwardRotation = new Vector3 (90.0f, 0.0f, 0.0f);
 
+	// Set Layer Mask to Traversal
+	int _traversalExclusionLayerMask = 1 << 8;
+
 	void Awake () {
 			_mainCamera = Camera.main;
 			_pickUpTimer = new Timer (_pickUpDuration);
+
+			//include all but Traversal Layer
+		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
 	}
 	
 	// Update is called once per frame
@@ -34,19 +40,24 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void Carry(GameObject carriedObject){
-
 		carriedObject.transform.position = Vector3.Lerp(carriedObject.transform.position, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, _pickUpTimer.PercentTimePassed);
 		// have this stop after completion
 		if(!_pickUpTimer.IsOffCooldown){
-			carriedObject.transform.rotation = Quaternion.Lerp (carriedObject.transform.rotation, Quaternion.Euler (_forwardRotation), _pickUpTimer.PercentTimePassed);
+			MaintainRotation(carriedObject);
 		}
+	}
+
+	// Keeps the rotation of the picked up object consistent during Camera Rotation
+	void MaintainRotation(GameObject carriedObject){
+		Vector3 adjustedForwardRotation = _mainCamera.transform.rotation.eulerAngles + _forwardRotation;
+		carriedObject.transform.rotation = Quaternion.Lerp (carriedObject.transform.rotation, Quaternion.Euler (adjustedForwardRotation), _pickUpTimer.PercentTimePassed);
 	}
 
 	void Pickup(){
 		if(Input.GetMouseButtonDown(1)){
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit)){
+			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
 				Pickupable p = hit.collider.GetComponent<Pickupable>();
 				if(p != null){
 					_pickUpTimer.Reset();
