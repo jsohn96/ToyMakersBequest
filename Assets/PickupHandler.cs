@@ -56,7 +56,7 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void Pickup(){
-		if(Input.GetMouseButtonDown(1)){
+		if(Input.GetMouseButtonDown(0)){
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
@@ -74,7 +74,7 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void CheckDrop(){
-		if(Input.GetMouseButtonDown(1)){
+		if(Input.GetMouseButtonDown(0)){
 			DropObject();
 		}
 	}

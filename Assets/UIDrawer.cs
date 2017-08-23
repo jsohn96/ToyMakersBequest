@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenDrawer : MonoBehaviour {
+public class UIDrawer : MonoBehaviour {
 	bool _isOpening = false;
 	[SerializeField] Vector3 _closePos;
 	[SerializeField] Vector3 _openPos;
+
+	[SerializeField] Camera _uiCamera;
 	Vector3 _tempPos;
 	Timer _drawerTimer = new Timer (1.0f);
 
 	AudioSource _audioSource;
 
-	int _boxLayerMask = 1 << 10;
+	int _uiDrawerLayerMask = 1 << 11;
 
 	// Use this for initialization
 	void Start () {
 		_audioSource = GetComponent<AudioSource>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(_isOpening){
@@ -27,10 +29,10 @@ public class OpenDrawer : MonoBehaviour {
 		}
 
 
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
+		Ray ray = _uiCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
 		if(Input.GetMouseButtonDown(0)){
-			if(Physics.Raycast(ray, out hit, Mathf.Infinity ,_boxLayerMask)){
+			if(Physics.Raycast(ray, out hit, Mathf.Infinity ,_uiDrawerLayerMask)){
 				if(hit.collider.gameObject.tag == "Drawer"){
 					_tempPos = transform.localPosition;
 					_isOpening = !_isOpening;
