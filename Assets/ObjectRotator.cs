@@ -10,6 +10,7 @@ public class ObjectRotator : MonoBehaviour
 	Vector3 _mouseOffset;
 	Vector3 _rotation;
 	bool _isRotating;
+	[SerializeField] Transform _cameraNormalizer;
 
 	Vector3 _tempRot;
 	// Set Layer Mask to Traversal
@@ -63,7 +64,9 @@ public class ObjectRotator : MonoBehaviour
 			transform.Rotate(_rotation, Space.Self);
 
 			// prevent Z axis from rotating
-			Vector3 pos = Camera.main.transform.position;
+			//Vector3 pos = Camera.main.transform.position;
+			//Debug.Log(pos);
+			Vector3 pos = _cameraNormalizer.transform.position;
 			Vector3 dir = (this.transform.position - pos).normalized;
 
 			Quaternion currentRotation = transform.rotation; 

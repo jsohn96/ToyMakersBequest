@@ -8,6 +8,10 @@ public class UIDrawer : MonoBehaviour {
 	[SerializeField] Vector3 _openPos;
 
 	[SerializeField] Camera _uiCamera;
+	[SerializeField] Transform _mainCamera;
+	Vector3 _mainCamDefaultPos = new Vector3(0.0f, 0.0f, -10.0f);
+	Vector3 _mainCamShiftPos = new Vector3(1.7f, 0.0f, -10.0f);
+
 	Vector3 _tempPos;
 	Timer _drawerTimer = new Timer (1.0f);
 
@@ -24,8 +28,10 @@ public class UIDrawer : MonoBehaviour {
 	void Update () {
 		if(_isOpening){
 			transform.localPosition = Vector3.Lerp(_tempPos, _openPos, _drawerTimer.PercentTimePassed);
+			_mainCamera.localPosition = Vector3.Lerp(_mainCamDefaultPos, _mainCamShiftPos, _drawerTimer.PercentTimePassed);
 		} else {
 			transform.localPosition = Vector3.Lerp(_tempPos, _closePos, _drawerTimer.PercentTimePassed);
+			_mainCamera.localPosition = Vector3.Lerp(_mainCamShiftPos, _mainCamDefaultPos, _drawerTimer.PercentTimePassed);
 		}
 
 
