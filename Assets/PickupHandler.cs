@@ -30,16 +30,26 @@ public class PickupHandler : MonoBehaviour {
 	// Set Layer Mask to Traversal
 	int _traversalExclusionLayerMask = 1 << 8;
 
+	//Double Click Related Variables
+	bool _oneClick = false;
+	Timer _doubleClickTimer;
+	float _doubleClickDelay = 0.25f;
+	Pickupable _cachedPickupable = null;
+
 	void Awake () {
-			_mainCamera = Camera.main;
-			_pickUpTimer = new Timer (_pickUpDuration);
-			_dropOffTimer = new Timer (_dropOffDuration);
-			//include all but Traversal Layer
+		_mainCamera = Camera.main;
+		_pickUpTimer = new Timer (_pickUpDuration);
+		_dropOffTimer = new Timer (_dropOffDuration);
+		//include all but Traversal Layer
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
+
+		_doubleClickTimer = new Timer (_doubleClickDelay);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		DoubleClickReset ();
+
 		if(_carrying){
 			Carry(_carriedObject);
 			CheckDrop();
@@ -80,16 +90,24 @@ public class PickupHandler : MonoBehaviour {
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
-				Pickupable p = hit.collider.GetComponent<Pickupable>();
-				if(p != null){
-					FinishDrop();
-					_pickUpTimer.Reset();
-					_carrying = true;
-					_carriedObject = p.gameObject;
-					_tempOriginPosition = _carriedObject.transform.localPosition;
-					_tempOriginRotation = _carriedObject.transform.rotation;
-					hit.collider.isTrigger = true;
-					p.GetComponent<Rigidbody>().isKinematic = true;
+				Pickupable p = hit.collider.GetComponent<Pickupable> ();
+				if (_cachedPickupable == null) {
+					_cachedPickupable = p;
+					_oneClick = true;
+					_doubleClickTimer.Reset ();
+				} else if (_oneClick && (_cachedPickupable == p)) {
+					if (p != null) {
+						DoubleClickReset ();
+
+						FinishDrop ();
+						_pickUpTimer.Reset ();
+						_carrying = true;
+						_carriedObject = p.gameObject;
+						_tempOriginPosition = _carriedObject.transform.localPosition;
+						_tempOriginRotation = _carriedObject.transform.rotation;
+						hit.collider.isTrigger = true;
+						p.GetComponent<Rigidbody> ().isKinematic = true;
+					}
 				}
 			}
 		}
@@ -97,7 +115,13 @@ public class PickupHandler : MonoBehaviour {
 
 	void CheckDrop(){
 		if(Input.GetMouseButtonDown(0)){
-			DropObject();
+			if (!_oneClick) {
+				_doubleClickTimer.Reset ();
+				_oneClick = true;
+			} else {
+				DropObject();
+				DoubleClickReset ();
+			}
 		}
 	}
 
@@ -126,5 +150,12 @@ public class PickupHandler : MonoBehaviour {
 		_dropOffTimer.Reset();
 		//_carriedObject.GetComponent<Rigidbody>().isKinematic = false;
 		_carriedObject = null;
+	}
+
+	void DoubleClickReset(){
+		if (_doubleClickTimer.IsOffCooldown) {
+			_oneClick = false;
+			_cachedPickupable = null;
+		}
 	}
 }
