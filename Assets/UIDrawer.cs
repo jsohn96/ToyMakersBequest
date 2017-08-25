@@ -23,6 +23,8 @@ public class UIDrawer : MonoBehaviour {
 	int _ignoreLayerMask = 1 << 2;
 	int _finalLayerMask;
 
+	[SerializeField] PickupHandler _pickupHandlerScript;
+
 	// Use this for initialization
 	void Start () {
 		_finalLayerMask = _uiDrawerLayerMask | _ignoreLayerMask;
@@ -46,24 +48,23 @@ public class UIDrawer : MonoBehaviour {
 		Ray rayMain = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitMain;
 		if(Input.GetMouseButtonDown(0)){
-			if(Physics.Raycast(ray, out hit, Mathf.Infinity ,_finalLayerMask)){
-				if(hit.collider.gameObject.tag == "Drawer"){
-					_tempPos = transform.localPosition;
-					_mainCamTempPos = _mainCamera.localPosition;
-					_isOpening = !_isOpening;
-					_drawerTimer.Reset();
-					_audioSource.Play();
+			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _finalLayerMask)) {
+				if (hit.collider.gameObject.tag == "Drawer") {
+					ToggleDrawer ();
 				}
-			} else if(Physics.Raycast(rayMain, out hitMain, Mathf.Infinity ,_finalLayerMask)){
-				if(hitMain.collider.gameObject.tag == "Drawer"){
-					_tempPos = transform.localPosition;
-					_mainCamTempPos = _mainCamera.localPosition;
-					_isOpening = !_isOpening;
-					_drawerTimer.Reset();
-					_audioSource.Play();
+			} else if (Physics.Raycast (rayMain, out hitMain, Mathf.Infinity, _finalLayerMask)) {
+				if (hitMain.collider.gameObject.tag == "Drawer") {
+					ToggleDrawer ();
 				}
 			}
 		}
 	}
 
+	void ToggleDrawer(){
+		_tempPos = transform.localPosition;
+		_mainCamTempPos = _mainCamera.localPosition;
+		_isOpening = !_isOpening;
+		_drawerTimer.Reset ();
+		_audioSource.Play ();
+	}
 }

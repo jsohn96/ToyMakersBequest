@@ -5,6 +5,12 @@ using UnityEngine;
 public class PickupHandler : MonoBehaviour {
 	Camera _mainCamera;
 	bool _carrying;
+	public bool carrying
+	{
+		get {return _carrying; }
+		set {_carrying = value; }
+	}
+
 	bool _dropping = false;
 	GameObject _carriedObject;
 	GameObject _droppingObject;
@@ -126,6 +132,9 @@ public class PickupHandler : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
 				Pickupable p = hit.collider.GetComponent<Pickupable> ();
 				if (p != null && p.isPickedUp) {
+				} else if (hit.collider.gameObject.tag == "Drawer") {
+					// For the drawer under table
+					_carriedObject.SetActive (false);
 
 				} else {
 					DropObject ();
@@ -135,7 +144,7 @@ public class PickupHandler : MonoBehaviour {
 				RaycastHit uiHit;
 				if (Physics.Raycast (uiRay, out uiHit, Mathf.Infinity, _uiDrawerLayerMask)) {
 					if (uiHit.collider.gameObject.tag == "Drawer") {
-						
+						_carriedObject.SetActive (false);
 					} else {
 						DropObject ();
 					}
@@ -189,4 +198,8 @@ public class PickupHandler : MonoBehaviour {
 	//		_cachedPickupable = null;
 	//	}
 	//}
+
+	void PutInDrawer(){
+		
+	}
 }
