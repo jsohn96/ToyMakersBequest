@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Pickupable : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public bool isInBox
+	{
+		get {return _isInBox; }
+		set {_isInBox = value; }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public bool isPickedUp
+	{
+		get {return _isPickedUp; }
+		set {_isPickedUp = value; }
 	}
+
+	bool _isInBox = false;
+	bool _isPickedUp = false;
 }

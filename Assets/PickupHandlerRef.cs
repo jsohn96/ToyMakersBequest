@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupHandler : MonoBehaviour {
+public class PickupHandlerRef : MonoBehaviour {
 	Camera _mainCamera;
 	bool _carrying;
 	bool _dropping = false;
@@ -27,18 +27,17 @@ public class PickupHandler : MonoBehaviour {
 
 	Collider _droppingCollider;
 
-	[SerializeField] Transform _cameraNormalizer;
-	[SerializeField] Camera _uiCamera;
-
 	// Set Layer Mask to Traversal
 	int _traversalExclusionLayerMask = 1 << 8;
-	int _uiDrawerLayerMask = 1 << 11;
 
 	//Double Click Related Variables
-	//bool _oneClick = false;
-	//Timer _doubleClickTimer;
-	//float _doubleClickDelay = 0.25f;
-	//Pickupable _cachedPickupable = null;
+	bool _oneClick = false;
+	Timer _doubleClickTimer;
+	float _doubleClickDelay = 0.25f;
+	Pickupable _cachedPickupable = null;
+
+
+	[SerializeField] bool _isInBox = false;
 
 	void Awake () {
 		_mainCamera = Camera.main;
@@ -47,12 +46,12 @@ public class PickupHandler : MonoBehaviour {
 		//include all but Traversal Layer
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
 
-		//_doubleClickTimer = new Timer (_doubleClickDelay);
+		_doubleClickTimer = new Timer (_doubleClickDelay);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//DoubleClickReset ();
+		DoubleClickReset ();
 
 		if(_carrying){
 			Carry(_carriedObject);
@@ -76,7 +75,7 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	void Carry(GameObject carriedObject){
-		carriedObject.transform.position = Vector3.Lerp(_tempOriginPosition, _cameraNormalizer.position + _cameraNormalizer.forward * _distance, _pickUpTimer.PercentTimePassed);
+		carriedObject.transform.position = Vector3.Lerp(_tempOriginPosition, _mainCamera.transform.position + _mainCamera.transform.forward * _distance, _pickUpTimer.PercentTimePassed);
 		// have this stop after completion
 		if(!_pickUpTimer.IsOffCooldown){
 			MaintainRotation(carriedObject);
@@ -95,17 +94,15 @@ public class PickupHandler : MonoBehaviour {
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
 				Pickupable p = hit.collider.GetComponent<Pickupable> ();
-				//if (_cachedPickupable == null) {
-				//	_cachedPickupable = p;
-				//	_oneClick = true;
-				//	_doubleClickTimer.Reset ();
-				//} else if (_oneClick && (_cachedPickupable == p)) {
+				if (_cachedPickupable == null) {
+					_cachedPickupable = p;
+					_oneClick = true;
+					_doubleClickTimer.Reset ();
+				} else if (_oneClick && (_cachedPickupable == p)) {
 					if (p != null) {
-					//	DoubleClickReset ();
+						DoubleClickReset ();
 
 						FinishDrop ();
-						
-					p.isPickedUp = true;
 						_pickUpTimer.Reset ();
 						_carrying = true;
 						_carriedObject = p.gameObject;
@@ -114,42 +111,20 @@ public class PickupHandler : MonoBehaviour {
 						hit.collider.isTrigger = true;
 						p.GetComponent<Rigidbody> ().isKinematic = true;
 					}
-				//}
+				}
 			}
 		}
 	}
 
 	void CheckDrop(){
 		if(Input.GetMouseButtonDown(0)){
-			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
-				Pickupable p = hit.collider.GetComponent<Pickupable> ();
-				if (p != null && p.isPickedUp) {
-
-				} else {
-					DropObject ();
-				}
+			if (!_oneClick) {
+				_doubleClickTimer.Reset ();
+				_oneClick = true;
 			} else {
-				Ray uiRay = _uiCamera.ScreenPointToRay(Input.mousePosition);
-				RaycastHit uiHit;
-				if (Physics.Raycast (uiRay, out uiHit, Mathf.Infinity, _uiDrawerLayerMask)) {
-					if (uiHit.collider.gameObject.tag == "Drawer") {
-						
-					} else {
-						DropObject ();
-					}
-				} else {
-					DropObject ();
-				}
+				DropObject();
+				DoubleClickReset ();
 			}
-			//if (!_oneClick) {
-			//	_doubleClickTimer.Reset ();
-			//	_oneClick = true;
-			//} else {
-				
-			//	DoubleClickReset ();
-			//}
 		}
 	}
 
@@ -172,9 +147,6 @@ public class PickupHandler : MonoBehaviour {
 		_tempDropOriginRotation = _droppingObject.transform.rotation;
 
 		_droppingCollider =  _droppingObject.GetComponent<Collider>();
-		//set pickupable false
-		_droppingObject.GetComponent<Pickupable>().isPickedUp = false;
-
 		_droppingCollider.enabled = false;
 		_carrying =false;
 		_dropping = true;
@@ -183,10 +155,10 @@ public class PickupHandler : MonoBehaviour {
 		_carriedObject = null;
 	}
 
-	//void DoubleClickReset(){
-	//	if (_doubleClickTimer.IsOffCooldown) {
-	//		_oneClick = false;
-	//		_cachedPickupable = null;
-	//	}
-	//}
+	void DoubleClickReset(){
+		if (_doubleClickTimer.IsOffCooldown) {
+			_oneClick = false;
+			_cachedPickupable = null;
+		}
+	}
 }
