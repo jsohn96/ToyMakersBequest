@@ -21,8 +21,8 @@ public class PickupHandler : MonoBehaviour {
 	[SerializeField] float _pickUpDuration = 0.5f;
 	Timer _dropOffTimer;
 	[SerializeField] float _dropOffDuration = 0.5f;
-
 	Vector3 _forwardRotation = new Vector3 (90.0f, 0.0f, 0.0f);
+	Vector3 _dropZoneRotation = new Vector3 (180.0f, -90.0f, 0.0f);
 	Quaternion _tempOriginRotation;
 	Vector3 _tempOriginPosition;
 
@@ -39,6 +39,9 @@ public class PickupHandler : MonoBehaviour {
 	// Set Layer Mask to Traversal
 	int _traversalExclusionLayerMask = 1 << 8;
 	int _uiDrawerLayerMask = 1 << 11;
+	int _DropZoneLayerMask = 1 << 12;
+
+	int _uiDropZoneLayerMask;
 
 	//Double Click Related Variables
 	//bool _oneClick = false;
@@ -47,6 +50,8 @@ public class PickupHandler : MonoBehaviour {
 	//Pickupable _cachedPickupable = null;
 
 	void Awake () {
+		_uiDropZoneLayerMask = _uiDrawerLayerMask | _DropZoneLayerMask;
+
 		_mainCamera = Camera.main;
 		_pickUpTimer = new Timer (_pickUpDuration);
 		_dropOffTimer = new Timer (_dropOffDuration);
@@ -99,6 +104,9 @@ public class PickupHandler : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
+			Ray uiRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
+			RaycastHit uiHit;
+
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
 				Pickupable p = hit.collider.GetComponent<Pickupable> ();
 				//if (_cachedPickupable == null) {
@@ -122,6 +130,8 @@ public class PickupHandler : MonoBehaviour {
 					}
 				//}
 			}
+			// pick up pickupables in Box
+			//else if (
 		}
 	}
 
@@ -134,17 +144,23 @@ public class PickupHandler : MonoBehaviour {
 				if (p != null && p.isPickedUp) {
 				} else if (hit.collider.gameObject.tag == "Drawer") {
 					// For the drawer under table
-					_carriedObject.SetActive (false);
+					// do nothing
 
-				} else {
+				} else if (hit.collider.gameObject.tag == "DropZone"){
+					//drop in box drawer
+					PutInDrawer (hit.collider.gameObject.transform.position);
+				}
+				else {
 					DropObject ();
 				}
 			} else {
 				Ray uiRay = _uiCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit uiHit;
-				if (Physics.Raycast (uiRay, out uiHit, Mathf.Infinity, _uiDrawerLayerMask)) {
+				if (Physics.Raycast (uiRay, out uiHit, Mathf.Infinity, _uiDropZoneLayerMask)) {
 					if (uiHit.collider.gameObject.tag == "Drawer") {
-						_carriedObject.SetActive (false);
+					} else if (uiHit.collider.gameObject.tag == "DropZone"){
+						//drop in box drawer
+						PutInDrawer (uiHit.collider.gameObject.transform.position);
 					} else {
 						DropObject ();
 					}
@@ -199,7 +215,27 @@ public class PickupHandler : MonoBehaviour {
 	//	}
 	//}
 
-	void PutInDrawer(){
-		
+	void PutInDrawer(Vector3 dropZonePosition){
+		_tempDropGoalRotation = Quaternion.Euler(_dropZoneRotation);
+		_tempDropGoalPosition = dropZonePosition;
+
+		_droppingObject = _carriedObject;
+		//set pickupable object to UI box layer
+		_droppingObject.layer = 11;
+
+		_tempDropOriginPosition = _droppingObject.transform.localPosition;
+		_tempDropOriginRotation = _droppingObject.transform.rotation;
+
+		_droppingCollider =  _droppingObject.GetComponent<Collider>();
+		//set pickupable false
+		Pickupable pickupableScript = _droppingObject.GetComponent<Pickupable>();
+		pickupableScript.isPickedUp = false;
+		pickupableScript.isInBox = true;
+
+		_droppingCollider.enabled = false;
+		_carrying = false;
+		_dropping = true;
+		_dropOffTimer.Reset ();
+		_carriedObject = null;
 	}
 }
