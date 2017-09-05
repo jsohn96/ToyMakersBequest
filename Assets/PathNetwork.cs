@@ -80,7 +80,5 @@ public class PathNetwork : MonoBehaviour {
 		} else {
 			print ("success!!");
 		}
-
-
 	}
 }

@@ -8,9 +8,21 @@ public enum ButtonColor{
 	Brown
 };
 
+// passing data to the path network 
 public struct NodeInfo{
+	public Vector3[] pathPositions;
+	public int index;
+	public bool isConnected;
+	public NodeInfo(Vector3[] pos, int i, bool iscnnt){
+		pathPositions = pos;
+		index = i;
+		isConnected = iscnnt;
+	}
+
+	/*
 	public Vector3 startPos;
 	public Vector3 endPos;
+	//public Vector3[] pathPositions;
 	public int index;
 	public bool isConnected;
 	public Vector3 localDirection;
@@ -21,8 +33,11 @@ public struct NodeInfo{
 		index = i;
 		isConnected = isconnected;
 	}
+	*/
+
 
 }
+
 
 public class PathNode : MonoBehaviour {
 
@@ -33,39 +48,53 @@ public class PathNode : MonoBehaviour {
 	Transform _nodeTransform;
 	[SerializeField] float _assignedDegree;          // the correct rotation  
 	[SerializeField] Material _GreenMat;
+	[SerializeField] Renderer _cylinderRenderer;
 	Material _originMat;
-
-	// public variables for path manager  // need optimization --> struct??
 
 
 	Vector3 _startPos;
 	Vector3 _endPos;
 	public bool _isCorrectConnection = false;               // if the path is correctly connected 
 
+
+
 	NodeInfo _myNodeInfo;
 	//
+
+	// position information
+	Vector3[] _myPathPos;
 
 
 
 	// Use this for initialization
 	void Awake () {
 		_nodeTransform = gameObject.transform;
-		_originMat = gameObject.GetComponent<Renderer> ().material;
-		initNodePathInfo ();
+		_originMat = _cylinderRenderer.GetComponent<Renderer> ().material;
 
+		// 
+		initNodePathInfo ();
 	}
 
 	void initNodePathInfo(){
+		//get the positions of the path links 	
+		PathLink[] _tempPath;
+		_tempPath = GetComponentsInChildren<PathLink> ();
+		_myPathPos = new Vector3[_tempPath.Length];
+		for (int i = 0; i < _myPathPos.Length; i++) {
+			_myPathPos[i] = _tempPath [i].GetLinkPosition ();
+		}
 		// register the start and end 
-		Vector3 tempPos = transform.position;
-		float length = transform.localScale.x;
-		tempPos.x += length / 2;
-		_startPos = tempPos;
-		tempPos.x -= length/2;
-		_endPos = tempPos;
-		Vector3 tempDir = new Vector3(1, 1, 1);
+//		Vector3 tempPos = transform.position;
+//		float length = transform.localScale.x;
+//		tempPos.x += length / 2;
+//		_startPos = tempPos;
+//		tempPos.x -= length/2;
+//		_endPos = tempPos;
+//		Vector3 tempDir = new Vector3(1, 1, 1);
 		//tempDir = Vector3.Normalize ();
-		_myNodeInfo = new NodeInfo(tempDir, _startPos, _endPos, _nodeIndex, false);
+		//_myNodeInfo = new NodeInfo(tempDir, _startPos, _endPos, _nodeIndex, false);
+		_myNodeInfo = new NodeInfo(_myPathPos, _nodeIndex, false);
+		//print ("Path position chaeck " + _myNodeInfo.pathPositions[0].ToString());
 
 	}
 	
@@ -108,10 +137,10 @@ public class PathNode : MonoBehaviour {
 		tempRotDegree = transform.rotation.eulerAngles.z;
 		if (tempRotDegree == _assignedDegree) {
 			_isCorrectConnection = true;
-			gameObject.GetComponent<Renderer> ().material = _GreenMat;
+			_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
 		} else {
 			_isCorrectConnection = false;
-			gameObject.GetComponent<Renderer> ().material = _originMat;
+			_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
 		}
 		//update node info 
 		_myNodeInfo.isConnected = _isCorrectConnection;
