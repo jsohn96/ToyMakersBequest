@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PathNetwork : MonoBehaviour {
+	// the solution for the puzzle --> the order of the correct path 
+	[SerializeField] int[] _correctOrder;
 	[SerializeField] PathNode[] _myNodes;
 	[SerializeField] Dancer _myDancer;
-	int _curNodeIdx = 0;
+	int _curNodeIdx;
+	int _orderIdx = 0;
 	PathNode _curNode;
 	bool _isCheckingNext = false;
 
@@ -14,7 +17,7 @@ public class PathNetwork : MonoBehaviour {
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		print ("Init Info: " + "\nNode Count"+ _myNodes.Length);
 		// init player position 
-
+		_curNodeIdx = _correctOrder[_orderIdx];
 	}
 
 	void OnEnable(){
@@ -74,8 +77,9 @@ public class PathNetwork : MonoBehaviour {
 
 	void HandleDancerFinishPath(DancerFinishPath e){
 		print ("Check next available node");
-		if (_curNodeIdx < _myNodes.Length-1) {
-			_curNodeIdx += 1;
+		if (_orderIdx + 1 < _correctOrder.Length) {
+			_orderIdx += 1;
+			_curNodeIdx = _correctOrder [_orderIdx];
 			_isCheckingNext = true;
 		} else {
 			print ("success!!");
