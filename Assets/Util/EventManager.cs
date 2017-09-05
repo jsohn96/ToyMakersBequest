@@ -8,3 +8,8 @@ using System.Collections;
 //	}
 //}
 
+// for the rotating path prototype 
+
+public class DancerFinishPath: GameEvent{
+}
+
