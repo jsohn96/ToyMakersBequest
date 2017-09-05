@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Pickupable : MonoBehaviour {
 
+	public int identifier
+	{
+		get {return _identifier; }
+		set {_identifier = value; }
+	}
+
 	public bool isInBox
 	{
 		get {return _isInBox; }
@@ -16,6 +22,14 @@ public class Pickupable : MonoBehaviour {
 		set {_isPickedUp = value; }
 	}
 
+	public bool isInDropZone
+	{
+		get {return _isInDropZone; }
+		set {_isInDropZone = value; }
+	}
+
+	int _identifier = 0;
 	bool _isInBox = false;
 	bool _isPickedUp = false;
+	bool _isInDropZone = false;
 }

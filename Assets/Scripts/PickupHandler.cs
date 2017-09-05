@@ -12,6 +12,9 @@ public class PickupHandler : MonoBehaviour {
 	}
 
 	bool _dropping = false;
+	bool _isDropZoneDrop = false;
+	DropZone _dropZoneReference = null;
+
 	GameObject _carriedObject;
 	GameObject _droppingObject;
 	[SerializeField] float _distance;
@@ -40,6 +43,7 @@ public class PickupHandler : MonoBehaviour {
 	int _traversalExclusionLayerMask = 1 << 8;
 	int _uiDrawerLayerMask = 1 << 11;
 	int _DropZoneLayerMask = 1 << 12;
+	int _pickupableInBoxLayerMask = 1 << 13;
 
 	int _uiDropZoneLayerMask;
 
@@ -71,8 +75,12 @@ public class PickupHandler : MonoBehaviour {
 		} else {
 			if(_dropping){
 				if(!_dropOffTimer.IsOffCooldown){
-					Vector3 tempPos = Vector3.Lerp(_tempDropOriginPosition, _tempDropGoalPosition, _dropOffTimer.PercentTimePassed);
-					Quaternion tempRot = Quaternion.Lerp(_tempDropOriginRotation, _tempDropGoalRotation, _dropOffTimer.PercentTimePassed);
+					if (_isDropZoneDrop) {
+						_tempDropGoalPosition = _dropZoneReference.position;
+						_tempDropGoalRotation = Quaternion.Euler(_dropZoneReference.eulerRotation);
+					}
+					Vector3 tempPos = Vector3.Lerp (_tempDropOriginPosition, _tempDropGoalPosition, _dropOffTimer.PercentTimePassed);
+					Quaternion tempRot = Quaternion.Lerp (_tempDropOriginRotation, _tempDropGoalRotation, _dropOffTimer.PercentTimePassed);
 					_droppingObject.transform.SetPositionAndRotation(tempPos, tempRot);
 				} else {
 					FinishDrop();
@@ -104,7 +112,7 @@ public class PickupHandler : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			Ray uiRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
+			Ray uiRay = _uiCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit uiHit;
 
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)){
@@ -131,7 +139,23 @@ public class PickupHandler : MonoBehaviour {
 				//}
 			}
 			// pick up pickupables in Box
-			//else if (
+			else if (Physics.Raycast (uiRay, out uiHit, Mathf.Infinity, _pickupableInBoxLayerMask)) {
+				Pickupable p = uiHit.collider.GetComponent<Pickupable> ();
+				if (p != null && p.isInBox) {
+					FinishDrop ();
+
+					p.isPickedUp = true;
+					_pickUpTimer.Reset ();
+					_carrying = true;
+					_carriedObject = p.gameObject;
+					_tempOriginPosition = _carriedObject.transform.localPosition;
+					_tempOriginRotation = _carriedObject.transform.rotation;
+					uiHit.collider.isTrigger = true;
+					p.GetComponent<Rigidbody> ().isKinematic = true;
+				} 	
+					
+			
+			}
 		}
 	}
 
@@ -142,13 +166,24 @@ public class PickupHandler : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
 				Pickupable p = hit.collider.GetComponent<Pickupable> ();
 				if (p != null && p.isPickedUp) {
-				} else if (hit.collider.gameObject.tag == "Drawer") {
+				}
+				else if (hit.collider.gameObject.tag == "Drawer") {
 					// For the drawer under table
 					// do nothing
 
 				} else if (hit.collider.gameObject.tag == "DropZone"){
-					//drop in box drawer
-					PutInDrawer (hit.collider.gameObject.transform.position);
+					_dropZoneReference = hit.collider.gameObject.GetComponent<DropZone> ();
+					if (_dropZoneReference != null && !_dropZoneReference.occupied) {
+						Pickupable carriedP = _carriedObject.GetComponent<Pickupable> ();
+						if (_dropZoneReference.identifier == carriedP.identifier) {
+							PlaceInDropZone (carriedP, _dropZoneReference);
+						} else {
+							DropObject ();
+						}
+					} else {
+						//drop in box drawer
+						PutInDrawer (hit.collider.gameObject.transform.position);
+					}
 				}
 				else {
 					DropObject ();
@@ -180,11 +215,20 @@ public class PickupHandler : MonoBehaviour {
 
 	void FinishDrop(){
 		if(_dropping){
-			_droppingObject.transform.SetPositionAndRotation(_tempDropGoalPosition, _tempDropGoalRotation);
-			_droppingCollider.isTrigger = false;
+			
+			if (!_isDropZoneDrop) {
+				_droppingCollider.isTrigger = false;
+				_droppingObject.GetComponent<Rigidbody> ().isKinematic = false;
+			} else {
+				_tempDropGoalPosition = _dropZoneReference.position;
+				_tempDropGoalRotation = Quaternion.Euler(_dropZoneReference.eulerRotation);
+				_dropZoneReference.occupied = true;
+				_dropZoneReference = null;
+			}
+			_droppingObject.transform.SetPositionAndRotation (_tempDropGoalPosition, _tempDropGoalRotation);
 			_droppingCollider.enabled = true;
-			_droppingObject.GetComponent<Rigidbody>().isKinematic = false;
 			_dropping = false;
+			_isDropZoneDrop = false;
 		}
 	}
 
@@ -215,13 +259,42 @@ public class PickupHandler : MonoBehaviour {
 	//	}
 	//}
 
+	void PlaceInDropZone(Pickupable p, DropZone d){
+		_tempDropGoalRotation = Quaternion.Euler(d.eulerRotation);
+		_tempDropGoalPosition = d.position;
+
+		_droppingObject = _carriedObject;
+		//set object to pickupable
+		_droppingObject.layer = 9;
+
+		_tempDropOriginPosition = _droppingObject.transform.localPosition;
+		_tempDropOriginRotation = _droppingObject.transform.rotation;
+
+		_droppingCollider =  _droppingObject.GetComponent<Collider>();
+
+		//put the object under dropzone parent
+		_droppingObject.transform.parent = d.parent;
+
+		p.isPickedUp = false;
+		p.isInBox = false;
+		p.isInDropZone = true;
+
+		_droppingCollider.enabled = false;
+		_carrying = false;
+		_dropping = true;
+
+		_isDropZoneDrop = true;
+		_dropOffTimer.Reset ();
+		_carriedObject = null;
+	}
+
 	void PutInDrawer(Vector3 dropZonePosition){
 		_tempDropGoalRotation = Quaternion.Euler(_dropZoneRotation);
 		_tempDropGoalPosition = dropZonePosition;
 
 		_droppingObject = _carriedObject;
 		//set pickupable object to UI box layer
-		_droppingObject.layer = 11;
+		_droppingObject.layer = 13;
 
 		_tempDropOriginPosition = _droppingObject.transform.localPosition;
 		_tempDropOriginRotation = _droppingObject.transform.rotation;
