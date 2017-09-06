@@ -10,19 +10,21 @@ public enum ButtonColor{
 
 // passing data to the path network 
 public struct NodeInfo{
-	public Vector3[] pathPositions;
+	public Path[] paths;
 	public int index;
 	public bool isConnected;
-	public NodeInfo(Vector3[] pos, int i, bool iscnnt){
-		pathPositions = pos;
+	public int activeSegIdx;
+	public NodeInfo(Path[] p, int i, bool iscnnt, int actseg){
+		paths = p;
 		index = i;
 		isConnected = iscnnt;
+		activeSegIdx = actseg;
 	}
 
 	/*
 	public Vector3 startPos;
 	public Vector3 endPos;
-	//public Vector3[] pathPositions;
+	//public Vector3[] paths;
 	public int index;
 	public bool isConnected;
 	public Vector3 localDirection;
@@ -46,7 +48,7 @@ public class PathNode : MonoBehaviour {
 	float _rotateAngle;
 	[SerializeField] int _nodeIndex;
 	Transform _nodeTransform;
-	[SerializeField] float _assignedDegree;          // the correct rotation  
+	[SerializeField] float[] _assignedDegree;          // the correct rotation  
 	[SerializeField] Material _GreenMat;
 	[SerializeField] Renderer _cylinderRenderer;
 	Material _originMat;
@@ -59,11 +61,18 @@ public class PathNode : MonoBehaviour {
 
 
 	NodeInfo _myNodeInfo;
-	//
+	//Vector3[] _myPathPos;
+	Path[] _myPaths;
+	int _segCount;
+	int _curSegIdx = 0;
 
-	// position information
-	Vector3[] _myPathPos;
+	void OnEnable(){
+		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
+	}
 
+	void OnDisable(){
+		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
+	}
 
 
 	// Use this for initialization
@@ -77,11 +86,18 @@ public class PathNode : MonoBehaviour {
 
 	void initNodePathInfo(){
 		//get the positions of the path links 	
-		PathLink[] _tempPath;
-		_tempPath = GetComponentsInChildren<PathLink> ();
-		_myPathPos = new Vector3[_tempPath.Length];
-		for (int i = 0; i < _myPathPos.Length; i++) {
-			_myPathPos[i] = _tempPath [i].GetLinkPosition ();
+
+		// TODO store the position value for different path segments 
+		if (GetComponentsInChildren<Path> () != null) {
+			_myPaths = GetComponentsInChildren<Path> ();
+			_segCount = _myPaths.Length;
+			print ("Check: path number in total " + _segCount);
+		} else {
+			print ("ERROR: need to construct path first");
+		}
+
+		if (_assignedDegree.Length != _segCount) {
+			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
 		}
 		// register the start and end 
 //		Vector3 tempPos = transform.position;
@@ -93,8 +109,8 @@ public class PathNode : MonoBehaviour {
 //		Vector3 tempDir = new Vector3(1, 1, 1);
 		//tempDir = Vector3.Normalize ();
 		//_myNodeInfo = new NodeInfo(tempDir, _startPos, _endPos, _nodeIndex, false);
-		_myNodeInfo = new NodeInfo(_myPathPos, _nodeIndex, false);
-		//print ("Path position chaeck " + _myNodeInfo.pathPositions[0].ToString());
+		_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, false, _curSegIdx);
+		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
 
 	}
 	
@@ -135,7 +151,7 @@ public class PathNode : MonoBehaviour {
 
 		transform.Rotate(0,0,-90);
 		tempRotDegree = transform.rotation.eulerAngles.z;
-		if (tempRotDegree == _assignedDegree) {
+		if (tempRotDegree == _assignedDegree[_curSegIdx]) {
 			_isCorrectConnection = true;
 			_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
 		} else {
@@ -150,6 +166,25 @@ public class PathNode : MonoBehaviour {
 	// read functions 
 	public NodeInfo readNodeInfo(){
 		return _myNodeInfo;
+	}
+
+	void SetPathEventHandle(SetPathNodeEvent e){
+		if (e.NodeIdx == _nodeIndex) {
+			// set next path active 
+			if (_curSegIdx + 1 < _segCount) {
+				
+				_curSegIdx += 1;
+				// update node info
+				_myNodeInfo.activeSegIdx = _curSegIdx;
+				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
+					_isCorrectConnection = false;
+					_myNodeInfo.isConnected = _isCorrectConnection;
+					_cylinderRenderer.material = _originMat;
+
+				}
+			}
+
+		}
 	}
 
 }

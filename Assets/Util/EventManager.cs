@@ -13,3 +13,9 @@ using System.Collections;
 public class DancerFinishPath: GameEvent{
 }
 
+public class SetPathNodeEvent: GameEvent{
+	public int NodeIdx { get; private set; }
+	public SetPathNodeEvent(int nid){
+		NodeIdx = nid;
+	}
+}

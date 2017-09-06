@@ -19,8 +19,9 @@ public class Dancer : MonoBehaviour {
 	Vector3 _curEndPos;
 	Vector3 _curDirection;                 // moving direction --> local movement axis 
 	int _curPathLength;
-	int _curIndex;
+	int _curIndex;                         // link index 
 	List<Vector3> _curPathLinkPos;
+	int _curPathIndex;                     // path index
 
 	// Use this for initialization
 	void Awake () {
@@ -37,7 +38,7 @@ public class Dancer : MonoBehaviour {
 	void Update () {
 		// TODO Inplement dragging later
 		if (isMoving && !isPathFinished) {
-			print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
+			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
 			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
 			    && Vector3.Normalize (_curEndPos - (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime)) == _curDirection) {
 				_myTransform.Translate (_mySpeed * _curDirection * Time.deltaTime, Space.Self);
@@ -66,6 +67,7 @@ public class Dancer : MonoBehaviour {
 				isPathFinished = true;
 				print ("Dancer: reaches the end");
 				Events.G.Raise (new DancerFinishPath ());
+				Events.G.Raise (new SetPathNodeEvent (_curPathIndex));
 			}
 		} else {
 			//
@@ -85,7 +87,10 @@ public class Dancer : MonoBehaviour {
 		Quaternion tempRot = pn.gameObject.transform.rotation;
 
 		// get the positions info
-		Vector3[] TempPos = pn.readNodeInfo ().pathPositions;
+		_curPathIndex = pn.readNodeInfo().index;
+		int activePath = pn.readNodeInfo().activeSegIdx;
+		print ("Check Active Path" + activePath);
+		Vector3[] TempPos = pn.readNodeInfo ().paths[activePath].GetPathInfo();
 		_curPathLinkPos.Clear ();
 		for (int i= 0; i < TempPos.Length; i++) {
 			_curPathLinkPos.Add (TempPos [i]);
@@ -105,6 +110,8 @@ public class Dancer : MonoBehaviour {
 		tempRot = new Quaternion (0, 0, 0, 0);
 		tempRot = pn.gameObject.transform.rotation;
 		_myTransform.rotation = tempRot;
+
+
 		//_myBodyTransform.LookAt (_curEndPos);	
 
 		// face along the path 
