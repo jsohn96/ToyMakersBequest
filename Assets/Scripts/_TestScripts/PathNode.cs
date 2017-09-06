@@ -5,7 +5,8 @@ using UnityEngine;
 public enum ButtonColor{
 	Red = 0,
 	Yellow,
-	Brown
+	Brown,
+	None
 };
 
 // passing data to the path network 
@@ -19,25 +20,8 @@ public struct NodeInfo{
 		index = i;
 		isConnected = iscnnt;
 		activeSegIdx = actseg;
-	}
-
-	/*
-	public Vector3 startPos;
-	public Vector3 endPos;
-	//public Vector3[] paths;
-	public int index;
-	public bool isConnected;
-	public Vector3 localDirection;
-	public NodeInfo(Vector3 dir, Vector3 va, Vector3 vb, int i, bool isconnected){
-		localDirection = dir;
-		startPos = va;
-		endPos = vb;
-		index = i;
-		isConnected = isconnected;
-	}
-	*/
-
-
+	}	
+		
 }
 
 
@@ -52,7 +36,6 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] Material _GreenMat;
 	[SerializeField] Renderer _cylinderRenderer;
 	Material _originMat;
-
 
 	Vector3 _startPos;
 	Vector3 _endPos;
@@ -78,10 +61,21 @@ public class PathNode : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		_nodeTransform = gameObject.transform;
-		_originMat = _cylinderRenderer.GetComponent<Renderer> ().material;
+		if (_ControlColor != ButtonColor.None) {
+			_originMat = _cylinderRenderer.GetComponent<Renderer> ().material;
+		}
 
+
+		// static node 
+		if (_ControlColor == ButtonColor.None) {
+			_isCorrectConnection = true;
+		} else {
+			_isCorrectConnection = false;
+		}
 		// 
 		initNodePathInfo ();
+
+
 	}
 
 	void initNodePathInfo(){
@@ -99,17 +93,8 @@ public class PathNode : MonoBehaviour {
 		if (_assignedDegree.Length != _segCount) {
 			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
 		}
-		// register the start and end 
-//		Vector3 tempPos = transform.position;
-//		float length = transform.localScale.x;
-//		tempPos.x += length / 2;
-//		_startPos = tempPos;
-//		tempPos.x -= length/2;
-//		_endPos = tempPos;
-//		Vector3 tempDir = new Vector3(1, 1, 1);
-		//tempDir = Vector3.Normalize ();
-		//_myNodeInfo = new NodeInfo(tempDir, _startPos, _endPos, _nodeIndex, false);
-		_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, false, _curSegIdx);
+
+		_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, _isCorrectConnection, _curSegIdx);
 		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
 
 	}
@@ -153,10 +138,15 @@ public class PathNode : MonoBehaviour {
 		tempRotDegree = transform.rotation.eulerAngles.z;
 		if (tempRotDegree == _assignedDegree[_curSegIdx]) {
 			_isCorrectConnection = true;
-			_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+			if (_cylinderRenderer) {
+				_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+			}
 		} else {
 			_isCorrectConnection = false;
-			_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+			if (_cylinderRenderer) {
+				_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+			}
+
 		}
 		//update node info 
 		_myNodeInfo.isConnected = _isCorrectConnection;
@@ -180,7 +170,10 @@ public class PathNode : MonoBehaviour {
 				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
 					_isCorrectConnection = false;
 					_myNodeInfo.isConnected = _isCorrectConnection;
-					_cylinderRenderer.material = _originMat;
+					if (_cylinderRenderer != null) {
+						_cylinderRenderer.material = _originMat;
+					}
+				
 
 				}
 			}

@@ -8,6 +8,11 @@ using System.Collections;
 //	}
 //}
 
+
+//****************//
+// Rotate Puzzle  //
+//****************//
+
 // for the rotating path prototype 
 
 public class DancerFinishPath: GameEvent{
@@ -20,6 +25,16 @@ public class SetPathNodeEvent: GameEvent{
 	}
 }
 
+public class PathCompeleteEvent:GameEvent{
+	
+}
+
+
+
+//***********//
+// Main Box  //
+//***********//
+
 public class ClockCompletionEvent: GameEvent{
 	public bool IsClockCompleted { get; private set; }
 	public float MaxSpeed { get; private set; }
@@ -28,3 +43,4 @@ public class ClockCompletionEvent: GameEvent{
 		MaxSpeed = maxSpeed;
 	}
 }
+
