@@ -176,6 +176,7 @@ public class PathNode : MonoBehaviour {
 				_curSegIdx += 1;
 				// update node info
 				_myNodeInfo.activeSegIdx = _curSegIdx;
+
 				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
 					_isCorrectConnection = false;
 					_myNodeInfo.isConnected = _isCorrectConnection;
