@@ -28,7 +28,7 @@ public class Pickupable : MonoBehaviour {
 		set {_isInDropZone = value; }
 	}
 
-	int _identifier = 0;
+	[SerializeField] int _identifier = 0;
 	bool _isInBox = false;
 	bool _isPickedUp = false;
 	bool _isInDropZone = false;
