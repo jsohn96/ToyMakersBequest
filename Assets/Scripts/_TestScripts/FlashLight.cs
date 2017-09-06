@@ -12,15 +12,18 @@ namespace Test{
 		Timer _onTimer;
 		bool _isFlashing = false;
 		bool _isLightOn = false;
+		[SerializeField] MeshRenderer[] _meshRendererDog; 
+
+		int _cnt = 0;
 
 
 		void Start(){
-			_offTimer = new Timer (1.0f / 24.0f);
-			_onTimer = new Timer (0.02f);
+			_offTimer = new Timer (1.0f / 48.0f);
+			_onTimer = new Timer (1.0f / 48.0f);
 		}
 
 		void Update(){
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.S)) {
 				_isFlashing = !_isFlashing;
 			}
 
@@ -38,6 +41,20 @@ namespace Test{
 
 		}
 
+//		void OnTriggerEnter(Collider other){
+//			if (other.tag == "Player") {
+//				TurnOnlight ();
+//				Debug.Log (other.name);
+//			}
+//		}
+//
+//
+//		void OnTriggerExit(Collider other){
+//			if (other.tag == "Player") {
+//				TurnOfflight ();
+//			}
+//		}
+
 
 		void TurnOnlight(){
 			myLight.intensity = maxIntensity;
@@ -50,6 +67,17 @@ namespace Test{
 			myLight.intensity = 0;
 			_offTimer.Reset ();
 			_isLightOn = false;
+			if (_cnt - 1 == -1) {
+				_meshRendererDog [4].enabled = false;
+			} else {
+				_meshRendererDog [_cnt -1].enabled = false;
+			}
+			_meshRendererDog [_cnt].enabled = true;
+			_cnt++;
+			if (_cnt == 5) {
+				_cnt = 0;
+			}
+
 		}
 	}
 	

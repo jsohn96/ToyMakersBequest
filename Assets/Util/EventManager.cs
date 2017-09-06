@@ -22,7 +22,9 @@ public class SetPathNodeEvent: GameEvent{
 
 public class ClockCompletionEvent: GameEvent{
 	public bool IsClockCompleted { get; private set; }
-	public ClockCompletionEvent(bool isClockCompleted){
+	public float MaxSpeed { get; private set; }
+	public ClockCompletionEvent(bool isClockCompleted, float maxSpeed){
 		IsClockCompleted = isClockCompleted;
+		MaxSpeed = maxSpeed;
 	}
 }

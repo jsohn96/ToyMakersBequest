@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClockCompletion : MonoBehaviour {
 	[SerializeField] DropZone[] _dogDropZones;
 	bool _isComplete = false;
-
+	[SerializeField] float _maxSpeed = 600.0f;
 	
 	void Update () {
 		if (!_isComplete) {
@@ -16,7 +16,11 @@ public class ClockCompletion : MonoBehaviour {
 				}
 			}
 		} else {
-			Events.G.Raise (new ClockCompletionEvent (_isComplete));
+			Events.G.Raise (new ClockCompletionEvent (_isComplete, _maxSpeed));
+		}
+
+		if (Input.GetKeyDown (KeyCode.A)) {
+			Events.G.Raise (new ClockCompletionEvent (_isComplete, _maxSpeed));
 		}
 	}
 }

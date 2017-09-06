@@ -10,15 +10,16 @@ public class RotateClock : MonoBehaviour {
 	float _speed = 0.0f;
 
 	float _counter = 0.0f;
+	float _counterDuration = 3.0f;
 
 	bool _isClockCompleted = false;
+	float _maxSpeed = 300.0f;
 
 
 	void Update () {
-		if (Input.GetKey (KeyCode.R)) {
-			_counter += Time.deltaTime;
+		if ((_isClockCompleted && _counter > _counterDuration) || Input.GetKey(KeyCode.Space)) {
 			for (int i = 0; i < _clockTransform.Length; i++) {
-				_clockTransform [i].Rotate (Vector3.up * (MathHelpers.LinMapFrom01(_speedMinMax.Min, _speedMinMax.Max, _counter/3.0f)) * Time.deltaTime);
+				_clockTransform [i].Rotate (Vector3.up * _maxSpeed * Time.deltaTime);
 			}
 			for (int r = 0; r < _reverseClockTransform.Length; r++) {
 				if (r < 5) {
@@ -26,13 +27,13 @@ public class RotateClock : MonoBehaviour {
 				} else {
 					_dogMultiplier = 1.0f;
 				}
-				_reverseClockTransform[r].Rotate(Vector3.down * _dogMultiplier *(MathHelpers.LinMapFrom01(_speedMinMax.Min, _speedMinMax.Max, _counter/3.0f)) * Time.deltaTime);
+				_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * _maxSpeed * Time.deltaTime);
 			}
 		} else {
-			if (_counter > 0.0f) {
-				_counter -= 0.1f;
+			if (Input.GetKey (KeyCode.R)) {
+				_counter += Time.deltaTime;
 				for (int i = 0; i < _clockTransform.Length; i++) {
-					_clockTransform [i].Rotate (Vector3.up * (MathHelpers.LinMapFrom01(_speedMinMax.Min, _speedMinMax.Max, _counter/3.0f)) * Time.deltaTime);
+					_clockTransform [i].Rotate (Vector3.up * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
 				}
 				for (int r = 0; r < _reverseClockTransform.Length; r++) {
 					if (r < 5) {
@@ -40,17 +41,37 @@ public class RotateClock : MonoBehaviour {
 					} else {
 						_dogMultiplier = 1.0f;
 					}
-					_reverseClockTransform[r].Rotate(Vector3.down * _dogMultiplier *(MathHelpers.LinMapFrom01(_speedMinMax.Min, _speedMinMax.Max, _counter/3.0f)) * Time.deltaTime);
-				}			
+					_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
+				}
 			} else {
-				_counter = 0.0f;
+				if (_counter > 0.0f) {
+					_counter -= 0.1f;
+					for (int i = 0; i < _clockTransform.Length; i++) {
+						_clockTransform [i].Rotate (Vector3.up * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
+					}
+					for (int r = 0; r < _reverseClockTransform.Length; r++) {
+						if (r < 5) {
+							_dogMultiplier = 2.0f;
+						} else {
+							_dogMultiplier = 1.0f;
+						}
+						_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
+					}			
+				} else {
+					_counter = 0.0f;
+				}
 			}
 		}
 	}
 
 
 	void ClockCompleted(ClockCompletionEvent e){
+		_maxSpeed = e.MaxSpeed;
 		_isClockCompleted = e.IsClockCompleted;
+
+		if (_isClockCompleted) {
+			_counterDuration = 3.0f;
+		}
 	}
 
 	void OnEnable(){
