@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathNetwork : MonoBehaviour {
 	// the solution for the puzzle --> the order of the correct path 
 	[SerializeField] int[] _correctOrder;
-	[SerializeField] PathNode[] _myNodes;
+	PathNode[] _myNodes;
 	[SerializeField] Dancer _myDancer;
 	int _curNodeIdx;
 	int _orderIdx = 0;
@@ -83,6 +83,8 @@ public class PathNetwork : MonoBehaviour {
 			_isCheckingNext = true;
 		} else {
 			print ("success!!");
+			// trigger final state 
+			Events.G.Raise(new PathCompeleteEvent());
 		}
 	}
 }
