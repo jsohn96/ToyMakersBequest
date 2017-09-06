@@ -42,6 +42,7 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
+				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
 				_myDancer.SetNewPath (_curNode);
 				_isCheckingNext = false;
