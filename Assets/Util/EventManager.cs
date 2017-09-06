@@ -19,3 +19,10 @@ public class SetPathNodeEvent: GameEvent{
 		NodeIdx = nid;
 	}
 }
+
+public class ClockCompletionEvent: GameEvent{
+	public bool IsClockCompleted { get; private set; }
+	public ClockCompletionEvent(bool isClockCompleted){
+		IsClockCompleted = isClockCompleted;
+	}
+}
