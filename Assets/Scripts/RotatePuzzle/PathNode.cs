@@ -189,6 +189,8 @@ public class PathNode : MonoBehaviour {
 		}
 	}
 		
+	// TODO: put into camera selection manager or something 
+	// 需要把代码整理到一个脚本里面，否则每个node要求做一个raycast消费太大
 	void RotateWithMouse(){
 		//print ("Mouse Axis Check: " + Input.GetAxis ("Mouse Y") + "," + Input.GetAxis ("Mouse X"));
 		//float v = Input.GetAxis ("Mouse Y");
@@ -206,10 +208,13 @@ public class PathNode : MonoBehaviour {
 			dragPreviousMousePos = Input.mousePosition;
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				print ("git the circle: " + hit.point);
-				isDragStart = true;
-				dragStartPos = hit.point;
-				hitDist = hit.distance;
+				//print ("git the circle: " + hit.point);
+				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
+					isDragStart = true;
+					dragStartPos = hit.point;
+					hitDist = hit.distance;
+				}
+
 			}
 
 			//print ("Mouse Position Check: " + mouseInWorldPos);
@@ -225,13 +230,8 @@ public class PathNode : MonoBehaviour {
 
 		if (isDragStart) {
 			Vector3 curMousePos;
-			// point b
-//			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-//			Vector3 curMousePos = mousePositionRay.GetPoint(hitDist);
-
-
 			curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
-
+			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
 			va.z = 0;
 			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
