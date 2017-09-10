@@ -49,6 +49,13 @@ public class PathNode : MonoBehaviour {
 	int _segCount;
 	int _curSegIdx = 0;
 
+	// mouse drag rotate 
+	bool isDragStart = false;
+	Vector3 dragStartPos;
+	Vector3 dragPreviousMousePos;
+	float hitDist;
+	float accAngle = 0; // accumulated angle
+
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 	}
@@ -102,6 +109,7 @@ public class PathNode : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		ButtonControlListener ();
+		RotateWithMouse ();
 		
 	}
 
@@ -179,6 +187,79 @@ public class PathNode : MonoBehaviour {
 			}
 
 		}
+	}
+		
+	void RotateWithMouse(){
+		//print ("Mouse Axis Check: " + Input.GetAxis ("Mouse Y") + "," + Input.GetAxis ("Mouse X"));
+		//float v = Input.GetAxis ("Mouse Y");
+		//float h = Input.GetAxis ("Mouse X");
+
+		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
+		//Plane playerPlane = 
+
+
+
+		// get the mouse input position
+		if(Input.GetMouseButtonDown(0)){
+			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			dragPreviousMousePos = Input.mousePosition;
+			bool isHit = Physics.Raycast (mousePositionRay, out hit);
+			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+				print ("git the circle: " + hit.point);
+				isDragStart = true;
+				dragStartPos = hit.point;
+				hitDist = hit.distance;
+			}
+
+			//print ("Mouse Position Check: " + mouseInWorldPos);
+		}
+
+		if (Input.GetMouseButtonUp (0)) {
+			if (isDragStart) {
+				isDragStart = false;
+				hitDist = 0;
+				accAngle = 0;
+			}
+		}
+
+		if (isDragStart) {
+			Vector3 curMousePos;
+			// point b
+//			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+//			Vector3 curMousePos = mousePositionRay.GetPoint(hitDist);
+
+
+			curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
+
+			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
+			va.z = 0;
+			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
+			vb.z = 0;
+			//print ("z pos chack: " + (va.z - vb.z));
+			//rotate from b to a
+			Vector3 rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
+
+			// get the angle 
+			float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
+			accAngle += angle;
+			print ("Angle Check: " + angle);
+			if (accAngle >= 0f) {
+				Quaternion tempRot = Quaternion.Euler (-accAngle*rotateAxis);
+				print ("Temp rot: " + tempRot);
+				Quaternion curRot = gameObject.transform.rotation;
+				//curRot = curRot + tempRot;
+				gameObject.transform.Rotate(-accAngle*rotateAxis*0.5f, Space.World);
+				dragStartPos = curMousePos;
+				accAngle = 0;
+			}
+
+
+		
+		}
+
+
+	
 	}
 
 }
