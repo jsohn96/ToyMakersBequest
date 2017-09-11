@@ -55,6 +55,7 @@ public class PathNode : MonoBehaviour {
 	Vector3 dragPreviousMousePos;
 	float hitDist;
 	float accAngle = 0; // accumulated angle
+	int circleDivision = 12; // default as the clock 
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
@@ -82,6 +83,11 @@ public class PathNode : MonoBehaviour {
 		// 
 		initNodePathInfo ();
 
+		// debug check 
+//		print("Angle check 1: " + DampAngle(540));
+//		print("Angle check 2: " + DampAngle(-270));
+//		print ("Angle check 3: " + DampAngle (180));
+
 
 	}
 
@@ -108,6 +114,7 @@ public class PathNode : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Controls for the circle rotation
 		ButtonControlListener ();
 		RotateWithMouse ();
 		
@@ -225,6 +232,30 @@ public class PathNode : MonoBehaviour {
 				isDragStart = false;
 				hitDist = 0;
 				accAngle = 0;
+				//
+				// check if angle correct 
+
+				// get the final rotation and then turn? 
+				float tempAngle = gameObject.transform.rotation.eulerAngles.z;
+				// dont need this step 
+				tempAngle = DampAngle (tempAngle);
+				float targetAngle = AngleSnap (tempAngle);
+				print("Final angle check: " + tempAngle + "," + targetAngle);
+
+				if (targetAngle == _assignedDegree[_curSegIdx]) {
+					_isCorrectConnection = true;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+					}
+				} else {
+					_isCorrectConnection = false;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+					}
+
+				}
+				//update node info 
+				_myNodeInfo.isConnected = _isCorrectConnection;
 			}
 		}
 
@@ -243,7 +274,7 @@ public class PathNode : MonoBehaviour {
 			// get the angle 
 			float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
-			print ("Angle Check: " + angle);
+			//print ("Angle Check: " + accAngle);
 			if (accAngle >= 0f) {
 				Quaternion tempRot = Quaternion.Euler (-accAngle*rotateAxis);
 				print ("Temp rot: " + tempRot);
@@ -253,13 +284,43 @@ public class PathNode : MonoBehaviour {
 				dragStartPos = curMousePos;
 				accAngle = 0;
 			}
-
-
-		
+				
 		}
 
 
-	
 	}
+
+	// snap rotation angle to the clock --> use in the clock puzzle 
+	float AngleSnap(float angle){
+		float subDeg = 360/12;
+		// round the angle to the next subdivision point 
+		float remainder = angle%subDeg;
+		if (remainder >= subDeg / 2) {
+			return angle + subDeg - remainder;
+		} else {
+			return angle - remainder;
+		}
+
+		return angle;
+			
+	}
+
+	// map angle to [0,2*PI)
+	float DampAngle(float angle){
+		if (angle >= 360) {
+			angle -= 360;
+			DampAngle (angle);
+		} else if (angle < 0) {
+			angle += 360;
+			DampAngle (angle);
+		} else {
+			return angle;
+			//break;
+		}
+
+		return angle;
+	}
+
+
 
 }
