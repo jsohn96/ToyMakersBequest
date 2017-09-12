@@ -25,7 +25,19 @@ public struct NodeInfo{
 }
 
 
+
+
 public class PathNode : MonoBehaviour {
+	// adjacent node -- for relative angles
+	[System.Serializable]
+	public struct AdjacentNode{
+		public int adjNodeIdx;
+		public float relativeAngle;
+		AdjacentNode(int id, float angle){
+			adjNodeIdx = id;
+			relativeAngle = angle;
+		}
+	}
 
 
 	[SerializeField] ButtonColor _ControlColor;      // the color of the button that controls the node 
@@ -36,13 +48,16 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] Material _GreenMat;
 	[SerializeField] Renderer _cylinderRenderer;
 	Material _originMat;
-
+	//
+	[SerializeField] AdjacentNode[] _adjacentNode;              // the adjacent node index and angle
+	bool _isDancerOnBoard = false;                                      // 1 - on, 0-off    
+	 
 	Vector3 _startPos;
 	Vector3 _endPos;
 	public bool _isCorrectConnection = false;               // if the path is correctly connected 
+	bool _isInterLocked = false;                            // if the path node has dependency on others 
 
-
-
+	PathNetwork _myNetWork;
 	NodeInfo _myNodeInfo;
 	//Vector3[] _myPathPos;
 	Path[] _myPaths;
@@ -57,17 +72,21 @@ public class PathNode : MonoBehaviour {
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
 
+
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
+		Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
+		Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 	}
 
 
 	// Use this for initialization
 	void Awake () {
+		_myNetWork = GetComponentInParent<PathNetwork> ();
 		_nodeTransform = gameObject.transform;
 		if (_ControlColor != ButtonColor.None) {
 			_originMat = _cylinderRenderer.GetComponent<Renderer> ().material;
@@ -83,12 +102,6 @@ public class PathNode : MonoBehaviour {
 		// 
 		initNodePathInfo ();
 
-		// debug check 
-//		print("Angle check 1: " + DampAngle(540));
-//		print("Angle check 2: " + DampAngle(-270));
-//		print ("Angle check 3: " + DampAngle (180));
-
-
 	}
 
 	void initNodePathInfo(){
@@ -103,11 +116,14 @@ public class PathNode : MonoBehaviour {
 			print ("ERROR: need to construct path first");
 		}
 
-		if (_assignedDegree.Length != _segCount) {
+		if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
 			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
+		} else {
+		
+			_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, _isCorrectConnection, _curSegIdx);
 		}
 
-		_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, _isCorrectConnection, _curSegIdx);
+
 		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
 
 	}
@@ -151,18 +167,48 @@ public class PathNode : MonoBehaviour {
 
 		transform.Rotate(0,0,-90);
 		tempRotDegree = transform.rotation.eulerAngles.z;
-		if (tempRotDegree == _assignedDegree[_curSegIdx]) {
-			_isCorrectConnection = true;
-			if (_cylinderRenderer) {
-				_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+		int curCheckIdx = 0;
+		if (!_isDancerOnBoard) {
+			curCheckIdx = _curSegIdx * 2;
+		} else {
+			curCheckIdx = _curSegIdx * 2 + 1;
+		}
+
+		if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
+			// if the node has dependency on other nodes
+			print("print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
+			// check relative angle && get the next node information 
+			PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
+			if (tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z 
+				== _adjacentNode [_curSegIdx * 2].relativeAngle) {
+				_isCorrectConnection = true;
+				adjNode._isCorrectConnection = true;
+				if (_cylinderRenderer) {
+					_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+				}
+			} else {
+				_isCorrectConnection = false;
+				if (_cylinderRenderer) {
+					_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+				}
+
 			}
 		} else {
-			_isCorrectConnection = false;
-			if (_cylinderRenderer) {
-				_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-			}
+			if (tempRotDegree == _adjacentNode [curCheckIdx].relativeAngle) {
+				_isCorrectConnection = true;
+				//_isDancerOnBoard = true;
+				if (_cylinderRenderer) {
+					_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+				}
+			} else {
+				_isCorrectConnection = false;
+				if (_cylinderRenderer) {
+					_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+				}
 
+			}
 		}
+
 		//update node info 
 		_myNodeInfo.isConnected = _isCorrectConnection;
 		//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
@@ -175,6 +221,8 @@ public class PathNode : MonoBehaviour {
 
 	void SetPathEventHandle(SetPathNodeEvent e){
 		if (e.NodeIdx == _nodeIndex) {
+			
+			_isDancerOnBoard = !_isDancerOnBoard;
 			// set next path active 
 			if (_curSegIdx + 1 < _segCount) {
 				
@@ -193,6 +241,12 @@ public class PathNode : MonoBehaviour {
 				}
 			}
 
+		}
+	}
+
+	void DancerFinishPathHandle(DancerFinishPath e){
+		if (e.NodeIdx == _nodeIndex) {
+			//_isDancerOnBoard = false;
 		}
 	}
 		

@@ -39,6 +39,7 @@ public class PathNetwork : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//if(FindNodeWithIndex (_curNodeIdx + 1).readNodeInfo.)
+		// checking all the connection info here
 		if(_isCheckingNext){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
@@ -63,18 +64,7 @@ public class PathNetwork : MonoBehaviour {
 
 	}
 
-	// util functions 
-	PathNode FindNodeWithIndex(int i){
-		foreach (PathNode _pn in _myNodes) {
-			NodeInfo ninfo = _pn.readNodeInfo ();
-			if (ninfo.index == i) {
-				return _pn;
-				break;
-			} 
-		}
 
-		return _myNodes [0];
-	}
 
 	void HandleDancerFinishPath(DancerFinishPath e){
 		print ("Check next available node");
@@ -87,5 +77,18 @@ public class PathNetwork : MonoBehaviour {
 			// trigger final state 
 			Events.G.Raise(new PathCompeleteEvent());
 		}
+	}
+
+	// util functions 
+	public PathNode FindNodeWithIndex(int i){
+		foreach (PathNode _pn in _myNodes) {
+			NodeInfo ninfo = _pn.readNodeInfo ();
+			if (ninfo.index == i) {
+				return _pn;
+				break;
+			} 
+		}
+
+		return _myNodes [0];
 	}
 }

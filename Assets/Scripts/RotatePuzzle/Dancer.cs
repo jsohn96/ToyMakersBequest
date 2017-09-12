@@ -68,7 +68,7 @@ public class Dancer : MonoBehaviour {
 				isMoving = false;
 				isPathFinished = true;
 				print ("Dancer: reaches the end");
-				Events.G.Raise (new DancerFinishPath ());
+				Events.G.Raise (new DancerFinishPath (_curPathIndex));
 				//Events.G.Raise (new SetPathNodeEvent (_curPathIndex));
 			}
 		} else {

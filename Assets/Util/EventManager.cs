@@ -16,6 +16,10 @@ using System.Collections;
 // for the rotating path prototype 
 
 public class DancerFinishPath: GameEvent{
+	public int NodeIdx { get; private set; }
+	public DancerFinishPath(int nid){
+		NodeIdx = nid;
+	}
 }
 
 public class SetPathNodeEvent: GameEvent{
