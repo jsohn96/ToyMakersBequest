@@ -4,10 +4,12 @@ using UnityEngine;
  
 
 // handels the dancers movement and behaviour in the game 
+// add music control for the music box 
 
 public class Dancer : MonoBehaviour {
 	Animator _myAnim;                     // future use --> change of animation 
 	Transform _myTransform;
+	AudioSource _myAudio;
 
 	// 
 	[SerializeField] float _mySpeed;      // dancer's moving speed 
@@ -26,6 +28,7 @@ public class Dancer : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		_myTransform = gameObject.transform;
+		_myAudio = gameObject.GetComponent<AudioSource> ();
 		if (_mySpeed == null) {
 			_mySpeed = 10f;
 		}
@@ -48,10 +51,17 @@ public class Dancer : MonoBehaviour {
 				_myTransform.localPosition = _curEndPos;
 			}
 
+			// playing the music
+			if(!_myAudio.isPlaying){
+				_myAudio.Play ();
+			}
 
 			// if reaches the end of the path 
 			// do something 
 		} else if (!isMoving && !isPathFinished) {
+			if(_myAudio.isPlaying){
+				_myAudio.Pause();
+			}
 			if (_curIndex + 1 < _curPathLength) {
 				_curIndex += 1;
 				print ("Dancer move on to link No." + _curIndex);
@@ -114,6 +124,8 @@ public class Dancer : MonoBehaviour {
 		// set the boolean vals 
 		isMoving = true;
 		isPathFinished = false;
+	
+
 		//_myTransform.parent = pn.gameObject.transform.parent;
 		_myTransform.parent = pn.gameObject.transform;
 		Quaternion tempRot = pn.gameObject.transform.rotation;
