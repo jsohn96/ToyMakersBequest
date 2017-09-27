@@ -196,4 +196,21 @@ public class BezierSpline : MonoBehaviour {
 			BezierControlPointMode.Free
 		};
 	}
+
+
+	// add get spline length
+	public float GetSplineDuration(){
+		float length = 0f;
+		//float progress = 0;
+		Vector3 prevPoint = GetPoint(0);
+		Vector3 curPoint;
+		for(float progress = 0; progress < 1f;progress += Time.deltaTime){
+			curPoint = GetPoint (progress);
+			length += Vector3.Distance (prevPoint, curPoint);
+			prevPoint = curPoint;
+			
+		}
+		return length;
+
+	}
 }

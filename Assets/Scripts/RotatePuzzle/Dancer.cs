@@ -11,7 +11,7 @@ public class Dancer : MonoBehaviour {
 	Transform _myTransform;
 	AudioSource _myAudio;
 	// 
-	[SerializeField] float _mySpeed;      // dancer's moving speed 
+	[SerializeField] float _DurationSensitivity;      // dancer's moving speed 
 	[SerializeField] Transform _myBodyTransform;
 
 	bool isPathFinished = true;           // is the current path finished 
@@ -34,8 +34,8 @@ public class Dancer : MonoBehaviour {
 	void Awake () {
 		_myTransform = gameObject.transform;
 		_myAudio = gameObject.GetComponent<AudioSource> ();
-		if (_mySpeed == null) {
-			_mySpeed = 10f;
+		if (_DurationSensitivity == null) {
+			_DurationSensitivity = 10f;
 		}
 		//
 		_curPathLinkPos = new List<Vector3>(100);
@@ -123,6 +123,10 @@ public class Dancer : MonoBehaviour {
 		_activeSpline = pn.readNodeInfo ().paths [activePath];
 		print ("Check Active Path" + activePath);
 		_curStartPos = _activeSpline.GetPoint (0);
+
+		float pathLength = _activeSpline.GetSplineDuration ();
+		print ("Current Spline Length: " + pathLength);
+		_duration = pathLength * _DurationSensitivity;
 		//Vector3[] TempPos = pn.readNodeInfo ().paths[activePath].GetPathInfo();
 //		_curPathLinkPos.Clear ();
 //		for (int i= 0; i < TempPos.Length; i++) {
@@ -189,10 +193,10 @@ public class Dancer : MonoBehaviour {
 // TODO Inplement dragging later --> in update 
 /*
 		if (isMoving && !isPathFinished) {
-			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
-			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
-			    && Vector3.Normalize (_curEndPos - (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime)) == _curDirection) {
-				_myTransform.Translate (_mySpeed * _curDirection * Time.deltaTime, Space.Self);
+			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _DurationSensitivity * _curDirection * Time.deltaTime, _curEndPos));
+			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _DurationSensitivity * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
+			    && Vector3.Normalize (_curEndPos - (_myTransform.localPosition + _DurationSensitivity * _curDirection * Time.deltaTime)) == _curDirection) {
+				_myTransform.Translate (_DurationSensitivity * _curDirection * Time.deltaTime, Space.Self);
 			} else {
 				isMoving = false;
 				_myTransform.localPosition = _curEndPos;
