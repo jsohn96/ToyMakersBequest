@@ -11,11 +11,11 @@ public enum ButtonColor{
 
 // passing data to the path network 
 public struct NodeInfo{
-	public Path[] paths;
+	public BezierSpline[] paths;
 	public int index;
 	public bool isConnected;
 	public int activeSegIdx;
-	public NodeInfo(Path[] p, int i, bool iscnnt, int actseg){
+	public NodeInfo(BezierSpline[] p, int i, bool iscnnt, int actseg){
 		paths = p;
 		index = i;
 		isConnected = iscnnt;
@@ -23,9 +23,7 @@ public struct NodeInfo{
 	}	
 		
 }
-
-
-
+	
 
 public class PathNode : MonoBehaviour {
 	// adjacent node -- for relative angles
@@ -60,9 +58,13 @@ public class PathNode : MonoBehaviour {
 	PathNetwork _myNetWork;
 	NodeInfo _myNodeInfo;
 	//Vector3[] _myPathPos;
-	Path[] _myPaths;
+	//Path[] _myPaths;
+	BezierSpline[] _mySplines;
 	int _segCount;
 	int _curSegIdx = 0;
+	float _duration = 10f;
+	float progress = 0;
+
 
 	// mouse drag rotate 
 	bool isDragStart = false;
@@ -108,9 +110,9 @@ public class PathNode : MonoBehaviour {
 		//get the positions of the path links 	
 
 		// TODO store the position value for different path segments 
-		if (GetComponentsInChildren<Path> () != null) {
-			_myPaths = GetComponentsInChildren<Path> ();
-			_segCount = _myPaths.Length;
+		if (GetComponentsInChildren<BezierSpline> () != null) {
+			_mySplines = GetComponentsInChildren<BezierSpline> ();
+			_segCount = _mySplines.Length;
 			print ("Check: path number in total " + _segCount);
 		} else {
 			print ("ERROR: need to construct path first");
@@ -119,8 +121,7 @@ public class PathNode : MonoBehaviour {
 		if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
 			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
 		} else {
-		
-			_myNodeInfo = new NodeInfo(_myPaths, _nodeIndex, _isCorrectConnection, _curSegIdx);
+			_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx);
 		}
 
 
@@ -133,7 +134,12 @@ public class PathNode : MonoBehaviour {
 		// Controls for the circle rotation
 		ButtonControlListener ();
 		RotateWithMouse ();
+
 		
+	}
+
+	void FixedUpdate(){
+		CheckNodeConnection ();
 	}
 
 	void ButtonControlListener(){
@@ -164,54 +170,64 @@ public class PathNode : MonoBehaviour {
 	void RotateNode(){
 		// temp Rot Degree = 0, 90, 180, 270 
 		float tempRotDegree = transform.rotation.eulerAngles.z;
-
 		transform.Rotate(0,0,-90);
-		tempRotDegree = transform.rotation.eulerAngles.z;
-		int curCheckIdx = 0;
-		if (!_isDancerOnBoard) {
-			curCheckIdx = _curSegIdx * 2;
-		} else {
-			curCheckIdx = _curSegIdx * 2 + 1;
-		}
 
-		if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
-			// if the node has dependency on other nodes
-			print("print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
-			// check relative angle && get the next node information 
-			PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-			if (tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z 
-				== _adjacentNode [_curSegIdx * 2].relativeAngle) {
-				_isCorrectConnection = true;
-				adjNode._isCorrectConnection = true;
-				if (_cylinderRenderer) {
-					_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+	}
+
+
+	void CheckNodeConnection(){
+		if (_ControlColor != ButtonColor.None) {
+			float tempRotDegree = transform.rotation.eulerAngles.z;
+			int curCheckIdx = 0;
+			if (!_isDancerOnBoard) {
+				print ("Check In ");
+				curCheckIdx = _curSegIdx * 2;
+			} else {
+				curCheckIdx = _curSegIdx * 2 + 1;
+				print ("Check Out ");
+			}
+
+			if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
+				// if the node has dependency on other nodes
+				print("print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
+				// check relative angle && get the next node information 
+				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
+				if (tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z 
+					== _adjacentNode [_curSegIdx * 2].relativeAngle) {
+					_isCorrectConnection = true;
+					adjNode._isCorrectConnection = true;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+					}
+				} else {
+					_isCorrectConnection = false;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+					}
+
 				}
 			} else {
-				_isCorrectConnection = false;
-				if (_cylinderRenderer) {
-					_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-				}
+				if (tempRotDegree == _adjacentNode [curCheckIdx].relativeAngle) {
+					_isCorrectConnection = true;
+					//_isDancerOnBoard = true;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+					}
+				} else {
+					_isCorrectConnection = false;
+					if (_cylinderRenderer) {
+						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+					}
 
+				}
 			}
-		} else {
-			if (tempRotDegree == _adjacentNode [curCheckIdx].relativeAngle) {
-				_isCorrectConnection = true;
-				//_isDancerOnBoard = true;
-				if (_cylinderRenderer) {
-					_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-				}
-			} else {
-				_isCorrectConnection = false;
-				if (_cylinderRenderer) {
-					_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-				}
 
-			}
+			//update node info 
+			_myNodeInfo.isConnected = _isCorrectConnection;
+			//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
+		
 		}
 
-		//update node info 
-		_myNodeInfo.isConnected = _isCorrectConnection;
-		//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
 	}
 
 	// read functions 
@@ -221,11 +237,9 @@ public class PathNode : MonoBehaviour {
 
 	void SetPathEventHandle(SetPathNodeEvent e){
 		if (e.NodeIdx == _nodeIndex) {
-			
 			_isDancerOnBoard = !_isDancerOnBoard;
 			// set next path active 
 			if (_curSegIdx + 1 < _segCount) {
-				
 				_curSegIdx += 1;
 				// update node info
 				_myNodeInfo.activeSegIdx = _curSegIdx;
@@ -236,11 +250,8 @@ public class PathNode : MonoBehaviour {
 					if (_cylinderRenderer != null) {
 						_cylinderRenderer.material = _originMat;
 					}
-				
-
 				}
 			}
-
 		}
 	}
 

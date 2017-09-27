@@ -10,7 +10,6 @@ public class Dancer : MonoBehaviour {
 	Animator _myAnim;                     // future use --> change of animation 
 	Transform _myTransform;
 	AudioSource _myAudio;
-
 	// 
 	[SerializeField] float _mySpeed;      // dancer's moving speed 
 	[SerializeField] Transform _myBodyTransform;
@@ -24,6 +23,12 @@ public class Dancer : MonoBehaviour {
 	int _curIndex;                         // link index 
 	List<Vector3> _curPathLinkPos;
 	int _curPathIndex;                     // path index
+
+	// traverse the spline 
+	float _duration = 2f;
+	float _progress = 0;
+	BezierSpline _activeSpline;
+	[SerializeField] SplineWalkerMode _mode;
 
 	// Use this for initialization
 	void Awake () {
@@ -40,7 +45,33 @@ public class Dancer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// spline walker adapt 
+		if(isMoving){
+			_progress += Time.deltaTime / _duration;
+			if (_progress >= 1f) {
+				_progress = 1f;
+				isMoving = false;
+				isPathFinished = true;
+				print ("Dancer: reaches the end");
+				Events.G.Raise (new DancerFinishPath (_curPathIndex));
+			}
+		}else {
+//			_progress -= Time.deltaTime / _duration;
+//			if (_progress < 0f) {
+//				_progress = -_progress;
+//				isMoving = true;
+//			} else {
+//				
+//			}
+		}
+
+		Vector3 position = _activeSpline.GetPoint(_progress);
+		transform.position = position;
+		if (isMoving) {
+			transform.LookAt(position + _activeSpline.GetDirection(_progress));
+		}
 		// TODO Inplement dragging later
+		/*
 		if (isMoving && !isPathFinished) {
 			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
 			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
@@ -84,9 +115,7 @@ public class Dancer : MonoBehaviour {
 		} else {
 			//
 		}
-
-
-		
+	*/
 	}
 
 	void RotateForward(){
@@ -121,9 +150,11 @@ public class Dancer : MonoBehaviour {
 
 	// the dancer enters the new path 
 	public void SetNewPath (PathNode pn){
+		// set New Path --> get the current active path
 		// set the boolean vals 
 		isMoving = true;
 		isPathFinished = false;
+		_progress = 0f;
 	
 
 		//_myTransform.parent = pn.gameObject.transform.parent;
@@ -135,28 +166,30 @@ public class Dancer : MonoBehaviour {
 		// get the positions info
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
+		_activeSpline = pn.readNodeInfo ().paths [activePath];
 		print ("Check Active Path" + activePath);
-		Vector3[] TempPos = pn.readNodeInfo ().paths[activePath].GetPathInfo();
-		_curPathLinkPos.Clear ();
-		for (int i= 0; i < TempPos.Length; i++) {
-			_curPathLinkPos.Add (TempPos [i]);
-		}
-		//print ("Check: " + _curPathLinkPos);
-		_curPathLength = _curPathLinkPos.Count;
-		_curIndex = 0;
-		_curStartPos = _curPathLinkPos [_curIndex];
-		if (_curIndex + 1 < _curPathLength) {
-			_curEndPos = _curPathLinkPos [_curIndex + 1];
-		} else {
-			_curEndPos = _curStartPos;
-		}
+		_curStartPos = _activeSpline.GetPoint (0);
+		//Vector3[] TempPos = pn.readNodeInfo ().paths[activePath].GetPathInfo();
+//		_curPathLinkPos.Clear ();
+//		for (int i= 0; i < TempPos.Length; i++) {
+//			_curPathLinkPos.Add (TempPos [i]);
+//		}
+//		//print ("Check: " + _curPathLinkPos);
+//		_curPathLength = _curPathLinkPos.Count;
+//		_curIndex = 0;
+//		_curStartPos = _curPathLinkPos [_curIndex];
+//		if (_curIndex + 1 < _curPathLength) {
+//			_curEndPos = _curPathLinkPos [_curIndex + 1];
+//		} else {
+//			_curEndPos = _curStartPos;
+//		}
+//
+		//_curDirection = Vector3.Normalize (_curEndPos - _curStartPos);
+		//_myTransform.localPosition = _curStartPos;
 
-		_curDirection = Vector3.Normalize (_curEndPos - _curStartPos);
-		_myTransform.localPosition = _curStartPos;
 
 
-
-		RotateForward ();
+		//RotateForward ();
 
 		//_myBodyTransform.LookAt (_curEndPos);	
 
