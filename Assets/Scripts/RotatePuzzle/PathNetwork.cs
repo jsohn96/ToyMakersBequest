@@ -94,9 +94,11 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
+				// icc the past pathnode --> active path +1, isOnboard = false
 				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
 				_myDancer.SetNewPath (_curNode);
+				// set the dancer onboard of the new one
 				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 				_isCheckingNext = false;
 			} else {

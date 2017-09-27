@@ -81,6 +81,7 @@ public class PathNode : MonoBehaviour {
 	float hitDist;
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
+	bool ischeckingConnection = false;
 
 
 	void OnEnable(){
@@ -150,6 +151,10 @@ public class PathNode : MonoBehaviour {
 
 	void FixedUpdate(){
 		CheckNodeConnection ();
+//		if (ischeckingConnection) {
+//			CheckNodeConnection ();
+//		}
+
 	}
 
 	void ButtonControlListener(){
@@ -190,24 +195,25 @@ public class PathNode : MonoBehaviour {
 			float tempRotDegree = transform.rotation.eulerAngles.z;
 			int curCheckIdx = 0;
 			if (!_isDancerOnBoard) {
-				print ("Check In ");
+				//print ("Check In ");
 				curCheckIdx = _curSegIdx * 2;
 			} else {
 				curCheckIdx = _curSegIdx * 2 + 1;
-				print ("Check Out ");
+				//print ("Check Out ");
 			}
 
-			print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
+			//print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
 
 			// update current checking index
 
 			if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
 				// if the node has dependency on other nodes
-				//print("Current Node " + _nodeIndex + "print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
+
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-				if (tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z 
-					== _adjacentNode [curCheckIdx].relativeAngle) {
+				print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z));
+				if (DampAngle(tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z) 
+					== DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) {
 					_isCorrectConnection = true;
 					//adjNode._isCorrectConnection = true;
 					if (_cylinderRenderer) {
@@ -258,6 +264,7 @@ public class PathNode : MonoBehaviour {
 				// update node info --> move on to the next spline
 				_myNodeInfo.activeSegIdx = _curSegIdx;
 
+				// reset connection status
 				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
 					_isCorrectConnection = false;
 					_myNodeInfo.isConnected = _isCorrectConnection;
@@ -272,9 +279,7 @@ public class PathNode : MonoBehaviour {
 
 	void DancerFinishPathHandle(DancerFinishPath e){
 		if (e.NodeIdx == _nodeIndex) {
-			
-
-
+			//_isCorrectConnection = false;
 		}
 	}
 
@@ -282,7 +287,7 @@ public class PathNode : MonoBehaviour {
 	void DancerOnBoardHandle(DancerOnBoard e){
 		if (e.NodeIdx == _nodeIndex) {
 			_isDancerOnBoard = true;
-
+			//_isCorrectConnection = true;
 
 		}
 	}
