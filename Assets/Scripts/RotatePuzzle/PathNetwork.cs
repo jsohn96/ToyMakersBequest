@@ -11,6 +11,8 @@ public class PathNetwork : MonoBehaviour {
 	int _orderIdx = 0;
 	PathNode _curNode;
 	bool _isCheckingNext = false;
+	bool _isDancerFinishPath = false;
+	int _curCheckIdx = 0;
 
 	// Use this for initialization
 	void Awake () {
@@ -40,12 +42,62 @@ public class PathNetwork : MonoBehaviour {
 	void Update () {
 		//if(FindNodeWithIndex (_curNodeIdx + 1).readNodeInfo.)
 		// checking all the connection info here
+
+//
+//		// TODO: move node angle chaking to here
+//		// always happens when the dancer finishes the path
+//		if(_isCheckingNext){
+//			PathNode nextNode = FindNodeWithIndex (_curNodeIdx);
+//			int activeSegId = _curNode.readNodeInfo ().activeSegIdx;
+//
+//			// if the current node has a relative dependency 
+//			if (_curNode.readNodeInfo ().controlColor != ButtonColor.None) {
+//				if (_curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].adjNodeIdx >= 0) {
+//					if (_curNode.transform.rotation.eulerAngles.z - nextNode.transform.rotation.eulerAngles.z ==
+//					    _curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].relativeAngle) {
+//						// set both connection true;
+//						Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
+//						_curNode = nextNode;
+//						_myDancer.SetNewPath (_curNode);
+//						_isCheckingNext = false;
+//					} else {
+//						print ("next node not correctly connected");
+//					}
+//
+//				} else {
+//					// no relative dependency 
+//					if (_curNode.transform.rotation.eulerAngles.z ==
+//					    _curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].relativeAngle) {
+//						// set both connection true;
+//						Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
+//						_curNode = nextNode;
+//						_myDancer.SetNewPath (_curNode);
+//						_isCheckingNext = false;
+//					} else {
+//						print ("next node not correctly connected");
+//					}
+//
+//				}
+//			} else {
+//				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
+//				_curNode = nextNode;
+//				_myDancer.SetNewPath (_curNode);
+//				_isCheckingNext = false;
+//			}
+//
+//		}
+//
+
+
+
+		///
 		if(_isCheckingNext){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
 				_myDancer.SetNewPath (_curNode);
+				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 				_isCheckingNext = false;
 			} else {
 				print ("next node not correctly connected");
@@ -91,4 +143,6 @@ public class PathNetwork : MonoBehaviour {
 
 		return _myNodes [0];
 	}
+
+
 }

@@ -7,7 +7,19 @@ public enum ButtonColor{
 	Yellow,
 	Brown,
 	None
+
 };
+
+[System.Serializable]
+public struct AdjacentNode{
+	public int adjNodeIdx;
+	public float relativeAngle;
+	AdjacentNode(int id, float angle){
+		adjNodeIdx = id;
+		relativeAngle = angle;
+	}
+}
+
 
 // passing data to the path network 
 public struct NodeInfo{
@@ -15,27 +27,23 @@ public struct NodeInfo{
 	public int index;
 	public bool isConnected;
 	public int activeSegIdx;
-	public NodeInfo(BezierSpline[] p, int i, bool iscnnt, int actseg){
+	public AdjacentNode[] adjNodes;
+	public ButtonColor controlColor;
+	public NodeInfo(BezierSpline[] p, int i, bool iscnnt, int actseg, AdjacentNode[] adj, ButtonColor btn){
 		paths = p;
 		index = i;
 		isConnected = iscnnt;
 		activeSegIdx = actseg;
+		adjNodes = adj;
+		controlColor = btn;
 	}	
-		
+
 }
 	
 
 public class PathNode : MonoBehaviour {
 	// adjacent node -- for relative angles
-	[System.Serializable]
-	public struct AdjacentNode{
-		public int adjNodeIdx;
-		public float relativeAngle;
-		AdjacentNode(int id, float angle){
-			adjNodeIdx = id;
-			relativeAngle = angle;
-		}
-	}
+
 
 
 	[SerializeField] ButtonColor _ControlColor;      // the color of the button that controls the node 
@@ -62,8 +70,8 @@ public class PathNode : MonoBehaviour {
 	BezierSpline[] _mySplines;
 	int _segCount;
 	int _curSegIdx = 0;
-	float _duration = 10f;
-	float progress = 0;
+	//float _duration = 10f;
+	//float progress = 0;
 
 
 	// mouse drag rotate 
@@ -78,11 +86,13 @@ public class PathNode : MonoBehaviour {
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
 		Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 	}
 
 
@@ -121,7 +131,7 @@ public class PathNode : MonoBehaviour {
 		if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
 			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
 		} else {
-			_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx);
+			_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 		}
 
 
@@ -187,15 +197,19 @@ public class PathNode : MonoBehaviour {
 				print ("Check Out ");
 			}
 
+			print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
+
+			// update current checking index
+
 			if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
 				// if the node has dependency on other nodes
-				print("print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
+				//print("Current Node " + _nodeIndex + "print Check Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " relative angle");
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
 				if (tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z 
-					== _adjacentNode [_curSegIdx * 2].relativeAngle) {
+					== _adjacentNode [curCheckIdx].relativeAngle) {
 					_isCorrectConnection = true;
-					adjNode._isCorrectConnection = true;
+					//adjNode._isCorrectConnection = true;
 					if (_cylinderRenderer) {
 						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
 					}
@@ -237,11 +251,11 @@ public class PathNode : MonoBehaviour {
 
 	void SetPathEventHandle(SetPathNodeEvent e){
 		if (e.NodeIdx == _nodeIndex) {
-			_isDancerOnBoard = !_isDancerOnBoard;
 			// set next path active 
+			_isDancerOnBoard = false;
 			if (_curSegIdx + 1 < _segCount) {
 				_curSegIdx += 1;
-				// update node info
+				// update node info --> move on to the next spline
 				_myNodeInfo.activeSegIdx = _curSegIdx;
 
 				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
@@ -252,12 +266,24 @@ public class PathNode : MonoBehaviour {
 					}
 				}
 			}
+
 		}
 	}
 
 	void DancerFinishPathHandle(DancerFinishPath e){
 		if (e.NodeIdx == _nodeIndex) {
-			//_isDancerOnBoard = false;
+			
+
+
+		}
+	}
+
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		if (e.NodeIdx == _nodeIndex) {
+			_isDancerOnBoard = true;
+
+
 		}
 	}
 		

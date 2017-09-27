@@ -34,6 +34,13 @@ public class PathCompeleteEvent:GameEvent{
 }
 
 
+public class DancerOnBoard: GameEvent{
+	public int NodeIdx { get; private set; }
+	public DancerOnBoard(int nid){
+		NodeIdx = nid;
+	}
+}
+
 
 //***********//
 // Main Box  //

@@ -93,20 +93,12 @@ public class Dancer : MonoBehaviour {
 		float angle = Mathf.Acos(Vector3.Dot(_curDirection, new Vector3(0,1,0)));
 		angle *= Mathf.Rad2Deg;
 		print ("Dancer check dot product: " + angle);
-//		if (Vector3.Dot (_curDirection,new Vector3(0,1,0)) > 0) {
-//			angle = 180 - angle;
-//		}
 
 		// cross product 
 		Vector3 eularAngle = angle * Vector3.Normalize(Vector3.Cross(new Vector3(0,1,0), _curDirection));
 
 		Quaternion tempRot = Quaternion.Euler (eularAngle);
 		print ("Dancer check rotating: " + eularAngle + " Angle: " + angle + "Quaternion: " + tempRot);
-//		float angle = Vector3.Angle(_curDirection, _myBodyTransform.up);
-//		print ("Dancer need to rotate: " + angle);
-//		Quaternion tempRot = _myBodyTransform.localRotation;
-//		tempRot = Quaternion.Euler (0, 0, angle);
-		//_myBodyTransform.localRotation = tempRot;
 
 	}
 
