@@ -46,7 +46,7 @@ public class Dancer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// spline walker adapt 
-		if(isMoving){
+		if(isMoving && !isPathFinished){
 			_progress += Time.deltaTime / _duration;
 			if (_progress >= 1f) {
 				_progress = 1f;
@@ -55,7 +55,17 @@ public class Dancer : MonoBehaviour {
 				print ("Dancer: reaches the end");
 				Events.G.Raise (new DancerFinishPath (_curPathIndex));
 			}
-		}else {
+
+
+			// playing the music
+			if(!_myAudio.isPlaying){
+				_myAudio.Play ();
+			}
+
+		}else if(isPathFinished){
+			if(_myAudio.isPlaying){
+				_myAudio.Pause();
+			}
 //			_progress -= Time.deltaTime / _duration;
 //			if (_progress < 0f) {
 //				_progress = -_progress;
@@ -70,52 +80,7 @@ public class Dancer : MonoBehaviour {
 		if (isMoving) {
 			transform.LookAt(position + _activeSpline.GetDirection(_progress));
 		}
-		// TODO Inplement dragging later
-		/*
-		if (isMoving && !isPathFinished) {
-			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
-			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
-			    && Vector3.Normalize (_curEndPos - (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime)) == _curDirection) {
-				_myTransform.Translate (_mySpeed * _curDirection * Time.deltaTime, Space.Self);
-			} else {
-				isMoving = false;
-				_myTransform.localPosition = _curEndPos;
-			}
 
-			// playing the music
-			if(!_myAudio.isPlaying){
-				_myAudio.Play ();
-			}
-
-			// if reaches the end of the path 
-			// do something 
-		} else if (!isMoving && !isPathFinished) {
-			if(_myAudio.isPlaying){
-				_myAudio.Pause();
-			}
-			if (_curIndex + 1 < _curPathLength) {
-				_curIndex += 1;
-				print ("Dancer move on to link No." + _curIndex);
-				_curStartPos = _curPathLinkPos [_curIndex];
-				if (_curIndex + 1 < _curPathLength) {
-					_curEndPos = _curPathLinkPos [_curIndex + 1];
-				} else {
-					_curEndPos = _curStartPos;
-				}
-				_curDirection = Vector3.Normalize (_curEndPos - _curStartPos);
-				RotateForward ();
-				isMoving = true;
-			} else {
-				isMoving = false;
-				isPathFinished = true;
-				print ("Dancer: reaches the end");
-				Events.G.Raise (new DancerFinishPath (_curPathIndex));
-				//Events.G.Raise (new SetPathNodeEvent (_curPathIndex));
-			}
-		} else {
-			//
-		}
-	*/
 	}
 
 	void RotateForward(){
@@ -141,10 +106,7 @@ public class Dancer : MonoBehaviour {
 //		print ("Dancer need to rotate: " + angle);
 //		Quaternion tempRot = _myBodyTransform.localRotation;
 //		tempRot = Quaternion.Euler (0, 0, angle);
-		_myBodyTransform.localRotation = tempRot;
-
-		// 
-
+		//_myBodyTransform.localRotation = tempRot;
 
 	}
 
@@ -228,3 +190,53 @@ public class Dancer : MonoBehaviour {
 
 
 }
+
+
+
+// old code
+// TODO Inplement dragging later --> in update 
+/*
+		if (isMoving && !isPathFinished) {
+			//print ("Dancer: Keep Moving " + Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos));
+			if (Mathf.Abs (Vector3.Distance (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime, _curEndPos)) > 0.0001f
+			    && Vector3.Normalize (_curEndPos - (_myTransform.localPosition + _mySpeed * _curDirection * Time.deltaTime)) == _curDirection) {
+				_myTransform.Translate (_mySpeed * _curDirection * Time.deltaTime, Space.Self);
+			} else {
+				isMoving = false;
+				_myTransform.localPosition = _curEndPos;
+			}
+
+			// playing the music
+			if(!_myAudio.isPlaying){
+				_myAudio.Play ();
+			}
+
+			// if reaches the end of the path 
+			// do something 
+		} else if (!isMoving && !isPathFinished) {
+			if(_myAudio.isPlaying){
+				_myAudio.Pause();
+			}
+			if (_curIndex + 1 < _curPathLength) {
+				_curIndex += 1;
+				print ("Dancer move on to link No." + _curIndex);
+				_curStartPos = _curPathLinkPos [_curIndex];
+				if (_curIndex + 1 < _curPathLength) {
+					_curEndPos = _curPathLinkPos [_curIndex + 1];
+				} else {
+					_curEndPos = _curStartPos;
+				}
+				_curDirection = Vector3.Normalize (_curEndPos - _curStartPos);
+				RotateForward ();
+				isMoving = true;
+			} else {
+				isMoving = false;
+				isPathFinished = true;
+				print ("Dancer: reaches the end");
+				Events.G.Raise (new DancerFinishPath (_curPathIndex));
+				//Events.G.Raise (new SetPathNodeEvent (_curPathIndex));
+			}
+		} else {
+			//
+		}
+	*/
