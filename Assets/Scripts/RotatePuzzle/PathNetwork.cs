@@ -40,56 +40,6 @@ public class PathNetwork : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//if(FindNodeWithIndex (_curNodeIdx + 1).readNodeInfo.)
-		// checking all the connection info here
-
-//
-//		// TODO: move node angle chaking to here
-//		// always happens when the dancer finishes the path
-//		if(_isCheckingNext){
-//			PathNode nextNode = FindNodeWithIndex (_curNodeIdx);
-//			int activeSegId = _curNode.readNodeInfo ().activeSegIdx;
-//
-//			// if the current node has a relative dependency 
-//			if (_curNode.readNodeInfo ().controlColor != ButtonColor.None) {
-//				if (_curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].adjNodeIdx >= 0) {
-//					if (_curNode.transform.rotation.eulerAngles.z - nextNode.transform.rotation.eulerAngles.z ==
-//					    _curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].relativeAngle) {
-//						// set both connection true;
-//						Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
-//						_curNode = nextNode;
-//						_myDancer.SetNewPath (_curNode);
-//						_isCheckingNext = false;
-//					} else {
-//						print ("next node not correctly connected");
-//					}
-//
-//				} else {
-//					// no relative dependency 
-//					if (_curNode.transform.rotation.eulerAngles.z ==
-//					    _curNode.readNodeInfo ().adjNodes [activeSegId * 2 + 1].relativeAngle) {
-//						// set both connection true;
-//						Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
-//						_curNode = nextNode;
-//						_myDancer.SetNewPath (_curNode);
-//						_isCheckingNext = false;
-//					} else {
-//						print ("next node not correctly connected");
-//					}
-//
-//				}
-//			} else {
-//				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
-//				_curNode = nextNode;
-//				_myDancer.SetNewPath (_curNode);
-//				_isCheckingNext = false;
-//			}
-//
-//		}
-//
-
-
-
 		///
 		if(_isCheckingNext){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
@@ -119,7 +69,7 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 
-
+	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
 		print ("Check next available node");
 		if (_orderIdx + 1 < _correctOrder.Length) {

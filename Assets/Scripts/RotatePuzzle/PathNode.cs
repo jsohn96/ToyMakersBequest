@@ -42,10 +42,6 @@ public struct NodeInfo{
 	
 
 public class PathNode : MonoBehaviour {
-	// adjacent node -- for relative angles
-
-
-
 	[SerializeField] ButtonColor _ControlColor;      // the color of the button that controls the node 
 	float _rotateAngle;
 	[SerializeField] int _nodeIndex;
@@ -192,7 +188,7 @@ public class PathNode : MonoBehaviour {
 
 	void CheckNodeConnection(){
 		if (_ControlColor != ButtonColor.None) {
-			float tempRotDegree = transform.rotation.eulerAngles.z;
+			float tempRotDegree = transform.localRotation.eulerAngles.z;
 			int curCheckIdx = 0;
 			if (!_isDancerOnBoard) {
 				//print ("Check In ");
@@ -211,8 +207,8 @@ public class PathNode : MonoBehaviour {
 
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-				print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z));
-				if (DampAngle(tempRotDegree - adjNode.gameObject.transform.rotation.eulerAngles.z) 
+				print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
+				if (DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z) 
 					== DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) {
 					_isCorrectConnection = true;
 					//adjNode._isCorrectConnection = true;
@@ -227,7 +223,7 @@ public class PathNode : MonoBehaviour {
 
 				}
 			} else {
-				if (tempRotDegree == _adjacentNode [curCheckIdx].relativeAngle) {
+				if ( DampAngle(tempRotDegree) ==  DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) {
 					_isCorrectConnection = true;
 					//_isDancerOnBoard = true;
 					if (_cylinderRenderer) {
