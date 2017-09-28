@@ -140,7 +140,7 @@ public class PathNode : MonoBehaviour {
 	void Update () {
 		// Controls for the circle rotation
 		ButtonControlListener ();
-		RotateWithMouse ();
+		//RotateWithMouse ();
 
 		
 	}
