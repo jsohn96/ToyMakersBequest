@@ -86,18 +86,18 @@ public class Dancer : MonoBehaviour {
 		//rotation can't reley on the local position --> need to rotate the _currentdirection 
 		//_myBodyTransform.up = _curDirection;
 		//print ("Direction Check: " + _myBodyTransform.forward + " " + _myBodyTransform.up + " " + _myBodyTransform.right);
-		print ("curDir Check: " + _curDirection);
+		//print ("curDir Check: " + _curDirection);
 		// calculate the angles 
 		// dot product
 		float angle = Mathf.Acos(Vector3.Dot(_curDirection, new Vector3(0,1,0)));
 		angle *= Mathf.Rad2Deg;
-		print ("Dancer check dot product: " + angle);
+		//print ("Dancer check dot product: " + angle);
 
 		// cross product 
 		Vector3 eularAngle = angle * Vector3.Normalize(Vector3.Cross(new Vector3(0,1,0), _curDirection));
 
 		Quaternion tempRot = Quaternion.Euler (eularAngle);
-		print ("Dancer check rotating: " + eularAngle + " Angle: " + angle + "Quaternion: " + tempRot);
+		//print ("Dancer check rotating: " + eularAngle + " Angle: " + angle + "Quaternion: " + tempRot);
 
 	}
 
@@ -120,11 +120,11 @@ public class Dancer : MonoBehaviour {
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
 		_activeSpline = pn.readNodeInfo ().paths [activePath];
-		print ("Check Active Path" + activePath);
+		//print ("Check Active Path" + activePath);
 		_curStartPos = _activeSpline.GetPoint (0);
 
 		float pathLength = _activeSpline.GetSplineDuration ();
-		print ("Current Spline Length: " + pathLength);
+		//print ("Current Spline Length: " + pathLength);
 		_duration = pathLength * _DurationSensitivity;
 
 	}

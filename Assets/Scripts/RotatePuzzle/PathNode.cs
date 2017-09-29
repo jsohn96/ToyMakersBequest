@@ -39,6 +39,8 @@ public struct NodeInfo{
 	}	
 
 }
+
+
 	
 
 public class PathNode : MonoBehaviour {
@@ -78,6 +80,13 @@ public class PathNode : MonoBehaviour {
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
 	bool ischeckingConnection = false;
+
+	// lerp node rotation 
+	float rotateSpeed = 4f;
+	Quaternion finalAngle;
+	Quaternion originAngle;
+	bool isRotating = false;
+	float errorVal = 0.2f;
 
 
 	void OnEnable(){
@@ -141,6 +150,16 @@ public class PathNode : MonoBehaviour {
 		// Controls for the circle rotation
 		ButtonControlListener ();
 		//RotateWithMouse ();
+		if(isRotating){
+			// rotate the node 
+			if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*10f){
+				transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
+			} else {
+				print ("####### reset boolean #######");
+				transform.localRotation = finalAngle;
+				isRotating = false;
+			}
+		}
 
 		
 	}
@@ -180,8 +199,16 @@ public class PathNode : MonoBehaviour {
 	// rotate 90 degrees clockwise 
 	void RotateNode(){
 		// temp Rot Degree = 0, 90, 180, 270 
-		float tempRotDegree = transform.rotation.eulerAngles.z;
-		transform.Rotate(0,0,-90);
+		//float tempRotDegree = transform.rotation.eulerAngles.z;
+		if(!isRotating){
+			isRotating = true;
+			originAngle = transform.localRotation;
+			//transform.Rotate(0,0,-90);
+			finalAngle = transform.localRotation;
+			finalAngle *= Quaternion.Euler (0, 0, 90);
+
+		}
+
 
 	}
 
@@ -208,8 +235,8 @@ public class PathNode : MonoBehaviour {
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
 				print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
-				if (DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z) 
-					== DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) {
+				if (Mathf.Abs(DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z) 
+					- DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
 					_isCorrectConnection = true;
 					//adjNode._isCorrectConnection = true;
 					if (_cylinderRenderer) {
@@ -223,7 +250,7 @@ public class PathNode : MonoBehaviour {
 
 				}
 			} else {
-				if ( DampAngle(tempRotDegree) ==  DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) {
+				if ( Mathf.Abs(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
 					_isCorrectConnection = true;
 					//_isDancerOnBoard = true;
 					if (_cylinderRenderer) {
