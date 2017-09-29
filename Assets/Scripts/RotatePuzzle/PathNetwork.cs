@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PathNetwork : MonoBehaviour {
 	// the solution for the puzzle --> the order of the correct path 
 	[SerializeField] int[] _correctOrder;

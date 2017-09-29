@@ -5,6 +5,12 @@ using UnityEngine;
 
 // handels the dancers movement and behaviour in the game 
 // add music control for the music box 
+// dancer movement --> different gestures according to the activated event 
+
+public enum DancerMove{
+	none = 0,
+	idleDance
+}
 
 public class Dancer : MonoBehaviour {
 	Animator _myAnim;                     // future use --> change of animation 
@@ -66,13 +72,6 @@ public class Dancer : MonoBehaviour {
 			if(_myAudio.isPlaying){
 				_myAudio.Pause();
 			}
-//			_progress -= Time.deltaTime / _duration;
-//			if (_progress < 0f) {
-//				_progress = -_progress;
-//				isMoving = true;
-//			} else {
-//				
-//			}
 		}
 
 		Vector3 position = _activeSpline.GetPoint(_progress);
@@ -127,61 +126,20 @@ public class Dancer : MonoBehaviour {
 		float pathLength = _activeSpline.GetSplineDuration ();
 		print ("Current Spline Length: " + pathLength);
 		_duration = pathLength * _DurationSensitivity;
-		//Vector3[] TempPos = pn.readNodeInfo ().paths[activePath].GetPathInfo();
-//		_curPathLinkPos.Clear ();
-//		for (int i= 0; i < TempPos.Length; i++) {
-//			_curPathLinkPos.Add (TempPos [i]);
-//		}
-//		//print ("Check: " + _curPathLinkPos);
-//		_curPathLength = _curPathLinkPos.Count;
-//		_curIndex = 0;
-//		_curStartPos = _curPathLinkPos [_curIndex];
-//		if (_curIndex + 1 < _curPathLength) {
-//			_curEndPos = _curPathLinkPos [_curIndex + 1];
-//		} else {
-//			_curEndPos = _curStartPos;
-//		}
-//
-		//_curDirection = Vector3.Normalize (_curEndPos - _curStartPos);
-		//_myTransform.localPosition = _curStartPos;
 
-
-
-		//RotateForward ();
-
-		//_myBodyTransform.LookAt (_curEndPos);	
-
-		// face along the path 
-		//_myTransform.LookAt(_curEndPos);
-
-		/*
-		//tempRot = new Quaternion (0, 0, 0, 0);
-		_myTransform.rotation = tempRot;
-	
-		// get the direction of moving 
-		//_curDirection = -Vector3.Normalize(pn.readNodeInfo().endPos - pn.readNodeInfo().startPos);
-		_curDirection = new Vector3 (-1f, 0, 0);
-		// get the start point 
-		//Vector3 n = new Vector3 (-0.5f, -0.5f, -0.5f);	
-		//_curStartPos = Vector3.Scale (n, _curDirection);
-		_curStartPos = new Vector3 (0.5f, 0, 0);
-		// get the end point 
-		//Vector3 m = new Vector3 (0.5f, 0.5f, 0.5f);
-		//_curEndPos = Vector3.Scale (m, _curDirection);
-
-		_curEndPos = new Vector3 (-0.5f, 0, 0);
-
-		// set the dancer position 
-	
-		_myTransform.localPosition = _curStartPos;
-		*/
-
-
-
-		
 	}
 
 	// TODO: set the dancer behavior --> what the dancer's moves are 
+	void DancerChangeMove(DancerMove _dm){
+		
+		switch(_dm){
+		case DancerMove.none:
+			break;
+		case DancerMove.idleDance:
+			break;
+
+		}
+	}
 
 
 
