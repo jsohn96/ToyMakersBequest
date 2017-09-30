@@ -55,3 +55,14 @@ public class ClockCompletionEvent: GameEvent{
 	}
 }
 
+
+//***********//
+// Peephole  //
+//***********//
+
+public class InsidePeepHoleEvent: GameEvent {
+	public bool IsInsidePeepHole { get; private set; }
+	public InsidePeepHoleEvent(bool isInsidePeepHole){
+		IsInsidePeepHole = isInsidePeepHole;
+	}
+}
