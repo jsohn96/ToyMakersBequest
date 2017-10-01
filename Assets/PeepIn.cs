@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PeepIn : MonoBehaviour {
-	Camera _mainCamera;
+	[SerializeField] Camera _mainCamera;
 	int _traversalExclusionLayerMask = 1 << 8;
 	[SerializeField] ObjectRotator _traversalScript;
 	Transform _traversalTransform;
@@ -33,7 +33,6 @@ public class PeepIn : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		_traversalTransform = _traversalScript.gameObject.transform;
-		_mainCamera = Camera.main;
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
 
 		_peepAtTimer = new Timer (1.0f);
