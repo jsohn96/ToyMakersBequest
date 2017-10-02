@@ -29,6 +29,7 @@ public class Dancer : MonoBehaviour {
 	int _curIndex;                         // link index 
 	List<Vector3> _curPathLinkPos;
 	int _curPathIndex;                     // path index
+	bool _isDancerRotate = false;
 
 	// traverse the spline 
 	float _duration = 2f;
@@ -47,6 +48,16 @@ public class Dancer : MonoBehaviour {
 		_curPathLinkPos = new List<Vector3>(100);
 
 			
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
+
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
+
 	}
 	
 	// Update is called once per frame
@@ -67,6 +78,11 @@ public class Dancer : MonoBehaviour {
 			if(!_myAudio.isPlaying){
 				_myAudio.Play ();
 			}
+			Vector3 position = _activeSpline.GetPoint(_progress);
+			transform.position = position;
+			if (isMoving) {
+				transform.LookAt(position + _activeSpline.GetDirection(_progress));
+			}
 
 		}else if(isPathFinished){
 			if(_myAudio.isPlaying){
@@ -74,12 +90,11 @@ public class Dancer : MonoBehaviour {
 			}
 		}
 
-		Vector3 position = _activeSpline.GetPoint(_progress);
-		transform.position = position;
-		if (isMoving) {
-			transform.LookAt(position + _activeSpline.GetDirection(_progress));
+		if (_isDancerRotate) {
+			_myBodyTransform.Rotate (0, -1, 0);
 		}
 
+	
 	}
 
 	void RotateForward(){
@@ -134,11 +149,17 @@ public class Dancer : MonoBehaviour {
 		
 		switch(_dm){
 		case DancerMove.none:
+			_isDancerRotate = false;
 			break;
 		case DancerMove.idleDance:
+			_isDancerRotate = true;
 			break;
 
 		}
+	}
+
+	void DancerChangeMoveHandel(DancerChangeMoveEvent e){
+		DancerChangeMove (e.Move);
 	}
 
 

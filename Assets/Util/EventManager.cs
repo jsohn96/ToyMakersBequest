@@ -41,6 +41,24 @@ public class DancerOnBoard: GameEvent{
 	}
 }
 
+public class DancerChangeMoveEvent:GameEvent{
+	public DancerMove Move{ get; private set;}
+	public DancerChangeMoveEvent(DancerMove dm){
+		Move = dm;
+	}
+}
+
+public class PathStateManagerEvent:GameEvent{
+	public PathState activeEvent{ get; private set;}
+	public PathStateManagerEvent(PathState ate){
+		activeEvent = ate;
+	}
+}
+
+public class PathResumeEvent:GameEvent{
+	
+}
+
 
 //***********//
 // Main Box  //
