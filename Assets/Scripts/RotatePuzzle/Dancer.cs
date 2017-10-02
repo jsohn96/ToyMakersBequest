@@ -52,11 +52,13 @@ public class Dancer : MonoBehaviour {
 
 	void OnEnable(){
 		Events.G.AddListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
+		Events.G.AddListener<PathStateManagerEvent> (DancerHoldHandEvent);
 
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
+		Events.G.AddListener<PathStateManagerEvent> (DancerHoldHandEvent);
 
 	}
 	
@@ -162,6 +164,12 @@ public class Dancer : MonoBehaviour {
 		DancerChangeMove (e.Move);
 	}
 
+	void DancerHoldHandEvent(PathStateManagerEvent e){
+		if (e.activeEvent == PathState.hold_hand_with_TM) {
+			print ("Dancer start");
+			DancerChangeMove (DancerMove.idleDance);
+		}
+	}
 
 
 }
