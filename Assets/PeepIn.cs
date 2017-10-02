@@ -24,11 +24,14 @@ public class PeepIn : MonoBehaviour {
 	Timer _peepAtTimer;
 	Timer _peepInTimer;
 
+	bool _lastExit = false;
+
 	Vector3 _tempRotation;
 	Vector3 _tempPosition;
 
 	[SerializeField] TurnCrank _turnCrankScript;
 	[SerializeField] Fading _fadeScript;
+	AudioSource _audioSource;
 
 	// Use this for initialization
 	void Awake () {
@@ -37,48 +40,40 @@ public class PeepIn : MonoBehaviour {
 
 		_peepAtTimer = new Timer (1.0f);
 		_peepInTimer = new Timer (1.5f);
+		_audioSource = GetComponent<AudioSource> ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			Ray ray = _mainCamera.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
-				if (hit.collider.name == "Peep") {
-					_isPeeping = true;
-					_traversalScript.enabled = false;
-					_isTransitioning = true;
-					Debug.Log ("works");
-					_cameraPositionCache = _traversalTransform.localPosition;
-					_cameraRotationCache = _traversalTransform.localRotation.eulerAngles;
-
-					_peepAtTimer.Reset ();
-				} else {
-					if (_isPeeping) {
-						_isPeeping = false;
+		if (!_isPeepingIn) {
+			if (Input.GetMouseButtonDown (0)) {
+				Ray ray = _mainCamera.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
+					if (hit.collider.name == "Peep") {
+						_isPeeping = true;
+						_traversalScript.enabled = false;
 						_isTransitioning = true;
+						Debug.Log ("works");
 						_cameraPositionCache = _traversalTransform.localPosition;
 						_cameraRotationCache = _traversalTransform.localRotation.eulerAngles;
 
 						_peepAtTimer.Reset ();
+					} else {
+						if (_isPeeping) {
+							_isPeeping = false;
+							_isTransitioning = true;
+							_cameraPositionCache = _traversalTransform.localPosition;
+							_cameraRotationCache = _traversalTransform.localRotation.eulerAngles;
+
+							_peepAtTimer.Reset ();
+						}
 					}
-				}
-			} 
-		}
-
-		if (_isPeeping) {
-			if (Input.GetKeyDown (KeyCode.E) && !_isPeepTransitioning) {
-				_isPeepingIn = !_isPeepingIn;
-
-				if (_isPeepingIn) {
-					StartCoroutine (FadeInTransition ());
-				} else {
-					StartCoroutine (FadeOutTransition ());
-				}
-
+				} 
 			}
 		}
+
+		PeepInTransition ();
 
 		if (_isPeepTransitioning) {
 			if (_peepInTimer.IsOffCooldown) {
@@ -113,10 +108,29 @@ public class PeepIn : MonoBehaviour {
 		}
 	}
 
+	public void PeepInTransition(bool lastExit = false){
+		if (!_lastExit) {
+			if (_isPeeping) {
+				if (Input.GetKeyDown (KeyCode.E) && !_isPeepTransitioning) {
+					_isPeepingIn = !_isPeepingIn;
+
+					if (_isPeepingIn) {
+						StartCoroutine (FadeInTransition ());
+					} else {
+						StartCoroutine (FadeOutTransition ());
+					}
+
+				}
+			}
+			_lastExit = lastExit;
+		}
+	}
+
 	IEnumerator FadeInTransition(){
 		_isPeepTransitioning = true;
 		_peepInTimer.Reset ();
 		_fadeScript.BeginFade (1);
+		_audioSource.Play ();
 		yield return new WaitForSeconds (1.5f);
 		Events.G.Raise (new InsidePeepHoleEvent (true));
 		_fadeScript.BeginFade (-1);
@@ -125,6 +139,7 @@ public class PeepIn : MonoBehaviour {
 	IEnumerator FadeOutTransition(){
 		_fadeScript.BeginFade (1);
 		yield return new WaitForSeconds (1f);
+		_audioSource.Play ();
 		Events.G.Raise (new InsidePeepHoleEvent (false));
 		yield return new WaitForSeconds (0.25f);
 		_isPeepTransitioning = true;

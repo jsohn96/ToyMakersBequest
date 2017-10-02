@@ -84,3 +84,13 @@ public class InsidePeepHoleEvent: GameEvent {
 		IsInsidePeepHole = isInsidePeepHole;
 	}
 }
+
+public class PickedUpGearEvent: GameEvent {
+	public int WhichGear { get; private set; }
+	public PickedUpGearEvent(int whichGear){
+		WhichGear = whichGear;
+	}
+}
+
+public class GearsReadyForPickupEvent: GameEvent {
+}

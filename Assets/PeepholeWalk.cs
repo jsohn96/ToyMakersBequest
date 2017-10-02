@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PeepholeWalk : MonoBehaviour {
 	[SerializeField] PeepIn _peepInScript;
-	bool _forwardMotionOn = true;
+	[SerializeField] bool _forwardMotionOn = true;
 	// Use this for initialization
 	void Start () {
 		
@@ -20,6 +20,14 @@ public class PeepholeWalk : MonoBehaviour {
 			}
 			if (Input.GetAxis ("Mouse ScrollWheel") < 0f) {
 				transform.Translate (Vector3.back * Time.deltaTime * 50.0f);
+			}
+
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
+				if (_forwardMotionOn) {
+					transform.Translate (Vector3.forward * Time.deltaTime * 15.0f);
+				}
+			} else if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
+				transform.Translate (Vector3.back * Time.deltaTime * 20.0f);
 			}
 
 			if (transform.localPosition.z < -10f) {

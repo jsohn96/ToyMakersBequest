@@ -34,7 +34,7 @@ public class TurnCrank : MonoBehaviour {
 		}
 
 		if (_isHoldingCrank) {
-			if (Input.GetAxis ("Mouse ScrollWheel") > 0f) {
+			if (Input.GetAxis ("Mouse ScrollWheel") > 0f ) {
 				PlayCrankSound ();
 
 				transform.Rotate (Vector3.right * Time.deltaTime * _crankTurnSensitivity);
@@ -49,6 +49,9 @@ public class TurnCrank : MonoBehaviour {
 				for (int i = 0; i < _otherGears.Length; i++) {
 					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
 				}
+			}
+			if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)){
+				PlayCrankSound ();
 			}
 		}
 	}
