@@ -309,13 +309,13 @@ public class PathNode : MonoBehaviour {
 				_myNodeInfo.activeSegIdx = _curSegIdx;
 
 				// reset connection status
-				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
-					_isCorrectConnection = false;
-					_myNodeInfo.isConnected = _isCorrectConnection;
-					if (_cylinderRenderer != null) {
-						_cylinderRenderer.material = _originMat;
-					}
-				}
+//				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
+//					_isCorrectConnection = false;
+//					_myNodeInfo.isConnected = _isCorrectConnection;
+//					if (_cylinderRenderer != null) {
+//						_cylinderRenderer.material = _originMat;
+//					}
+//				}
 			}
 
 		}
