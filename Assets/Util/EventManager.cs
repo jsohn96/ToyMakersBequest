@@ -59,6 +59,17 @@ public class PathResumeEvent:GameEvent{
 	
 }
 
+//***********//
+//    UI     //
+//***********//
+
+public class CircleTurnButtonPressEvent:GameEvent {
+	public ButtonColor WhichCircleColor { get; private set; }
+	public CircleTurnButtonPressEvent(ButtonColor whichCirlceColor) {
+		WhichCircleColor = whichCirlceColor;
+	}
+}
+
 
 //***********//
 // Main Box  //

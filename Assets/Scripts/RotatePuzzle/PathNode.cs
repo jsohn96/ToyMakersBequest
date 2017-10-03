@@ -41,7 +41,7 @@ public struct NodeInfo{
 }
 
 
-	
+
 
 public class PathNode : MonoBehaviour {
 	[SerializeField] ButtonColor _ControlColor;      // the color of the button that controls the node 
@@ -55,7 +55,7 @@ public class PathNode : MonoBehaviour {
 	//
 	[SerializeField] AdjacentNode[] _adjacentNode;              // the adjacent node index and angle
 	bool _isDancerOnBoard = false;                                      // 1 - on, 0-off    
-	 
+
 	Vector3 _startPos;
 	Vector3 _endPos;
 	public bool _isCorrectConnection = false;               // if the path is correctly connected 
@@ -93,12 +93,14 @@ public class PathNode : MonoBehaviour {
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
+		Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
 		Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
+		Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 	}
 
 
@@ -144,7 +146,7 @@ public class PathNode : MonoBehaviour {
 		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		// Controls for the circle rotation
@@ -161,15 +163,34 @@ public class PathNode : MonoBehaviour {
 			}
 		}
 
-		
+
 	}
 
 	void FixedUpdate(){
 		CheckNodeConnection ();
-//		if (ischeckingConnection) {
-//			CheckNodeConnection ();
-//		}
+		//		if (ischeckingConnection) {
+		//			CheckNodeConnection ();
+		//		}
 
+	}
+
+	void CircleButtonInputHandle (CircleTurnButtonPressEvent e){
+		if (_ControlColor == e.WhichCircleColor) {
+			switch (_ControlColor) {
+			case ButtonColor.Red:
+				print ("Rotate Red");
+				RotateNode ();
+				break;
+			case ButtonColor.Brown:
+				print ("Rotate Brown");
+				RotateNode ();
+				break;
+			case ButtonColor.Yellow:
+				print ("Rotate Yellow");
+				RotateNode ();
+				break;
+			}
+		}
 	}
 
 	void ButtonControlListener(){
@@ -192,7 +213,7 @@ public class PathNode : MonoBehaviour {
 				RotateNode ();
 			}
 			break;
-			
+
 		}
 	}
 
@@ -268,7 +289,7 @@ public class PathNode : MonoBehaviour {
 			//update node info 
 			_myNodeInfo.isConnected = _isCorrectConnection;
 			//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
-		
+
 		}
 
 	}
@@ -314,7 +335,7 @@ public class PathNode : MonoBehaviour {
 
 		}
 	}
-		
+
 	// TODO: put into camera selection manager or something 
 	// 需要把代码整理到一个脚本里面，否则每个node要求做一个raycast消费太大
 	void RotateWithMouse(){
@@ -403,7 +424,7 @@ public class PathNode : MonoBehaviour {
 				dragStartPos = curMousePos;
 				accAngle = 0;
 			}
-				
+
 		}
 
 
@@ -421,7 +442,7 @@ public class PathNode : MonoBehaviour {
 		}
 
 		return angle;
-			
+
 	}
 
 	// map angle to [0,2*PI)
