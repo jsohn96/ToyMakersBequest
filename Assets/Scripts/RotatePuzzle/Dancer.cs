@@ -74,11 +74,12 @@ public class Dancer : MonoBehaviour {
 				print ("Dancer: reaches the end");
 				Events.G.Raise (new DancerFinishPath (_curPathIndex));
 			}
-
+			 
 
 			// playing the music
 			if(!_myAudio.isPlaying){
 				_myAudio.Play ();
+				print ("Dancer Player Music");
 			}
 			Vector3 position = _activeSpline.GetPoint(_progress);
 			transform.position = position;

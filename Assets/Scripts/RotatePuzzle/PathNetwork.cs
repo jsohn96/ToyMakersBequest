@@ -15,6 +15,7 @@ public struct PathOrder{
 public enum PathState{
 	none,
 	descend_inital_stage,
+	first_encounter_TM,
 	hold_hand_with_TM
 }
 
@@ -129,6 +130,7 @@ public class PathNetwork : MonoBehaviour {
 				Events.G.Raise (new PathCompeleteEvent ());
 			}
 		} else {
+			print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
 			Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
 			_isPathPause = true;
 		}
