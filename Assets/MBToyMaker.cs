@@ -10,6 +10,10 @@ public class MBToyMaker : MonoBehaviour {
 	bool _isLightOn = false;
 
 
+	bool _isFlip = false;
+	[SerializeField] Animator _stageAnimator;
+
+
 	// Use this for initialization
 	void Awake () {
 		_spotLight.intensity = 0;
@@ -18,13 +22,11 @@ public class MBToyMaker : MonoBehaviour {
 	}
 
 	void OnEnable(){
-		Events.G.AddListener<PathStateManagerEvent> (DancerHoldHandEvent);
-		Events.G.AddListener<PathStateManagerEvent> (FirstEncounterTMHandle);
+		Events.G.AddListener<PathStateManagerEvent> (PathStateManagerHandle);
 	}
 
 	void OnDisable(){
-		Events.G.RemoveListener<PathStateManagerEvent> (DancerHoldHandEvent);
-		Events.G.AddListener<PathStateManagerEvent> (FirstEncounterTMHandle);
+		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManagerHandle);
 
 	}
 	
@@ -37,22 +39,50 @@ public class MBToyMaker : MonoBehaviour {
 			Events.G.Raise (new PathResumeEvent ());
 			_isLightOn = false;
 		}
+
+//		if (Input.GetKeyDown (KeyCode.F)) {
+//			_stageAnimator.Play ("Flip");
+//		}
 	}
 
-	void FirstEncounterTMHandle(PathStateManagerEvent e){
-		if (e.activeEvent == PathState.first_encounter_TM) {
-			if (!_isLightOn) {
-				_isLightOn = true;
-				print ("TM : Light on");
-			}
+	void FirstEncounterTMHandle(){
+		if (!_isLightOn) {
+			_isLightOn = true;
+			print ("TM : Light on");
+
+		}
+
+	}
+
+	void ResumePathWhenFlipFinish(){
+		Events.G.Raise (new PathResumeEvent ());
+	}
+
+	void DancerHoldHandEvent(){
+		
+
+	}
+
+	void FlipTMStage(){
+		print("TM Flip Stage");
+		if (!_isFlip) {
+			_stageAnimator.Play ("Flip");
+			_isFlip = false;
 		}
 	
 	}
 
-	void DancerHoldHandEvent(PathStateManagerEvent e){
-		if (e.activeEvent == PathState.hold_hand_with_TM) {
-			
+	void PathStateManagerHandle(PathStateManagerEvent e){
+		switch (e.activeEvent) {
+		case PathState.none:
+			break;
+		case PathState.first_encounter_TM:
+			break;
+		case PathState.hold_hand_with_TM:
+			break;
+		case PathState.flip_TM_stage:
+			FlipTMStage ();
+			break;
 		}
-
 	}
 }
