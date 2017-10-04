@@ -60,7 +60,9 @@ namespace UnityStandardAssets.Cameras
 
 
             // and update the gameobject itself
-            transform.localRotation = m_OriginalRotation*Quaternion.Euler(-m_FollowAngles.x, m_FollowAngles.y, 0);
+			Vector3 tempV3 = (m_OriginalRotation*Quaternion.Euler(-m_FollowAngles.x, m_FollowAngles.y, 0)).eulerAngles;
+			tempV3.z = 0.0f;
+			transform.localRotation = Quaternion.Euler (tempV3);
         }
     }
 }
