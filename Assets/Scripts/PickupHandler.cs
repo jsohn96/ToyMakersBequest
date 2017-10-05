@@ -105,7 +105,9 @@ public class PickupHandler : MonoBehaviour {
 	// Keeps the rotation of the picked up object consistent during Camera Rotation
 	void MaintainRotation(GameObject carriedObject){
 		Vector3 adjustedForwardRotation = _mainCamera.transform.rotation.eulerAngles + _forwardRotation;
-		carriedObject.transform.rotation = Quaternion.Lerp (_tempOriginRotation, Quaternion.Euler (adjustedForwardRotation), _pickUpTimer.PercentTimePassed);
+		carriedObject.transform.rotation = Quaternion.Lerp (_tempOriginRotation, Quaternion.Euler(_forwardRotation), _pickUpTimer.PercentTimePassed);
+
+		//carriedObject.transform.rotation = Quaternion.Lerp (_tempOriginRotation, Quaternion.Euler (adjustedForwardRotation), _pickUpTimer.PercentTimePassed);
 	}
 
 	void Pickup(){
@@ -131,7 +133,7 @@ public class PickupHandler : MonoBehaviour {
 						_pickUpTimer.Reset ();
 						_carrying = true;
 						_carriedObject = p.gameObject;
-						_tempOriginPosition = _carriedObject.transform.localPosition;
+						_tempOriginPosition = _carriedObject.transform.position;
 						_tempOriginRotation = _carriedObject.transform.rotation;
 						hit.collider.isTrigger = true;
 						p.GetComponent<Rigidbody> ().isKinematic = true;
@@ -148,7 +150,7 @@ public class PickupHandler : MonoBehaviour {
 					_pickUpTimer.Reset ();
 					_carrying = true;
 					_carriedObject = p.gameObject;
-					_tempOriginPosition = _carriedObject.transform.localPosition;
+					_tempOriginPosition = _carriedObject.transform.position;
 					_tempOriginRotation = _carriedObject.transform.rotation;
 					uiHit.collider.isTrigger = true;
 					p.GetComponent<Rigidbody> ().isKinematic = true;
@@ -237,7 +239,7 @@ public class PickupHandler : MonoBehaviour {
 		_tempDropGoalPosition = _tempOriginPosition;
 
 		_droppingObject = _carriedObject;
-		_tempDropOriginPosition = _droppingObject.transform.localPosition;
+		_tempDropOriginPosition = _droppingObject.transform.position;
 		_tempDropOriginRotation = _droppingObject.transform.rotation;
 
 		_droppingCollider =  _droppingObject.GetComponent<Collider>();
@@ -267,7 +269,7 @@ public class PickupHandler : MonoBehaviour {
 		//set object to pickupable
 		_droppingObject.layer = 9;
 
-		_tempDropOriginPosition = _droppingObject.transform.localPosition;
+		_tempDropOriginPosition = _droppingObject.transform.position;
 		_tempDropOriginRotation = _droppingObject.transform.rotation;
 
 		_droppingCollider =  _droppingObject.GetComponent<Collider>();
@@ -296,7 +298,7 @@ public class PickupHandler : MonoBehaviour {
 		//set pickupable object to UI box layer
 		_droppingObject.layer = 13;
 
-		_tempDropOriginPosition = _droppingObject.transform.localPosition;
+		_tempDropOriginPosition = _droppingObject.transform.position;
 		_tempDropOriginRotation = _droppingObject.transform.rotation;
 
 		_droppingCollider =  _droppingObject.GetComponent<Collider>();
