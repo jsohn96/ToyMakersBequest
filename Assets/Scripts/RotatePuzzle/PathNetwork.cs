@@ -17,13 +17,16 @@ public enum PathState{
 	descend_inital_stage,
 	first_encounter_TM,
 	flip_TM_stage,
-	hold_hand_with_TM
+	hold_hand_with_TM,
+	descend_to_layer_two
 }
 
 
 public class PathNetwork : MonoBehaviour {
 	// the solution for the puzzle --> the order of the correct path 
+	[SerializeField] int _startIndex;
 	[SerializeField] PathOrder[] _correctOrder;
+
 	PathNode[] _myNodes;
 	[SerializeField] Dancer _myDancer;
 	int _curNodeIdx;
@@ -40,6 +43,7 @@ public class PathNetwork : MonoBehaviour {
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		print ("Init Info: " + "\nNode Count"+ _myNodes.Length);
 		// init player position 
+		_orderIdx = _startIndex;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
 	}
 

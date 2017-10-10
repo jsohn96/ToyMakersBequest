@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MBToyMaker : MonoBehaviour {
 	[SerializeField] Transform _dancerTransform;
+	[SerializeField] Transform _TMTransform;
 	[SerializeField] Light _spotLight;
 
 	Timer _descendTimer;
 	bool _isLightOn = false;
+	bool _isFollow = false;
 
 
 	bool _isFlip = false;
@@ -43,6 +45,10 @@ public class MBToyMaker : MonoBehaviour {
 //		if (Input.GetKeyDown (KeyCode.F)) {
 //			_stageAnimator.Play ("Flip");
 //		}
+		if(_isFollow){
+			_TMTransform.position = _dancerTransform.position;
+			//_isFollow = false;
+		}
 	}
 
 	void FirstEncounterTMHandle(){
@@ -59,15 +65,21 @@ public class MBToyMaker : MonoBehaviour {
 	}
 
 	void DancerHoldHandEvent(){
-		
+		if (!_isFollow) {
+			_isFollow = true;
+		}
 
 	}
+
 
 	void FlipTMStage(){
 		print("TM Flip Stage");
 		if (!_isFlip) {
 			_stageAnimator.Play ("Flip");
 			_isFlip = false;
+		}
+		if (!_isFollow) {
+			_isFollow = true;
 		}
 	
 	}
@@ -79,6 +91,8 @@ public class MBToyMaker : MonoBehaviour {
 		case PathState.first_encounter_TM:
 			break;
 		case PathState.hold_hand_with_TM:
+			DancerHoldHandEvent ();
+			Events.G.Raise (new PathResumeEvent ());
 			break;
 		case PathState.flip_TM_stage:
 			FlipTMStage ();
