@@ -24,7 +24,7 @@ public class PickupHandler : MonoBehaviour {
 	[SerializeField] float _pickUpDuration = 0.5f;
 	Timer _dropOffTimer;
 	[SerializeField] float _dropOffDuration = 0.5f;
-	Vector3 _forwardRotation = new Vector3 (90.0f, 0.0f, 0.0f);
+	Vector3 _forwardRotation = new Vector3 (90.0f, 180.0f, 0.0f);
 	Vector3 _dropZoneRotation = new Vector3 (180.0f, -90.0f, 0.0f);
 	Quaternion _tempOriginRotation;
 	Vector3 _tempOriginPosition;
