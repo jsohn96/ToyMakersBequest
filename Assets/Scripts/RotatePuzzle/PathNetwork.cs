@@ -38,6 +38,10 @@ public class PathNetwork : MonoBehaviour {
 	bool _isStartPath = false;
 	bool _isPathPause = false;
 
+
+	// 
+	bool _isActive = false;
+
 	// Use this for initialization
 	void Awake () {
 		_myNodes = GetComponentsInChildren<PathNode> ();
@@ -59,7 +63,7 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	void Start(){
-		Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
+		//Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
 		//PositionDancer ();
 	}
 
@@ -68,7 +72,7 @@ public class PathNetwork : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		///
-		if(_isCheckingNext && _isPathPause != null){
+		if(_isCheckingNext && _isPathPause != null && _isActive){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// icc the past pathnode --> active path +1, isOnboard = false
@@ -123,22 +127,25 @@ public class PathNetwork : MonoBehaviour {
 	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
 		print ("Check next available node");
-		// check if there is anyevent envoked when the path is finished 
-		if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
-			if (_orderIdx + 1 < _correctOrder.Length) {
-				_orderIdx += 1;
-				_curNodeIdx = _correctOrder [_orderIdx].index;
-				_isCheckingNext = true;
+		if (_isActive) {
+			// check if there is anyevent envoked when the path is finished 
+			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
+				if (_orderIdx + 1 < _correctOrder.Length) {
+					_orderIdx += 1;
+					_curNodeIdx = _correctOrder [_orderIdx].index;
+					_isCheckingNext = true;
+				} else {
+					print ("success!!");
+					// trigger final state 
+					Events.G.Raise (new PathCompeleteEvent ());
+				}
 			} else {
-				print ("success!!");
-				// trigger final state 
-				Events.G.Raise (new PathCompeleteEvent ());
+				print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
+				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
+				_isPathPause = true;
 			}
-		} else {
-			print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
-			Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
-			_isPathPause = true;
 		}
+
 
 
 
@@ -155,6 +162,23 @@ public class PathNetwork : MonoBehaviour {
 		}
 
 		return _myNodes [0];
+	}
+
+	public void SetPathActive(bool isActive){
+		_isActive = isActive;
+		if (_isActive) {
+			PositionDancer ();
+			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
+		}
+	}
+
+	public void UpdateNodes(){
+		//_myNodes = new PathNode();
+		_myNodes = GetComponentsInChildren<PathNode> ();
+		print ("Update Info: " + "\nNode Count"+ _myNodes.Length);
+		// init player position 
+		_orderIdx = _startIndex;
+		_curNodeIdx = _correctOrder[_orderIdx].index;
 	}
 
 

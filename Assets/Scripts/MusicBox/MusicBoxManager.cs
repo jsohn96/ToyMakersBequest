@@ -6,6 +6,7 @@ public class MusicBoxManager : MonoBehaviour {
 	bool isBoxOpen = false;
 	Animator _myAnim;
 	[SerializeField] GameObject[] _Layers;
+	[SerializeField] PathNetwork[] _musicPaths;
 	[SerializeField] GameObject _firstDescendCircle;
 	bool _isDecend;
 	Vector3 FinalPos;
@@ -16,6 +17,11 @@ public class MusicBoxManager : MonoBehaviour {
 		_myAnim = GetComponent<Animator> ();
 		FinalPos = _firstDescendCircle.transform.localPosition;
 		FinalPos.z += 17.6f;
+
+	}
+
+	void Start(){
+		_musicPaths[0].SetPathActive(true);
 	}
 
 	void OnEnable(){
@@ -36,6 +42,8 @@ public class MusicBoxManager : MonoBehaviour {
 
 		if (isBoxOpen) {
 			_myAnim.Play("Open");
+			// activate the first layer path 
+
 		}
 
 		if (_isDecend) {
@@ -63,7 +71,9 @@ public class MusicBoxManager : MonoBehaviour {
 
 	void OpenLayer(int idx){
 		_Layers [idx - 1].GetComponent<Animator> ().Play ("SideOpen");
+		//_Layers [idx - 2].SetActive (false);
 		_isDecend = true;
+
 	}
 
 	void DescendFirstCircle(){
@@ -72,9 +82,16 @@ public class MusicBoxManager : MonoBehaviour {
 			tempPos.z += _speed * Time.deltaTime;
 			_firstDescendCircle.transform.localPosition = tempPos;
 		} else {
+			print ("First layer move to the second layer");
 			_firstDescendCircle.transform.localPosition = FinalPos;
 			Events.G.Raise (new PathResumeEvent ());
 			_isDecend = false;
+			_musicPaths [0].SetPathActive (false);
+			_firstDescendCircle.transform.parent = _musicPaths[1].transform;
+			_musicPaths [1].UpdateNodes ();
+			_musicPaths [1].SetPathActive (true);
+
+
 		}
 			
 	}

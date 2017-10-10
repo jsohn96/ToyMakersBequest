@@ -255,7 +255,7 @@ public class PathNode : MonoBehaviour {
 
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-				print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
+				//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
 				if (Mathf.Abs(DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z) 
 					- DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
 					_isCorrectConnection = true;
