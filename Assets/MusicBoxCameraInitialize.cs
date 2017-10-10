@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Cameras;
 
 public class MusicBoxCameraInitialize : MonoBehaviour {
 	[SerializeField] Transform _otherPositionCamera;
@@ -11,9 +12,16 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 
 	Vector3 _tempPos;
 	Quaternion _tempRot;
+
+	TargetFieldOfView _targetFieldOfViewScript;
+	LookatTarget _lookAtTargetScript;
+
 	// Use this for initialization
 	void Start () {
 		_cameraInitTime = new Timer (3.0f);
+
+		_targetFieldOfViewScript = GetComponent<TargetFieldOfView> ();
+		_lookAtTargetScript = GetComponent<LookatTarget> ();
 	}
 	
 	// Update is called once per frame
@@ -26,11 +34,16 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 			_once = true;
 		}
 
-		if (_once && !_cameraInitTime.IsOffCooldown) {
-			_tempPos = Vector3.Slerp (_originPosition, _otherPositionCamera.position, _cameraInitTime.PercentTimePassed);
-			_tempRot = Quaternion.Lerp (_originRotation, _otherPositionCamera.rotation, _cameraInitTime.PercentTimePassed);
+		if (_once) {
+			if (!_cameraInitTime.IsOffCooldown) {
+				_tempPos = Vector3.Slerp (_originPosition, _otherPositionCamera.position, _cameraInitTime.PercentTimePassed);
+				_tempRot = Quaternion.Lerp (_originRotation, _otherPositionCamera.rotation, _cameraInitTime.PercentTimePassed);
 
-			transform.SetPositionAndRotation (_tempPos, _tempRot);
+				transform.SetPositionAndRotation (_tempPos, _tempRot);
+			} else if (Input.GetKeyDown (KeyCode.S)) {
+				_targetFieldOfViewScript.enabled = true;
+				_lookAtTargetScript.enabled = true;
+			}
 		}
 	}
 }

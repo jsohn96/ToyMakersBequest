@@ -20,7 +20,9 @@ public class NotePickUp : MonoBehaviour {
 				_guideText.SetActive (true);
 				_hasNoteBeenPickedUp = true;
 			}
-		} else if(Input.GetKeyDown(KeyCode.Space)){
+		}
+
+		if(Input.GetKeyDown(KeyCode.Space)){
 			_guideText.SetActive (false);
 		}
 	}
