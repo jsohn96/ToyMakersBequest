@@ -54,7 +54,6 @@ public class PeepIn : MonoBehaviour {
 						_isPeeping = true;
 						_traversalScript.enabled = false;
 						_isTransitioning = true;
-						Debug.Log ("works");
 						_cameraPositionCache = _traversalTransform.localPosition;
 						_cameraRotationCache = _traversalTransform.localRotation.eulerAngles;
 
@@ -79,11 +78,9 @@ public class PeepIn : MonoBehaviour {
 			if (_peepInTimer.IsOffCooldown) {
 				_isPeepTransitioning = false;
 			} else if (_isPeepingIn) {
-				_turnCrankScript._isHoldingCrank = true;
 				_tempPosition = Vector3.Lerp (_cameraPeepPosition, _cameraPeepInPosition, _peepInTimer.PercentTimePassed);
 				_traversalTransform.localPosition = _tempPosition;
 			} else {
-				_turnCrankScript._isHoldingCrank = false;
 				_tempPosition = Vector3.Lerp (_cameraPeepInPosition, _cameraPeepPosition, _peepInTimer.PercentTimePassed);
 				_traversalTransform.localPosition = _tempPosition;
 			}

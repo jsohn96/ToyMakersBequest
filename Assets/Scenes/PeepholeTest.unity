@@ -795,7 +795,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &162213275
 GameObject:
@@ -904,6 +904,7 @@ GameObject:
   - component: {fileID: 164949453}
   - component: {fileID: 164949455}
   - component: {fileID: 164949454}
+  - component: {fileID: 164949456}
   m_Layer: 10
   m_Name: New Text (1)
   m_TagString: Untagged
@@ -931,9 +932,9 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 164949452}
-  m_Text: 'Click Peephole to observe
+  m_Text: 'Click Peephole to Observe
 
-    then Press ''E'' to enter'
+    then press ''E'' to look in'
   m_OffsetZ: 0
   m_CharacterSize: 0.015
   m_LineSpacing: 1
@@ -979,6 +980,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &164949456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 164949452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ababf0d72ccad1f47b8c4fe6323e0098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lookAtCamera: {fileID: 1770253183}
 --- !u!1 &188254239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1203,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &205229021
 GameObject:
@@ -2498,20 +2511,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -3219,20 +3218,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -3559,6 +3544,7 @@ GameObject:
   - component: {fileID: 684598497}
   - component: {fileID: 684598499}
   - component: {fileID: 684598498}
+  - component: {fileID: 684598500}
   m_Layer: 10
   m_Name: New Text
   m_TagString: Untagged
@@ -3586,7 +3572,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 684598496}
-  m_Text: "Right Click on Crank and \nuse Middle Mouse Wheel to Scroll"
+  m_Text: Use Middle Mouse Wheel to Scroll
   m_OffsetZ: 0
   m_CharacterSize: 0.015
   m_LineSpacing: 1
@@ -3632,6 +3618,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &684598500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 684598496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ababf0d72ccad1f47b8c4fe6323e0098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lookAtCamera: {fileID: 1770253183}
 --- !u!1 &702758261
 GameObject:
   m_ObjectHideFlags: 0
@@ -4323,7 +4321,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &792723308
 GameObject:
@@ -5107,20 +5105,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -5501,7 +5485,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &1004191980
 GameObject:
@@ -7386,7 +7370,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &1493307403
 GameObject:
@@ -7724,7 +7708,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &1643469711
 GameObject:
@@ -8355,7 +8339,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1770253183}
-  _isHoldingCrank: 0
   _otherGears:
   - {fileID: 1226021367}
   - {fileID: 620762057}
@@ -8797,7 +8780,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &1915080544
 GameObject:
@@ -9452,7 +9435,7 @@ SpriteRenderer:
   m_Size: {x: 1.0999999, y: 1.5699998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!65 &2017707266
 BoxCollider:

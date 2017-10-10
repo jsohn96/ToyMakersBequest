@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TurnCrank : MonoBehaviour {
 	[SerializeField] Camera _mainCamera;
-	public bool _isHoldingCrank = false;
 	float _crankTurnSensitivity = 1000.0f;
 	int _traversalExclusionLayerMask = 1 << 8;
 
@@ -19,21 +18,8 @@ public class TurnCrank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			
-			Ray ray = _mainCamera.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, Mathf.Infinity, _traversalExclusionLayerMask)) {
-				if (hit.collider.name == "Crank") {
-					_isHoldingCrank = true;
-					Debug.Log ("click works");
-				}
-			}
-		} else if (Input.GetMouseButtonUp(0)) {
-			_isHoldingCrank = false;
-		}
 
-		if (_isHoldingCrank) {
+
 			if (Input.GetAxis ("Mouse ScrollWheel") > 0f ) {
 				PlayCrankSound ();
 
@@ -53,7 +39,7 @@ public class TurnCrank : MonoBehaviour {
 			if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)){
 				PlayCrankSound ();
 			}
-		}
+
 	}
 
 	void PlayCrankSound(){
