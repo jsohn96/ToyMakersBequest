@@ -13,6 +13,7 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!_once && Input.GetKeyDown(KeyCode.Space)) {
+			transform.parent = null;
 			transform.SetPositionAndRotation (_otherPositionCamera.position, _otherPositionCamera.rotation);
 			_once = true;
 		}
