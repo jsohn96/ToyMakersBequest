@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateManager : MonoBehaviour {
-	public static StateManager stateManager;
+public enum State {
+	Zoetrope = 0,
+	ShadowPuppet = 1,
+	Marionette = 2,
+	MusicBox = 3,
+	PeepHole = 4,
+	End = 5,
+	Null = 6
+}
 
-	// Use this for initialization
+public class StateManager : MonoBehaviour {
+	public static StateManager _stateManager;
+
+	public State currentState {
+		get { return _currentState; }
+		set { _currentState = value; }
+	}
+	State _currentState = State.Zoetrope;
+
 	void Start () {
-		if (stateManager == null) {
+		if (_stateManager == null) {
 			DontDestroyOnLoad (gameObject);
-			stateManager = this;
+			_stateManager = this;
 		}
-		else if (stateManager != this) {
+		else if (_stateManager != this) {
 			Destroy (gameObject);
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
