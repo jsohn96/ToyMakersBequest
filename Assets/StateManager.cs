@@ -10,7 +10,7 @@ public enum State {
 	MusicBox = 3,
 	PeepHole = 4,
 	End = 97,
-	Null
+	Null = 100
 }
 
 public class StateManager : MonoBehaviour {
