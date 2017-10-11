@@ -13,6 +13,8 @@ public class TurnCrank : MonoBehaviour {
 
 	[SerializeField] bool _isZoetrope = false;
 	[SerializeField] bool _isReverse = false;
+	int _crankCnt = 0;
+
 	// Use this for initialization
 	void Awake () {
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
@@ -21,9 +23,7 @@ public class TurnCrank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
-		if (Input.GetAxis ("Mouse ScrollWheel") > 0f ) {
+		if (!_isZoetrope && Input.GetAxis ("Mouse ScrollWheel") > 0f ) {
 			PlayCrankSound ();
 
 			transform.Rotate (Vector3.right * Time.deltaTime * _crankTurnSensitivity);
@@ -35,7 +35,9 @@ public class TurnCrank : MonoBehaviour {
 					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
 				}
 			}
-		} else if (!_isZoetrope && Input.GetAxis ("Mouse ScrollWheel") < 0f) {
+		} else if (Input.GetAxis ("Mouse ScrollWheel") < 0f) {
+			_crankCnt++;
+
 			PlayCrankSound ();
 			transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
 
@@ -49,6 +51,11 @@ public class TurnCrank : MonoBehaviour {
 		}
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)){
 			PlayCrankSound ();
+		}
+
+
+		if (_isZoetrope) {
+			Debug.Log (_crankCnt);
 		}
 	}	
 
