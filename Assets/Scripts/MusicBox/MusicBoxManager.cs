@@ -107,7 +107,7 @@ public class MusicBoxManager : MonoBehaviour {
 		} else {
 			print ("First layer move to the second layer");
 			_firstDescendCircle.transform.localPosition = FinalPos;
-			Events.G.Raise (new PathResumeEvent ());
+
 			_isDecend = false;
 			_musicPaths [0].SetPathActive (false);
 			_firstDescendCircle.transform.parent = _musicPaths[1].transform;
@@ -118,7 +118,7 @@ public class MusicBoxManager : MonoBehaviour {
 			_originRotation = _Layers [0].transform.localRotation;
 			_transitionLayerTimer.Reset ();
 
-			// TODO: get camera transition 
+			Events.G.Raise (new PathResumeEvent ());
 		}
 			
 	}
