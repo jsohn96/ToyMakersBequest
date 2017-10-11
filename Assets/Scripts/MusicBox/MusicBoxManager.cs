@@ -18,6 +18,8 @@ public class MusicBoxManager : MonoBehaviour {
 	float _speed = 5f;
 	bool _hideFirstLayer=false;
 
+	bool _isStartPath = false;
+
 	// Use this for initialization
 	void Awake () {
 		_myAnim = GetComponent<Animator> ();
@@ -28,7 +30,7 @@ public class MusicBoxManager : MonoBehaviour {
 	}
 
 	void Start(){
-		_musicPaths[0].SetPathActive(true);
+		Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
 	}
 
 	void OnEnable(){
@@ -63,6 +65,13 @@ public class MusicBoxManager : MonoBehaviour {
 
 		if (_transitionLayerTimer.IsOffCooldown) {
 			_hideFirstLayer = false;
+		}
+
+
+		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
+			_isStartPath = true;
+			_musicPaths[0].SetPathActive(true);
+			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
 		}
 	}
 

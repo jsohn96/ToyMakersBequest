@@ -87,12 +87,12 @@ public class PathNetwork : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
-			_isStartPath = true;
-			PositionDancer ();
-			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
-
-		}
+//		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
+//			_isStartPath = true;
+//			PositionDancer ();
+//			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
+//
+//		}
 		
 	}
 

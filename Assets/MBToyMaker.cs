@@ -10,6 +10,8 @@ public class MBToyMaker : MonoBehaviour {
 	Timer _descendTimer;
 	bool _isLightOn = false;
 	bool _isFollow = false;
+	bool _isLookaAtDancer=false;
+	bool _isStartPath = false;
 
 
 	bool _isFlip = false;
@@ -46,21 +48,29 @@ public class MBToyMaker : MonoBehaviour {
 //			_stageAnimator.Play ("Flip");
 //		}
 		if(_isFollow){
-			_TMTransform.position = _dancerTransform.position;
+			Vector3 temp = _dancerTransform.position;
+			temp.x -= 4f;
+			_TMTransform.position = temp;
 			//_isFollow = false;
 		}
+
+		if (_isLookaAtDancer) {
+			print ("Looking at the dancer");
+			_TMTransform.LookAt (_dancerTransform, Vector3.up);
+		}
+
 	}
 
 	void FirstEncounterTMHandle(){
 		if (!_isLightOn) {
 			_isLightOn = true;
 			print ("TM : Light on");
-
+			_isLookaAtDancer = true;
 		}
 
 	}
 
-	void ResumePathWhenFlipFinish(){
+	public void ResumePathWhenFlipFinish(){
 		Events.G.Raise (new PathResumeEvent ());
 	}
 
@@ -89,6 +99,8 @@ public class MBToyMaker : MonoBehaviour {
 		case PathState.none:
 			break;
 		case PathState.first_encounter_TM:
+			FirstEncounterTMHandle ();
+			Events.G.Raise (new PathResumeEvent ());
 			break;
 		case PathState.hold_hand_with_TM:
 			DancerHoldHandEvent ();
