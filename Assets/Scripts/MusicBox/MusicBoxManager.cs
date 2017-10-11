@@ -118,6 +118,9 @@ public class MusicBoxManager : MonoBehaviour {
 			_originRotation = _Layers [0].transform.localRotation;
 			_transitionLayerTimer.Reset ();
 
+			// TODO: get camera transition 
+
+
 		}
 			
 	}
