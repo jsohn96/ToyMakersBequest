@@ -25,7 +25,7 @@ public class RotateClock : MonoBehaviour {
 				if (r < 5) {
 					_dogMultiplier = 2.0f;
 				} else {
-					_dogMultiplier = 1.0f;
+					_dogMultiplier = 1.7f;
 				}
 				_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * _maxSpeed * Time.deltaTime);
 			}
@@ -39,7 +39,7 @@ public class RotateClock : MonoBehaviour {
 					if (r < 5) {
 						_dogMultiplier = 2.0f;
 					} else {
-						_dogMultiplier = 1.0f;
+						_dogMultiplier = 1.7f;
 					}
 					_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
 				}
@@ -53,7 +53,7 @@ public class RotateClock : MonoBehaviour {
 						if (r < 5) {
 							_dogMultiplier = 2.0f;
 						} else {
-							_dogMultiplier = 1.0f;
+							_dogMultiplier = 1.7f;
 						}
 						_reverseClockTransform [r].Rotate (Vector3.down * _dogMultiplier * (MathHelpers.LinMapFrom01 (_speedMinMax.Min, _speedMinMax.Max, _counter / _counterDuration)) * Time.deltaTime);
 					}			
