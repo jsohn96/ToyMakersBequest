@@ -21,10 +21,15 @@ namespace Test{
 
 		AudioSource _audioSourceWhir;
 
+		BoxCollider _boxCollider;
+
+		[SerializeField] GameObject _gameTitle;
+
 		void Awake(){
 			_offTimer = new Timer (1.0f / 24.0f);
 			_onTimer = new Timer (1.0f / 24.0f);
 			_audioSourceWhir = GetComponent<AudioSource> ();
+			_boxCollider = GetComponent<BoxCollider> ();
 		}
 
 		void Update(){
@@ -43,28 +48,26 @@ namespace Test{
 					} else if (!_isLightOn && _offTimer.IsOffCooldown) {
 						TurnOnlight ();
 					}
-				} else {
-					TurnOfflight ();
 				}
 			}
 
 		}
 
-//		void OnTriggerEnter(Collider other){
-//			if (other.tag == "Player") {
-//				TurnOnlight ();
-//				Debug.Log (other.name);
-//			}
-//		}
-//
-//
-//		void OnTriggerExit(Collider other){
-//			if (other.tag == "Player") {
-//				TurnOfflight ();
-//			}
-//		}
+		void OnTriggerEnter(Collider other){
+			if (other.tag == "RotateCircle") {
+				TurnOnlight ();
+			}
+		}
+
+
+		void OnTriggerExit(Collider other){
+			if (other.tag == "RotateCircle") {
+				TurnOfflight ();
+			}
+		}
 		public void StartZoetrope(){
 			if (!_started) {
+				TurnOfflight ();
 				_started = true;
 				StartCoroutine (WaitToSpeedUp ());
 			}
@@ -72,33 +75,40 @@ namespace Test{
 
 		IEnumerator WaitToSpeedUp(){
 			_audioSourceWhir.Play ();
-			yield return new WaitForSeconds (0.7f);
-
-			yield return new WaitForSeconds (1.0f);
-	
-			yield return new WaitForSeconds (1.3f);
+			_boxCollider.enabled = true;
+			yield return new WaitForSeconds (3f);
 
 			_bringInAnimation = true;
 			for (int i = 0; i < _removeForZoetrope.Length; i++) {
 				_removeForZoetrope[i].SetActive(false);
 			}
+
 			_onTimer.CooldownTime = (1.0f / 48.0f);
 			_offTimer.CooldownTime = (1.0f / 48.0f);
 			_isFlashing = true;
+
+			yield return new WaitForSeconds (2f);
+			_gameTitle.SetActive (true);
+			yield return new WaitForSeconds (2f);
+			_gameTitle.SetActive (false);
 		}
 
 		void TurnOnlight(){
 			myLight.intensity = maxIntensity;
-			_onTimer.Reset ();
+
 			_isLightOn = true;
+			if (_bringInAnimation) {
+				_onTimer.Reset ();
+			}
 
 		}
 
 		void TurnOfflight(){
 			myLight.intensity = 0;
-			_offTimer.Reset ();
+
 			_isLightOn = false;
 			if (_bringInAnimation) {
+				_offTimer.Reset ();
 				if (_cnt - 1 == -1) {
 					_meshRendererDog [4].enabled = false;
 				} else {

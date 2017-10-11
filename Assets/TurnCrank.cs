@@ -68,7 +68,7 @@ public class TurnCrank : MonoBehaviour {
 
 		if (_isZoetrope) {
 			Debug.Log (_crankCnt);
-			if (_crankCnt > 120) {
+			if (_crankCnt > 122) {
 				if (!_startRotate) {
 					_startRotate = true;
 					_speedTimer.Reset ();
