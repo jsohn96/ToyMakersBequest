@@ -13,31 +13,40 @@ namespace Test{
 		bool _isFlashing = false;
 		bool _isLightOn = false;
 		[SerializeField] MeshRenderer[] _meshRendererDog; 
+		[SerializeField] GameObject[] _removeForZoetrope;
+		bool _started = false;
 
 		int _cnt = 0;
+		bool _bringInAnimation = false;
 
+		AudioSource _audioSourceWhir;
 
-		void Start(){
-			_offTimer = new Timer (1.0f / 48.0f);
-			_onTimer = new Timer (1.0f / 48.0f);
+		void Awake(){
+			_offTimer = new Timer (1.0f / 24.0f);
+			_onTimer = new Timer (1.0f / 24.0f);
+			_audioSourceWhir = GetComponent<AudioSource> ();
 		}
 
 		void Update(){
+			#if UNITY_EDITOR
 			if (Input.GetKeyDown (KeyCode.S)) {
+				_started = true;
 				_isFlashing = !_isFlashing;
 			}
+			#endif
 
-			if (_isFlashing) {
-				//TurnOnlight ();
-				if (_isLightOn && _onTimer.IsOffCooldown) {
+			if (_started) {
+				if (_isFlashing) {
+					//TurnOnlight ();
+					if (_isLightOn && _onTimer.IsOffCooldown) {
+						TurnOfflight ();
+					} else if (!_isLightOn && _offTimer.IsOffCooldown) {
+						TurnOnlight ();
+					}
+				} else {
 					TurnOfflight ();
-				} else if (!_isLightOn && _offTimer.IsOffCooldown) {
-					TurnOnlight ();
 				}
-			} else {
-				TurnOfflight();
 			}
-
 
 		}
 
@@ -54,7 +63,29 @@ namespace Test{
 //				TurnOfflight ();
 //			}
 //		}
+		public void StartZoetrope(){
+			if (!_started) {
+				_started = true;
+				StartCoroutine (WaitToSpeedUp ());
+			}
+		}
 
+		IEnumerator WaitToSpeedUp(){
+			_audioSourceWhir.Play ();
+			yield return new WaitForSeconds (0.7f);
+
+			yield return new WaitForSeconds (1.0f);
+	
+			yield return new WaitForSeconds (1.3f);
+
+			_bringInAnimation = true;
+			for (int i = 0; i < _removeForZoetrope.Length; i++) {
+				_removeForZoetrope[i].SetActive(false);
+			}
+			_onTimer.CooldownTime = (1.0f / 48.0f);
+			_offTimer.CooldownTime = (1.0f / 48.0f);
+			_isFlashing = true;
+		}
 
 		void TurnOnlight(){
 			myLight.intensity = maxIntensity;
@@ -67,17 +98,18 @@ namespace Test{
 			myLight.intensity = 0;
 			_offTimer.Reset ();
 			_isLightOn = false;
-			if (_cnt - 1 == -1) {
-				_meshRendererDog [4].enabled = false;
-			} else {
-				_meshRendererDog [_cnt -1].enabled = false;
+			if (_bringInAnimation) {
+				if (_cnt - 1 == -1) {
+					_meshRendererDog [4].enabled = false;
+				} else {
+					_meshRendererDog [_cnt - 1].enabled = false;
+				}
+				_meshRendererDog [_cnt].enabled = true;
+				_cnt++;
+				if (_cnt == 5) {
+					_cnt = 0;
+				}
 			}
-			_meshRendererDog [_cnt].enabled = true;
-			_cnt++;
-			if (_cnt == 5) {
-				_cnt = 0;
-			}
-
 		}
 	}
 	

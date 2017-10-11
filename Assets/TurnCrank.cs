@@ -15,47 +15,85 @@ public class TurnCrank : MonoBehaviour {
 	[SerializeField] bool _isReverse = false;
 	int _crankCnt = 0;
 
+	bool _startRotate = false;
+	float _speed = 0.001f;
+	Timer _speedTimer;
+	[SerializeField] AnimationCurve _speedCurve;
+	MinMax _speedRange = new MinMax(0.1f, 600.0f);
+
+	[SerializeField] ZoetropeLightFlicker _dLight;
+	[SerializeField] CameraZoom _cameraZoomScript;
+
 	// Use this for initialization
 	void Awake () {
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
 		_audioSource = GetComponent<AudioSource> ();
+		_speedTimer = new Timer (5.0f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!_isZoetrope && Input.GetAxis ("Mouse ScrollWheel") > 0f ) {
-			PlayCrankSound ();
+		if (!_isZoetrope || !_startRotate) {
+			if (!_isZoetrope && Input.GetAxis ("Mouse ScrollWheel") > 0f) {
+				PlayCrankSound ();
 
-			transform.Rotate (Vector3.right * Time.deltaTime * _crankTurnSensitivity);
+				transform.Rotate (Vector3.right * Time.deltaTime * _crankTurnSensitivity);
 
-			for (int i = 0; i < _otherGears.Length; i++) {
-				if (!_isReverse) {
-					_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
-				} else {
-					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
+				for (int i = 0; i < _otherGears.Length; i++) {
+					if (!_isReverse) {
+						_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
+					} else {
+						_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
+					}
+				}
+			} else if (Input.GetAxis ("Mouse ScrollWheel") < 0f) {
+				_crankCnt++;
+
+				PlayCrankSound ();
+				transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
+
+				for (int i = 0; i < _otherGears.Length; i++) {
+					if (!_isReverse) {
+						_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
+					} else {
+						_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
+					}
 				}
 			}
-		} else if (Input.GetAxis ("Mouse ScrollWheel") < 0f) {
-			_crankCnt++;
-
-			PlayCrankSound ();
-			transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
-
-			for (int i = 0; i < _otherGears.Length; i++) {
-				if (!_isReverse) {
-					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
-				} else {
-					_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
-				}
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.DownArrow)) {
+				PlayCrankSound ();
 			}
-		}
-		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)){
-			PlayCrankSound ();
 		}
 
 
 		if (_isZoetrope) {
 			Debug.Log (_crankCnt);
+			if (_crankCnt > 120) {
+				if (!_startRotate) {
+					_startRotate = true;
+					_speedTimer.Reset ();
+					_dLight.PlayTick ();
+					StartCoroutine (DelayShutDown ());
+				}
+			} else if (_crankCnt > 90) {
+				_dLight.DarkerFlicker ();
+			}
+			else if (_crankCnt > 45) {
+				_dLight.LittleFlicker ();
+			}
+
+			if (_startRotate) {
+				_audioSource.Stop ();
+
+				_speed = MathHelpers.LinMapFrom01(_speedRange.Min, _speedRange.Max, _speedCurve.Evaluate (_speedTimer.PercentTimePassed));
+
+				transform.Rotate (Vector3.right * Time.deltaTime * _speed);
+				for (int i = 0; i < _otherGears.Length; i++) {
+					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * _speed);
+				}
+
+
+			}
 		}
 	}	
 
@@ -65,5 +103,12 @@ public class TurnCrank : MonoBehaviour {
 			_audioSource.clip = _crankClips [index];
 			_audioSource.Play ();
 		}
+	}
+
+	IEnumerator DelayShutDown(){
+		yield return new WaitForSeconds (5.0f);
+		_cameraZoomScript.BeginZoom ();
+		yield return new WaitForSeconds (1.0f);
+		_dLight.ShutDown ();
 	}
 }
