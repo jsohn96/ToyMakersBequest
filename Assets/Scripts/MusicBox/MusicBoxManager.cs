@@ -20,6 +20,8 @@ public class MusicBoxManager : MonoBehaviour {
 
 	bool _isStartPath = false;
 
+	[SerializeField] TempSScript _tempSText;
+
 	// Use this for initialization
 	void Awake () {
 		_myAnim = GetComponent<Animator> ();
@@ -44,13 +46,17 @@ public class MusicBoxManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			isBoxOpen = !isBoxOpen;
-			
+			if (!isBoxOpen) {
+				isBoxOpen = true;
+				_tempSText.DisplayText();
+			}
+
 		}
 
 		if (isBoxOpen) {
 			_myAnim.Play("Open");
 			// activate the first layer path 
+
 
 		}
 
@@ -87,6 +93,9 @@ public class MusicBoxManager : MonoBehaviour {
 		case PathState.descend_to_layer_two:
 			Events.G.Raise(new CamerafovAmountChange (50.0f));
 			OpenLayer (2);
+			break;
+		case PathState.temp_end_scene:
+			EndScene ();
 			break;
 			
 		}
@@ -126,5 +135,10 @@ public class MusicBoxManager : MonoBehaviour {
 
 	void HideLayer(Transform layer){
 		layer.localRotation = Quaternion.Lerp (_originRotation, Quaternion.Euler (_goalRotation), _transitionLayerTimer.PercentTimePassed);
+	}
+
+	void EndScene(){
+		print ("Layer2 finish: End Scene");
+	
 	}
 }

@@ -6,6 +6,7 @@ public class TempSScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameObject.SetActive (false);
 		
 	}
 	
@@ -14,5 +15,9 @@ public class TempSScript : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.S)) {
 			gameObject.SetActive (false);
 		}
+	}
+
+	public void DisplayText(){
+		gameObject.SetActive (true);
 	}
 }
