@@ -8,9 +8,15 @@ public class MusicBoxManager : MonoBehaviour {
 	[SerializeField] GameObject[] _Layers;
 	[SerializeField] PathNetwork[] _musicPaths;
 	[SerializeField] GameObject _firstDescendCircle;
+
+	Vector3 _goalRotation = new Vector3 (0.0f, 360.0f, -90.0f);
+	Quaternion _originRotation;
+	Timer _transitionLayerTimer;
+
 	bool _isDecend;
 	Vector3 FinalPos;
 	float _speed = 5f;
+	bool _hideFirstLayer=false;
 
 	// Use this for initialization
 	void Awake () {
@@ -18,6 +24,7 @@ public class MusicBoxManager : MonoBehaviour {
 		FinalPos = _firstDescendCircle.transform.localPosition;
 		FinalPos.z += 17.6f;
 
+		_transitionLayerTimer = new Timer (2.0f);
 	}
 
 	void Start(){
@@ -49,7 +56,14 @@ public class MusicBoxManager : MonoBehaviour {
 		if (_isDecend) {
 			DescendFirstCircle ();
 		}
-		
+
+		if (_hideFirstLayer) {
+			HideLayer (_Layers [0].transform);
+		}
+
+		if (_transitionLayerTimer.IsOffCooldown) {
+			_hideFirstLayer = false;
+		}
 	}
 
 	void PathStateManagerHandle(PathStateManagerEvent e){
@@ -90,9 +104,17 @@ public class MusicBoxManager : MonoBehaviour {
 			_firstDescendCircle.transform.parent = _musicPaths[1].transform;
 			_musicPaths [1].UpdateNodes ();
 			_musicPaths [1].SetPathActive (true);
+			_hideFirstLayer = true;
 
+			_originRotation = _Layers [0].transform.localRotation;
+			_transitionLayerTimer.Reset ();
 
 		}
 			
+	}
+
+
+	void HideLayer(Transform layer){
+		layer.localRotation = Quaternion.Lerp (_originRotation, Quaternion.Euler (_goalRotation), _transitionLayerTimer.PercentTimePassed);
 	}
 }
