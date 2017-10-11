@@ -24,6 +24,8 @@ public class TurnCrank : MonoBehaviour {
 	[SerializeField] ZoetropeLightFlicker _dLight;
 	[SerializeField] CameraZoom _cameraZoomScript;
 
+	[SerializeField] AudioSource _audioSourceWhir;
+
 	// Use this for initialization
 	void Awake () {
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
@@ -67,8 +69,7 @@ public class TurnCrank : MonoBehaviour {
 
 
 		if (_isZoetrope) {
-			Debug.Log (_crankCnt);
-			if (_crankCnt > 120) {
+			if (_crankCnt > 122) {
 				if (!_startRotate) {
 					_startRotate = true;
 					_speedTimer.Reset ();
@@ -83,6 +84,7 @@ public class TurnCrank : MonoBehaviour {
 			}
 
 			if (_startRotate) {
+
 				_audioSource.Stop ();
 
 				_speed = MathHelpers.LinMapFrom01(_speedRange.Min, _speedRange.Max, _speedCurve.Evaluate (_speedTimer.PercentTimePassed));
@@ -106,6 +108,7 @@ public class TurnCrank : MonoBehaviour {
 	}
 
 	IEnumerator DelayShutDown(){
+		_audioSourceWhir.Play ();
 		yield return new WaitForSeconds (5.0f);
 		_cameraZoomScript.BeginZoom ();
 		yield return new WaitForSeconds (1.0f);
