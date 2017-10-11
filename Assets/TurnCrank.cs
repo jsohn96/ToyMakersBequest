@@ -64,6 +64,17 @@ public class TurnCrank : MonoBehaviour {
 			}
 			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.DownArrow)) {
 				PlayCrankSound ();
+				_crankCnt++;
+
+				transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
+
+				for (int i = 0; i < _otherGears.Length; i++) {
+					if (!_isReverse) {
+						_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
+					} else {
+						_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
+					}
+				}
 			}
 		}
 

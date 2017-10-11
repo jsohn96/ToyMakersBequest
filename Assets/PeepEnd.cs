@@ -17,6 +17,7 @@ public class PeepEnd : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "MainCamera") {
+			StartCoroutine(StateManager._stateManager.ChangeLevel (1));
 			_peepInScript.PeepInTransition (true);
 		}
 	}

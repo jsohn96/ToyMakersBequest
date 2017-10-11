@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum State {
-	Zoetrope = 1,
-	ShadowPuppet,
-	Marionette,
-	MusicBox = 2,
-	PeepHole = 3,
-	End,
+	Zoetrope = 2,
+	ShadowPuppet = 99,
+	Marionette = 98,
+	MusicBox = 3,
+	PeepHole = 4,
+	End = 97,
 	Null
 }
 
