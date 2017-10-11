@@ -39,7 +39,6 @@ public class MusicBoxManager : MonoBehaviour {
 
 	void OnDisable(){
 		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManagerHandle);
-
 	}
 	
 	// Update is called once per frame
@@ -86,6 +85,7 @@ public class MusicBoxManager : MonoBehaviour {
 		case PathState.flip_TM_stage:
 			break;
 		case PathState.descend_to_layer_two:
+			Events.G.Raise(new CamerafovAmountChange (50.0f));
 			OpenLayer (2);
 			break;
 			
@@ -119,8 +119,6 @@ public class MusicBoxManager : MonoBehaviour {
 			_transitionLayerTimer.Reset ();
 
 			// TODO: get camera transition 
-
-
 		}
 			
 	}

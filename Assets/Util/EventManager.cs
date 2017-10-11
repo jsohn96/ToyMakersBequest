@@ -84,6 +84,13 @@ public class ClockCompletionEvent: GameEvent{
 	}
 }
 
+public class CamerafovAmountChange:GameEvent {
+	public float FovAmount { get; private set; }
+	public CamerafovAmountChange(float fovAmount){
+		FovAmount = fovAmount;
+	}
+}
+
 
 //***********//
 // Peephole  //
