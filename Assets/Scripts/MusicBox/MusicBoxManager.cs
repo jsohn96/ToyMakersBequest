@@ -138,7 +138,7 @@ public class MusicBoxManager : MonoBehaviour {
 	}
 
 	void EndScene(){
-		print ("Layer2 finish: End Scene");
+		StartCoroutine (StateManager._stateManager.ChangeLevel (1));
 	
 	}
 }
