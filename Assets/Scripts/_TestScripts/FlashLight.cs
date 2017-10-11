@@ -19,7 +19,7 @@ namespace Test{
 		int _cnt = 0;
 		bool _bringInAnimation = false;
 
-		AudioSource _audioSourceWhir;
+
 
 		BoxCollider _boxCollider;
 
@@ -28,7 +28,6 @@ namespace Test{
 		void Awake(){
 			_offTimer = new Timer (1.0f / 24.0f);
 			_onTimer = new Timer (1.0f / 24.0f);
-			_audioSourceWhir = GetComponent<AudioSource> ();
 			_boxCollider = GetComponent<BoxCollider> ();
 		}
 
@@ -74,7 +73,7 @@ namespace Test{
 		}
 
 		IEnumerator WaitToSpeedUp(){
-			_audioSourceWhir.Play ();
+			
 			_boxCollider.enabled = true;
 			yield return new WaitForSeconds (3f);
 
@@ -87,10 +86,12 @@ namespace Test{
 			_offTimer.CooldownTime = (1.0f / 48.0f);
 			_isFlashing = true;
 
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (3f);
 			_gameTitle.SetActive (true);
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (4f);
 			_gameTitle.SetActive (false);
+			yield return new WaitForSeconds (1f);
+			yield return StartCoroutine(StateManager._stateManager.ChangeLevel (0));
 		}
 
 		void TurnOnlight(){
