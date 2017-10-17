@@ -9,9 +9,11 @@ public class AudioSourceController : MonoBehaviour {
 	[SerializeField] MinMax _pitchRange;
 	[SerializeField] AudioSource _audioSource;
 	float duration = 0.2f;
+
+	float _thisVolume = 1.0f;
 	// Use this for initialization
 	void Start () {
-		
+		_thisVolume = _audioSource.volume;
 	}
 	
 	// Update is called once per frame
@@ -23,19 +25,19 @@ public class AudioSourceController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.S)) {
-			AudioManager.instance.Stop (_audioSource,duration);
+			AudioManager.instance.Stop (_audioSource,_thisVolume,duration);
 		}
 
 		if (Input.GetKeyDown (KeyCode.P)) {
-			AudioManager.instance.Pause (_audioSource,duration);
+			AudioManager.instance.Pause (_audioSource,_thisVolume,duration);
 		}
 
 		if (Input.GetKeyDown (KeyCode.A)) {
-			AudioManager.instance.Play (_audioSource,duration);
+			AudioManager.instance.Play (_audioSource,_thisVolume,duration);
 		}
 
 		if (Input.GetKeyDown (KeyCode.U)) {
-			AudioManager.instance.Resume (_audioSource,duration);
+			AudioManager.instance.Resume (_audioSource,_thisVolume,duration);
 		}
 	}
 

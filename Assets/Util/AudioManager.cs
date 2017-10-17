@@ -18,11 +18,10 @@ public class AudioManager : MonoBehaviour {
 		}
 	}
 
-	public void Play(AudioSource audioSource, float duration = 0.5f){
-		StartCoroutine (SmoothPlay (audioSource, duration));
+	public void Play(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
+		StartCoroutine (SmoothPlay (audioSource, sourceVolume, duration));
 	}
-	IEnumerator SmoothPlay(AudioSource audioSource, float duration){
-		float tempVolume = audioSource.volume;
+	IEnumerator SmoothPlay(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		audioSource.volume = 0.0f;
@@ -31,57 +30,54 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		while (!audioTimer.IsOffCooldown) {
-			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, tempVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimePassed));
+			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, sourceVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimePassed));
 			yield return null;
 		}
-		audioSource.volume = tempVolume;
+		audioSource.volume = sourceVolume;
 	}
 
-	public void Pause(AudioSource audioSource, float duration = 0.5f){
-		StartCoroutine (SmoothPause (audioSource, duration));
+	public void Pause(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
+		StartCoroutine (SmoothPause (audioSource, sourceVolume, duration));
 	}
-	IEnumerator SmoothPause(AudioSource audioSource, float duration){
-		float tempVolume = audioSource.volume;
+	IEnumerator SmoothPause(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		while (!audioTimer.IsOffCooldown) {
-			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, tempVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimeLeft));
+			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, sourceVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimeLeft));
 			yield return null;
 		}
 		audioSource.Pause ();
-		audioSource.volume = tempVolume;
+		audioSource.volume = sourceVolume;
 	}
 
-	public void Resume(AudioSource audioSource, float duration = 0.5f){
-		StartCoroutine (SmoothResume (audioSource, duration));
+	public void Resume(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
+		StartCoroutine (SmoothResume (audioSource, sourceVolume, duration));
 	}
-	IEnumerator SmoothResume(AudioSource audioSource, float duration){
-		float tempVolume = audioSource.volume;
+	IEnumerator SmoothResume(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		audioSource.volume = 0.0f;
 		audioSource.UnPause ();
 		while (!audioTimer.IsOffCooldown) {
-			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, tempVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimePassed));
+			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, sourceVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimePassed));
 			yield return null;
 		}
 
-		audioSource.volume = tempVolume;
+		audioSource.volume = sourceVolume;
 	}
 
-	public void Stop(AudioSource audioSource, float duration = 0.5f){
-		StartCoroutine (SmoothStop (audioSource, duration));
+	public void Stop(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
+		StartCoroutine (SmoothStop (audioSource, sourceVolume, duration));
 	}
-	IEnumerator SmoothStop(AudioSource audioSource, float duration){
-		float tempVolume = audioSource.volume;
+	IEnumerator SmoothStop(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		while (!audioTimer.IsOffCooldown) {
-			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, tempVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimeLeft));
+			audioSource.volume = MathHelpers.LinMapFrom01(0.0f, sourceVolume, _audioFadeCurve.Evaluate (audioTimer.PercentTimeLeft));
 			yield return null;
 		}
 		audioSource.Stop ();
-		audioSource.volume = tempVolume;
+		audioSource.volume = sourceVolume;
 	}
 
 
