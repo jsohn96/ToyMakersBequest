@@ -4,54 +4,36 @@ using UnityEngine;
 
 public class AudioSourceController : MonoBehaviour {
 
-
-
-	[SerializeField] MinMax _pitchRange;
-	[SerializeField] AudioSource _audioSource;
-	float duration = 0.2f;
-
-	float _thisVolume = 1.0f;
-	// Use this for initialization
-	void Start () {
-		_thisVolume = _audioSource.volume;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.E)) {
-			duration = 5f;
-			//c
-			//May need to add maximum volume
+	// Handles the coroutines and calls appropriate functions in AudioManager
+	public void Play(AudioSystem audioSystem){
+		if (audioSystem.coroutine != null) {
+			StopCoroutine (audioSystem.coroutine);
 		}
+		audioSystem.coroutine = AudioManager.instance.SmoothPlay (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration);
+		StartCoroutine (audioSystem.coroutine);
+	}
 
-		if (Input.GetKeyDown (KeyCode.S)) {
-			AudioManager.instance.Stop (_audioSource,_thisVolume,duration);
+	public void Pause(AudioSystem audioSystem){
+		if (audioSystem.coroutine != null) {
+			StopCoroutine (audioSystem.coroutine);
 		}
+		StartCoroutine (AudioManager.instance.SmoothPause (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		StartCoroutine (audioSystem.coroutine);
+	}
 
-		if (Input.GetKeyDown (KeyCode.P)) {
-			AudioManager.instance.Pause (_audioSource,_thisVolume,duration);
+	public void Resume(AudioSystem audioSystem){
+		if (audioSystem.coroutine != null) {
+			StopCoroutine (audioSystem.coroutine);
 		}
+		StartCoroutine (AudioManager.instance.SmoothResume (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		StartCoroutine (audioSystem.coroutine);
+	}
 
-		if (Input.GetKeyDown (KeyCode.A)) {
-			AudioManager.instance.Play (_audioSource,_thisVolume,duration);
+	public void Stop(AudioSystem audioSystem){
+		if (audioSystem.coroutine != null) {
+			StopCoroutine (audioSystem.coroutine);
 		}
-
-		if (Input.GetKeyDown (KeyCode.U)) {
-			AudioManager.instance.Resume (_audioSource,_thisVolume,duration);
-		}
+		StartCoroutine (AudioManager.instance.SmoothStop (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		StartCoroutine (audioSystem.coroutine);
 	}
-
-	void RandomizePitchFromRange(float max, float min) {
-		
-	}
-
-	void PlayAudio(){
-	}
-
-	void PauseAudio(){
-	}
-
-	void StopAudio(){
-	}
-
 }

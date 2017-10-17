@@ -2,6 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class AudioSystem {
+	public AudioSource audioSource;
+	public float volume;
+	public float fadeDuration;
+	public AudioClip[] clips;
+	public MinMax pitchRange;
+	public IEnumerator coroutine;
+
+	public AudioSystem (
+		AudioSource _audioSource,
+		float _volume,
+		float _fadeDuration,
+		AudioClip[] _clips,
+		MinMax _pitchRange,
+		IEnumerator _coroutine){
+		audioSource = _audioSource;
+		volume = _volume;
+		fadeDuration = _fadeDuration;
+		clips = _clips;
+		pitchRange = _pitchRange;
+		coroutine = _coroutine;
+	}
+}
+
 public class AudioManager : MonoBehaviour {
 	//persists the script between scenes and makes script accessible by all
 	public static AudioManager instance = null;
@@ -18,10 +43,8 @@ public class AudioManager : MonoBehaviour {
 		}
 	}
 
-	public void Play(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
-		StartCoroutine (SmoothPlay (audioSource, sourceVolume, duration));
-	}
-	IEnumerator SmoothPlay(AudioSource audioSource, float sourceVolume, float duration){
+
+	public IEnumerator SmoothPlay(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		audioSource.volume = 0.0f;
@@ -35,11 +58,8 @@ public class AudioManager : MonoBehaviour {
 		}
 		audioSource.volume = sourceVolume;
 	}
-
-	public void Pause(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
-		StartCoroutine (SmoothPause (audioSource, sourceVolume, duration));
-	}
-	IEnumerator SmoothPause(AudioSource audioSource, float sourceVolume, float duration){
+		
+	public IEnumerator SmoothPause(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		while (!audioTimer.IsOffCooldown) {
@@ -49,11 +69,8 @@ public class AudioManager : MonoBehaviour {
 		audioSource.Pause ();
 		audioSource.volume = sourceVolume;
 	}
-
-	public void Resume(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
-		StartCoroutine (SmoothResume (audioSource, sourceVolume, duration));
-	}
-	IEnumerator SmoothResume(AudioSource audioSource, float sourceVolume, float duration){
+		
+	public IEnumerator SmoothResume(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		audioSource.volume = 0.0f;
@@ -65,11 +82,8 @@ public class AudioManager : MonoBehaviour {
 
 		audioSource.volume = sourceVolume;
 	}
-
-	public void Stop(AudioSource audioSource, float sourceVolume, float duration = 0.5f){
-		StartCoroutine (SmoothStop (audioSource, sourceVolume, duration));
-	}
-	IEnumerator SmoothStop(AudioSource audioSource, float sourceVolume, float duration){
+		
+	public IEnumerator SmoothStop(AudioSource audioSource, float sourceVolume, float duration){
 		Timer audioTimer = new Timer (duration);
 		audioTimer.Reset ();
 		while (!audioTimer.IsOffCooldown) {
@@ -122,5 +136,21 @@ public class AudioManager : MonoBehaviour {
 			audioSource.volume = goalVolume;
 		}
 
+	}
+
+	public void RandomizePitchFromRange(AudioSource audioSource, float max, float min) {
+		audioSource.pitch = Random.Range (min, max);
+	}
+
+	//pseudo randomly chooses between audioclips
+	public AudioClip GetRandomClip(AudioClip[] audioClipArray, int previouslyAssignedIndex = -99){
+		int index;
+		index = Random.Range (0, audioClipArray.Length);
+		if (previouslyAssignedIndex != -99 && index == previouslyAssignedIndex) {
+			// if it is a repeated clip, call this function again until a different result
+			return GetRandomClip (audioClipArray, previouslyAssignedIndex);
+		} else {
+			return audioClipArray [index];
+		}
 	}
 }
