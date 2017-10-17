@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class AudioSourceController : MonoBehaviour {
 
+	public void SwapClip(AudioSystem audioSystem, bool abruptSwap = false){
+		if (abruptSwap || !audioSystem.audioSource.isPlaying) {
+			audioSystem.audioSource.clip = AudioManager.instance.GetRandomClip (audioSystem);
+			Play (audioSystem);		
+		}
+	}
+
 	// Handles the coroutines and calls appropriate functions in AudioManager
 	public void Play(AudioSystem audioSystem){
 		if (audioSystem.coroutine != null) {

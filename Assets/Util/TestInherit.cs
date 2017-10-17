@@ -14,7 +14,7 @@ public class TestInherit : AudioSourceController {
 
 
 		if (Input.GetKeyDown (KeyCode.S)) {
-			AudioManager.instance.RandomizePitchFromRange (_musicSystem.audioSource ,0.7f, 1.3f);
+			AudioManager.instance.RandomizePitchFromRange (_musicSystem);
 		}
 
 		if (Input.GetKeyDown (KeyCode.P)) {
@@ -27,6 +27,9 @@ public class TestInherit : AudioSourceController {
 
 		if (Input.GetKeyDown (KeyCode.U)) {
 			Resume (_musicSystem);
+		}
+		if (Input.GetKeyDown (KeyCode.Y)) {
+			SwapClip (_musicSystem, true);
 		}
 	}
 }

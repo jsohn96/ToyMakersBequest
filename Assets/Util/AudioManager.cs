@@ -10,6 +10,7 @@ public class AudioSystem {
 	public AudioClip[] clips;
 	public MinMax pitchRange;
 	public IEnumerator coroutine;
+	public int previouslyPlayedIndex;
 
 	public AudioSystem (
 		AudioSource _audioSource,
@@ -17,13 +18,15 @@ public class AudioSystem {
 		float _fadeDuration,
 		AudioClip[] _clips,
 		MinMax _pitchRange,
-		IEnumerator _coroutine){
+		IEnumerator _coroutine,
+		int _previouslyPlayedIndex){
 		audioSource = _audioSource;
 		volume = _volume;
 		fadeDuration = _fadeDuration;
 		clips = _clips;
 		pitchRange = _pitchRange;
 		coroutine = _coroutine;
+		previouslyPlayedIndex = -99;
 	}
 }
 
@@ -138,19 +141,20 @@ public class AudioManager : MonoBehaviour {
 
 	}
 
-	public void RandomizePitchFromRange(AudioSource audioSource, float max, float min) {
-		audioSource.pitch = Random.Range (min, max);
+	public void RandomizePitchFromRange(AudioSystem audioSystem) {
+		audioSystem.audioSource.pitch = Random.Range (audioSystem.pitchRange.Min, audioSystem.pitchRange.Max);
 	}
 
 	//pseudo randomly chooses between audioclips
-	public AudioClip GetRandomClip(AudioClip[] audioClipArray, int previouslyAssignedIndex = -99){
+	public AudioClip GetRandomClip(AudioSystem audioSystem){
 		int index;
-		index = Random.Range (0, audioClipArray.Length);
-		if (previouslyAssignedIndex != -99 && index == previouslyAssignedIndex) {
+		index = Random.Range (0, audioSystem.clips.Length);
+		if (audioSystem.previouslyPlayedIndex != -99 && index == audioSystem.previouslyPlayedIndex) {
 			// if it is a repeated clip, call this function again until a different result
-			return GetRandomClip (audioClipArray, previouslyAssignedIndex);
+			return GetRandomClip (audioSystem);
 		} else {
-			return audioClipArray [index];
+			audioSystem.previouslyPlayedIndex = index;
+			return audioSystem.clips [index];
 		}
 	}
 }
