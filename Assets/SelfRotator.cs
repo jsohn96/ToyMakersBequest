@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectRotator : MonoBehaviour 
+public class SelfRotator : MonoBehaviour 
 {
 
 	[SerializeField] float _sensitivity;
@@ -29,7 +29,7 @@ public class ObjectRotator : MonoBehaviour
 
 	void Update()
 	{
-	// Temporary disabling of rotate
+		// Temporary disabling of rotate
 		if(Input.GetKeyDown(KeyCode.Q)){
 			GetComponent<BoxCollider>().enabled = false;
 		}
@@ -53,25 +53,25 @@ public class ObjectRotator : MonoBehaviour
 		}
 	}
 	void OnMouseDrag(){
-	if(_isRotating){
-		_mouseOffset = (Input.mousePosition - _mouseReference);
+		if(_isRotating){
+			_mouseOffset = (Input.mousePosition - _mouseReference);
 
 			// apply rotation
 			_rotation.y = (_mouseOffset.x) * _sensitivity;
 			_rotation.x = -(_mouseOffset.y) * _sensitivity;
-
 			// rotate
 			transform.Rotate(_rotation, Space.Self);
+
 
 			// prevent Z axis from rotating
 			//Vector3 pos = Camera.main.transform.position;
 			//Debug.Log(pos);
-			Vector3 pos = _cameraNormalizer.transform.position;
-			Vector3 dir = (this.transform.position - pos).normalized;
+			//Vector3 pos = _cameraNormalizer.transform.position;
+			//Vector3 dir = (this.transform.position - pos).normalized;
 
-			Quaternion currentRotation = transform.rotation; 
-			currentRotation = Quaternion.LookRotation(dir); 
-			transform.rotation = currentRotation;
+			//Quaternion currentRotation = transform.rotation;
+			//currentRotation = Quaternion.LookRotation(dir); 
+			//transform.rotation = currentRotation;
 
 			//clamp Rotation
 			_tempRot = transform.rotation.eulerAngles;
@@ -80,10 +80,11 @@ public class ObjectRotator : MonoBehaviour
 			} else if (_tempRot.x < 300.0f && _tempRot.x > 90.0f) {
 				_tempRot.x = 300.0f;
 			}
+			_tempRot.z = 0.0f;
 			transform.rotation = Quaternion.Euler (_tempRot);
 
 			// store mouse
 			_mouseReference = Input.mousePosition;
-			}
+		}
 	}
 }
