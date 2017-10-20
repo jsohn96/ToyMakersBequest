@@ -284,9 +284,9 @@ public class shaderGlowCustom : MonoBehaviour
 
         foreach (Renderer singleRenderer in renderers)
         {
-            if (!singleRenderer.enabled)
-                continue;
-            Debug.Log("Renderer found");
+			if (!singleRenderer.enabled) {
+				continue;
+			}
             //Create material for object
             Material newMat;
             if (useNormal)

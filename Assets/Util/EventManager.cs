@@ -91,6 +91,13 @@ public class CamerafovAmountChange:GameEvent {
 	}
 }
 
+public class WorkshopItemClicked:GameEvent {
+	public bool Zoom { get; private set; }
+	public WorkshopItemClicked(bool zoom) {
+		Zoom = zoom;
+	}
+}
+
 
 //***********//
 // Peephole  //

@@ -8,7 +8,7 @@ public class MouseManager : MonoBehaviour {
 	int _traversalExclusionLayerMask = 1 << 8;
 
 	bool _cacheCleared = true;
-	shaderGlowCustom _shaderGlowScript;
+	MouseOverHandler _shaderGlowScript;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +29,7 @@ public class MouseManager : MonoBehaviour {
 			// a larger parent GameObject (like "All Units") then this might
 			// not work.  An alternative is to move up the transform.parent
 			// hierarchy until you find something with a particular component.
-			_shaderGlowScript = hitInfo.transform.gameObject.GetComponent<shaderGlowCustom> ();
+			_shaderGlowScript = hitInfo.transform.gameObject.GetComponent<MouseOverHandler> ();
 			if (_shaderGlowScript != null) {
 				_shaderGlowScript.OtherPointerEnter ();
 				_cacheCleared = false;
