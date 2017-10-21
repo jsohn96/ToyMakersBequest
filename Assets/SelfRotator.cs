@@ -57,8 +57,8 @@ public class SelfRotator : MonoBehaviour
 			_mouseOffset = (Input.mousePosition - _mouseReference);
 
 			// apply rotation
-			_rotation.y = (_mouseOffset.x) * _sensitivity;
-			_rotation.x = -(_mouseOffset.y) * _sensitivity;
+			_rotation.y = -(_mouseOffset.x) * _sensitivity;
+			_rotation.x = (_mouseOffset.y) * _sensitivity;
 			// rotate
 			transform.Rotate(_rotation, Space.Self);
 

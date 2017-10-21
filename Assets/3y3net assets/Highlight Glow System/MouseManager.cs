@@ -9,6 +9,7 @@ public class MouseManager : MonoBehaviour {
 
 	bool _cacheCleared = true;
 	MouseOverHandler _shaderGlowScript;
+	GameObject _cachedObject = null;
 
 	// Use this for initialization
 	void Start () {
@@ -29,19 +30,29 @@ public class MouseManager : MonoBehaviour {
 			// a larger parent GameObject (like "All Units") then this might
 			// not work.  An alternative is to move up the transform.parent
 			// hierarchy until you find something with a particular component.
-			_shaderGlowScript = hitInfo.transform.gameObject.GetComponent<MouseOverHandler> ();
-			if (_shaderGlowScript != null) {
-				_shaderGlowScript.OtherPointerEnter ();
-				_cacheCleared = false;
+			if (_cachedObject == null || !(_cachedObject.Equals (hitInfo.transform.gameObject))) {
+				if (_shaderGlowScript != null) {
+					_shaderGlowScript.OtherPointerExit ();
+					_cacheCleared = true;
+				}
 			}
-			GameObject hitObject = hitInfo.transform.root.gameObject;
+				_cachedObject = hitInfo.transform.gameObject;
 
-			SelectObject(hitObject);
+				_shaderGlowScript = hitInfo.transform.gameObject.GetComponent<MouseOverHandler> ();
+				if (_shaderGlowScript != null) {
+					_shaderGlowScript.OtherPointerEnter ();
+					_cacheCleared = false;
+				}
+				GameObject hitObject = hitInfo.transform.root.gameObject;
+
+				SelectObject (hitObject);
+			
 		}
 		else {
 			if (!_cacheCleared) {
 				if (_shaderGlowScript != null) {
 					_shaderGlowScript.OtherPointerExit ();
+					_cacheCleared = true;
 				}
 			}
 			ClearSelection();
