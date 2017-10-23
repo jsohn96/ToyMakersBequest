@@ -88,19 +88,24 @@ public class PathNode : MonoBehaviour {
 	bool isRotating = false;
 	float errorVal = 0.2f;
 
+	// playmode 
+	PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
+
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
-		Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
+		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
+		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
-		Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
+		//Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
+		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 	}
 
 
@@ -120,27 +125,48 @@ public class PathNode : MonoBehaviour {
 			_isCorrectConnection = false;
 		}
 		// 
-		initNodePathInfo ();
 
+
+	}
+
+	void Start(){
+		initNodePathInfo ();
 	}
 
 	void initNodePathInfo(){
 		//get the positions of the path links 	
-
+		_mySplines = GetComponentsInChildren<BezierSpline> ();
+		//print ("Debug " + _nodeIndex + " : has spline: " + _mySplines);
 		// TODO store the position value for different path segments 
-		if (GetComponentsInChildren<BezierSpline> () != null) {
-			_mySplines = GetComponentsInChildren<BezierSpline> ();
-			_segCount = _mySplines.Length;
-			print ("Check: path number in total " + _segCount);
+		if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
+			if (_mySplines.Length > 0) {
+
+				_segCount = _mySplines.Length;
+				print ("Check: path number in total " + _segCount);
+			} else {
+				print ("ERROR: need to construct path first");
+
+			}
+			if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
+				print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
+				//_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+			} else {
+				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+			}
+
 		} else {
-			print ("ERROR: need to construct path first");
+			if (_mySplines.Length > 0) {
+
+				_segCount = _mySplines.Length;
+				print ("Check: path number in total " + _segCount);
+				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+			} else {
+				//print ("ERROR: need to construct path first");
+				_myNodeInfo = new NodeInfo (null, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+			}
 		}
 
-		if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
-			print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
-		} else {
-			_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-		}
+
 
 
 		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
@@ -256,8 +282,8 @@ public class PathNode : MonoBehaviour {
 				// check relative angle && get the next node information 
 				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
 				//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
-				if (Mathf.Abs(DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z) 
-					- DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+				if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
+				    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
 					_isCorrectConnection = true;
 					//adjNode._isCorrectConnection = true;
 					if (_cylinderRenderer) {
@@ -271,9 +297,8 @@ public class PathNode : MonoBehaviour {
 
 				}
 			} else {
-				if ( Mathf.Abs(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+				if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
 					_isCorrectConnection = true;
-					//_isDancerOnBoard = true;
 					if (_cylinderRenderer) {
 						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
 					}
@@ -290,7 +315,10 @@ public class PathNode : MonoBehaviour {
 			_myNodeInfo.isConnected = _isCorrectConnection;
 			//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
 
-		}
+		} 
+
+
+
 
 	}
 
@@ -459,6 +487,10 @@ public class PathNode : MonoBehaviour {
 		}
 
 		return angle;
+	}
+
+	void PlayModeHandle(MBPlayModeEvent e){
+		_myPlayMode = e.activePlayMode;
 	}
 
 

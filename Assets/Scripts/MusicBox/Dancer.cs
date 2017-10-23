@@ -37,6 +37,10 @@ public class Dancer : MonoBehaviour {
 	BezierSpline _activeSpline;
 	[SerializeField] SplineWalkerMode _mode;
 
+	// playmode 
+	PlayMode _myPlayMode;
+	bool _isOnStaticTrack = false;
+
 	// Use this for initialization
 	void Awake () {
 		_myTransform = gameObject.transform;
@@ -53,45 +57,98 @@ public class Dancer : MonoBehaviour {
 	void OnEnable(){
 		Events.G.AddListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
 		Events.G.AddListener<PathStateManagerEvent> (DancerHoldHandEvent);
-
+		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
-		Events.G.AddListener<PathStateManagerEvent> (DancerHoldHandEvent);
+		Events.G.RemoveListener<PathStateManagerEvent> (DancerHoldHandEvent);
+		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// spline walker adapt 
-		if(isMoving && !isPathFinished){
-			_progress += Time.deltaTime / _duration;
-			if (_progress >= 1f) {
-				_progress = 1f;
-				isMoving = false;
-				isPathFinished = true;
-				print ("Dancer: reaches the end");
-				Events.G.Raise (new DancerFinishPath (_curPathIndex));
-			}
-			 
+		if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
+			if (isMoving && !isPathFinished) {
+				_progress += Time.deltaTime / _duration;
+				if (_progress >= 1f) {
+					_progress = 1f;
+					isMoving = false;
+					isPathFinished = true;
+					print ("Dancer: reaches the end");
+					Events.G.Raise (new DancerFinishPath (_curPathIndex));
+				}
 
-			// playing the music
-			if(!_myAudio.isPlaying){
-				_myAudio.Play ();
-				print ("Dancer Player Music");
+
+				// playing the music
+				if (!_myAudio.isPlaying) {
+					_myAudio.Play ();
+					print ("Dancer Player Music");
+				}
+				Vector3 position = _activeSpline.GetPoint (_progress);
+				transform.position = position;
+				if (isMoving) {
+					transform.LookAt (position + _activeSpline.GetDirection (_progress));
+				}
+
+			} else if (isPathFinished) {
+				if (_myAudio.isPlaying) {
+					_myAudio.Pause ();
+				}
 			}
-			Vector3 position = _activeSpline.GetPoint(_progress);
-			transform.position = position;
-			if (isMoving) {
-				transform.LookAt(position + _activeSpline.GetDirection(_progress));
+		} else if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
+			// adjust the dancer rotation 
+			if (isMoving &&!isPathFinished) {
+				// if the dancer is on the static track
+				if (_isOnStaticTrack ) {
+					_progress += Time.deltaTime / _duration;
+					if (_progress >= 1f) {
+						_progress = 1f;
+						isMoving = false;
+						isPathFinished = true;
+						print ("Dancer: reaches the end");
+						Events.G.Raise (new DancerFinishPath (_curPathIndex));
+
+					}
+
+
+					Vector3 position = _activeSpline.GetPoint (_progress);
+					transform.position = position;
+					if (isMoving) {
+						transform.LookAt (position + _activeSpline.GetDirection (_progress));
+					}
+				} else {
+					print ("Dancer: dancer onboard the circle");
+					//Events.G.Raise (new DancerFinishPath (_curPathIndex));
+					
+				}
+
+
+				// playing the music
+				if (!_myAudio.isPlaying) {
+					_myAudio.Play ();
+					print ("Dancer Player Music");
+				}
+
+				if (isPathFinished) {
+					if (_isOnStaticTrack) {
+						_isOnStaticTrack = false;
+					}
+				}
+
+
+			} else if (isPathFinished) {
+				if (_myAudio.isPlaying) {
+					_myAudio.Pause ();
+				}
+
+
 			}
 
-		}else if(isPathFinished){
-			if(_myAudio.isPlaying){
-				_myAudio.Pause();
-			}
 		}
+
 
 		if (_isDancerRotate) {
 			_myBodyTransform.Rotate (0, -1, 0);
@@ -125,25 +182,35 @@ public class Dancer : MonoBehaviour {
 		// set the boolean vals 
 		isMoving = true;
 		isPathFinished = false;
-		_progress = 0f;
+
 	
 
 		//_myTransform.parent = pn.gameObject.transform.parent;
 		_myTransform.parent = pn.gameObject.transform;
 		Quaternion tempRot = pn.gameObject.transform.rotation;
-		_myTransform.rotation = tempRot;
+		//_myTransform.rotation = tempRot;
 
 
 		// get the positions info
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
-		_activeSpline = pn.readNodeInfo ().paths [activePath];
-		//print ("Check Active Path" + activePath);
-		_curStartPos = _activeSpline.GetPoint (0);
+		//TODO: add code for p2 
+		if (pn.readNodeInfo ().paths != null) {
+			_progress = 0f;
+			_isOnStaticTrack = true;
+			_activeSpline = pn.readNodeInfo ().paths [activePath];
+			//print ("Check Active Path" + activePath);
+			_curStartPos = _activeSpline.GetPoint (0);
 
-		float pathLength = _activeSpline.GetSplineDuration ();
-		//print ("Current Spline Length: " + pathLength);
-		_duration = pathLength * _DurationSensitivity;
+			float pathLength = _activeSpline.GetSplineDuration ();
+			//print ("Current Spline Length: " + pathLength);
+			_duration = pathLength * _DurationSensitivity;
+		} else {
+			_isOnStaticTrack = false;
+			print ("Enter Node");
+			//_activeSpline == null;
+		}
+
 
 	}
 
@@ -170,6 +237,11 @@ public class Dancer : MonoBehaviour {
 			print ("Dancer start");
 			DancerChangeMove (DancerMove.idleDance);
 		}
+	}
+
+
+	void PlayModeHandle(MBPlayModeEvent e){
+		_myPlayMode = e.activePlayMode;
 	}
 
 

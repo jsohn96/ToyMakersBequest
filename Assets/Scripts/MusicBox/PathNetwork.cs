@@ -39,6 +39,8 @@ public class PathNetwork : MonoBehaviour {
 	bool _isStartPath = false;
 	bool _isPathPause = false;
 
+	PlayMode _myPlayMode;
+
 
 	// 
 	bool _isActive = false;
@@ -55,12 +57,14 @@ public class PathNetwork : MonoBehaviour {
 	void OnEnable(){
 		Events.G.AddListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
+		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
+		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 	}
 
 	void Start(){
@@ -82,7 +86,15 @@ public class PathNetwork : MonoBehaviour {
 				_myDancer.SetNewPath (_curNode);
 				// set the dancer onboard of the new one
 				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
-				_isCheckingNext = false;
+				// check the 
+				if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
+					_isCheckingNext = false;
+				} else if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
+					if (_curNode.readNodeInfo ().paths.Length == 0) {
+						_isCheckingNext = true;
+					}
+				}
+
 			} else {
 				print ("next node not correctly connected");
 			}
@@ -180,6 +192,10 @@ public class PathNetwork : MonoBehaviour {
 		// init player position 
 		_orderIdx = _startIndex;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
+	}
+
+	void PlayModeHandle(MBPlayModeEvent e){
+		_myPlayMode = e.activePlayMode;
 	}
 
 

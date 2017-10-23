@@ -59,6 +59,13 @@ public class PathResumeEvent:GameEvent{
 	
 }
 
+public class MBPlayModeEvent:GameEvent{
+	public PlayMode activePlayMode{ get; private set;}
+	public MBPlayModeEvent(PlayMode plm){
+		activePlayMode = plm;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//

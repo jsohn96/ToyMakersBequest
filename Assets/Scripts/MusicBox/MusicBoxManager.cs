@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum PlayMode{
+	MBPrototype_With_Path,
+	MBPrototype2_Without_Path
+}
+
 public class MusicBoxManager : MonoBehaviour {
 	bool isBoxOpen = false;
 	Animator _myAnim;
+	[SerializeField] PlayMode _playMode;
 	[SerializeField] GameObject[] _Layers;
 	[SerializeField] PathNetwork[] _musicPaths;
 	[SerializeField] GameObject _firstDescendCircle;
@@ -24,15 +31,18 @@ public class MusicBoxManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		
 		_myAnim = GetComponent<Animator> ();
 		FinalPos = _firstDescendCircle.transform.localPosition;
 		FinalPos.z += 17.6f;
 
 		_transitionLayerTimer = new Timer (2.0f);
+		Events.G.Raise (new MBPlayModeEvent (_playMode));
 	}
 
 	void Start(){
 		Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
+
 	}
 
 	void OnEnable(){
