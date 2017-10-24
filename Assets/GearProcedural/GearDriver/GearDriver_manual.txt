@@ -1,0 +1,54 @@
+GearDriver.cs
+-------------
+
+
+Add this script to a Procedural Gear to drive it.
+You also can add this script to a cylinder (or any other GameObject) to use it as a shaft.
+
+Gear Driver Options:
+
+[is Motor]
+This is the gear object that drives all other gears/shafts.
+
+[Motor speed]
+If "is Motor" is checked, you can see the "Motor speed" property.
+Here you set the speed of the motor. This is in rounds per minute.
+
+Use 'motorSpeedRPM' to set the speed of the motor gear from other scripts or playmaker 
+ during gameplay.
+
+ Read or Set by Script:
+  gd = (GearDriver)anotherGameObject.GetComponent(typeof(GearDriver));
+  gd.motorSpeedRPM = 15.0f;
+  float speed = gd.motorSpeedRPM;
+	
+ For Playmaker:
+  Add a FSM to the motor gear game object.
+  In a State create an Action -> Unity Object -> Set Property
+  As Target object select 'gear'.
+  As Property select 'motorSpeedRPM'
+  Then set a value for the speed or select another variable you stored in playmaker.
+
+[is Shaft]
+used to mark the object as a shaft.
+will be checked automaticly on start, if the game object has no "Procedural Gear" script attached.
+You can create a cylinder and add the gear driver script, then you have a shaft ready to work with
+the other gears.
+
+[Live Update]
+A gear marked as "is Motor" have the option "Live Update".
+If "Live Update" is checked, every change to the gears will affect the transmission in real time (every frame).
+
+[Update Speed Once]
+This Button is enabled if "Update Speed" is deactivated.
+With "Update Speed Once" you set your changes once, after you setup gears and speed.
+
+[Outputs connected]
+This is a list, where you add the connection to other gears or shafts.
+You set where the power is going to. Not where the power comes from.
+Drag and Drop the gears you want to drive from scene view onto this list.
+
+
+
+Simple Gear Driver Script by Alexander Schlottau, Hamburg, Germany
+Thanks for using.

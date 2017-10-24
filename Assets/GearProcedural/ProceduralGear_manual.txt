@@ -1,0 +1,65 @@
+﻿Procedural Gear
+
+Installation:
+-------------
+Import the ´GearProcedural.package´ into your project: 
+
+ Menü ´Assets -> Import package -> Custom package...´ , choose the ´GearProcedura.package´ and import all of it,
+ or download it from Unity Asset Store and impot all files.
+
+
+How to use:
+-----------
+
+Create a procedural gear:
+
+	Click menu ´GameObject -> Create other -> Procedural Gear´
+
+A gear was created and you can change its parameters in the inspector or move the vertices (handles) in the scene view.
+
+Gear
+----
+
+If you want to have a more detailed gear or more detailed teeth, add some points by click the ´+´ button in the inspector at ´Body Parts´ or ´Teeth Parts´.
+You get a new point. It is a copy of the point, where you have clicked on ´+´.
+Move this new point around to fit your desired look.
+
+To move the vertices around, set the ´modul´ to value 0.5 (standard for new gears).
+Otherwise the handles are not exactly on the vertices. It is recommented to set the modul after modelling the teeth.
+
+
+Materials
+---------
+You can add more materials to the ´Mesh Renderer´ by drag&drop a material from the project view into the inspector (to the Mesh Renderer compontent).
+In the Gear Inspector you see all materials of the Mesh Renderer.
+You can choose a material for each tooth or body part by clicking on the number button of each part.
+
+
+UV´s
+----
+
+By default the gear scipt is set to ´Automatic Mapping´.
+This means, gear-parts that are flat will be mapped planar and those who are over the ´Ramp Angle´ will be mapped cylindrical.
+You can change the ´Ramp Angle´ in the inspector.
+With this option you mostly get a good result.
+If you want to change the mapping or set an offset to the uv´s/texture or scale them, you also can do it in the inspector.
+For this uncheck the ´Automatic Mapping´ and you will see the parameters for each of your gear parts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
