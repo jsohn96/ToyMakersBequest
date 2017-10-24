@@ -22,16 +22,16 @@ public class MBIntialStage : MonoBehaviour {
 	void Start () {
 		
 		FinalPos = transform.localPosition;
-		FinalPos.z += 2.5f;
+		FinalPos.y -= 2f;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (_isDecend) {
-			if (Mathf.Abs (gameObject.transform.localPosition.z - FinalPos.z) > 0.1f) {
+			if (Mathf.Abs (gameObject.transform.localPosition.y - FinalPos.y) > 0.1f) {
 				Vector3 tempPos = transform.localPosition;
-				tempPos.z += _speed * Time.deltaTime;
+				tempPos.y -= _speed * Time.deltaTime;
 				transform.localPosition = tempPos;
 			} else {
 				transform.localPosition = FinalPos;

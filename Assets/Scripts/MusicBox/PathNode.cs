@@ -71,6 +71,8 @@ public class PathNode : MonoBehaviour {
 	//float _duration = 10f;
 	//float progress = 0;
 
+	bool _isWinded = false;
+
 
 	// mouse drag rotate 
 	bool isDragStart = false;
@@ -90,6 +92,11 @@ public class PathNode : MonoBehaviour {
 
 	// playmode 
 	PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
+
+	Vector3 debugPos1;
+	Vector3 debugPos2;
+
+	Plane circlePlane;
 
 
 	void OnEnable(){
@@ -126,6 +133,8 @@ public class PathNode : MonoBehaviour {
 		}
 		// 
 
+		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
+		//print ("world up " + Vector3.up);
 
 	}
 
@@ -176,8 +185,14 @@ public class PathNode : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Controls for the circle rotation
-		ButtonControlListener ();
+		//ButtonControlListener ();
 		//RotateWithMouse ();
+		if (_isWinded) {
+			ClickWithMouse ();
+		} else {
+			RotateWithMouse ();
+		}
+
 		if(isRotating){
 			// rotate the node 
 			if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*10f){
@@ -364,6 +379,31 @@ public class PathNode : MonoBehaviour {
 		}
 	}
 
+	void ClickWithMouse(){
+		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
+	
+		if(Input.GetMouseButtonDown(0)){
+			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			dragPreviousMousePos = Input.mousePosition;
+			bool isHit = Physics.Raycast (mousePositionRay, out hit);
+			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+				//print ("git the circle: " + hit.point);
+				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
+					//isDragStart = true;
+					//dragStartPos = hit.point;
+					RotateNode();
+					hitDist = hit.distance;
+
+				}
+
+			}
+
+			//print ("Mouse Position Check: " + mouseInWorldPos);
+		}
+		
+	}
+
 	// TODO: put into camera selection manager or something 
 	// 需要把代码整理到一个脚本里面，否则每个node要求做一个raycast消费太大
 	void RotateWithMouse(){
@@ -371,9 +411,7 @@ public class PathNode : MonoBehaviour {
 		//float v = Input.GetAxis ("Mouse Y");
 		//float h = Input.GetAxis ("Mouse X");
 
-		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
-		//Plane playerPlane = 
-
+		//Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
 
 
 		// get the mouse input position
@@ -383,11 +421,14 @@ public class PathNode : MonoBehaviour {
 			dragPreviousMousePos = Input.mousePosition;
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				//print ("git the circle: " + hit.point);
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					isDragStart = true;
 					dragStartPos = hit.point;
+					print ("hit point :" + hit.point);
 					hitDist = hit.distance;
+					// create a plane ;
+					circlePlane = new Plane(Vector3.up, hit.point);
+					debugPos1 = hit.point;
 				}
 
 			}
@@ -410,34 +451,44 @@ public class PathNode : MonoBehaviour {
 				float targetAngle = AngleSnap (tempAngle);
 				print("Final angle check: " + tempAngle + "," + targetAngle);
 
-				if (targetAngle == _assignedDegree[_curSegIdx]) {
-					_isCorrectConnection = true;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-					}
-				} else {
-					_isCorrectConnection = false;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-					}
-
-				}
-				//update node info 
-				_myNodeInfo.isConnected = _isCorrectConnection;
+//				if (targetAngle == _assignedDegree[_curSegIdx]) {
+//					_isCorrectConnection = true;
+//					if (_cylinderRenderer) {
+//						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+//					}
+//				} else {
+//					_isCorrectConnection = false;
+//					if (_cylinderRenderer) {
+//						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+//					}
+//
+//				}
+//				//update node info 
+//				_myNodeInfo.isConnected = _isCorrectConnection;
 			}
 		}
 
 		if (isDragStart) {
 			Vector3 curMousePos;
-			curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			float rayDistance;
+			if (circlePlane.Raycast (ray, out rayDistance)) {
+				curMousePos = ray.GetPoint(rayDistance);
+			}
+				
+			debugPos1 = curMousePos;
+			Debug.DrawLine (ray.origin, curMousePos);
+
+			//curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
 			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
-			va.z = 0;
+			va.y = 0;
 			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
-			vb.z = 0;
+			vb.y = 0;
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			Vector3 rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
+			//print ("Debug: rotate axis " + rotateAxis);
 
 			// get the angle 
 			float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
@@ -445,7 +496,7 @@ public class PathNode : MonoBehaviour {
 			//print ("Angle Check: " + accAngle);
 			if (accAngle >= 0f) {
 				Quaternion tempRot = Quaternion.Euler (-accAngle*rotateAxis);
-				print ("Temp rot: " + tempRot);
+				//print ("Temp rot: " + tempRot);
 				Quaternion curRot = gameObject.transform.rotation;
 				//curRot = curRot + tempRot;
 				gameObject.transform.Rotate(-accAngle*rotateAxis*0.5f, Space.World);
@@ -493,6 +544,11 @@ public class PathNode : MonoBehaviour {
 		_myPlayMode = e.activePlayMode;
 	}
 
+	void OnDrawGizmosSelected() {
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawSphere(debugPos2, 1);
+
+	}
 
 
 }
