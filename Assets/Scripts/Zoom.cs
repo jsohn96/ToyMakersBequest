@@ -53,6 +53,10 @@ public class Zoom : MonoBehaviour {
 			}
 		}
 
+		if (Input.GetMouseButtonDown (1)) {
+			ZoomOut ();
+		}
+
 
 //		if (_isZoomed) {
 //			Camera.main.fieldOfView = Mathf.Lerp (_currentFOV, 20.0f, _zoomCurve.Evaluate(_zoomTimer.PercentTimePassed));
@@ -62,13 +66,7 @@ public class Zoom : MonoBehaviour {
 	}
 
 	public void ZoomIn(Vector3 position, Vector3 rotation){
-		if (_isZoomed) {
-			_goalPos = transform.position;
-			_goalRot = transform.rotation;
-			_isZoomed = false;
-			_isDone = false;
-			_zoomTimer.Reset ();
-		} else if (_isDone) {
+		if (_isDone) {
 			_originPos = transform.position;
 			_originRot = transform.rotation;
 			_goalPos = position;
@@ -77,5 +75,15 @@ public class Zoom : MonoBehaviour {
 			_isDone = false;
 			_isZoomed = true;
 		}
+	}
+
+	void ZoomOut(){
+		if (_isZoomed) {
+			_goalPos = transform.position;
+			_goalRot = transform.rotation;
+			_isZoomed = false;
+			_isDone = false;
+			_zoomTimer.Reset ();
+		} 
 	}
 }

@@ -7,17 +7,31 @@ public class WorkshopViewMouseHandler : MouseOverHandler {
 	[SerializeField] Vector3 _viewPos, _viewRot;
 
 	Zoom _zoomScript;
+	bool _banZoom = false;
+	bool _sourceOfZoom = false;
 
 	void Start () {
 		
 	}
 	
 	void Update () {
-		if (isPointerIn) {
-			if (Input.GetMouseButtonDown (0)) {
+		if (isPointerIn && !_banZoom) {
+			if (Input.GetMouseButtonUp (0)) {
 				_zoomScript = Camera.main.GetComponent<Zoom> ();
+				_sourceOfZoom = true;
+				Events.G.Raise (new WorkshopItemClicked (true));
 				_zoomScript.ZoomIn (_viewPos, _viewRot);
 				Debug.Log(this.name + " clicked:");
+			}
+		}
+	}
+
+	void WorkshopToggle (WorkshopItemClicked e) {
+		if (!_sourceOfZoom) {
+			if (e.Zoom) {
+				_banZoom = true;
+			} else {
+				_banZoom = false;
 			}
 		}
 	}
@@ -32,5 +46,12 @@ public class WorkshopViewMouseHandler : MouseOverHandler {
 	{
 		base.OtherPointerExit ();
 		_shaderGlowCustomScript.OtherPointerExit ();
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<WorkshopItemClicked> (WorkshopToggle);
+	}
+	void OnDisable(){
+		Events.G.RemoveListener<WorkshopItemClicked> (WorkshopToggle);
 	}
 }
