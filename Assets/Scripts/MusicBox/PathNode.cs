@@ -405,16 +405,8 @@ public class PathNode : MonoBehaviour {
 	}
 
 	// TODO: put into camera selection manager or something 
-	// 需要把代码整理到一个脚本里面，否则每个node要求做一个raycast消费太大
 	void RotateWithMouse(){
-		//print ("Mouse Axis Check: " + Input.GetAxis ("Mouse Y") + "," + Input.GetAxis ("Mouse X"));
-		//float v = Input.GetAxis ("Mouse Y");
-		//float h = Input.GetAxis ("Mouse X");
-
-		//Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
-
-
-		// get the mouse input position
+		// start dragging
 		if(Input.GetMouseButtonDown(0)){
 			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
@@ -432,19 +424,16 @@ public class PathNode : MonoBehaviour {
 				}
 
 			}
-
-			//print ("Mouse Position Check: " + mouseInWorldPos);
 		}
 
+		// end dragging: angle snap
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
 				isDragStart = false;
-				hitDist = 0;
+				//hitDist = 0;
 				accAngle = 0;
-				//
-				// check if angle correct 
 
-				// get the final rotation and then turn? 
+
 				float tempAngle = gameObject.transform.rotation.eulerAngles.z;
 				// dont need this step 
 				tempAngle = DampAngle (tempAngle);
