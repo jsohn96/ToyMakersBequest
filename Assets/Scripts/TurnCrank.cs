@@ -26,6 +26,8 @@ public class TurnCrank : MonoBehaviour {
 
 	[SerializeField] AudioSource _audioSourceWhir;
 
+	[SerializeField] bool _isTitle = true;
+
 	// Use this for initialization
 	void Awake () {
 		_traversalExclusionLayerMask = ~_traversalExclusionLayerMask;
@@ -79,7 +81,7 @@ public class TurnCrank : MonoBehaviour {
 		}
 
 
-		if (_isZoetrope) {
+		if (_isZoetrope && _isTitle) {
 			if (_crankCnt > 122) {
 				if (!_startRotate) {
 					_startRotate = true;

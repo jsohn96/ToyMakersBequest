@@ -49,6 +49,7 @@ public class Zoom : MonoBehaviour {
 				transform.SetPositionAndRotation (_tempPos, _tempRot);
 				if (transform.position == _originPos) {
 					_isDone = true;
+					Events.G.Raise(new WorkshopItemClicked(false));
 				}
 			}
 		}
@@ -65,12 +66,13 @@ public class Zoom : MonoBehaviour {
 //		}
 	}
 
-	public void ZoomIn(Vector3 position, Vector3 rotation){
+	public void ZoomIn(Vector3 position, Vector3 rotation, float duration = 1.5f){
 		if (_isDone) {
 			_originPos = transform.position;
 			_originRot = transform.rotation;
 			_goalPos = position;
 			_goalRot = Quaternion.Euler (rotation);
+			_zoomTimer.CooldownTime = duration;
 			_zoomTimer.Reset ();
 			_isDone = false;
 			_isZoomed = true;

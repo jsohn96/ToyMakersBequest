@@ -48,6 +48,8 @@ public class shaderGlowCustom : MonoBehaviour
     private GUIStyle style;
     private bool showLabel = false;
 
+	bool _disablePointerEnter = false;
+
     void Awake()
     {
         //Grab the glow shader
@@ -195,19 +197,27 @@ public class shaderGlowCustom : MonoBehaviour
             style.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
     }
 
+	public void DisablePointerEnter(bool disabled){
+		_disablePointerEnter = disabled;
+	}
+
     public void OtherPointerEnter()
     {
-        OnMouseEnter();
+		if (!_disablePointerEnter) {
+			OnMouseEnter ();
+		}
     }
 
     void OnMouseEnter()
     {
-        if (!labelToDisplay.Equals("") && labelMode == labelModes.onMouseEnter)
-            showLabel = true;
-        if (highlighted)
-            return;
-        if (glowMode == allowedModes.onMouseEnter)
-            lightOn();
+		if (!_disablePointerEnter) {
+			if (!labelToDisplay.Equals ("") && labelMode == labelModes.onMouseEnter)
+				showLabel = true;
+			if (highlighted)
+				return;
+			if (glowMode == allowedModes.onMouseEnter)
+				lightOn ();
+		}
     }
 
     public void OtherPointerExit()

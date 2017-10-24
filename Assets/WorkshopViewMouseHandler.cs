@@ -9,6 +9,7 @@ public class WorkshopViewMouseHandler : MouseOverHandler {
 	Zoom _zoomScript;
 	bool _banZoom = false;
 	bool _sourceOfZoom = false;
+	[SerializeField] float _zoomDuration = 1.5f;
 
 	void Start () {
 		
@@ -20,17 +21,22 @@ public class WorkshopViewMouseHandler : MouseOverHandler {
 				_zoomScript = Camera.main.GetComponent<Zoom> ();
 				_sourceOfZoom = true;
 				Events.G.Raise (new WorkshopItemClicked (true));
-				_zoomScript.ZoomIn (_viewPos, _viewRot);
+				_zoomScript.ZoomIn (_viewPos, _viewRot, _zoomDuration);
 				Debug.Log(this.name + " clicked:");
 			}
 		}
 	}
 
 	void WorkshopToggle (WorkshopItemClicked e) {
-		if (!_sourceOfZoom) {
-			if (e.Zoom) {
+		if (e.Zoom) {
+			_shaderGlowCustomScript.DisablePointerEnter (true);
+			OtherPointerExit ();
+			if (!_sourceOfZoom) {
 				_banZoom = true;
-			} else {
+			}
+		} else {
+			_shaderGlowCustomScript.DisablePointerEnter (false);
+			if (!_sourceOfZoom) {
 				_banZoom = false;
 			}
 		}
