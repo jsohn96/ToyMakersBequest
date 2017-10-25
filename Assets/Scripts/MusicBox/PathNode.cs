@@ -284,7 +284,7 @@ public class PathNode : MonoBehaviour {
 			originAngle = transform.localRotation;
 			//transform.Rotate(0,0,-90);
 			finalAngle = transform.localRotation;
-			finalAngle = originAngle * Quaternion.Euler (0, 0, -90);
+			finalAngle = originAngle * Quaternion.Euler (0, 0, 90);
 
 		}
 
