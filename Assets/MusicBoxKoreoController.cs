@@ -24,6 +24,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	[SerializeField] int _sampleRate = 44100;
 
 	SimpleMusicPlayer _simpleMusicPlayer;
+	[SerializeField] SimpleMusicPlayer _sourceSimpleMusicPlayer;
 
 	// check this bool if koreography needs to be paused
 	bool _stop = false;
@@ -80,29 +81,29 @@ public class MusicBoxKoreoController : AudioSourceController {
 	//Calculates the duration of the koreoevent and converts it into seconds
 	//Used for calculating the duration of the audio fade out
 	float CalculateFadeDuration(KoreographyEvent koreoEvent){
-		int sampleDifference = koreoEvent.EndSample - _simpleMusicPlayer.GetSampleTimeForClip(_simpleMusicPlayer.GetCurrentClipName());
+		int sampleDifference = koreoEvent.EndSample - _sourceSimpleMusicPlayer.GetSampleTimeForClip(_sourceSimpleMusicPlayer.GetCurrentClipName());
 		_tempSampleForUnpause = koreoEvent.EndSample;
 		float duration = (float)sampleDifference / (float)_sampleRate;
 		return duration;
 	}
 
 	void ResumeKoreography(){
-		if(!_inactive){
-			bool isInterrupted = false;
-			if (_delayedPauseCoroutine != null) {
-				StopCoroutine (_delayedPauseCoroutine);
-				isInterrupted = true;
-				_audioFadeStarted = false;
-			}
-			if (!isInterrupted) {
-				_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
-			}
+		bool isInterrupted = false;
+		if (_delayedPauseCoroutine != null) {
+			StopCoroutine (_delayedPauseCoroutine);
+			isInterrupted = true;
+			_audioFadeStarted = false;
+		}
+		if (!isInterrupted) {
+			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
+		}
+		if (!_inactive) {
 			AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
 		}
 	}
 
 	// Function to set a bool to wait for pause
-	public void StopMusicBoxMusic(MBMusicMangerEvent e){
+	void StopMusicBoxMusic(MBMusicMangerEvent e){
 		_stop = !e.isMusicPlaying;
 		if (!_isStarted && !_stop) {
 			_simpleMusicPlayer.Play ();
@@ -115,16 +116,65 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 	}
 
-	public void MakeActive(){
-		_inactive = false;
-		AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
+	public void ActivateLayer(){
+		if (_inactive) {
+			_inactive = false;
+			AdjustVolume (_audioSystem, 0.5f, 1.0f, _audioSystem.audioSource.volume, true);
+		}
 	}
 
+	public void DeactivateLayer(){
+		if (!_inactive) {
+			_inactive = true;
+			_stop = true;
+		}
+	}
+
+	void ToggleMusicLayer(MBMusicLayerAdjustmentEvent e){
+		if (_whichLayer == e.ThisMusicBoxLayer) {
+			if (e.IsOn) {
+				ActivateLayer ();
+			} else {
+				DeactivateLayer ();
+			}
+		}
+	}
+
+	void PathStateManage(PathStateManagerEvent e){
+		if (e.activeEvent == PathState.descend_inital_stage) {
+			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
+				ActivateLayer ();
+			}
+		} else if (e.activeEvent == PathState.open_gate) {
+			if (_whichLayer == MusicBoxLayer.slowPiano) {
+				ActivateLayer ();
+			}
+		} else if (e.activeEvent == PathState.first_encounter_TM) {
+			if (_whichLayer == MusicBoxLayer.pianoMelody) {
+				ActivateLayer ();
+			}
+		} else if (e.activeEvent == PathState.hold_hand_with_TM) {
+			if (_whichLayer == MusicBoxLayer.slowPiano) {
+				DeactivateLayer ();
+			}
+			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
+				DeactivateLayer ();
+			}
+		} else if (e.activeEvent == PathState.descend_to_layer_two) {
+			if (_whichLayer == MusicBoxLayer.pianoMelody) {
+				DeactivateLayer ();
+			}
+		}
+	}
 
 	void OnEnable(){
 		Events.G.AddListener<MBMusicMangerEvent> (StopMusicBoxMusic);
+		Events.G.AddListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
+		Events.G.AddListener<PathStateManagerEvent> (PathStateManage);
 	}
 	void OnDisable(){
 		Events.G.RemoveListener<MBMusicMangerEvent> (StopMusicBoxMusic);
+		Events.G.RemoveListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
+		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManage);
 	}
 }
