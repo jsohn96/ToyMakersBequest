@@ -28,6 +28,7 @@ public class TempMusicManager : MonoBehaviour {
 	}
 
 	void MusicPlayHandle(MBMusicMangerEvent e){
+		print ("MB MAnager: " + e.isMusicPlaying);
 		if (e.isMusicPlaying) {
 			if (!_myAudio.isPlaying) {
 				_myAudio.Play ();

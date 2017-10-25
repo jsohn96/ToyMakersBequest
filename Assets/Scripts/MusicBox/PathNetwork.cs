@@ -100,7 +100,7 @@ public class PathNetwork : MonoBehaviour {
 
 			} else {
 				print ("next node not correctly connected");
-				Events.G.Raise (new MBMusicMangerEvent (false));
+
 			}
 		}
 
@@ -144,9 +144,11 @@ public class PathNetwork : MonoBehaviour {
 	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
 		print ("Check next available node");
+
 		if (_isActive) {
 			// check if there is anyevent envoked when the path is finished 
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
+				Events.G.Raise (new MBMusicMangerEvent (false));
 				if (_orderIdx + 1 < _correctOrder.Length) {
 					_orderIdx += 1;
 					_curNodeIdx = _correctOrder [_orderIdx].index;
@@ -158,8 +160,10 @@ public class PathNetwork : MonoBehaviour {
 				}
 			} else {
 				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
-				if(_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate){
+				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
 					Events.G.Raise (new MBMusicMangerEvent (false));
+				} else {
+					
 				}
 				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
 				_isPathPause = true;
