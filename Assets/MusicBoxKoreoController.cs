@@ -34,7 +34,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 	// check if the music box level has been started
 	bool _isStarted = false;
 
-	[SerializeField] float _resumeAudioDuration = 0.3f;
+	[SerializeField] float _resumeAudioDuration = 0.05f;
+
+	//The end sample value for holding where the track left off at
+	int _tempSampleForUnpause = 0;
 
 	IEnumerator _delayedPauseCoroutine;
 
@@ -78,6 +81,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	//Used for calculating the duration of the audio fade out
 	float CalculateFadeDuration(KoreographyEvent koreoEvent){
 		int sampleDifference = koreoEvent.EndSample - _simpleMusicPlayer.GetSampleTimeForClip(_simpleMusicPlayer.GetCurrentClipName());
+		_tempSampleForUnpause = koreoEvent.EndSample;
 		float duration = (float)sampleDifference / (float)_sampleRate;
 		return duration;
 	}
@@ -88,7 +92,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 				StopCoroutine (_delayedPauseCoroutine);
 			}
 			AudioManager.instance.AdjustVolume (_audioSystem.audioSource, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume);
-			_simpleMusicPlayer.Play ();
+
+			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
+		
 		}
 	}
 
