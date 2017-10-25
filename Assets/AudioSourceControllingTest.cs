@@ -10,6 +10,7 @@ public class AudioSourceControllingTest : AudioSourceController {
 	bool _reduceStart = false;
 	bool _waitForComeback = false;
 
+
 	SimpleMusicPlayer _simpleMusicPlayer;
 
 	// Use this for initialization
@@ -37,11 +38,13 @@ public class AudioSourceControllingTest : AudioSourceController {
 			_waitForComeback = false;
 			_audioSystem.audioSource.volume = 1.0f;
 			_simpleMusicPlayer.Play ();
+
 		}
 		Debug.Log ("resume function called");
 	}
 
 	void TrackOff(KoreographyEvent koreoEvent){
+		Debug.Log (koreoEvent.GetIntValue ());
 		if (_stop && _reduceStart && !_waitForComeback) {
 			_simpleMusicPlayer.Pause ();
 			Debug.Log ("off in");
