@@ -24,7 +24,7 @@ public class AudioSourceController : MonoBehaviour {
 		if (audioSystem.coroutine != null) {
 			StopCoroutine (audioSystem.coroutine);
 		}
-		StartCoroutine (AudioManager.instance.SmoothPause (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		audioSystem.coroutine = AudioManager.instance.SmoothPause (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration);
 		StartCoroutine (audioSystem.coroutine);
 	}
 
@@ -32,7 +32,7 @@ public class AudioSourceController : MonoBehaviour {
 		if (audioSystem.coroutine != null) {
 			StopCoroutine (audioSystem.coroutine);
 		}
-		StartCoroutine (AudioManager.instance.SmoothResume (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		audioSystem.coroutine = AudioManager.instance.SmoothResume (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration);
 		StartCoroutine (audioSystem.coroutine);
 	}
 
@@ -40,7 +40,7 @@ public class AudioSourceController : MonoBehaviour {
 		if (audioSystem.coroutine != null) {
 			StopCoroutine (audioSystem.coroutine);
 		}
-		StartCoroutine (AudioManager.instance.SmoothStop (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration));
+		audioSystem.coroutine = AudioManager.instance.SmoothStop (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration);
 		StartCoroutine (audioSystem.coroutine);
 	}
 }

@@ -130,7 +130,7 @@ public class AudioManager : MonoBehaviour {
 		Timer fadeTimer = new Timer (duration);
 		fadeTimer.Reset ();
 		while (!fadeTimer.IsOffCooldown) {
-			audioSource.volume = MathHelpers.LinMapFrom01(originVolume, goalVolume, _audioFadeCurve.Evaluate (fadeTimer.PercentTimeLeft));
+			audioSource.volume = MathHelpers.LinMapFrom01(originVolume, goalVolume, _audioFadeCurve.Evaluate (fadeTimer.PercentTimePassed));
 			yield return null;
 		}
 		if (goalVolume == 0.0f) {
