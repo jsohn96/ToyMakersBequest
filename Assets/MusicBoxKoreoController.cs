@@ -142,11 +142,11 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 	void PathStateManage(PathStateManagerEvent e){
 		if (e.activeEvent == PathState.descend_inital_stage) {
-			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
+			if (_whichLayer == MusicBoxLayer.slowPiano) {
 				ActivateLayer ();
 			}
 		} else if (e.activeEvent == PathState.open_gate) {
-			if (_whichLayer == MusicBoxLayer.slowPiano) {
+			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
 				ActivateLayer ();
 			}
 
