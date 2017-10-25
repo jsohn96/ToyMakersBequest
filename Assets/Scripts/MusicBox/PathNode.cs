@@ -474,7 +474,7 @@ public class PathNode : MonoBehaviour {
 		}
 
 		if (isDragStart) {
-			Vector3 curMousePos;
+			Vector3 curMousePos = Vector3.zero;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
 			if (circlePlane.Raycast (ray, out rayDistance)) {
