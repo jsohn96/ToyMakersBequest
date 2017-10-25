@@ -64,7 +64,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 			float fadeDuration = CalculateFadeDuration (koreoEvent);
 
 			//reduces the volume of the audio to 0, because koreographer requires a separate Pause
-			AudioManager.instance.AdjustVolume (_audioSystem.audioSource, fadeDuration, 0.0f, _audioSystem.audioSource.volume);
+			AdjustVolume (_audioSystem, fadeDuration, 0.0f, _audioSystem.audioSource.volume, true);
 			//Coroutine to wait for the actual pause time
 			_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
 			StartCoroutine (_delayedPauseCoroutine);
@@ -88,13 +88,16 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 	void ResumeKoreography(){
 		if(!_inactive){
+			bool isInterrupted = false;
 			if (_delayedPauseCoroutine != null) {
 				StopCoroutine (_delayedPauseCoroutine);
+				isInterrupted = true;
+				_audioFadeStarted = false;
 			}
-			AudioManager.instance.AdjustVolume (_audioSystem.audioSource, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume);
-
-			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
-		
+			if (!isInterrupted) {
+				_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
+			}
+			AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
 		}
 	}
 
@@ -106,14 +109,15 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 
 		if (!_stop && _waitingForResume) {
-			ResumeKoreography ();
 			_waitingForResume = false;
+			_audioFadeStarted = false;
+			ResumeKoreography ();
 		}
 	}
 
 	public void MakeActive(){
 		_inactive = false;
-		AudioManager.instance.AdjustVolume (_audioSystem.audioSource, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume);
+		AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
 	}
 
 

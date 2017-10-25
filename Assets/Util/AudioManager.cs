@@ -96,15 +96,7 @@ public class AudioManager : MonoBehaviour {
 		audioSource.Stop ();
 		audioSource.volume = sourceVolume;
 	}
-
-
-	public void AdjustVolume(AudioSource audioSource, float duration, float goalVolume, float originVolume){
-		if (goalVolume > originVolume) {
-			StartCoroutine (FadeIn (audioSource, duration, goalVolume, originVolume));
-		} else {
-			StartCoroutine (FadeOut (audioSource, duration, goalVolume, originVolume));
-		}
-	}
+		
 
 	//Crossfades audio, defaults to 1 second
 	public void CrossFade(AudioSource outAudio, AudioSource inAudio, float fadeDuration = 1f, float onVolume = 1f) {
@@ -112,8 +104,8 @@ public class AudioManager : MonoBehaviour {
 		StartCoroutine(FadeOut (outAudio, fadeDuration, 0f, outAudio.volume));
 	}
 
-	IEnumerator FadeIn(AudioSource audioSource, float duration, float goalVolume = 1.0f, float originVolume = 0.0f){
-		if (!audioSource.isPlaying) {
+	public IEnumerator FadeIn(AudioSource audioSource, float duration, float goalVolume = 1.0f, float originVolume = 0.0f, bool isKoreo = false){
+		if (!audioSource.isPlaying && !isKoreo) {
 			audioSource.Play ();
 		}
 		Timer fadeTimer = new Timer (duration);
@@ -125,7 +117,7 @@ public class AudioManager : MonoBehaviour {
 		audioSource.volume = goalVolume;
 	}
 
-	IEnumerator FadeOut(AudioSource audioSource, float duration, float goalVolume = 0.0f, float originVolume = 1.0f){
+	public IEnumerator FadeOut(AudioSource audioSource, float duration, float goalVolume = 0.0f, float originVolume = 1.0f, bool isKoreo = false){
 		float tempOnVolume = audioSource.volume;
 		Timer fadeTimer = new Timer (duration);
 		fadeTimer.Reset ();
@@ -134,7 +126,9 @@ public class AudioManager : MonoBehaviour {
 			yield return null;
 		}
 		if (goalVolume == 0.0f) {
-			audioSource.Stop ();
+			if (!isKoreo) {
+				audioSource.Stop ();
+			}
 		} else {
 			audioSource.volume = goalVolume;
 		}

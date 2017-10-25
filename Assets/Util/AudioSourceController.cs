@@ -43,4 +43,16 @@ public class AudioSourceController : MonoBehaviour {
 		audioSystem.coroutine = AudioManager.instance.SmoothStop (audioSystem.audioSource, audioSystem.volume, audioSystem.fadeDuration);
 		StartCoroutine (audioSystem.coroutine);
 	}
+
+	public void AdjustVolume(AudioSystem audioSystem, float duration, float goalVolume, float originVolume, bool isKoreo = false){
+		if (audioSystem.coroutine != null) {
+			StopCoroutine (audioSystem.coroutine);
+		}
+		if (goalVolume > originVolume) {
+			audioSystem.coroutine = AudioManager.instance.FadeIn (audioSystem.audioSource, duration, goalVolume, originVolume, isKoreo);
+		} else {
+			audioSystem.coroutine = AudioManager.instance.FadeOut (audioSystem.audioSource, duration, goalVolume, originVolume, isKoreo);
+		}
+		StartCoroutine (audioSystem.coroutine);
+	}
 }

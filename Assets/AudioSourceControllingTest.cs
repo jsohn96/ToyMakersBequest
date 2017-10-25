@@ -26,7 +26,7 @@ public class AudioSourceControllingTest : AudioSourceController {
 	void TestFunction(KoreographyEvent koreoEvent) {
 		if (_stop && !_reduceStart && !_waitForComeback) {
 			_reduceStart = true;
-			AudioManager.instance.AdjustVolume (_audioSystem.audioSource, 0.3f, 0.0f, 1.0f);
+			AdjustVolume (_audioSystem, 0.3f, 0.0f, 1.0f);
 			Debug.Log ("volume change in");
 		}
 		Debug.Log ("test function called");
@@ -45,6 +45,8 @@ public class AudioSourceControllingTest : AudioSourceController {
 
 	void TrackOff(KoreographyEvent koreoEvent){
 		Debug.Log (koreoEvent.GetIntValue ());
+		int koreoInt = koreoEvent.GetIntValue ();
+
 		if (_stop && _reduceStart && !_waitForComeback) {
 			_simpleMusicPlayer.Pause ();
 			Debug.Log ("off in");
