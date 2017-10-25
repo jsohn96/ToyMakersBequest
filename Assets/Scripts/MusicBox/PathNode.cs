@@ -399,7 +399,7 @@ public class PathNode : MonoBehaviour {
 	void ClickWithMouse(){
 		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
 	
-		if(Input.GetMouseButtonDown(0)){
+		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
 			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			dragPreviousMousePos = Input.mousePosition;
@@ -436,7 +436,7 @@ public class PathNode : MonoBehaviour {
 					hitDist = hit.distance;
 					// create a plane ;
 					circlePlane = new Plane(Vector3.up, hit.point);
-					debugPos1 = hit.point;
+					//debugPos1 = hit.point;
 				}
 
 			}
@@ -481,8 +481,8 @@ public class PathNode : MonoBehaviour {
 				curMousePos = ray.GetPoint(rayDistance);
 			}
 				
-			debugPos1 = curMousePos;
-			Debug.DrawLine (ray.origin, curMousePos);
+//			debugPos1 = curMousePos;
+//			Debug.DrawLine (ray.origin, curMousePos);
 
 			//curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
 			// TODO: z needs to be switched to any customized axis
@@ -550,8 +550,8 @@ public class PathNode : MonoBehaviour {
 	}
 
 	void OnDrawGizmosSelected() {
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawSphere(debugPos2, 1);
+		//Gizmos.color = Color.yellow;
+		//Gizmos.DrawSphere(debugPos2, 1);
 
 	}
 
