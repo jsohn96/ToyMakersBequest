@@ -66,6 +66,15 @@ public class MBPlayModeEvent:GameEvent{
 	}
 }
 
+public class MBTurnColorCircle:GameEvent{
+	public ButtonColor activeColor{ get; private set;}
+	public int activeIdx{ get; private set;}
+	public MBTurnColorCircle(ButtonColor btnClr, int idx){
+		activeColor = btnClr;
+		activeIdx = idx;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//

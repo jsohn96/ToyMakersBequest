@@ -105,6 +105,7 @@ public class PathNode : MonoBehaviour {
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
+		Events.G.AddListener<MBTurnColorCircle> (TurnColorCircleHandle);
 	}
 
 	void OnDisable(){
@@ -113,6 +114,7 @@ public class PathNode : MonoBehaviour {
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
+		Events.G.RemoveListener<MBTurnColorCircle> (TurnColorCircleHandle);
 	}
 
 
@@ -184,14 +186,21 @@ public class PathNode : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
 		// Controls for the circle rotation
 		//ButtonControlListener ();
 		//RotateWithMouse ();
-		if (_isWinded) {
+		if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
 			ClickWithMouse ();
-		} else {
-			RotateWithMouse ();
+//			if (_isWinded) {
+//				ClickWithMouse ();
+//			} else {
+//				RotateWithMouse ();
+//			}
+		} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
+			ClickWithMouse ();
 		}
+
 
 		if(isRotating){
 			// rotate the node 
@@ -215,6 +224,7 @@ public class PathNode : MonoBehaviour {
 
 	}
 
+	// UI Code
 	void CircleButtonInputHandle (CircleTurnButtonPressEvent e){
 		if (_ControlColor == e.WhichCircleColor) {
 			switch (_ControlColor) {
@@ -231,6 +241,13 @@ public class PathNode : MonoBehaviour {
 				RotateNode ();
 				break;
 			}
+		}
+	}
+
+	void TurnColorCircleHandle(MBTurnColorCircle e){
+		if (_nodeIndex != e.activeIdx && _ControlColor == e.activeColor) {
+			print ("check control color: " + e.activeColor);
+			RotateNode ();
 		}
 	}
 
@@ -394,14 +411,13 @@ public class PathNode : MonoBehaviour {
 					//dragStartPos = hit.point;
 					RotateNode();
 					hitDist = hit.distance;
+					// turn circle with the same control color
+					Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
+
 
 				}
-
 			}
-
-			//print ("Mouse Position Check: " + mouseInWorldPos);
 		}
-		
 	}
 
 	// TODO: put into camera selection manager or something 

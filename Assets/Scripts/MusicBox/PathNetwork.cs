@@ -15,11 +15,13 @@ public struct PathOrder{
 public enum PathState{
 	none,
 	descend_inital_stage,
+	open_gate,
 	first_encounter_TM,
 	flip_TM_stage,
 	hold_hand_with_TM,
 	descend_to_layer_two,
-	temp_end_scene
+	temp_end_scene,
+
 }
 
 
