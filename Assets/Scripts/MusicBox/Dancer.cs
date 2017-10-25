@@ -83,10 +83,10 @@ public class Dancer : MonoBehaviour {
 
 
 				// playing the music
-				if (!_myAudio.isPlaying) {
-					_myAudio.Play ();
-					print ("Dancer Player Music");
-				}
+//				if (!_myAudio.isPlaying) {
+//					_myAudio.Play ();
+//					print ("Dancer Player Music");
+//				}
 				Vector3 position = _activeSpline.GetPoint (_progress);
 				transform.position = position;
 				if (isMoving) {
@@ -94,9 +94,9 @@ public class Dancer : MonoBehaviour {
 				}
 
 			} else if (isPathFinished) {
-				if (_myAudio.isPlaying) {
-					_myAudio.Pause ();
-				}
+//				if (_myAudio.isPlaying) {
+//					_myAudio.Pause ();
+//				}
 			}
 		} else if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
 			// adjust the dancer rotation 

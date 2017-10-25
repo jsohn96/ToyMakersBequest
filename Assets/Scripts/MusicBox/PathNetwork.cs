@@ -79,10 +79,11 @@ public class PathNetwork : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		///
-		if(_isCheckingNext && _isPathPause != null && _isActive){
+		if(_isCheckingNext && _isActive && !_isPathPause){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// icc the past pathnode --> active path +1, isOnboard = false
+				Events.G.Raise (new MBMusicMangerEvent (true));
 				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
 				_myDancer.SetNewPath (_curNode);
@@ -99,6 +100,7 @@ public class PathNetwork : MonoBehaviour {
 
 			} else {
 				print ("next node not correctly connected");
+				Events.G.Raise (new MBMusicMangerEvent (false));
 			}
 		}
 
@@ -155,7 +157,10 @@ public class PathNetwork : MonoBehaviour {
 					Events.G.Raise (new PathCompeleteEvent ());
 				}
 			} else {
-				print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
+				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
+				if(_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate){
+					Events.G.Raise (new MBMusicMangerEvent (false));
+				}
 				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
 				_isPathPause = true;
 			}
@@ -184,6 +189,7 @@ public class PathNetwork : MonoBehaviour {
 		if (_isActive) {
 			PositionDancer ();
 			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
+			Events.G.Raise (new MBMusicMangerEvent (true));
 		}
 	}
 

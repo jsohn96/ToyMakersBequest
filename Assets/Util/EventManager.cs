@@ -75,6 +75,14 @@ public class MBTurnColorCircle:GameEvent{
 	}
 }
 
+// Music Manager Event
+public class MBMusicMangerEvent:GameEvent{
+	public bool isMusicPlaying{ get; private set;}
+	public MBMusicMangerEvent(bool imp){
+		isMusicPlaying = imp;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//
