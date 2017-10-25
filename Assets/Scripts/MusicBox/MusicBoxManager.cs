@@ -59,6 +59,7 @@ public class MusicBoxManager : MonoBehaviour {
 			if (!isBoxOpen) {
 				isBoxOpen = true;
 				_tempSText.DisplayText();
+				Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_off));
 			}
 
 		}
@@ -87,6 +88,7 @@ public class MusicBoxManager : MonoBehaviour {
 			_isStartPath = true;
 			_musicPaths[0].SetPathActive(true);
 			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
+
 		}
 	}
 
@@ -101,7 +103,8 @@ public class MusicBoxManager : MonoBehaviour {
 		case PathState.flip_TM_stage:
 			break;
 		case PathState.descend_to_layer_two:
-			Events.G.Raise(new CamerafovAmountChange (50.0f));
+			Events.G.Raise (new CamerafovAmountChange (50.0f));
+			Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_on));
 			OpenLayer (2);
 			break;
 		case PathState.temp_end_scene:

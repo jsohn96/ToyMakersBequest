@@ -92,6 +92,14 @@ public class MBMusicLayerAdjustmentEvent:GameEvent {
 	}
 }
 
+// music box light manager
+public class MBLightManagerEvent:GameEvent{
+	public LightState activeLightState{ get; private set; }
+	public MBLightManagerEvent(LightState ls){
+		activeLightState = ls;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//

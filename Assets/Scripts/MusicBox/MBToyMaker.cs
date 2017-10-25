@@ -51,6 +51,7 @@ public class MBToyMaker : MonoBehaviour {
 			Vector3 temp = _dancerTransform.position;
 			temp.x -= 4f;
 			_TMTransform.position = temp;
+			_TMTransform.parent = _dancerTransform.parent;
 			//_isFollow = false;
 		}
 

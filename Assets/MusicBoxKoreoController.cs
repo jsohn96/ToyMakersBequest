@@ -149,22 +149,20 @@ public class MusicBoxKoreoController : AudioSourceController {
 			if (_whichLayer == MusicBoxLayer.slowPiano) {
 				ActivateLayer ();
 			}
+
+		} else if (e.activeEvent == PathState.flip_TM_stage) {
 			if (_whichLayer == MusicBoxLayer.pianoMelody) {
 				ActivateLayer ();
 			}
-		} else if (e.activeEvent == PathState.flip_TM_stage) {
-			//if (_whichLayer == MusicBoxLayer.pianoMelody) {
-			//	ActivateLayer ();
-			//}
-		} else if (e.activeEvent == PathState.hold_hand_with_TM) {
+		} else if (e.activeEvent == PathState.descend_to_layer_two) {
+			if (_whichLayer == MusicBoxLayer.pianoMelody) {
+				DeactivateLayer ();
+
+			}
 			if (_whichLayer == MusicBoxLayer.slowPiano) {
 				DeactivateLayer ();
 			}
 			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
-				DeactivateLayer ();
-			}
-		} else if (e.activeEvent == PathState.descend_to_layer_two) {
-			if (_whichLayer == MusicBoxLayer.pianoMelody) {
 				DeactivateLayer ();
 			}
 		}
