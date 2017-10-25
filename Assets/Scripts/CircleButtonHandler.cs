@@ -26,4 +26,16 @@ public class CircleButtonHandler : MonoBehaviour {
 			_audioSource.Play ();
 		}
 	}
+
+	void CircleTurned(MBTurnColorCircle e){
+		PlayCrankSound ();
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<MBTurnColorCircle> (CircleTurned);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<MBTurnColorCircle> (CircleTurned);
+	}
 }
