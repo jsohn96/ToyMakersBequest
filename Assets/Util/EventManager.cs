@@ -83,6 +83,15 @@ public class MBMusicMangerEvent:GameEvent{
 	}
 }
 
+public class MBMusicLayerAdjustmentEvent:GameEvent {
+	public MusicBoxLayer ThisMusicBoxLayer { get; private set; }
+	public bool IsOn { get; private set; }
+	public MBMusicLayerAdjustmentEvent(MusicBoxLayer thisMusicBoxLayer, bool isOn){
+		ThisMusicBoxLayer = thisMusicBoxLayer;
+		IsOn = isOn;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//
