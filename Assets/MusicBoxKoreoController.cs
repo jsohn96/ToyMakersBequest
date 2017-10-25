@@ -31,6 +31,8 @@ public class MusicBoxKoreoController : AudioSourceController {
 	bool _audioFadeStarted = false;
 	//set to true if audio is paused but resume hasnt been called
 	bool _waitingForResume = false;
+	// check if the music box level has been started
+	bool _isStarted = false;
 
 	[SerializeField] float _resumeAudioDuration = 0.3f;
 
@@ -93,6 +95,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 	// Function to set a bool to wait for pause
 	public void StopMusicBoxMusic(MBMusicMangerEvent e){
 		_stop = !e.isMusicPlaying;
+		if (!_isStarted && !_stop) {
+			_simpleMusicPlayer.Play ();
+		}
+
 		if (!_stop && _waitingForResume) {
 			ResumeKoreography ();
 			_waitingForResume = false;
