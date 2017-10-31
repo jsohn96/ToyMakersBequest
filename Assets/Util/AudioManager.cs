@@ -44,6 +44,7 @@ public class AudioManager : MonoBehaviour {
 		} else if (instance != this) {
 			Destroy (gameObject);
 		}
+		DontDestroyOnLoad (this);
 	}
 
 
