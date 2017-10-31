@@ -14,6 +14,16 @@ using System.Collections;
 //****************//
 
 // for the rotating path prototype 
+public class InterlockNodeStateEvent:GameEvent{
+	public bool Unlock { get; private set; }
+	public int SendFrom { get; private set; }
+	public int SendTo { get; private set; }
+	public InterlockNodeStateEvent(bool ulc, int sid, int rid){
+		Unlock = ulc;
+		SendFrom = sid;
+		SendTo = rid;
+	}
+}
 
 public class DancerFinishPath: GameEvent{
 	public int NodeIdx { get; private set; }

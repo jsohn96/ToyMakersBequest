@@ -21,7 +21,7 @@ public enum PathState{
 	hold_hand_with_TM,
 	descend_to_layer_two,
 	temp_end_scene,
-
+	activateInterlockNode
 }
 
 
@@ -60,6 +60,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.AddListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
 		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
+		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 
 	}
 
@@ -67,6 +68,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.RemoveListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
+		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 	}
 
 	void Start(){
@@ -81,13 +83,18 @@ public class PathNetwork : MonoBehaviour {
 		///
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
+			print ("Check connection for " + _curNodeIdx + ":" + _curNode.readNodeInfo ().isConnected
+				+ "and " +_curNode.readNodeInfo().index + ":" + tempNode.readNodeInfo ().isConnected);
+
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
-				// icc the past pathnode --> active path +1, isOnboard = false
+				// music manager continues to play music 
 				Events.G.Raise (new MBMusicMangerEvent (true));
+				// icc the past pathnode --> active path +1, isOnboard = false
 				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
+				// when there is a path on the current node
 				_myDancer.SetNewPath (_curNode);
-				// set the dancer onboard of the new one
+				// set the dancer onboard of the new one || TODO: or when interlocked node, it means it switches to the next state
 				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 				// check the 
 				if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
@@ -118,6 +125,7 @@ public class PathNetwork : MonoBehaviour {
 	// have the dancer reports back to the network about her status
 	void PositionDancer (){
 		// pass down the game object
+
 		_curNode = FindNodeWithIndex (_curNodeIdx);
 		_myDancer.SetNewPath (_curNode);
 
@@ -208,6 +216,10 @@ public class PathNetwork : MonoBehaviour {
 
 	void PlayModeHandle(MBPlayModeEvent e){
 		_myPlayMode = e.activePlayMode;
+	}
+
+	void InterlockNodeStateHandle(InterlockNodeStateEvent e){
+		
 	}
 
 

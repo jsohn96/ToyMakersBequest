@@ -48,7 +48,7 @@ public class PathNode : MonoBehaviour {
 	float _rotateAngle;
 	[SerializeField] int _nodeIndex;
 	Transform _nodeTransform;
-	[SerializeField] float[] _assignedDegree;          // the correct rotation  
+	//[SerializeField] float[] _assignedDegree;          // the correct rotation  
 	[SerializeField] Material _GreenMat;
 	[SerializeField] Renderer _cylinderRenderer;
 	Material _originMat;
@@ -59,7 +59,7 @@ public class PathNode : MonoBehaviour {
 	Vector3 _startPos;
 	Vector3 _endPos;
 	public bool _isCorrectConnection = false;               // if the path is correctly connected 
-	bool _isInterLocked = false;                            // if the path node has dependency on others 
+	                          // if the path node has dependency on others 
 
 	PathNetwork _myNetWork;
 	NodeInfo _myNodeInfo;
@@ -98,23 +98,32 @@ public class PathNode : MonoBehaviour {
 
 	Plane circlePlane;
 
+	// for interlocked nodes
+	[SerializeField] bool _isInterLocked = false;  
+	[SerializeField] bool _isActive = true;
+	[SerializeField] GameObject _intersectionPart;
+	[SerializeField] int _lockNodeSenderIdx;      // the node that the current circle is being blocked
+	[SerializeField] int _lockNodeReceiverIdx;      // the node that the current circle is blocking 
+	[SerializeField] float _interLockAngle;
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
-		Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
+		//Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.AddListener<MBTurnColorCircle> (TurnColorCircleHandle);
+		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
-		Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
+		//Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.RemoveListener<MBTurnColorCircle> (TurnColorCircleHandle);
+		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 	}
 
 
@@ -135,6 +144,15 @@ public class PathNode : MonoBehaviour {
 		}
 		// 
 
+		if (_isInterLocked && _intersectionPart == null) {
+			print("Check interlock section");
+			
+		}
+
+		if (!_isInterLocked && !_isActive) {
+			print ("ERROR: non interlock nodes should be active");
+		}
+
 		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
 		//print ("world up " + Vector3.up);
 
@@ -150,20 +168,22 @@ public class PathNode : MonoBehaviour {
 		//print ("Debug " + _nodeIndex + " : has spline: " + _mySplines);
 		// TODO store the position value for different path segments 
 		if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
-			if (_mySplines.Length > 0) {
+//			if (_mySplines.Length > 0) {
+//
+//				_segCount = _mySplines.Length;
+//				print ("Check: path number in total " + _segCount);
+//			} else {
+//				print ("ERROR: need to construct path first");
+//
+//			}
+//			if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
+//				print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
+//				//_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+//			} else {
+//				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
+//			}
 
-				_segCount = _mySplines.Length;
-				print ("Check: path number in total " + _segCount);
-			} else {
-				print ("ERROR: need to construct path first");
-
-			}
-			if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
-				print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
-				//_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-			} else {
-				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-			}
+			_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 
 		} else {
 			if (_mySplines.Length > 0) {
@@ -186,38 +206,46 @@ public class PathNode : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
-		// Controls for the circle rotation
-		//ButtonControlListener ();
-		//RotateWithMouse ();
-		if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
-			ClickWithMouse ();
-//			if (_isWinded) {
-//				ClickWithMouse ();
-//			} else {
-//				RotateWithMouse ();
-//			}
-		} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
-			ClickWithMouse ();
-		}
-
-
-		if(isRotating){
-			// rotate the node 
-			if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*10f){
-				transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
-			} else {
-				print ("####### reset boolean #######");
-				transform.localRotation = finalAngle;
-				isRotating = false;
+		// Rotate Circles
+		if(_isActive){
+			if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
+				ClickWithMouse ();
+				//			if (_isWinded) {
+				//				ClickWithMouse ();
+				//			} else {
+				//				RotateWithMouse ();
+				//			}
+			} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
+				ClickWithMouse ();
 			}
-		}
+
+
+			if(isRotating){
+				// rotate the node 
+				if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*10f){
+					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
+				} else {
+					//print ("####### reset boolean #######");
+					transform.localRotation = finalAngle;
+					isRotating = false;
+					if (_isActive) {
+						CheckNodeConnection ();
+					}
+				}
+			}
+			
+		}// end of checking isActive
+
 
 
 	}
 
 	void FixedUpdate(){
-		CheckNodeConnection ();
+		// only check connection when node is active 
+		if (_isActive) {
+			//CheckNodeConnection ();
+		}
+
 		//		if (ischeckingConnection) {
 		//			CheckNodeConnection ();
 		//		}
@@ -225,24 +253,24 @@ public class PathNode : MonoBehaviour {
 	}
 
 	// UI Code
-	void CircleButtonInputHandle (CircleTurnButtonPressEvent e){
-		if (_ControlColor == e.WhichCircleColor) {
-			switch (_ControlColor) {
-			case ButtonColor.Red:
-				print ("Rotate Red");
-				RotateNode ();
-				break;
-			case ButtonColor.Brown:
-				print ("Rotate Brown");
-				RotateNode ();
-				break;
-			case ButtonColor.Yellow:
-				print ("Rotate Yellow");
-				RotateNode ();
-				break;
-			}
-		}
-	}
+//	void CircleButtonInputHandle (CircleTurnButtonPressEvent e){
+//		if (_ControlColor == e.WhichCircleColor) {
+//			switch (_ControlColor) {
+//			case ButtonColor.Red:
+//				print ("Rotate Red");
+//				RotateNode ();
+//				break;
+//			case ButtonColor.Brown:
+//				print ("Rotate Brown");
+//				RotateNode ();
+//				break;
+//			case ButtonColor.Yellow:
+//				print ("Rotate Yellow");
+//				RotateNode ();
+//				break;
+//			}
+//		}
+//	}
 
 	void TurnColorCircleHandle(MBTurnColorCircle e){
 		if (_nodeIndex != e.activeIdx && _ControlColor == e.activeColor) {
@@ -308,49 +336,79 @@ public class PathNode : MonoBehaviour {
 
 			// update current checking index
 
-			if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
-				// if the node has dependency on other nodes
-
-				// check relative angle && get the next node information 
-				PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-				//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
-				if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
-				    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+			// when the node is interlocked check for the interlock logic 
+			if(_isInterLocked){
+				
+				if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_interLockAngle)) <= errorVal) {
+					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, _lockNodeReceiverIdx));
 					_isCorrectConnection = true;
-					//adjNode._isCorrectConnection = true;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-					}
+					print ("Correct connection with for the current node");
 				} else {
+					Events.G.Raise (new InterlockNodeStateEvent (false, _nodeIndex, _lockNodeReceiverIdx));
 					_isCorrectConnection = false;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-					}
-
 				}
-			} else {
-				if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
-					_isCorrectConnection = true;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-					}
-				} else {
-					_isCorrectConnection = false;
-					if (_cylinderRenderer) {
-						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-					}
+				// if the node is a sender 
 
-				}
+				// if the node is a receiver 
+
+				// if the node is both 
+				//_myNodeInfo.isConnected = _isCorrectConnection;
 			}
 
-			//update node info 
+			if (_adjacentNode.Length > 0) {
+				if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
+					// if the node has dependency on other nodes
+
+					// check relative angle && get the next node information 
+					PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
+					//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
+					if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
+						- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+						_isCorrectConnection = true;
+						//adjNode._isCorrectConnection = true;
+						if (_cylinderRenderer) {
+							_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+						}
+					} else {
+						_isCorrectConnection = false;
+						if (_cylinderRenderer) {
+							_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+						}
+
+					}
+				} else {
+					if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+						_isCorrectConnection = true;
+						if (_cylinderRenderer) {
+							_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+						}
+
+					} else {
+						_isCorrectConnection = false;
+						if (_cylinderRenderer) {
+							_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+						}
+
+
+					}
+
+				}
+
+			}
+
 			_myNodeInfo.isConnected = _isCorrectConnection;
-			//print ("Current Angle " + _ControlColor.ToString () +":" + tempRotDegree);
+
+			//update node info 
+
 
 		} 
+	}
 
-
-
+	public void InterlockNodeStateHandle(InterlockNodeStateEvent e){
+		//print ("Interlock State Check: " + _nodeIndex + " " + e.Unlock);
+		if (e.SendFrom != _nodeIndex && (e.SendFrom == _lockNodeSenderIdx || e.SendFrom == _lockNodeReceiverIdx )) {
+			_isActive = e.Unlock;
+		}
 
 	}
 
@@ -398,6 +456,9 @@ public class PathNode : MonoBehaviour {
 
 	void ClickWithMouse(){
 		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
+		if (_isInterLocked && _intersectionPart.transform.parent != transform) {
+			_intersectionPart.transform.parent = transform;
+		}
 	
 		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
 			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -417,6 +478,8 @@ public class PathNode : MonoBehaviour {
 
 				}
 			}
+
+
 		}
 	}
 

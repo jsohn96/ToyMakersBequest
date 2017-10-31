@@ -180,6 +180,7 @@ public class Dancer : MonoBehaviour {
 	public void SetNewPath (PathNode pn){
 		// set New Path --> get the current active path
 		// set the boolean vals 
+		print("Place dancer on node " + pn.readNodeInfo().index);
 		isMoving = true;
 		isPathFinished = false;
 
@@ -195,7 +196,7 @@ public class Dancer : MonoBehaviour {
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
 		//TODO: add code for p2 
-		if (pn.readNodeInfo ().paths != null) {
+		if (pn.readNodeInfo ().paths.Length > 0) {
 			_progress = 0f;
 			_isOnStaticTrack = true;
 			_activeSpline = pn.readNodeInfo ().paths [activePath];
