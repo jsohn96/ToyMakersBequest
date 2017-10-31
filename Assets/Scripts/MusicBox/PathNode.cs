@@ -275,7 +275,10 @@ public class PathNode : MonoBehaviour {
 	void TurnColorCircleHandle(MBTurnColorCircle e){
 		if (_nodeIndex != e.activeIdx && _ControlColor == e.activeColor) {
 			print ("check control color: " + e.activeColor);
-			RotateNode ();
+			if (_isActive) {
+				RotateNode ();
+			}
+
 		}
 	}
 
@@ -456,7 +459,7 @@ public class PathNode : MonoBehaviour {
 
 	void ClickWithMouse(){
 		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
-		if (_isInterLocked && _intersectionPart.transform.parent != transform) {
+		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
 			_intersectionPart.transform.parent = transform;
 		}
 	
