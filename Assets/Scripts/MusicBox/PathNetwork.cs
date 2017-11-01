@@ -95,7 +95,8 @@ public class PathNetwork : MonoBehaviour {
 				_curNode = tempNode;
 				// when there is a path on the current node
 				_myDancer.SetNewPath (_curNode);
-				// set the dancer onboard of the new one || TODO: or when interlocked node, it means it switches to the next state
+				// set the dancer onboard of the new one || //
+				//TODO: or when interlocked node, it means it switches to the next state
 				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 				// check the 
 				if (_myPlayMode == PlayMode.MBPrototype_With_Path) {

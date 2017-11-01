@@ -6,7 +6,8 @@ public enum ButtonColor{
 	Red = 0,
 	Yellow,
 	Brown,
-	None
+	None,
+	RotatableObject
 
 };
 
@@ -17,6 +18,18 @@ public struct AdjacentNode{
 	AdjacentNode(int id, float angle){
 		adjNodeIdx = id;
 		relativeAngle = angle;
+	}
+}
+
+[System.Serializable]
+public struct InterlockNode{
+	public int sendToIdx;
+	public float lockAngle;
+	public GameObject intersection;
+	InterlockNode(int id, float angle, GameObject itc){
+		sendToIdx = id;
+		lockAngle = angle;
+		intersection = itc;
 	}
 }
 
@@ -102,9 +115,11 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] bool _isInterLocked = false;  
 	[SerializeField] bool _isActive = true;
 	[SerializeField] GameObject _intersectionPart;
-	[SerializeField] int _lockNodeSenderIdx;      // the node that the current circle is being blocked
-	[SerializeField] int _lockNodeReceiverIdx;      // the node that the current circle is blocking 
-	[SerializeField] float _interLockAngle;
+//	[SerializeField] int _lockNodeSenderIdx;      // the node that the current circle is being blocked
+//	[SerializeField] int _lockNodeReceiverIdx;      // the node that the current circle is blocking 
+//	[SerializeField] float _interLockAngle;
+
+	[SerializeField] InterlockNode[] _interlockNodes;
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
@@ -151,6 +166,7 @@ public class PathNode : MonoBehaviour {
 
 		if (!_isInterLocked && !_isActive) {
 			print ("ERROR: non interlock nodes should be active");
+			_isActive = true;
 		}
 
 		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
@@ -208,16 +224,17 @@ public class PathNode : MonoBehaviour {
 	void Update () {
 		// Rotate Circles
 		if(_isActive){
-			if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
-				ClickWithMouse ();
-				//			if (_isWinded) {
-				//				ClickWithMouse ();
-				//			} else {
-				//				RotateWithMouse ();
-				//			}
-			} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
-				ClickWithMouse ();
-			}
+			ClickWithMouse ();
+//			if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
+//				ClickWithMouse ();
+//				//			if (_isWinded) {
+//				//				ClickWithMouse ();
+//				//			} else {
+//				//				RotateWithMouse ();
+//				//			}
+//			} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
+//				ClickWithMouse ();
+//			}
 
 
 			if(isRotating){
@@ -228,9 +245,10 @@ public class PathNode : MonoBehaviour {
 					//print ("####### reset boolean #######");
 					transform.localRotation = finalAngle;
 					isRotating = false;
-					if (_isActive) {
-						CheckNodeConnection ();
-					}
+					// TODO change the node checking 
+//					if (_isActive) {
+//						CheckNodeConnection ();
+//					}
 				}
 			}
 			
@@ -243,7 +261,7 @@ public class PathNode : MonoBehaviour {
 	void FixedUpdate(){
 		// only check connection when node is active 
 		if (_isActive) {
-			//CheckNodeConnection ();
+			CheckNodeConnection ();
 		}
 
 		//		if (ischeckingConnection) {
@@ -322,17 +340,37 @@ public class PathNode : MonoBehaviour {
 
 	}
 
+	// for interlock nodes 
+	void CheckInterlockNodes(float degree){
+		bool isfoundMatch = false;
+		if (_interlockNodes != null && _interlockNodes.Length > 0) {
+			foreach (InterlockNode itn in _interlockNodes) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal) {
+					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, itn.sendToIdx));
+					isfoundMatch = true;
+					_intersectionPart = itn.intersection;
+				} else {
+					Events.G.Raise (new InterlockNodeStateEvent (false, _nodeIndex, itn.sendToIdx));
+				}
+			}
+
+			_isCorrectConnection = isfoundMatch;
+			_myNodeInfo.isConnected = _isCorrectConnection;
+			
+		}
+	}
+
 
 	void CheckNodeConnection(){
 		if (_ControlColor != ButtonColor.None) {
 			float tempRotDegree = transform.localRotation.eulerAngles.z;
 			int curCheckIdx = 0;
 			if (!_isDancerOnBoard) {
-				//print ("Check In ");
+				print (_nodeIndex + ": Check In ");
 				curCheckIdx = _curSegIdx * 2;
 			} else {
 				curCheckIdx = _curSegIdx * 2 + 1;
-				//print ("Check Out ");
+				print (_nodeIndex + ": Check Out ");
 			}
 
 			//print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
@@ -341,21 +379,8 @@ public class PathNode : MonoBehaviour {
 
 			// when the node is interlocked check for the interlock logic 
 			if(_isInterLocked){
-				
-				if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_interLockAngle)) <= errorVal) {
-					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, _lockNodeReceiverIdx));
-					_isCorrectConnection = true;
-					print ("Correct connection with for the current node");
-				} else {
-					Events.G.Raise (new InterlockNodeStateEvent (false, _nodeIndex, _lockNodeReceiverIdx));
-					_isCorrectConnection = false;
-				}
-				// if the node is a sender 
+				CheckInterlockNodes (tempRotDegree);
 
-				// if the node is a receiver 
-
-				// if the node is both 
-				//_myNodeInfo.isConnected = _isCorrectConnection;
 			}
 
 			if (_adjacentNode.Length > 0) {
@@ -401,6 +426,7 @@ public class PathNode : MonoBehaviour {
 
 			_myNodeInfo.isConnected = _isCorrectConnection;
 
+
 			//update node info 
 
 
@@ -409,7 +435,8 @@ public class PathNode : MonoBehaviour {
 
 	public void InterlockNodeStateHandle(InterlockNodeStateEvent e){
 		//print ("Interlock State Check: " + _nodeIndex + " " + e.Unlock);
-		if (e.SendFrom != _nodeIndex && (e.SendFrom == _lockNodeSenderIdx || e.SendFrom == _lockNodeReceiverIdx )) {
+		// TODO: for one with multiple index
+		if (e.SendFrom != _nodeIndex && e.SendTo == _nodeIndex) {
 			_isActive = e.Unlock;
 		}
 

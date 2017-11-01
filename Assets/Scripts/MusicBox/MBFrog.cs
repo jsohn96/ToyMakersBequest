@@ -16,6 +16,14 @@ public class MBFrog : MonoBehaviour {
 	int _curNodeOrderIdx = 0;
 	int _loopNodeNum = 3;
 
+	[SerializeField] Transform _pondMain;
+	[SerializeField] Transform _ponfSide;
+
+	float _radiusRatioMainToSide = 2;
+	float _mainRotateAxis;
+
+	float _originAngle; 
+
 
 	//
 	void OnEnable(){
@@ -30,6 +38,8 @@ public class MBFrog : MonoBehaviour {
 	void Start () {
 		_frogTransform = gameObject.transform;
 		_curNodeOrderIdx = -1;
+		// 
+		_originAngle = _pondMain.transform.localEulerAngles.z;
 		
 	}
 	
@@ -40,6 +50,10 @@ public class MBFrog : MonoBehaviour {
 		}
 
 		FrogDetectDancer ();
+
+		if (_isEnterPond) {
+			GearWorkUpdate ();
+		}
 
 
 	}
@@ -52,6 +66,9 @@ public class MBFrog : MonoBehaviour {
 			if (_curNodeOrderIdx + 1 < _JumpNode.Length) {
 				tempIdx = _curNodeOrderIdx + 1;
 			} else {
+				if (!_isEnterPond) {
+					_isEnterPond = true;
+				}
 				tempIdx = _JumpNode.Length - _loopNodeNum;
 			}
 
@@ -76,7 +93,29 @@ public class MBFrog : MonoBehaviour {
 		}
 	}
 
+	// 
+	void GearWorkUpdate(){
+		//float radiusLength = 0;
+		float mainrotateAngle = _pondMain.transform.localEulerAngles.z - _originAngle;
+		_originAngle = _pondMain.transform.localEulerAngles.z;
+		float sideAngle = -mainrotateAngle * 2;
+		Quaternion angle = _ponfSide.transform.localRotation;
+		angle = angle * Quaternion.Euler (0, 0, sideAngle);
+		_ponfSide.transform.localRotation = angle;
+
+		// check side circle rotation 
+		if(_ponfSide.transform.localEulerAngles.z == 360){
+			_isCaught = true;
+		}
+
+	}
+
+
+
 	void PathStateManageHandle(PathStateManagerEvent e){
+		if (e.activeEvent == PathState.enter_pond && !_isEnterPond) {
+			_isEnterPond = true;
+		}
 		
 	}
 }

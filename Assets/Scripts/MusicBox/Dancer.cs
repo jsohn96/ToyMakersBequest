@@ -39,7 +39,7 @@ public class Dancer : MonoBehaviour {
 
 	// playmode 
 	PlayMode _myPlayMode;
-	bool _isOnStaticTrack = false;
+	bool _isNodeWithPath = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -102,7 +102,7 @@ public class Dancer : MonoBehaviour {
 			// adjust the dancer rotation 
 			if (isMoving &&!isPathFinished) {
 				// if the dancer is on the static track
-				if (_isOnStaticTrack ) {
+				if (_isNodeWithPath ) {
 					_progress += Time.deltaTime / _duration;
 					if (_progress >= 1f) {
 						_progress = 1f;
@@ -133,8 +133,8 @@ public class Dancer : MonoBehaviour {
 				}
 
 				if (isPathFinished) {
-					if (_isOnStaticTrack) {
-						_isOnStaticTrack = false;
+					if (_isNodeWithPath) {
+						_isNodeWithPath = false;
 					}
 				}
 
@@ -196,9 +196,9 @@ public class Dancer : MonoBehaviour {
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
 		//TODO: add code for p2 
-		if (pn.readNodeInfo ().paths.Length > 0) {
+		if (pn.readNodeInfo ().paths!= null && pn.readNodeInfo ().paths.Length > 0) {
 			_progress = 0f;
-			_isOnStaticTrack = true;
+			_isNodeWithPath = true;
 			_activeSpline = pn.readNodeInfo ().paths [activePath];
 			//print ("Check Active Path" + activePath);
 			_curStartPos = _activeSpline.GetPoint (0);
@@ -207,7 +207,7 @@ public class Dancer : MonoBehaviour {
 			//print ("Current Spline Length: " + pathLength);
 			_duration = pathLength * _DurationSensitivity;
 		} else {
-			_isOnStaticTrack = false;
+			_isNodeWithPath = false;
 			print ("Enter Node");
 			//_activeSpline == null;
 		}
