@@ -21,7 +21,8 @@ public enum PathState{
 	hold_hand_with_TM,
 	descend_to_layer_two,
 	temp_end_scene,
-	activateInterlockNode
+	activateInterlockNode,
+	enter_pond
 }
 
 
@@ -219,6 +220,12 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	void InterlockNodeStateHandle(InterlockNodeStateEvent e){
+		
+	}
+
+	// for loop in the path
+	// loop the next node order between the fromIdx and toIdx
+	void EnterLoop(int fromIdx, int toIdx){
 		
 	}
 

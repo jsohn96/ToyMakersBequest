@@ -522,20 +522,7 @@ public class PathNode : MonoBehaviour {
 				float targetAngle = AngleSnap (tempAngle);
 				print("Final angle check: " + tempAngle + "," + targetAngle);
 
-//				if (targetAngle == _assignedDegree[_curSegIdx]) {
-//					_isCorrectConnection = true;
-//					if (_cylinderRenderer) {
-//						_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-//					}
-//				} else {
-//					_isCorrectConnection = false;
-//					if (_cylinderRenderer) {
-//						_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-//					}
-//
-//				}
-//				//update node info 
-//				_myNodeInfo.isConnected = _isCorrectConnection;
+
 			}
 		}
 
