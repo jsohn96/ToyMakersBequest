@@ -35,4 +35,10 @@ public static class MathHelpers {
             return new Vector2(Mathf.Cos(sample), Mathf.Sin(sample));
         }
     }
+
+	public static Quaternion KeepRotationLevel(Quaternion rotation){
+		Vector3 tempRotation = rotation.eulerAngles;
+		tempRotation.z = 0.0f;
+		return Quaternion.Euler (tempRotation);
+	}
 }
