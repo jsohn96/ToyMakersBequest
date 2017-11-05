@@ -225,6 +225,7 @@ public class PathNode : MonoBehaviour {
 		// Rotate Circles
 		if(_isActive){
 			ClickWithMouse ();
+			//RotateWithMouse ();
 //			if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
 //				ClickWithMouse ();
 //				//			if (_isWinded) {
