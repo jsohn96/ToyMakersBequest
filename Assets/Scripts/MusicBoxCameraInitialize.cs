@@ -5,7 +5,7 @@ using UnityStandardAssets.Cameras;
 using System;
 
 public class MusicBoxCameraInitialize : MonoBehaviour {
-	[SerializeField] Transform _otherPositionCamera;
+	[SerializeField] Transform _startPositionCamera;
 	[SerializeField] Transform _dancer;
 	[SerializeField] MusicBoxManager _musicBoxManager;
 	bool _once = false;
@@ -47,11 +47,13 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 			_cameraInitTime.Reset ();
 			_once = true;
 		}
+
 		if (!_zoomOut) {
 			if (_once) {
+				Debug.Log ("Cooldown: "+_cameraInitTime.IsOffCooldown);
 				if (!_cameraInitTime.IsOffCooldown) {
-					_tempPos = Vector3.Slerp (_originPosition, _otherPositionCamera.position, _cameraInitTime.PercentTimePassed);
-					_tempRot = Quaternion.Lerp (_originRotation, _otherPositionCamera.rotation, _cameraInitTime.PercentTimePassed);
+					_tempPos = Vector3.Slerp (_originPosition, _startPositionCamera.position, _cameraInitTime.PercentTimePassed);
+					_tempRot = Quaternion.Slerp (_originRotation, _startPositionCamera.rotation, _cameraInitTime.PercentTimePassed);
 					_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 					transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
 				} 
@@ -62,9 +64,9 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 		} else {
 			if (!_zoomOutTimer.IsOffCooldown) {
 				Camera.main.fieldOfView = Mathf.Lerp (_tempfov, _tempGoalfov, _zoomOutTimer.PercentTimePassed);
-				_tempRot = Quaternion.Lerp (_otherPositionCamera.rotation, _originRotation, _zoomOutTimer.PercentTimePassed);
+				_tempRot = Quaternion.Slerp (_startPositionCamera.rotation, _originRotation, _zoomOutTimer.PercentTimePassed);
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
-				_tempPos = Vector3.Slerp (_otherPositionCamera.position, _originPosition, _zoomOutTimer.PercentTimePassed);
+				_tempPos = Vector3.Slerp (_startPositionCamera.position, _originPosition, _zoomOutTimer.PercentTimePassed);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
 			}
 		}
@@ -74,12 +76,11 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 		if (_cachedPathNode != _musicBoxManager.GetActivePathNetwork ()._curNode) {
 			_cachedPathNode = _musicBoxManager.GetActivePathNetwork ()._curNode;
 
+			if (_musicBoxManager.GetActivePathNetwork ()._curNode.GetControlColor() != ButtonColor.None) {
 				if (_targetFieldOfViewScript.enabled) {
 					_targetFieldOfViewScript.SetTargetOverride (_cachedPathNode.transform);
 				}
-				if (_lookAtTargetScript.enabled) {
-					_lookAtTargetScript.SetTargetOverride (_cachedPathNode.transform);
-				}
+				_lookAtTargetScript.SetTargetOverride (_cachedPathNode.transform);
 			} else {
 				_targetFieldOfViewScript.SetTargetOverride (_dancer);
 				_lookAtTargetScript.SetTargetOverride (_dancer);
@@ -118,3 +119,5 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 		Events.G.RemoveListener<CamerafovAmountChange> (ChangeZoom);
 	}
 }
+
+
