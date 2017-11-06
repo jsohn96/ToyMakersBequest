@@ -35,6 +35,11 @@ namespace UnityStandardAssets.Cameras
             m_OriginalRotation = transform.localRotation;
         }
 
+		void OnEnable(){
+			m_OriginalRotation = transform.localRotation;
+			m_FollowAngles = Vector3.zero;
+		}
+
 
         protected override void FollowTarget(float deltaTime)
         {
