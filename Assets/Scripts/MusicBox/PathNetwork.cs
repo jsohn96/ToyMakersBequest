@@ -35,7 +35,7 @@ public class PathNetwork : MonoBehaviour {
 	[SerializeField] Dancer _myDancer;
 	int _curNodeIdx;
 	int _orderIdx = 0;
-	PathNode _curNode;
+	public PathNode _curNode{ get; set;}
 	bool _isCheckingNext = false;
 	bool _isDancerFinishPath = false;
 	int _curCheckIdx = 0;

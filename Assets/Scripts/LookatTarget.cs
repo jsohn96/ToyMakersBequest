@@ -64,5 +64,9 @@ namespace UnityStandardAssets.Cameras
 			tempV3.z = 0.0f;
 			transform.localRotation = Quaternion.Euler (tempV3);
         }
+
+		public void SetTargetOverride(Transform _targetTransform){
+			m_Target = _targetTransform;
+		}
     }
 }

@@ -75,5 +75,9 @@ namespace UnityStandardAssets.Cameras
             float max = Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
             return max;
         }
+
+		public void SetTargetOverride(Transform _targetTransform){
+			m_Target = _targetTransform;
+		}
     }
 }

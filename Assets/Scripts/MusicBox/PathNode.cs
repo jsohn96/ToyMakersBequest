@@ -636,5 +636,7 @@ public class PathNode : MonoBehaviour {
 
 	}
 
-
+	public ButtonColor GetControlColor(){
+		return _ControlColor;
+	}
 }

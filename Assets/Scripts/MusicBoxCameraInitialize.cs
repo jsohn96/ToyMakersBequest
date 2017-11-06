@@ -6,6 +6,8 @@ using System;
 
 public class MusicBoxCameraInitialize : MonoBehaviour {
 	[SerializeField] Transform _otherPositionCamera;
+	[SerializeField] Transform _dancer;
+	[SerializeField] MusicBoxManager _musicBoxManager;
 	bool _once = false;
 	Timer _cameraInitTime;
 	Quaternion _originRotation;
@@ -23,6 +25,7 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 	Timer _zoomOutTimer;
 
 	ObjectRotator _objectRotator;
+	PathNode _cachedPathNode = null;
 
 	// Use this for initialization
 	void Start () {
@@ -63,6 +66,23 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 				_tempPos = Vector3.Slerp (_otherPositionCamera.position, _originPosition, _zoomOutTimer.PercentTimePassed);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
+			}
+		}
+
+		//Have the camera focus on the circle that the dancer is on, instead of dancer
+		// An attempt to reduce nausea
+		if (_cachedPathNode != _musicBoxManager.GetActivePathNetwork ()._curNode) {
+			_cachedPathNode = _musicBoxManager.GetActivePathNetwork ()._curNode;
+
+				if (_targetFieldOfViewScript.enabled) {
+					_targetFieldOfViewScript.SetTargetOverride (_cachedPathNode.transform);
+				}
+				if (_lookAtTargetScript.enabled) {
+					_lookAtTargetScript.SetTargetOverride (_cachedPathNode.transform);
+				}
+			} else {
+				_targetFieldOfViewScript.SetTargetOverride (_dancer);
+				_lookAtTargetScript.SetTargetOverride (_dancer);
 			}
 		}
 	}

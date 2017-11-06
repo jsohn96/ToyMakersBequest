@@ -14,6 +14,7 @@ public class MusicBoxManager : MonoBehaviour {
 	[SerializeField] PlayMode _playMode;
 	[SerializeField] GameObject[] _Layers;
 	[SerializeField] PathNetwork[] _musicPaths;
+	int _activePathIndex;
 	[SerializeField] GameObject _firstDescendCircle;
 
 	Vector3 _goalRotation = new Vector3 (0.0f, 360.0f, -90.0f);
@@ -87,6 +88,7 @@ public class MusicBoxManager : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
 			_isStartPath = true;
 			_musicPaths[0].SetPathActive(true);
+			_activePathIndex = 0;
 			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
 
 		}
@@ -135,6 +137,7 @@ public class MusicBoxManager : MonoBehaviour {
 			_firstDescendCircle.transform.parent = _musicPaths[1].transform;
 			_musicPaths [1].UpdateNodes ();
 			_musicPaths [1].SetPathActive (true);
+			_activePathIndex = 1;
 			_hideFirstLayer = true;
 
 			_originRotation = _Layers [0].transform.localRotation;
@@ -153,5 +156,11 @@ public class MusicBoxManager : MonoBehaviour {
 	void EndScene(){
 		StartCoroutine (StateManager._stateManager.ChangeLevel (1));
 	
+	}
+
+
+	//Returns the Active path network
+	public PathNetwork GetActivePathNetwork(){
+		return _musicPaths [_activePathIndex];
 	}
 }
