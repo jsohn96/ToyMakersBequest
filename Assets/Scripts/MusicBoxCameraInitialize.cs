@@ -6,7 +6,8 @@ using System;
 
 public enum MusicBoxCameraMode {
 	StaticFollowMode,
-	Static,
+	WayPointMode,
+	TraversalMode,
 	Null
 }
 
@@ -14,9 +15,10 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 
 	MusicBoxCameraMode _musicBoxCameraMode = MusicBoxCameraMode.Null;
 
-	[SerializeField] Transform _startPositionCamera;
+	[SerializeField] Transform _startPositionCamera, _endPositionCamera;
 	[SerializeField] Transform _dancer;
 	[SerializeField] MusicBoxManager _musicBoxManager;
+	[SerializeField] CameraControlPoint _cameraControlPoints;
 
 	bool _initialized = false;
 
@@ -63,11 +65,23 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 		_cameraIsMoving = true;
 	}
 
+	void TriggerTraversalMode(){
+		_originPosition = transform.parent.position;
+		_originRotation = transform.parent.rotation;
+		_goalPosition = _endPositionCamera.position;
+		_goalRotation = _endPositionCamera.rotation;
+		_cameraMoveTimer.Reset ();
+		_cameraIsMoving = true;
+		_objectRotator.enabled = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
-		if (!_initialized && Input.GetKeyDown(KeyCode.Space)) {
+		if (!_initialized && Input.GetKeyDown (KeyCode.Space)) {
 			//Bring the camera to the start position for the level
 			InitializeMusicBoxLevel ();
+		} else if(Input.GetKeyDown (KeyCode.Space)){
+			SwitchCameraMode (MusicBoxCameraMode.TraversalMode);
 		}
 
 		if (_cameraIsMoving) {
@@ -79,11 +93,10 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 			} else {
 				_cameraIsMoving = false;
 			}
-			if (Input.GetKeyDown (KeyCode.S)) {
-				StartCoroutine (WaitForTimer (_cameraMoveTimer, EnableFollowScripts));
-			}
 		}
-
+		if (Input.GetKeyDown (KeyCode.S) && _initialized && !_objectRotator.enabled) {
+			SwitchCameraMode (MusicBoxCameraMode.StaticFollowMode);
+		}
 		// Checks to see if camera should focus on circle or dancer
 		FocusCameraOnCircle ();
 
@@ -92,7 +105,22 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 
 	void SwitchCameraMode(MusicBoxCameraMode newCameraMode){
 		if (_musicBoxCameraMode != newCameraMode) {
+			_musicBoxCameraMode = newCameraMode;
 			switch (_musicBoxCameraMode) {
+			case MusicBoxCameraMode.StaticFollowMode:
+				_objectRotator.enabled = false;
+				StartCoroutine (WaitForTimer (_cameraMoveTimer, EnableFollowScripts));
+				break;
+			case MusicBoxCameraMode.WayPointMode:
+				_objectRotator.enabled = false;
+				_targetFieldOfViewScript.enabled = false;
+				_lookAtTargetScript.enabled = false;
+				break;
+			case MusicBoxCameraMode.TraversalMode:
+				_targetFieldOfViewScript.enabled = false;
+				_lookAtTargetScript.enabled = false;
+				TriggerTraversalMode ();
+				break;
 			default:
 				break;
 			}
