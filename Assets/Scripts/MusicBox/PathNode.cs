@@ -367,11 +367,11 @@ public class PathNode : MonoBehaviour {
 			float tempRotDegree = transform.localRotation.eulerAngles.z;
 			int curCheckIdx = 0;
 			if (!_isDancerOnBoard) {
-				print (_nodeIndex + ": Check In ");
+				//print (_nodeIndex + ": Check In ");
 				curCheckIdx = _curSegIdx * 2;
 			} else {
 				curCheckIdx = _curSegIdx * 2 + 1;
-				print (_nodeIndex + ": Check Out ");
+				//print (_nodeIndex + ": Check Out ");
 			}
 
 			//print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
