@@ -75,9 +75,12 @@ namespace UnityStandardAssets.Cameras
             float max = Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
             return max;
         }
-
-		public void SetTargetOverride(Transform _targetTransform){
-			m_Target = _targetTransform;
+			
+		public void AdjustFOV(float fovAmount, float duration){
+			if(fovAmount != m_ZoomAmountMultiplier){
+				m_FovAdjustTime = duration;
+				m_ZoomAmountMultiplier = fovAmount;
+			}
 		}
     }
 }

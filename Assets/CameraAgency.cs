@@ -9,6 +9,8 @@ public class CameraAgency : MonoBehaviour {
 	float _constraint = 3f;
 	Vector3 _tempRotation;
 
+	bool _isAgencying = false;
+
 	void Update()
 	{
 
@@ -16,14 +18,25 @@ public class CameraAgency : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(0))
 		{
-			dragOrigin = Input.mousePosition;
-			return;
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if(Physics.Raycast(ray, out hit,  Mathf.Infinity)){
+				if (hit.collider.gameObject.tag != "RotateCircle") {
+					dragOrigin = Input.mousePosition;
+					_isAgencying = true;
+				}
+			}
+			else {
+				dragOrigin = Input.mousePosition;
+				_isAgencying = true;
+			}
 		}
 
 		if (!Input.GetMouseButton (0)) {
-			return;
+			_isAgencying = false;
 		}
 
+		if(_isAgencying){
 		float x = Input.mousePosition.x - dragOrigin.x;
 		float y = Input.mousePosition.y - dragOrigin.y;
 
@@ -68,6 +81,7 @@ public class CameraAgency : MonoBehaviour {
 
 		//transform.Rotate (Vector3.up, Time.deltaTime);
 
-		//transform.Translate(move, Space.World);  
+		//transform.Translate(move, Space.World); 
+		}
 	}
 }

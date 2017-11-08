@@ -53,6 +53,9 @@ public class MusicBoxCameraManager : MonoBehaviour {
 		_zoomTimer = new Timer (1.5f);
 
 		_objectRotator = transform.parent.parent.GetComponent<ObjectRotator> ();
+
+		_lookAtTargetScript.SetTarget (_dancer);
+		_targetFieldOfViewScript.SetTarget (_dancer);
 	}
 
 	// Update is called once per frame
@@ -97,8 +100,15 @@ public class MusicBoxCameraManager : MonoBehaviour {
 		_cameraIsMoving = true;
 	}
 
-	// Expected to be called from Camera Timeline, except for waypoint Mode
-	// Call MoveToWayPoint() Instead for waypoint
+	public void ActivateStaticFollow(float zoomAmount = 8.0f, float adjustDuration = 1.0f){
+		if (_musicBoxCameraMode != MusicBoxCameraMode.StaticFollowMode) {
+			SwitchCameraMode (MusicBoxCameraMode.StaticFollowMode);
+		}
+		_targetFieldOfViewScript.AdjustFOV (zoomAmount, adjustDuration);
+	}
+		
+	// Call MoveToWayPoint() Instead for Waypoint, Traversal
+	// Call AcivateStaticFollow for static Follow
 	public void SwitchCameraMode(MusicBoxCameraMode newCameraMode){
 		if (_musicBoxCameraMode != newCameraMode) {
 			_musicBoxCameraMode = newCameraMode;
@@ -144,13 +154,13 @@ public class MusicBoxCameraManager : MonoBehaviour {
 			_cachedPathNode = _musicBoxManager.GetActivePathNetwork ()._curNode;
 
 			if (_musicBoxManager.GetActivePathNetwork ()._curNode.GetControlColor() != ButtonColor.None) {
-				if (_targetFieldOfViewScript.enabled) {
-					_targetFieldOfViewScript.SetTargetOverride (_cachedPathNode.transform);
-				}
-				_lookAtTargetScript.SetTargetOverride (_cachedPathNode.transform);
+				//if (_targetFieldOfViewScript.enabled) {
+				//	_targetFieldOfViewScript.SetTarget (_cachedPathNode.transform);
+				//}
+				_lookAtTargetScript.SetTarget (_cachedPathNode.transform);
 			} else {
-				_targetFieldOfViewScript.SetTargetOverride (_dancer);
-				_lookAtTargetScript.SetTargetOverride (_dancer);
+				//_targetFieldOfViewScript.SetTarget (_dancer);
+				_lookAtTargetScript.SetTarget (_dancer);
 			}
 		}
 	}
