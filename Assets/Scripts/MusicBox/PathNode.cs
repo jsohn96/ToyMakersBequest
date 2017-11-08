@@ -254,6 +254,8 @@ public class PathNode : MonoBehaviour {
 //					}
 				}
 			}
+
+			CheckNodeConnection ();
 			
 		}// end of checking isActive
 
@@ -264,7 +266,7 @@ public class PathNode : MonoBehaviour {
 	void FixedUpdate(){
 		// only check connection when node is active 
 		if (_isActive) {
-			CheckNodeConnection ();
+			
 		}
 
 		//		if (ischeckingConnection) {
@@ -348,7 +350,7 @@ public class PathNode : MonoBehaviour {
 		bool isfoundMatch = false;
 		if (_interlockNodes != null && _interlockNodes.Length > 0) {
 			foreach (InterlockNode itn in _interlockNodes) {
-				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal  * 5f) {
 					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, itn.sendToIdx));
 					isfoundMatch = true;
 					_intersectionPart = itn.intersection;
@@ -367,7 +369,7 @@ public class PathNode : MonoBehaviour {
 		bool isConnected = false;
 		if (_branchNodes != null && _branchNodes.Length > 0 ) {
 			foreach (BranchNode brn in _branchNodes) {
-				if (Mathf.Abs (DampAngle (degree) - DampAngle (brn.connectAngle)) <= errorVal) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (brn.connectAngle)) <= errorVal  * 5f) {
 					isConnected = true;
 					_isCorrectConnection = true;
 					_myNodeInfo.isConnected = _isCorrectConnection;
@@ -421,7 +423,7 @@ public class PathNode : MonoBehaviour {
 						PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
 						//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
 						if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
-						    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+						    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
 							_isCorrectConnection = true;
 							//adjNode._isCorrectConnection = true;
 							if (_cylinderRenderer) {
@@ -435,7 +437,7 @@ public class PathNode : MonoBehaviour {
 
 						}
 					} else {
-						if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+						if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
 							_isCorrectConnection = true;
 							if (_cylinderRenderer) {
 								_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
@@ -561,16 +563,16 @@ public class PathNode : MonoBehaviour {
 				tempAngle = DampAngle (tempAngle);
 				float snapAngleDelta = AngleSnap (tempAngle) - tempAngle;
 
-				if(!isRotating){
-					isRotating = true;
-					originAngle = transform.localRotation;
-					//transform.Rotate(0,0,-90);
-					finalAngle = transform.localRotation;
-					finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+				print ("Release drag final angle: " + AngleSnap (tempAngle));
 
-				}
 
-				// 
+				isRotating = true;
+				originAngle = transform.localRotation;
+				//transform.Rotate(0,0,-90);
+				finalAngle = transform.localRotation;
+				finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+
+
 
 			}
 		}
