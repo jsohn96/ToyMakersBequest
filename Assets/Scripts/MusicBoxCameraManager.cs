@@ -11,16 +11,15 @@ public enum MusicBoxCameraMode {
 	Null
 }
 
-public class MusicBoxCameraInitialize : MonoBehaviour {
+public class MusicBoxCameraManager : MonoBehaviour {
 
 	MusicBoxCameraMode _musicBoxCameraMode = MusicBoxCameraMode.Null;
 
 	[SerializeField] Transform _startPositionCamera, _endPositionCamera;
 	[SerializeField] Transform _dancer;
 	[SerializeField] MusicBoxManager _musicBoxManager;
-	[SerializeField] CameraControlPoint _cameraControlPoints;
 
-	bool _initialized = false;
+
 
 	bool _cameraIsMoving = false;
 	Timer _cameraMoveTimer;
@@ -28,6 +27,9 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 	Vector3 _originPosition;
 	Quaternion _goalRotation;
 	Vector3 _goalPosition;
+	float _originFOV;
+	float _goalFOV;
+	bool _includeFOVShift = false;
 
 	Vector3 _tempPos;
 	Quaternion _tempRot;
@@ -53,57 +55,51 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 		_objectRotator = transform.parent.parent.GetComponent<ObjectRotator> ();
 	}
 
-	//Brings the camera to the start position for the level
-	void InitializeMusicBoxLevel(){
-		_initialized = true;
-		_objectRotator.enabled = false;
-		_originPosition = transform.parent.position;
-		_originRotation = transform.parent.rotation;
-		_goalPosition = _startPositionCamera.position;
-		_goalRotation = _startPositionCamera.rotation;
-		_cameraMoveTimer.Reset ();
-		_cameraIsMoving = true;
-	}
-
-	void TriggerTraversalMode(){
-		_originPosition = transform.parent.position;
-		_originRotation = transform.parent.rotation;
-		_goalPosition = _endPositionCamera.position;
-		_goalRotation = _endPositionCamera.rotation;
-		_cameraMoveTimer.Reset ();
-		_cameraIsMoving = true;
-		_objectRotator.enabled = true;
-	}
-
 	// Update is called once per frame
 	void Update () {
-		if (!_initialized && Input.GetKeyDown (KeyCode.Space)) {
-			//Bring the camera to the start position for the level
-			InitializeMusicBoxLevel ();
-		} else if(Input.GetKeyDown (KeyCode.Space)){
-			SwitchCameraMode (MusicBoxCameraMode.TraversalMode);
-		}
-
 		if (_cameraIsMoving) {
 			if (!_cameraMoveTimer.IsOffCooldown) {
 				_tempPos = Vector3.Slerp (_originPosition, _goalPosition, _cameraMoveTimer.PercentTimePassed);
 				_tempRot = Quaternion.Slerp (_originRotation, _goalRotation, _cameraMoveTimer.PercentTimePassed);
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
+				if (_includeFOVShift) {
+					Camera.main.fieldOfView = Mathf.Lerp (_originFOV, _goalFOV, _cameraMoveTimer.PercentTimePassed);
+				}
 			} else {
 				_cameraIsMoving = false;
+				_includeFOVShift = false;
 			}
-		}
-		if (Input.GetKeyDown (KeyCode.S) && _initialized && !_objectRotator.enabled) {
-			SwitchCameraMode (MusicBoxCameraMode.StaticFollowMode);
 		}
 		// Checks to see if camera should focus on circle or dancer
 		FocusCameraOnCircle ();
 
 	}
 
+	public void MoveToWayPoint(Transform wayPointTransform, float duration, float fov = 0.0f, bool isTraversal = false){
+		if (isTraversal) {
+			SwitchCameraMode (MusicBoxCameraMode.TraversalMode);
+		} else {
+			SwitchCameraMode (MusicBoxCameraMode.WayPointMode);
+		}
+		_originPosition = transform.parent.position;
+		_originRotation = transform.parent.rotation;
+		_goalPosition = wayPointTransform.position;
+		_goalRotation = wayPointTransform.rotation;
 
-	void SwitchCameraMode(MusicBoxCameraMode newCameraMode){
+		_originFOV = Camera.main.fieldOfView;
+		if (fov != 0.0f) {
+			_goalFOV = fov;
+			_includeFOVShift = true;
+		}
+		_cameraMoveTimer.CooldownTime = duration;
+		_cameraMoveTimer.Reset ();
+		_cameraIsMoving = true;
+	}
+
+	// Expected to be called from Camera Timeline, except for waypoint Mode
+	// Call MoveToWayPoint() Instead for waypoint
+	public void SwitchCameraMode(MusicBoxCameraMode newCameraMode){
 		if (_musicBoxCameraMode != newCameraMode) {
 			_musicBoxCameraMode = newCameraMode;
 			switch (_musicBoxCameraMode) {
@@ -119,7 +115,7 @@ public class MusicBoxCameraInitialize : MonoBehaviour {
 			case MusicBoxCameraMode.TraversalMode:
 				_targetFieldOfViewScript.enabled = false;
 				_lookAtTargetScript.enabled = false;
-				TriggerTraversalMode ();
+				_objectRotator.enabled = true;
 				break;
 			default:
 				break;
