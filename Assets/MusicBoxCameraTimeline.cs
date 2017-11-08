@@ -39,7 +39,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 			}
 		}
 		if (Input.GetKeyDown (KeyCode.S)) {
-			_musicBoxCameraManager.SwitchCameraMode (MusicBoxCameraMode.StaticFollowMode);
+			_musicBoxCameraManager.ActivateStaticFollow ();
 		}
 	}
 
