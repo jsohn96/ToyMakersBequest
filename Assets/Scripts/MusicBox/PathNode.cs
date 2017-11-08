@@ -102,6 +102,7 @@ public class PathNode : MonoBehaviour {
 	bool isDragStart = false;
 	Vector3 dragStartPos;
 	Vector3 dragPreviousMousePos;
+	float dragSensitivity = 0.05f;
 	float hitDist;
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
@@ -236,11 +237,12 @@ public class PathNode : MonoBehaviour {
 	void Update () {
 		// Rotate Circles
 		if(_isActive){
-			ClickWithMouse ();
+			//ClickWithMouse ();
+			RotateWithMouse();
 
 			if(isRotating){
 				// rotate the node 
-				if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*10f){
+				if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*20f){
 					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
 				} else {
 					//print ("####### reset boolean #######");
@@ -508,17 +510,15 @@ public class PathNode : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
 			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			dragPreviousMousePos = Input.mousePosition;
+			//dragPreviousMousePos = Input.mousePosition;
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				//print ("git the circle: " + hit.point);
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					//isDragStart = true;
-					//dragStartPos = hit.point;
+
 					RotateNode();
 					hitDist = hit.distance;
-					// turn circle with the same control color
-					Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
+					//Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
 
 
 				}
@@ -557,13 +557,20 @@ public class PathNode : MonoBehaviour {
 				//hitDist = 0;
 				accAngle = 0;
 
-
-				float tempAngle = gameObject.transform.rotation.eulerAngles.z;
-				// dont need this step 
+				float tempAngle = transform.localEulerAngles.z;
 				tempAngle = DampAngle (tempAngle);
-				float targetAngle = AngleSnap (tempAngle);
-				print("Final angle check: " + tempAngle + "," + targetAngle);
+				float snapAngleDelta = AngleSnap (tempAngle) - tempAngle;
 
+				if(!isRotating){
+					isRotating = true;
+					originAngle = transform.localRotation;
+					//transform.Rotate(0,0,-90);
+					finalAngle = transform.localRotation;
+					finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+
+				}
+
+				// 
 
 			}
 		}
@@ -590,8 +597,16 @@ public class PathNode : MonoBehaviour {
 			Vector3 rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
 			//print ("Debug: rotate axis " + rotateAxis);
 
+			// determine the angle with the mouse position offset 
+			float dragDistance = Vector3.Distance(Input.mousePosition, dragPreviousMousePos);
+			float distanceToCenter = Vector3.Distance (dragStartPos, transform.position);
+			float angle = dragDistance * dragSensitivity * Mathf.Rad2Deg * (5/distanceToCenter);
+
+			dragPreviousMousePos = Input.mousePosition;
+
 			// get the angle 
-			float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
+			//
+			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
 			//print ("Angle Check: " + accAngle);
 			if (accAngle >= 0f) {
@@ -611,7 +626,7 @@ public class PathNode : MonoBehaviour {
 
 	// snap rotation angle to the clock --> use in the clock puzzle 
 	float AngleSnap(float angle){
-		float subDeg = 360/12;
+		float subDeg = 360/4;
 		// round the angle to the next subdivision point 
 		float remainder = angle%subDeg;
 		if (remainder >= subDeg / 2) {
