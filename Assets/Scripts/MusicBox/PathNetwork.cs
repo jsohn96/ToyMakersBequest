@@ -39,8 +39,10 @@ public class PathNetwork : MonoBehaviour {
 	bool _isCheckingNext = false;
 	bool _isDancerFinishPath = false;
 	int _curCheckIdx = 0;
+	int _nxtCheckIdx = -1;
 	bool _isStartPath = false;
 	bool _isPathPause = false;
+	bool _isPathLoop = false;
 
 	PlayMode _myPlayMode;
 
@@ -62,6 +64,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
 		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
+		Events.G.AddListener<MBPathIndexEvent> (PathIndexHandle);
 
 	}
 
@@ -70,6 +73,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
+		Events.G.RemoveListener<MBPathIndexEvent> (PathIndexHandle);
 	}
 
 	void Start(){
@@ -83,6 +87,7 @@ public class PathNetwork : MonoBehaviour {
 	void Update () {
 		///
 		if(_isCheckingNext && _isActive && !_isPathPause){
+			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
 			print ("Check connection for " + _curNodeIdx + ":" + _curNode.readNodeInfo ().isConnected
 				+ "and " +_curNode.readNodeInfo().index + ":" + tempNode.readNodeInfo ().isConnected);
@@ -130,6 +135,7 @@ public class PathNetwork : MonoBehaviour {
 
 		_curNode = FindNodeWithIndex (_curNodeIdx);
 		_myDancer.SetNewPath (_curNode);
+		Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 
 	}
 
@@ -138,15 +144,7 @@ public class PathNetwork : MonoBehaviour {
 	void PathResumeHandle(PathResumeEvent e){
 		if (_isPathPause) {
 			_isPathPause = false;
-			if (_orderIdx + 1 < _correctOrder.Length) {
-				_orderIdx += 1;
-				_curNodeIdx = _correctOrder [_orderIdx].index;
-				_isCheckingNext = true;
-			} else {
-				print ("success!!");
-				// trigger final state 
-				Events.G.Raise (new PathCompeleteEvent ());
-			}
+			CheckNextIdx ();
 		}
 	}
 
@@ -159,15 +157,7 @@ public class PathNetwork : MonoBehaviour {
 			// check if there is anyevent envoked when the path is finished 
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
 				Events.G.Raise (new MBMusicMangerEvent (false));
-				if (_orderIdx + 1 < _correctOrder.Length) {
-					_orderIdx += 1;
-					_curNodeIdx = _correctOrder [_orderIdx].index;
-					_isCheckingNext = true;
-				} else {
-					print ("success!!");
-					// trigger final state 
-					Events.G.Raise (new PathCompeleteEvent ());
-				}
+				CheckNextIdx ();
 			} else {
 				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
 				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
@@ -225,9 +215,59 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	// for loop in the path
-	// loop the next node order between the fromIdx and toIdx
+
 	void EnterLoop(int fromIdx, int toIdx){
 		
+	}
+
+	// loop the next node order between the fromIdx and toIdx
+	void LoopBetween(int fromIdx, int toIdx){
+		if (_nxtCheckIdx + 1 <= toIdx || _nxtCheckIdx < fromIdx) {
+			_nxtCheckIdx = fromIdx;
+		}
+
+	}
+
+	void JumpToIndex(int idx){
+		if (idx < _correctOrder.Length && idx >= 0) {
+			_nxtCheckIdx = idx;
+		}
+	}
+
+	void CheckNextIdxUpdate(){
+		if (_nxtCheckIdx >= 0 && _nxtCheckIdx < _correctOrder.Length ) {
+			_orderIdx = _nxtCheckIdx;
+			_curNodeIdx = _correctOrder [_orderIdx].index;
+		}
+		_nxtCheckIdx = -1;
+	
+	}
+
+	// for handling all the different senarios for getting the next node index 
+	// call after path finished && after any end of path events finished 
+	void CheckNextIdx(){
+		if (_orderIdx + 1 < _correctOrder.Length && _nxtCheckIdx < 0) {
+			_orderIdx += 1;
+			_curNodeIdx = _correctOrder [_orderIdx].index;
+			// TODO add other senarios 
+			_isCheckingNext = true;
+		} else if(_nxtCheckIdx > 0){
+			_orderIdx = _nxtCheckIdx;
+			_curNodeIdx = _correctOrder [_orderIdx].index;
+			// TODO add other senarios 
+			_nxtCheckIdx = -1;
+			_isCheckingNext = true;
+
+		}else if(_orderIdx + 1 < _correctOrder.Length && _nxtCheckIdx < 0){
+			print ("success!!");
+			// trigger final state 
+			Events.G.Raise (new PathCompeleteEvent ());
+		}
+	}
+
+	//
+	void PathIndexHandle(MBPathIndexEvent e){
+		JumpToIndex (e.jumpToIndex);
 	}
 
 

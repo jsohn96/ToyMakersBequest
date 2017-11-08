@@ -7,7 +7,8 @@ public enum ButtonColor{
 	Yellow,
 	Brown,
 	None,
-	RotatableObject
+	RotatableObject,
+	Branch
 
 };
 
@@ -30,6 +31,16 @@ public struct InterlockNode{
 		sendToIdx = id;
 		lockAngle = angle;
 		intersection = itc;
+	}
+}
+
+[System.Serializable]
+public struct BranchNode{
+	public int jumpToNodeIdx;
+	public float connectAngle;
+	BranchNode(int id, float angle){
+		jumpToNodeIdx = id;
+		connectAngle = angle;
 	}
 }
 
@@ -120,7 +131,8 @@ public class PathNode : MonoBehaviour {
 //	[SerializeField] float _interLockAngle;
 
 	[SerializeField] InterlockNode[] _interlockNodes;
-
+	[SerializeField] BranchNode[] _branchNodes;
+ 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
@@ -225,18 +237,6 @@ public class PathNode : MonoBehaviour {
 		// Rotate Circles
 		if(_isActive){
 			ClickWithMouse ();
-			//RotateWithMouse ();
-//			if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
-//				ClickWithMouse ();
-//				//			if (_isWinded) {
-//				//				ClickWithMouse ();
-//				//			} else {
-//				//				RotateWithMouse ();
-//				//			}
-//			} else if(_myPlayMode == PlayMode.MBPrototype_With_Path) {
-//				ClickWithMouse ();
-//			}
-
 
 			if(isRotating){
 				// rotate the node 
@@ -361,6 +361,29 @@ public class PathNode : MonoBehaviour {
 		}
 	}
 
+	void CheckBranchNodes(float degree){
+		bool isConnected = false;
+		if (_branchNodes != null && _branchNodes.Length > 0 ) {
+			foreach (BranchNode brn in _branchNodes) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (brn.connectAngle)) <= errorVal) {
+					isConnected = true;
+					_isCorrectConnection = true;
+					_myNodeInfo.isConnected = _isCorrectConnection;
+					if (_isDancerOnBoard) {
+						print (" branching dancer on board to emit event");
+						Events.G.Raise (new MBPathIndexEvent (brn.jumpToNodeIdx));
+					} 
+
+					return;
+				} 
+			}
+			//Events.G.Raise (new MBPathIndexEvent (-1));
+			_isCorrectConnection = false;
+			_myNodeInfo.isConnected = _isCorrectConnection;
+		}
+
+	}
+
 
 	void CheckNodeConnection(){
 		if (_ControlColor != ButtonColor.None) {
@@ -379,59 +402,59 @@ public class PathNode : MonoBehaviour {
 			// update current checking index
 
 			// when the node is interlocked check for the interlock logic 
-			if(_isInterLocked){
+			if (_isInterLocked) {
 				CheckInterlockNodes (tempRotDegree);
 
 			}
 
-			if (_adjacentNode.Length > 0) {
-				if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
-					// if the node has dependency on other nodes
+			if (_ControlColor == ButtonColor.Branch) {
+				CheckBranchNodes (tempRotDegree);
+			} else {
+				// check for connection (relative angle + defnite ange)
+				if (_adjacentNode.Length > 0) {
+					if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
+						// if the node has dependency on other nodes
 
-					// check relative angle && get the next node information 
-					PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-					//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
-					if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
-						- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
-						_isCorrectConnection = true;
-						//adjNode._isCorrectConnection = true;
-						if (_cylinderRenderer) {
-							_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+						// check relative angle && get the next node information 
+						PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
+						//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
+						if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
+						    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+							_isCorrectConnection = true;
+							//adjNode._isCorrectConnection = true;
+							if (_cylinderRenderer) {
+								_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+							}
+						} else {
+							_isCorrectConnection = false;
+							if (_cylinderRenderer) {
+								_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+							}
+
 						}
 					} else {
-						_isCorrectConnection = false;
-						if (_cylinderRenderer) {
-							_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+						if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
+							_isCorrectConnection = true;
+							if (_cylinderRenderer) {
+								_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+							}
+
+						} else {
+							_isCorrectConnection = false;
+							if (_cylinderRenderer) {
+								_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+							}
+
+
 						}
 
 					}
-				} else {
-					if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal) {
-						_isCorrectConnection = true;
-						if (_cylinderRenderer) {
-							_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-						}
-
-					} else {
-						_isCorrectConnection = false;
-						if (_cylinderRenderer) {
-							_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-						}
-
-
-					}
-
+					_myNodeInfo.isConnected = _isCorrectConnection;
 				}
 
 			}
+		}
 
-			_myNodeInfo.isConnected = _isCorrectConnection;
-
-
-			//update node info 
-
-
-		} 
 	}
 
 	public void InterlockNodeStateHandle(InterlockNodeStateEvent e){
@@ -456,15 +479,6 @@ public class PathNode : MonoBehaviour {
 				_curSegIdx += 1;
 				// update node info --> move on to the next spline
 				_myNodeInfo.activeSegIdx = _curSegIdx;
-
-				// reset connection status
-//				if (_assignedDegree [_curSegIdx] != _assignedDegree [_curSegIdx - 1]) {
-//					_isCorrectConnection = false;
-//					_myNodeInfo.isConnected = _isCorrectConnection;
-//					if (_cylinderRenderer != null) {
-//						_cylinderRenderer.material = _originMat;
-//					}
-//				}
 			}
 
 		}

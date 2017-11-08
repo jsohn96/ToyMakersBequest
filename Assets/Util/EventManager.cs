@@ -110,6 +110,13 @@ public class MBLightManagerEvent:GameEvent{
 	}
 }
 
+public class MBPathIndexEvent:GameEvent{
+	public int jumpToIndex{ get; private set; }
+	public MBPathIndexEvent(int jmp){
+		jumpToIndex = jmp;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//
