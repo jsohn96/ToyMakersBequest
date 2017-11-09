@@ -118,6 +118,10 @@ public class MBPathIndexEvent:GameEvent{
 	}
 }
 
+public class MBExitPondLoop:GameEvent{
+	
+}
+
 //***********//
 //    UI     //
 //***********//

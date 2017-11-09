@@ -631,7 +631,7 @@ public class PathNode : MonoBehaviour {
 
 	// snap rotation angle to the clock --> use in the clock puzzle 
 	float AngleSnap(float angle){
-		float subDeg = 360/12;
+		float subDeg = 360/36;
 		// round the angle to the next subdivision point 
 		float remainder = angle%subDeg;
 		if (remainder >= subDeg / 2) {

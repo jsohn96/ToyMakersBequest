@@ -59,9 +59,9 @@ public class MBFrog : MonoBehaviour {
 		if (_isEnterPond) {
 			GearWorkUpdate ();
 			if (_isNetDown && _JumpNode [_curNodeOrderIdx].readNodeInfo ().index == 13) {
-				_isCaught = true;
+				CatchFrog();
 				// TODO exit loop 
-				gameObject.SetActive(false);
+				Events.G.Raise(new MBExitPondLoop());
 			}
 		}
 
@@ -101,6 +101,8 @@ public class MBFrog : MonoBehaviour {
 	public void CatchFrog(){
 		if (!_isCaught) {
 			_isCaught = true;
+			gameObject.SetActive(false);
+			// break out from the network loop 
 		}
 	}
 
@@ -115,11 +117,11 @@ public class MBFrog : MonoBehaviour {
 		_ponfSide.transform.localRotation = angle;
 
 		// check side circle rotation 
-		if(_ponfSide.transform.localEulerAngles.z == 360){
-			_isCaught = true;
-		}
+//		if(_ponfSide.transform.localEulerAngles.z == 360){
+//			_isCaught = true;
+//		}
 
-		if (DampAngle (_pondMain.transform.localEulerAngles.z) == DampAngle (-134)) {
+		if (DampAngle (_pondMain.transform.localEulerAngles.z) == DampAngle (-120)) {
 			_isNetDown = true;
 		} else {
 			_isNetDown = false;

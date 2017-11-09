@@ -69,7 +69,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.AddListener<MBPathIndexEvent> (PathIndexHandle);
-
+		Events.G.AddListener<MBExitPondLoop> (ExitLoopHandle);
 	}
 
 	void OnDisable(){
@@ -78,6 +78,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.RemoveListener<MBPathIndexEvent> (PathIndexHandle);
+		Events.G.RemoveListener<MBExitPondLoop> (ExitLoopHandle);
 	}
 
 	void Start(){
@@ -296,6 +297,10 @@ public class PathNetwork : MonoBehaviour {
 	//
 	void PathIndexHandle(MBPathIndexEvent e){
 		JumpToIndex (e.jumpToIndex);
+	}
+
+	void ExitLoopHandle(MBExitPondLoop e){
+		_isPathLoop = false;
 	}
 
 
