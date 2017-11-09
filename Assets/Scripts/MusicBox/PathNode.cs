@@ -532,6 +532,9 @@ public class PathNode : MonoBehaviour {
 
 	// TODO: put into camera selection manager or something 
 	void RotateWithMouse(){
+		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
+			_intersectionPart.transform.parent = transform;
+		}
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
 			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -628,7 +631,7 @@ public class PathNode : MonoBehaviour {
 
 	// snap rotation angle to the clock --> use in the clock puzzle 
 	float AngleSnap(float angle){
-		float subDeg = 360/4;
+		float subDeg = 360/12;
 		// round the angle to the next subdivision point 
 		float remainder = angle%subDeg;
 		if (remainder >= subDeg / 2) {
