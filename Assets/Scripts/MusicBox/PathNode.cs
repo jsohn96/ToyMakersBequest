@@ -102,7 +102,7 @@ public class PathNode : MonoBehaviour {
 	bool isDragStart = false;
 	Vector3 dragStartPos;
 	Vector3 dragPreviousMousePos;
-	float dragSensitivity = 0.05f;
+	float dragSensitivity = 0.01f;
 	float hitDist;
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
