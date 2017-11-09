@@ -43,7 +43,8 @@ public class PathCompeleteEvent:GameEvent{
 	
 }
 
-
+// update path node info 
+// update frog info 
 public class DancerOnBoard: GameEvent{
 	public int NodeIdx { get; private set; }
 	public DancerOnBoard(int nid){

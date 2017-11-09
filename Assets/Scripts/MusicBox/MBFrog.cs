@@ -9,12 +9,14 @@ public class MBFrog : MonoBehaviour {
 	//[SerializeField] int[] _Order;
 	[SerializeField] Transform _dancerTrans;
 	Transform _frogTransform;
-	bool _isDetecting= false;
+	bool _isDetecting= true;
 	bool _isCaught = false;
 	bool _isEnterPond = true;
 	float _detectDistance = 4f;
 	int _curNodeOrderIdx = 0;
 	int _loopNodeNum = 3;
+	int _dancerOnNodeIdx = -1;
+	bool _isNetDown = false;
 
 	[SerializeField] Transform _pondMain;
 	[SerializeField] Transform _ponfSide;
@@ -28,16 +30,19 @@ public class MBFrog : MonoBehaviour {
 	//
 	void OnEnable(){
 		Events.G.AddListener<PathStateManagerEvent> (PathStateManageHandle);
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManageHandle);
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 	}
 
 	// Use this for initialization
 	void Start () {
 		_frogTransform = gameObject.transform;
-		_curNodeOrderIdx = -1;
+		_curNodeOrderIdx = 0;
+		_isDetecting = true;
 		// 
 		_originAngle = _pondMain.transform.localEulerAngles.z;
 		
@@ -49,11 +54,17 @@ public class MBFrog : MonoBehaviour {
 			FrogDetectDancer ();
 		}
 
-		FrogDetectDancer ();
+		//FrogDetectDancer ();
 
 		if (_isEnterPond) {
 			GearWorkUpdate ();
+			if (_isNetDown && _JumpNode [_curNodeOrderIdx].readNodeInfo ().index == 13) {
+				_isCaught = true;
+				// TODO exit loop 
+				gameObject.SetActive(false);
+			}
 		}
+
 
 
 	}
@@ -62,7 +73,7 @@ public class MBFrog : MonoBehaviour {
 		// if the current node that the player is step on is the one that's behind then check for the next position 
 		// or do it by distance? 
 		int tempIdx = -1;
-		if(Vector3.Distance(_frogTransform.position, _dancerTrans.position) <= _detectDistance || Input.GetKeyDown(KeyCode.J)){
+		if(_dancerOnNodeIdx == _JumpNode[_curNodeOrderIdx].readNodeInfo().index){
 			if (_curNodeOrderIdx + 1 < _JumpNode.Length) {
 				tempIdx = _curNodeOrderIdx + 1;
 			} else {
@@ -108,6 +119,12 @@ public class MBFrog : MonoBehaviour {
 			_isCaught = true;
 		}
 
+		if (DampAngle (_pondMain.transform.localEulerAngles.z) == DampAngle (-134)) {
+			_isNetDown = true;
+		} else {
+			_isNetDown = false;
+		}
+
 	}
 
 
@@ -117,5 +134,26 @@ public class MBFrog : MonoBehaviour {
 			_isEnterPond = true;
 		}
 		
+	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		_dancerOnNodeIdx = e.NodeIdx;
+		print ("Frog! : the dancer is on : " + _dancerOnNodeIdx + " the frog is on: " + _JumpNode[_curNodeOrderIdx].readNodeInfo().index);
+	} 
+
+	// map angle to [0,2*PI)
+	float DampAngle(float angle){
+		if (angle >= 360) {
+			angle -= 360;
+			DampAngle (angle);
+		} else if (angle < 0) {
+			angle += 360;
+			DampAngle (angle);
+		} else {
+			return angle;
+			//break;
+		}
+
+		return angle;
 	}
 }
