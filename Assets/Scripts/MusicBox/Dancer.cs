@@ -77,7 +77,7 @@ public class Dancer : MonoBehaviour {
 					_progress = 1f;
 					isMoving = false;
 					isPathFinished = true;
-					print ("Dancer: reaches the end");
+					//print ("Dancer: reaches the end");
 					Events.G.Raise (new DancerFinishPath (_curPathIndex));
 				}
 
@@ -180,7 +180,7 @@ public class Dancer : MonoBehaviour {
 	public void SetNewPath (PathNode pn){
 		// set New Path --> get the current active path
 		// set the boolean vals 
-		print("Place dancer on node " + pn.readNodeInfo().index);
+		//print("Place dancer on node " + pn.readNodeInfo().index);
 		isMoving = true;
 		isPathFinished = false;
 

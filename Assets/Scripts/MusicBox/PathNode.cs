@@ -545,7 +545,7 @@ public class PathNode : MonoBehaviour {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					isDragStart = true;
 					dragStartPos = hit.point;
-					print ("hit point :" + hit.point);
+					//print ("hit point :" + hit.point);
 					hitDist = hit.distance;
 					// create a plane ;
 					circlePlane = new Plane(Vector3.up, hit.point);
@@ -672,5 +672,10 @@ public class PathNode : MonoBehaviour {
 
 	public ButtonColor GetControlColor(){
 		return _ControlColor;
+	}
+
+	public void resetAdjNodeAngle(int idx, float angle){
+		_adjacentNode [idx].relativeAngle = angle;
+		
 	}
 }

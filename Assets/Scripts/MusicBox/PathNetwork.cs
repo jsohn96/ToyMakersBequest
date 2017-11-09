@@ -22,7 +22,8 @@ public enum PathState{
 	descend_to_layer_two,
 	temp_end_scene,
 	activateInterlockNode,
-	enter_pond
+	enter_pond,
+	pond_loop
 }
 
 
@@ -43,6 +44,9 @@ public class PathNetwork : MonoBehaviour {
 	bool _isStartPath = false;
 	bool _isPathPause = false;
 	bool _isPathLoop = false;
+
+	int _loopFromIdx = -1;
+	int _loopToIdx = -1;
 
 	PlayMode _myPlayMode;
 
@@ -159,14 +163,29 @@ public class PathNetwork : MonoBehaviour {
 				Events.G.Raise (new MBMusicMangerEvent (false));
 				CheckNextIdx ();
 			} else {
+				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
+				_isPathPause = true;
 				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
 				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
 					Events.G.Raise (new MBMusicMangerEvent (false));
-				} else {
+				} else if(_correctOrder[_orderIdx].nameOfEvent == PathState.pond_loop){
+					
+					if (!_isPathLoop) {
+						_isPathLoop = true;
+						_loopFromIdx = _orderIdx;
+						_loopToIdx = _orderIdx + 6;
+						print ("enter loop from to: " + _loopToIdx);
+						PathNode tempNode = FindNodeWithIndex (_correctOrder [_orderIdx].index);
+						tempNode.resetAdjNodeAngle(0, 150f);
+
+					}
+
+					_isPathPause = false;
+					CheckNextIdx ();
+				}else {
 					
 				}
-				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
-				_isPathPause = true;
+
 			}
 		}
 
@@ -221,9 +240,12 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	// loop the next node order between the fromIdx and toIdx
-	void LoopBetween(int fromIdx, int toIdx){
-		if (_nxtCheckIdx + 1 <= toIdx || _nxtCheckIdx < fromIdx) {
-			_nxtCheckIdx = fromIdx;
+	void LoopBetween(){
+		_nxtCheckIdx = _orderIdx;
+		if (_nxtCheckIdx + 1 > _loopToIdx) {
+			_nxtCheckIdx = _loopFromIdx;
+		} else {
+			_nxtCheckIdx  = -1;
 		}
 
 	}
@@ -234,7 +256,10 @@ public class PathNetwork : MonoBehaviour {
 		}
 	}
 
-	void CheckNextIdxUpdate(){
+	void CheckNextIdxUpdate(){		
+		if (_isPathLoop) {
+			LoopBetween ();
+		}
 		if (_nxtCheckIdx >= 0 && _nxtCheckIdx < _correctOrder.Length ) {
 			_orderIdx = _nxtCheckIdx;
 			_curNodeIdx = _correctOrder [_orderIdx].index;
@@ -246,6 +271,9 @@ public class PathNetwork : MonoBehaviour {
 	// for handling all the different senarios for getting the next node index 
 	// call after path finished && after any end of path events finished 
 	void CheckNextIdx(){
+		if (_isPathLoop) {
+			LoopBetween ();
+		}
 		if (_orderIdx + 1 < _correctOrder.Length && _nxtCheckIdx < 0) {
 			_orderIdx += 1;
 			_curNodeIdx = _correctOrder [_orderIdx].index;
