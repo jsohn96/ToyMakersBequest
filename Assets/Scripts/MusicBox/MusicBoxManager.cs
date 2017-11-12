@@ -34,8 +34,11 @@ public class MusicBoxManager : MonoBehaviour {
 	void Awake () {
 		
 		_myAnim = GetComponent<Animator> ();
-		FinalPos = _firstDescendCircle.transform.localPosition;
-		FinalPos.z += 17.6f;
+		if (_firstDescendCircle != null) {
+			FinalPos = _firstDescendCircle.transform.localPosition;
+			FinalPos.z += 17.6f;
+		}
+
 
 		_transitionLayerTimer = new Timer (2.0f);
 		Events.G.Raise (new MBPlayModeEvent (_playMode));

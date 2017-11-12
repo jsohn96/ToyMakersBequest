@@ -20,7 +20,8 @@ public class MBFrog : MonoBehaviour {
 
 	[SerializeField] Transform _pondMain;
 	[SerializeField] Transform _ponfSide;
-
+	[SerializeField] Animator _netAnim;
+ 
 	float _radiusRatioMainToSide = 2;
 	float _mainRotateAxis;
 
@@ -126,6 +127,9 @@ public class MBFrog : MonoBehaviour {
 		} else {
 			_isNetDown = false;
 		}
+
+		float animPlaybackVal = DampAngle (_pondMain.transform.localEulerAngles.z) / 360;
+		_netAnim.Play ("NetOperate", -1, animPlaybackVal);
 
 	}
 

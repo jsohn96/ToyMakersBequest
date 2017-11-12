@@ -23,7 +23,8 @@ public enum PathState{
 	temp_end_scene,
 	activateInterlockNode,
 	enter_pond,
-	pond_loop
+	pond_loop,
+	move_on_seesaw
 }
 
 
