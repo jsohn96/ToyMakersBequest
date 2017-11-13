@@ -41,6 +41,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 	int _tempSampleForUnpause = 0;
 
 	IEnumerator _delayedPauseCoroutine;
+	IEnumerator _storedResumeKoreography;
+
+	//[SerializeField] DancerStopSoundEffect _dancerStopSoundEffectScript;
 
 	void Start () {
 		if (_audioSystem.audioSource == null) {
@@ -48,13 +51,21 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 
 		// Subscribe to Koreographer Events
-		Koreographer.Instance.RegisterForEvents ("CircleKoreographyTrack", CircleKoreoHandle);
+		if (_whichLayer != MusicBoxLayer.slowLowPiano) {
+			Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
+			Koreographer.Instance.RegisterForEvents ("MusicBoxAccompanyTrack", TogglePhaseIn);
+		}
+
 		// get koreography music player
 		_simpleMusicPlayer = GetComponent<SimpleMusicPlayer> ();
 
 		if (_inactive) {
 			_audioSystem.audioSource.volume = 0.0f;
 		}
+	}
+
+	void TogglePhaseIn(KoreographyEvent koreoEvent){
+		
 	}
 
 	//Set so that the first event will provide information on the next segment and its length
@@ -66,16 +77,40 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 			//reduces the volume of the audio to 0, because koreographer requires a separate Pause
 			AdjustVolume (_audioSystem, fadeDuration, 0.0f, _audioSystem.audioSource.volume, true);
+			_inactive = true;
 			//Coroutine to wait for the actual pause time
-			_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
-			StartCoroutine (_delayedPauseCoroutine);
+			//_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
+			//StartCoroutine (_delayedPauseCoroutine);
+		} else if (!_stop && _waitingForResume) {
+			//if (!_inactive) {
+			_waitingForResume = false;
+				float fadeDuration = CalculateFadeDuration (koreoEvent);
+				StartCoroutine (TempResume (fadeDuration));
+			//}
 		}
 	}
 
+	IEnumerator TempResume(float fadeDuration){
+		_audioFadeStarted = false;
+		yield return new WaitForSeconds (fadeDuration);
+		_inactive = false;
+		AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
+
+	}
+
 	IEnumerator CountdownToKoreoPause(float fadeDuration){
+		//Maybe have the stop sound play at the halfway point?
+
+
 		yield return new WaitForSeconds (fadeDuration);
 		_simpleMusicPlayer.Pause ();
 		_audioFadeStarted = false;
+
+		/*if (_dancerStopSoundEffectScript != null) {
+			_dancerStopSoundEffectScript.ToggleStopSound (true);
+		}*/
+
+		yield return null;
 	}
 		
 	//Calculates the duration of the koreoevent and converts it into seconds
@@ -87,7 +122,13 @@ public class MusicBoxKoreoController : AudioSourceController {
 		return duration;
 	}
 
-	void ResumeKoreography(){
+	IEnumerator ResumeKoreography(){
+		/*
+		_dancerStopSoundEffectScript.ToggleStopSound (false);
+		while (!_dancerStopSoundEffectScript.LookForTimeToStart ()) {
+			yield return null;
+		}
+*/
 		bool isInterrupted = false;
 		if (_delayedPauseCoroutine != null) {
 			StopCoroutine (_delayedPauseCoroutine);
@@ -100,6 +141,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 		if (!_inactive) {
 			AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
 		}
+		yield return null;
 	}
 
 	// Function to set a bool to wait for pause
@@ -109,11 +151,11 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_simpleMusicPlayer.Play ();
 		}
 
-		if (!_stop && _waitingForResume) {
-			_waitingForResume = false;
-			_audioFadeStarted = false;
-			ResumeKoreography ();
-		}
+		//if (!_stop && _waitingForResume) {
+		//	_waitingForResume = false;
+		//	_audioFadeStarted = false;
+		//	StartCoroutine(ResumeKoreography ());
+		//}
 	}
 
 	public void ActivateLayer(){
@@ -140,42 +182,14 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 	}
 
-	void PathStateManage(PathStateManagerEvent e){
-		if (e.activeEvent == PathState.descend_inital_stage) {
-			if (_whichLayer == MusicBoxLayer.slowPiano) {
-				ActivateLayer ();
-			}
-		} else if (e.activeEvent == PathState.open_gate) {
-			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
-				ActivateLayer ();
-			}
-
-		} else if (e.activeEvent == PathState.flip_TM_stage) {
-			if (_whichLayer == MusicBoxLayer.pianoMelody) {
-				ActivateLayer ();
-			}
-		} else if (e.activeEvent == PathState.descend_to_layer_two) {
-			if (_whichLayer == MusicBoxLayer.pianoMelody) {
-				DeactivateLayer ();
-
-			}
-			if (_whichLayer == MusicBoxLayer.slowPiano) {
-				DeactivateLayer ();
-			}
-			if (_whichLayer == MusicBoxLayer.slowLowPiano) {
-				DeactivateLayer ();
-			}
-		}
-	}
-
 	void OnEnable(){
 		Events.G.AddListener<MBMusicMangerEvent> (StopMusicBoxMusic);
 		Events.G.AddListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
-		Events.G.AddListener<PathStateManagerEvent> (PathStateManage);
+		//Events.G.AddListener<PathStateManagerEvent> (PathStateManage);
 	}
 	void OnDisable(){
 		Events.G.RemoveListener<MBMusicMangerEvent> (StopMusicBoxMusic);
 		Events.G.RemoveListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
-		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManage);
+		//Events.G.RemoveListener<PathStateManagerEvent> (PathStateManage);
 	}
 }
