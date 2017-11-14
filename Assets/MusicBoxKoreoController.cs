@@ -94,7 +94,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 		_audioFadeStarted = false;
 		yield return new WaitForSeconds (fadeDuration);
 		_inactive = false;
-		AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
+		AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
 
 	}
 
@@ -139,7 +139,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
 		}
 		if (!_inactive) {
-			AdjustVolume (_audioSystem, _resumeAudioDuration, 1.0f, _audioSystem.audioSource.volume, true);
+			AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
 		}
 		yield return null;
 	}
@@ -161,7 +161,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	public void ActivateLayer(){
 		if (_inactive) {
 			_inactive = false;
-			AdjustVolume (_audioSystem, 0.5f, 1.0f, _audioSystem.audioSource.volume, true);
+			AdjustVolume (_audioSystem, 0.5f, _audioSystem.volume, _audioSystem.audioSource.volume, true);
 		}
 	}
 
