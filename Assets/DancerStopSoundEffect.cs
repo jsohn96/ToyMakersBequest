@@ -5,7 +5,7 @@ using UnityEngine;
 public class DancerStopSoundEffect : AudioSourceController {
 	[SerializeField] AudioSystem _stopSoundEffect;
 
-	float _timeBetweenNotesInSeconds = 0.521f;
+	float _timeBetweenNotesInSeconds = 0.789f;
 	Timer _delayBetweenTimer;
 	bool _isOn = false;
 	bool _waitToStop = false;
@@ -16,6 +16,7 @@ public class DancerStopSoundEffect : AudioSourceController {
 	}
 
 	public void ToggleStopSound(bool isOn){
+		Debug.Log ("called this thing?:");
 		if (isOn) {
 			_isOn = isOn;
 			_timeToStart = false;
@@ -47,7 +48,7 @@ public class DancerStopSoundEffect : AudioSourceController {
 	}
 
 	void PlayStopSoundEffect(){
-		_stopSoundEffect.audioSource.clip = AudioManager.instance.GetRandomClip (_stopSoundEffect);
+		//_stopSoundEffect.audioSource.clip = AudioManager.instance.GetRandomClip (_stopSoundEffect);
 		if (!_stopSoundEffect.audioSource.isPlaying) {
 			_stopSoundEffect.audioSource.Play ();
 		}

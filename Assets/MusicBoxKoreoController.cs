@@ -43,7 +43,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	IEnumerator _delayedPauseCoroutine;
 	IEnumerator _storedResumeKoreography;
 
-	//[SerializeField] DancerStopSoundEffect _dancerStopSoundEffectScript;
+	[SerializeField] DancerStopSoundEffect _dancerStopSoundEffectScript;
 
 	void Start () {
 		if (_audioSystem.audioSource == null) {
@@ -51,10 +51,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 
 		// Subscribe to Koreographer Events
-		if (_whichLayer != MusicBoxLayer.slowLowPiano) {
+		//if (_whichLayer != MusicBoxLayer.slowLowPiano) {
 			Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
-			Koreographer.Instance.RegisterForEvents ("MusicBoxAccompanyTrack", TogglePhaseIn);
-		}
+		//	Koreographer.Instance.RegisterForEvents ("MusicBoxAccompanyTrack", TogglePhaseIn);
+		//}
 
 		// get koreography music player
 		_simpleMusicPlayer = GetComponent<SimpleMusicPlayer> ();
@@ -79,13 +79,13 @@ public class MusicBoxKoreoController : AudioSourceController {
 			AdjustVolume (_audioSystem, fadeDuration, 0.0f, _audioSystem.audioSource.volume, true);
 			_inactive = true;
 			//Coroutine to wait for the actual pause time
-			//_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
-			//StartCoroutine (_delayedPauseCoroutine);
+			_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
+			StartCoroutine (_delayedPauseCoroutine);
 		} else if (!_stop && _waitingForResume) {
 			//if (!_inactive) {
-			_waitingForResume = false;
-				float fadeDuration = CalculateFadeDuration (koreoEvent);
-				StartCoroutine (TempResume (fadeDuration));
+			//_waitingForResume = false;
+			//	float fadeDuration = CalculateFadeDuration (koreoEvent);
+			//	StartCoroutine (TempResume (fadeDuration));
 			//}
 		}
 	}
@@ -106,9 +106,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 		_simpleMusicPlayer.Pause ();
 		_audioFadeStarted = false;
 
-		/*if (_dancerStopSoundEffectScript != null) {
+		if (_dancerStopSoundEffectScript != null) {
 			_dancerStopSoundEffectScript.ToggleStopSound (true);
-		}*/
+		}
 
 		yield return null;
 	}
@@ -123,12 +123,12 @@ public class MusicBoxKoreoController : AudioSourceController {
 	}
 
 	IEnumerator ResumeKoreography(){
-		/*
+		
 		_dancerStopSoundEffectScript.ToggleStopSound (false);
 		while (!_dancerStopSoundEffectScript.LookForTimeToStart ()) {
 			yield return null;
 		}
-*/
+
 		bool isInterrupted = false;
 		if (_delayedPauseCoroutine != null) {
 			StopCoroutine (_delayedPauseCoroutine);
@@ -138,9 +138,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 		if (!isInterrupted) {
 			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
 		}
-		if (!_inactive) {
+		//if (!_inactive) {
 			AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
-		}
+		//}
 		yield return null;
 	}
 
@@ -151,11 +151,11 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_simpleMusicPlayer.Play ();
 		}
 
-		//if (!_stop && _waitingForResume) {
-		//	_waitingForResume = false;
-		//	_audioFadeStarted = false;
-		//	StartCoroutine(ResumeKoreography ());
-		//}
+		if (!_stop && _waitingForResume) {
+			_waitingForResume = false;
+			_audioFadeStarted = false;
+			StartCoroutine(ResumeKoreography ());
+		}
 	}
 
 	public void ActivateLayer(){
