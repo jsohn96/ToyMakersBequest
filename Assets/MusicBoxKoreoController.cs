@@ -5,10 +5,11 @@ using SonicBloom.Koreo;
 using SonicBloom.Koreo.Players;
 
 public enum MusicBoxLayer {
-	slowMusicBox = 0,
-	slowPiano = 1,
-	slowLowPiano = 2,
-	pianoMelody = 3
+	MusicBox = 0,
+	MusicBoxAccompany = 1,
+	PianoMelody = 2,
+	PianoAccompany = 3,
+	WoodClick = 4
 }
 
 [RequireComponent(typeof(AudioSource))]
@@ -16,15 +17,15 @@ public enum MusicBoxLayer {
 public class MusicBoxKoreoController : AudioSourceController {
 	[SerializeField] AudioSystem _audioSystem;
 
-	[SerializeField] MusicBoxLayer _whichLayer = MusicBoxLayer.slowMusicBox;
-
-	[SerializeField] bool _inactive = false;
+	[SerializeField] MusicBoxLayer _whichLayer = MusicBoxLayer.MusicBox;
 
 	//sample rate will likely be 44100 for calculating delay for koreography
 	[SerializeField] int _sampleRate = 44100;
+	int _howLongBetweenEachBeat = 37895;
 
 	SimpleMusicPlayer _simpleMusicPlayer;
 	[SerializeField] SimpleMusicPlayer _sourceSimpleMusicPlayer;
+	[SerializeField] SimpleMusicPlayer _woodClickSimpleMusicPlayer;
 
 	// check this bool if koreography needs to be paused
 	bool _stop = false;
@@ -35,7 +36,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 	// check if the music box level has been started
 	bool _isStarted = false;
 
-	[SerializeField] float _resumeAudioDuration = 0.05f;
+	bool _readyToEnter = false;
+
+	//[SerializeField] float _resumeAudioDuration = 0.05f;
 
 	//The end sample value for holding where the track left off at
 	int _tempSampleForUnpause = 0;
@@ -43,29 +46,43 @@ public class MusicBoxKoreoController : AudioSourceController {
 	IEnumerator _delayedPauseCoroutine;
 	IEnumerator _storedResumeKoreography;
 
-	//[SerializeField] DancerStopSoundEffect _dancerStopSoundEffectScript;
-
 	void Start () {
 		if (_audioSystem.audioSource == null) {
 			_audioSystem.audioSource = GetComponent<AudioSource> ();
 		}
 
 		// Subscribe to Koreographer Events
-		if (_whichLayer != MusicBoxLayer.slowLowPiano) {
-			Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
-			Koreographer.Instance.RegisterForEvents ("MusicBoxAccompanyTrack", TogglePhaseIn);
+		if (_whichLayer != MusicBoxLayer.WoodClick) {
+			Koreographer.Instance.RegisterForEvents ("WoodGearClickTrack", TogglePhaseIn);
 		}
+		Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
 
 		// get koreography music player
 		_simpleMusicPlayer = GetComponent<SimpleMusicPlayer> ();
-
-		if (_inactive) {
-			_audioSystem.audioSource.volume = 0.0f;
-		}
+	
 	}
 
 	void TogglePhaseIn(KoreographyEvent koreoEvent){
-		
+		if (_readyToEnter) {
+			bool isInterrupted = false;
+
+			if (_audioFadeStarted) {
+				StopCoroutine (_delayedPauseCoroutine);
+				isInterrupted = true;
+				Debug.Log ("SO are yous topping me?");
+				_audioFadeStarted = false;
+			}
+			if (!isInterrupted) {
+				//int woodClipCurrentSampleTime = _woodClickSimpleMusicPlayer.GetSampleTimeForClip (_woodClickSimpleMusicPlayer.GetCurrentClipName ());
+				//int offsetSampleTimer = woodClipCurrentSampleTime % _howLongBetweenEachBeat;
+				//_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause + offsetSampleTimer);
+				_simpleMusicPlayer.SeekToSample(_tempSampleForUnpause);
+			}
+			AdjustVolume (_audioSystem, _audioSystem.fadeDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
+			_readyToEnter = false;
+
+
+		}
 	}
 
 	//Set so that the first event will provide information on the next segment and its length
@@ -75,28 +92,30 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_waitingForResume = true;
 			float fadeDuration = CalculateFadeDuration (koreoEvent);
 
-			//reduces the volume of the audio to 0, because koreographer requires a separate Pause
-			AdjustVolume (_audioSystem, fadeDuration, 0.0f, _audioSystem.audioSource.volume, true);
-			_inactive = true;
-			//Coroutine to wait for the actual pause time
-			//_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
-			//StartCoroutine (_delayedPauseCoroutine);
-		} else if (!_stop && _waitingForResume) {
-			//if (!_inactive) {
-			_waitingForResume = false;
-				float fadeDuration = CalculateFadeDuration (koreoEvent);
-				StartCoroutine (TempResume (fadeDuration));
-			//}
-		}
+
+			if (_whichLayer != MusicBoxLayer.WoodClick) {
+				//reduces the volume of the audio to 0, because koreographer requires a separate Pause
+				AdjustVolume (_audioSystem, fadeDuration, 0.0f, _audioSystem.audioSource.volume, true);
+				//Coroutine to wait for the actual pause time
+				_delayedPauseCoroutine = CountdownToKoreoPause (fadeDuration);
+				StartCoroutine (_delayedPauseCoroutine);
+			}
+		} 
+//		else if (!_stop && _waitingForResume) {
+//			//if (!_inactive) {
+//			_waitingForResume = false;
+//				float fadeDuration = CalculateFadeDuration (koreoEvent);
+//				StartCoroutine (TempResume (fadeDuration));
+//			//}
+//		}
 	}
 
-	IEnumerator TempResume(float fadeDuration){
-		_audioFadeStarted = false;
-		yield return new WaitForSeconds (fadeDuration);
-		_inactive = false;
-		AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
-
-	}
+//	IEnumerator TempResume(float fadeDuration){
+//		_audioFadeStarted = false;
+//		yield return new WaitForSeconds (fadeDuration);
+//		AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
+//
+//	}
 
 	IEnumerator CountdownToKoreoPause(float fadeDuration){
 		//Maybe have the stop sound play at the halfway point?
@@ -129,6 +148,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 			yield return null;
 		}
 */
+		while (!_readyToEnter) {
+			yield return null;
+		}
+
 		bool isInterrupted = false;
 		if (_delayedPauseCoroutine != null) {
 			StopCoroutine (_delayedPauseCoroutine);
@@ -138,9 +161,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 		if (!isInterrupted) {
 			_simpleMusicPlayer.SeekToSample (_tempSampleForUnpause);
 		}
-		if (!_inactive) {
-			AdjustVolume (_audioSystem, _resumeAudioDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
-		}
+		AdjustVolume (_audioSystem, _audioSystem.fadeDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
+		_readyToEnter = false;
+
 		yield return null;
 	}
 
@@ -151,34 +174,19 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_simpleMusicPlayer.Play ();
 		}
 
-		//if (!_stop && _waitingForResume) {
-		//	_waitingForResume = false;
-		//	_audioFadeStarted = false;
-		//	StartCoroutine(ResumeKoreography ());
-		//}
-	}
-
-	public void ActivateLayer(){
-		if (_inactive) {
-			_inactive = false;
-			AdjustVolume (_audioSystem, 0.5f, _audioSystem.volume, _audioSystem.audioSource.volume, true);
+		if (!_stop && _waitingForResume) {
+			_waitingForResume = false;
+			_audioFadeStarted = false;
+			_readyToEnter = true;
+			//StartCoroutine(ResumeKoreography ());
 		}
 	}
 
-	public void DeactivateLayer(){
-		if (!_inactive) {
-			_inactive = true;
-			_stop = true;
-		}
-	}
+
 
 	void ToggleMusicLayer(MBMusicLayerAdjustmentEvent e){
 		if (_whichLayer == e.ThisMusicBoxLayer) {
-			if (e.IsOn) {
-				ActivateLayer ();
-			} else {
-				DeactivateLayer ();
-			}
+
 		}
 	}
 
