@@ -53,7 +53,7 @@ public class PathNetwork : MonoBehaviour {
 
 
 	// 
-	bool _isActive = false;
+	[SerializeField] bool _isActive = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -198,6 +198,7 @@ public class PathNetwork : MonoBehaviour {
 
 	// util functions 
 	public PathNode FindNodeWithIndex(int i){
+		print ("find node idx: " + i);
 		foreach (PathNode _pn in _myNodes) {
 			NodeInfo ninfo = _pn.readNodeInfo ();
 			if (ninfo.index == i) {
@@ -210,11 +211,15 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	public void SetPathActive(bool isActive){
+		UpdateNodes ();
 		_isActive = isActive;
 		if (_isActive) {
+			print ("Path Activation");
 			PositionDancer ();
 			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
 			Events.G.Raise (new MBMusicMangerEvent (true));
+			_isPathPause = false;
+
 		}
 	}
 

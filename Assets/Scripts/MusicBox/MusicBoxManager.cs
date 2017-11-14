@@ -16,6 +16,7 @@ public class MusicBoxManager : MonoBehaviour {
 	[SerializeField] PathNetwork[] _musicPaths;
 	int _activePathIndex;
 	[SerializeField] GameObject _firstDescendCircle;
+	[SerializeField] GameObject[] _transitionNodes;
 
 	Vector3 _goalRotation = new Vector3 (0.0f, 360.0f, -90.0f);
 	Quaternion _originRotation;
@@ -33,7 +34,7 @@ public class MusicBoxManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		
-		_myAnim = GetComponent<Animator> ();
+		//_myAnim = GetComponent<Animator> ();
 		if (_firstDescendCircle != null) {
 			FinalPos = _firstDescendCircle.transform.localPosition;
 			FinalPos.z += 17.6f;
@@ -69,23 +70,19 @@ public class MusicBoxManager : MonoBehaviour {
 		}
 
 		if (isBoxOpen) {
-			_myAnim.Play("Open");
+			//_myAnim.Play("Open");
 			// activate the first layer path 
 
 
 		}
-
-		if (_isDecend) {
-			DescendFirstCircle ();
-		}
-
-		if (_hideFirstLayer) {
-			HideLayer (_Layers [0].transform);
-		}
-
-		if (_transitionLayerTimer.IsOffCooldown) {
-			_hideFirstLayer = false;
-		}
+			
+//		if (_hideFirstLayer) {
+//			//HideLayer (_Layers [0].transform);
+//		}
+//
+//		if (_transitionLayerTimer.IsOffCooldown) {
+//			_hideFirstLayer = false;
+//		}
 
 
 		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
@@ -108,9 +105,11 @@ public class MusicBoxManager : MonoBehaviour {
 		case PathState.flip_TM_stage:
 			break;
 		case PathState.descend_to_layer_two:
-			Events.G.Raise (new CamerafovAmountChange (50.0f));
-			Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_on));
-			OpenLayer (2);
+			//Events.G.Raise (new CamerafovAmountChange (50.0f));
+			//Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_on));
+			OpenLayer(2, _transitionNodes[0]);
+			// TODO: activate layer 2 
+			//OpenLayer (2);
 			break;
 		case PathState.temp_end_scene:
 			EndScene ();
@@ -119,10 +118,19 @@ public class MusicBoxManager : MonoBehaviour {
 		}
 	}
 
-	void OpenLayer(int idx){
-		_Layers [idx - 1].GetComponent<Animator> ().Play ("SideOpen");
-		//_Layers [idx - 2].SetActive (false);
-		_isDecend = true;
+	void OpenLayer(int idx, GameObject transitionNode){
+		print ("transition to layer " + idx);
+		_activePathIndex = idx - 1;
+		if (transitionNode != null) {
+			transitionNode.transform.parent = _musicPaths[idx - 1].transform;
+
+		}
+		_musicPaths [idx - 2].GetComponent<PathNetwork> ().SetPathActive (false);
+		_musicPaths [idx - 1].GetComponent<PathNetwork>().SetPathActive(true);
+		Events.G.Raise (new PathResumeEvent ());
+		//_Layers [idx - 1].GetComponent<Animator> ().Play ("SideOpen");
+		//_Layers [idx - 2].SetPathActive(true);
+		//_isDecend = true;
 
 	}
 

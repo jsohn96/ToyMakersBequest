@@ -8,7 +8,8 @@ public enum ButtonColor{
 	Brown,
 	None,
 	RotatableObject,
-	Branch
+	Branch,
+	Descend
 
 };
 
@@ -133,6 +134,11 @@ public class PathNode : MonoBehaviour {
 
 	[SerializeField] InterlockNode[] _interlockNodes;
 	[SerializeField] BranchNode[] _branchNodes;
+
+	// descend node --> for stairs 
+	bool _isDescended = false;
+	bool _isDescending = false;
+	Vector3 _finalDescendPos;
  
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
@@ -255,8 +261,13 @@ public class PathNode : MonoBehaviour {
 				}
 			}
 
+			CheckDescend ();
 			CheckNodeConnection ();
-			
+
+
+			if (_isDescending) {
+				DescendNode ();
+			}
 		}// end of checking isActive
 
 
@@ -414,49 +425,52 @@ public class PathNode : MonoBehaviour {
 			if (_ControlColor == ButtonColor.Branch) {
 				CheckBranchNodes (tempRotDegree);
 			} else {
-				// check for connection (relative angle + defnite ange)
-				if (_adjacentNode.Length > 0) {
-					if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
-						// if the node has dependency on other nodes
+				if (!_isDescending) {
+					// check for connection (relative angle + defnite ange)
+					if (_adjacentNode.Length > 0) {
+						if (_adjacentNode [curCheckIdx].adjNodeIdx >= 0) {
+							// if the node has dependency on other nodes
 
-						// check relative angle && get the next node information 
-						PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
-						//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
-						if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
-						    - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
-							_isCorrectConnection = true;
-							//adjNode._isCorrectConnection = true;
-							if (_cylinderRenderer) {
-								_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+							// check relative angle && get the next node information 
+							PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
+							//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
+							if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
+								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
+								_isCorrectConnection = true;
+								//adjNode._isCorrectConnection = true;
+								if (_cylinderRenderer) {
+									_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+								}
+							} else {
+								_isCorrectConnection = false;
+								if (_cylinderRenderer) {
+									_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+								}
+
 							}
 						} else {
-							_isCorrectConnection = false;
-							if (_cylinderRenderer) {
-								_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+							if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
+								_isCorrectConnection = true;
+								if (_cylinderRenderer) {
+									_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+								}
+
+							} else {
+								_isCorrectConnection = false;
+								if (_cylinderRenderer) {
+									_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
+								}
+
+
 							}
 
 						}
-					} else {
-						if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
-							_isCorrectConnection = true;
-							if (_cylinderRenderer) {
-								_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
-							}
-
-						} else {
-							_isCorrectConnection = false;
-							if (_cylinderRenderer) {
-								_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
-							}
-
-
-						}
-
+						_myNodeInfo.isConnected = _isCorrectConnection;
 					}
-					_myNodeInfo.isConnected = _isCorrectConnection;
+				
 				}
-
 			}
+
 		}
 
 	}
@@ -677,5 +691,26 @@ public class PathNode : MonoBehaviour {
 	public void resetAdjNodeAngle(int idx, float angle){
 		_adjacentNode [idx].relativeAngle = angle;
 		
+	}
+
+	// Check if node will descend 
+	void CheckDescend(){
+		if (_ControlColor == ButtonColor.Descend && _isDancerOnBoard && !_isDescended && !_isDescending) {
+			_isDescending = true;
+			_finalDescendPos = transform.localPosition;
+			_finalDescendPos.z += 5f;
+		}
+	}
+
+	void DescendNode(){
+		if (Vector3.Distance (transform.localPosition, _finalDescendPos) > errorVal) {
+			Vector3 tempPos = transform.localPosition;
+			tempPos.z += 2 * Time.deltaTime;
+			transform.localPosition = tempPos;
+		} else {
+			transform.localPosition = _finalDescendPos;
+			_isDescended = true;
+			_isDescending = false;
+		}
 	}
 }

@@ -21,6 +21,7 @@ public class CameraAgency : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit,  Mathf.Infinity)){
+				Debug.Log ("the name of the collider is: " +hit.collider.tag);
 				if (hit.collider.gameObject.tag != "RotateCircle") {
 					dragOrigin = Input.mousePosition;
 					_isAgencying = true;
