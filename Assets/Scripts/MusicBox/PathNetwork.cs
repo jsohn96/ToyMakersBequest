@@ -60,8 +60,8 @@ public class PathNetwork : MonoBehaviour {
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		print ("Init Info: " + "\nNode Count"+ _myNodes.Length);
 		// init player position 
-		_orderIdx = _startIndex;
-		_curNodeIdx = _correctOrder[_orderIdx].index;
+		//_orderIdx = _startIndex;
+		//_curNodeIdx = _correctOrder[_orderIdx].index;
 	}
 
 	void OnEnable(){

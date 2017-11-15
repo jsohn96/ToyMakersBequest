@@ -119,6 +119,11 @@ public class PathNode : MonoBehaviour {
 	Vector3 rotateAxis;
 	float preChangingTime;
 
+	List<float> snapToAngle;
+	Timer disableRotateTimer;
+	bool isTempDisableActive = true;
+	bool isTempDisable = false;
+
 	// playmode 
 	PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
 
@@ -203,6 +208,8 @@ public class PathNode : MonoBehaviour {
 
 	void Start(){
 		initNodePathInfo ();
+		snapToAngle = new List<float> (10);
+		disableRotateTimer = new Timer (1);
 	}
 
 	void initNodePathInfo(){
@@ -252,7 +259,10 @@ public class PathNode : MonoBehaviour {
 		// Rotate Circles
 		if(_isActive){
 			//ClickWithMouse ();
-			RotateWithMouse();
+
+			RotateWithMouse();	
+
+
 
 			if(isRotating){
 				// rotate the node 
@@ -276,6 +286,13 @@ public class PathNode : MonoBehaviour {
 			if (_isDescending) {
 				DescendNode ();
 			}
+
+			if (disableRotateTimer.IsOffCooldown && !isTempDisableActive) {
+				isTempDisable = false;
+				//isDragStart = false;
+			}
+
+
 		}// end of checking isActive
 
 
@@ -407,6 +424,38 @@ public class PathNode : MonoBehaviour {
 
 	}
 
+	void CheckSnapToAngle(int curCheckSegmentIdx){
+		snapToAngle.Clear ();
+		//
+		if (_isInterLocked ) {
+			for (int i = 0; i < _interlockNodes.Length; i++) {
+				snapToAngle.Add ( _interlockNodes [i].lockAngle);
+			}
+		}
+
+		//
+		if (_ControlColor == ButtonColor.Branch) {
+			for (int i = 0; i < _branchNodes.Length; i++) {
+				float angle = _branchNodes [i].connectAngle;
+				if (!snapToAngle.Contains (angle)) {
+					snapToAngle.Add (angle);
+				}
+
+			}
+		} 
+
+		if (_adjacentNode.Length > 0) {
+			float tempangle = _adjacentNode [curCheckSegmentIdx].relativeAngle;
+			if (!snapToAngle.Contains (tempangle)) {
+				snapToAngle.Add (tempangle);
+			}
+		}
+
+
+		return;
+
+	}
+
 
 	void CheckNodeConnection(){
 		if (_ControlColor != ButtonColor.None) {
@@ -419,6 +468,9 @@ public class PathNode : MonoBehaviour {
 				curCheckIdx = _curSegIdx * 2 + 1;
 				//print (_nodeIndex + ": Check Out ");
 			}
+
+			// check the correct snap-to-angle 
+			CheckSnapToAngle(curCheckIdx);
 
 			//print("Current Node " + _nodeIndex + "adj Node " + _adjacentNode [curCheckIdx].adjNodeIdx + " ," +  _adjacentNode [curCheckIdx].relativeAngle);
 
@@ -475,11 +527,19 @@ public class PathNode : MonoBehaviour {
 						}
 						_myNodeInfo.isConnected = _isCorrectConnection;
 						if (_isCorrectConnection) {
+
+							if (isDragStart && isTempDisableActive) {
+								DisableRotate (0.4f);
+							}
+
+							Events.G.Raise (new MBNodeConnect (_nodeIndex));
 							// when correctly connected snap to that angle + disable drag for 1 sec 
 
 
-							//isDragStart = false;
-							Events.G.Raise (new MBNodeConnect (_nodeIndex));
+						} else {
+							if (!isTempDisableActive) {
+								isTempDisableActive = true;
+							}
 						}
 					}
 				
@@ -595,7 +655,7 @@ public class PathNode : MonoBehaviour {
 
 				float tempAngle = transform.localEulerAngles.z;
 				tempAngle = DampAngle (tempAngle);
-				float snapAngleDelta = AngleSnap (tempAngle) - tempAngle;
+				float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
 
 				print ("Release drag final angle: " + AngleSnap (tempAngle));
 
@@ -611,7 +671,7 @@ public class PathNode : MonoBehaviour {
 			}
 		}
 
-		if (isDragStart) {
+		if (isDragStart && !isTempDisable) {
 			
 			Vector3 curMousePos = Vector3.zero;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -638,7 +698,7 @@ public class PathNode : MonoBehaviour {
 			if(rotateAxis != preAxis){
 				float deltaChangeTime = Time.time - preChangingTime;
 
-				if (deltaChangeTime <= 0.2f) {
+				if (deltaChangeTime <= 0.4f) {
 					print("############# Axis Jitter !!!!!");
 					return;
 
@@ -683,6 +743,18 @@ public class PathNode : MonoBehaviour {
 
 	}
 
+	void DisableRotate(float stopseconds){
+		if (isTempDisableActive) {
+			isTempDisableActive = false;
+			isTempDisable = true;
+			disableRotateTimer.CooldownTime = stopseconds;
+			disableRotateTimer.Reset ();
+			//isDragStart = false;
+			//Events.G.Raise (new MBNodeConnect (_nodeIndex));
+			Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
+		}
+	}
+
 	// snap rotation angle to the clock --> use in the clock puzzle 
 	float AngleSnap(float angle){
 		float subDeg = 360/36;
@@ -696,6 +768,19 @@ public class PathNode : MonoBehaviour {
 
 		return angle;
 
+	}
+
+	float AngleSnapTo(float angle){
+		// if the nearest snap to angle is found 
+		float matchAngle = 0;
+		foreach (float snp in snapToAngle) {
+			if (Mathf.Abs (DampAngle (angle) - DampAngle (snp)) <= 20f) {
+				matchAngle = DampAngle (snp);
+				return matchAngle;
+			}
+		}
+			
+		return AngleSnap(angle);
 	}
 
 	// map angle to [0,2*PI)
@@ -716,12 +801,6 @@ public class PathNode : MonoBehaviour {
 
 	void PlayModeHandle(MBPlayModeEvent e){
 		_myPlayMode = e.activePlayMode;
-	}
-
-	void OnDrawGizmosSelected() {
-		//Gizmos.color = Color.yellow;
-		//Gizmos.DrawSphere(debugPos2, 1);
-
 	}
 
 	public ButtonColor GetControlColor(){
