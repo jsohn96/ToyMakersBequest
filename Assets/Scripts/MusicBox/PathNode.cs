@@ -743,7 +743,13 @@ public class PathNode : MonoBehaviour {
 				//print ("Temp rot: " + tempRot);
 				Quaternion curRot = gameObject.transform.rotation;
 				//curRot = curRot + tempRot;
-				gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.World);
+				if (rotateAxis.y > 0f) {
+					rotateAxis = Vector3.back;
+				} else {
+					rotateAxis = Vector3.forward;
+				}
+
+				gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
 				dragStartPos = curMousePos;
 				accAngle = 0;
 
