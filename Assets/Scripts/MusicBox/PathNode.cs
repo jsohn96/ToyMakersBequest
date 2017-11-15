@@ -135,6 +135,9 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] InterlockNode[] _interlockNodes;
 	[SerializeField] BranchNode[] _branchNodes;
 
+	// audio 
+	AudioSource _NodeAudio;
+
 	// descend node --> for stairs 
 	bool _isDescended = false;
 	bool _isDescending = false;
@@ -190,6 +193,8 @@ public class PathNode : MonoBehaviour {
 
 		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
 		//print ("world up " + Vector3.up);
+
+
 
 	}
 
@@ -466,6 +471,9 @@ public class PathNode : MonoBehaviour {
 
 						}
 						_myNodeInfo.isConnected = _isCorrectConnection;
+						if (_isCorrectConnection) {
+							Events.G.Raise (new MBNodeConnect (_nodeIndex));
+						}
 					}
 				
 				}
@@ -589,12 +597,13 @@ public class PathNode : MonoBehaviour {
 				finalAngle = transform.localRotation;
 				finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
 
-
+				Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 
 			}
 		}
 
 		if (isDragStart) {
+			
 			Vector3 curMousePos = Vector3.zero;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
@@ -636,7 +645,11 @@ public class PathNode : MonoBehaviour {
 				gameObject.transform.Rotate(-accAngle*rotateAxis*0.5f, Space.World);
 				dragStartPos = curMousePos;
 				accAngle = 0;
+
+				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, accAngle));
 			}
+
+
 
 		}
 

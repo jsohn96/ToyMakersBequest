@@ -122,6 +122,28 @@ public class MBExitPondLoop:GameEvent{
 	
 }
 
+
+// music box audio event 
+// when the node is rotating, sending over the node index and rotate speed 
+public class MBNodeRotate:GameEvent{
+	public int nodeIndex{ get; private set; }
+	public bool isRoating{ get; private set; }
+	public float rotateSpeed{ get; private set; }
+	public MBNodeRotate(int nid, bool isRot, float rspeed){
+		nodeIndex = nid;
+		rotateSpeed = rspeed;
+		isRoating = isRot;
+	}
+}
+
+// when the node is correctly connected, sending over node index 
+public class MBNodeConnect:GameEvent{
+	public int nodeIndex{ get; private set; }
+	public MBNodeConnect(int nid){
+		nodeIndex = nid;
+	}
+}
+
 //***********//
 //    UI     //
 //***********//
