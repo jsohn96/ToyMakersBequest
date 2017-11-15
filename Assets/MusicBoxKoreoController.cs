@@ -144,10 +144,15 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 
 		if (!_stop && _waitingForResume) {
+			if (_delayedPauseCoroutine != null) {
+				StopCoroutine (_delayedPauseCoroutine);
+			}
 			_waitingForResume = false;
 			_audioFadeStarted = false;
 			_readyToEnter = true;
 		}
+
+		Debug.Log ("THIS IS WHERE THE EVENT WAS CALLED: " + _stop);
 	}
 
 
