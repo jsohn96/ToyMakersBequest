@@ -204,3 +204,6 @@ public class PickedUpGearEvent: GameEvent {
 
 public class GearsReadyForPickupEvent: GameEvent {
 }
+
+public class NotebookInteractionEvent: GameEvent {
+}

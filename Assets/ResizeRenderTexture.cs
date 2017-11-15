@@ -10,9 +10,4 @@ public class ResizeRenderTexture : MonoBehaviour {
 		_renderTexture.width = Screen.width;
 		_renderTexture.height = Screen.height;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
