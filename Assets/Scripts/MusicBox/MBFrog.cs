@@ -144,7 +144,7 @@ public class MBFrog : MonoBehaviour {
 
 	void DancerOnBoardHandle(DancerOnBoard e){
 		_dancerOnNodeIdx = e.NodeIdx;
-		print ("Frog! : the dancer is on : " + _dancerOnNodeIdx + " the frog is on: " + _JumpNode[_curNodeOrderIdx].readNodeInfo().index);
+		//print ("Frog! : the dancer is on : " + _dancerOnNodeIdx + " the frog is on: " + _JumpNode[_curNodeOrderIdx].readNodeInfo().index);
 	} 
 
 	// map angle to [0,2*PI)

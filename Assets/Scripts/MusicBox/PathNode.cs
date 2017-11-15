@@ -280,7 +280,7 @@ public class PathNode : MonoBehaviour {
 			}
 
 			CheckDescend ();
-			CheckNodeConnection ();
+			//CheckNodeConnection ();
 
 
 			if (_isDescending) {
@@ -292,6 +292,8 @@ public class PathNode : MonoBehaviour {
 				//isDragStart = false;
 			}
 
+			CheckNodeConnection ();
+
 
 		}// end of checking isActive
 
@@ -299,7 +301,7 @@ public class PathNode : MonoBehaviour {
 
 	}
 
-	void FixedUpdate(){
+	void LateUpdate(){
 		// only check connection when node is active 
 		if (_isActive) {
 			
@@ -520,14 +522,9 @@ public class PathNode : MonoBehaviour {
 								if (_cylinderRenderer) {
 									_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
 								}
-
-
 							}
-
 						}
-
 						_myNodeInfo.isConnected = _isCorrectConnection;
-
 					}
 				
 				}

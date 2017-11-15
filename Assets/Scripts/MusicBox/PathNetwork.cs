@@ -95,8 +95,8 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
-			print ("Check connection for " + _curNodeIdx + ":" + _curNode.readNodeInfo ().isConnected
-				+ "and " +_curNode.readNodeInfo().index + ":" + tempNode.readNodeInfo ().isConnected);
+			//print ("Check connection for " + _curNodeIdx + ":" + _curNode.readNodeInfo ().isConnected
+				//+ "and " +_curNode.readNodeInfo().index + ":" + tempNode.readNodeInfo ().isConnected);
 
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// music manager continues to play music 
@@ -119,7 +119,7 @@ public class PathNetwork : MonoBehaviour {
 				}
 
 			} else {
-				print ("next node not correctly connected");
+				//print ("next node not correctly connected");
 
 			}
 		}
@@ -157,7 +157,7 @@ public class PathNetwork : MonoBehaviour {
 
 	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
-		print ("Check next available node");
+		//print ("Check next available node");
 
 		if (_isActive) {
 			// check if there is anyevent envoked when the path is finished 
@@ -198,7 +198,7 @@ public class PathNetwork : MonoBehaviour {
 
 	// util functions 
 	public PathNode FindNodeWithIndex(int i){
-		print ("find node idx: " + i);
+		//print ("find node idx: " + i);
 		foreach (PathNode _pn in _myNodes) {
 			NodeInfo ninfo = _pn.readNodeInfo ();
 			if (ninfo.index == i) {
