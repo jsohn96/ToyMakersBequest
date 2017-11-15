@@ -103,7 +103,7 @@ public class PathNode : MonoBehaviour {
 	bool isDragStart = false;
 	Vector3 dragStartPos;
 	Vector3 dragPreviousMousePos;
-	float dragSensitivity = 0.01f;
+	float dragSensitivity = 0.05f;
 	float hitDist;
 	float accAngle = 0; // accumulated angle
 	int circleDivision = 12; // default as the clock 
@@ -115,6 +115,9 @@ public class PathNode : MonoBehaviour {
 	Quaternion originAngle;
 	bool isRotating = false;
 	float errorVal = 0.2f;
+	Vector3 preAxis;
+	Vector3 rotateAxis;
+	float preChangingTime;
 
 	// playmode 
 	PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
@@ -366,7 +369,7 @@ public class PathNode : MonoBehaviour {
 		bool isfoundMatch = false;
 		if (_interlockNodes != null && _interlockNodes.Length > 0) {
 			foreach (InterlockNode itn in _interlockNodes) {
-				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal  * 5f) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal  * 20f) {
 					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, itn.sendToIdx));
 					isfoundMatch = true;
 					_intersectionPart = itn.intersection;
@@ -385,7 +388,7 @@ public class PathNode : MonoBehaviour {
 		bool isConnected = false;
 		if (_branchNodes != null && _branchNodes.Length > 0 ) {
 			foreach (BranchNode brn in _branchNodes) {
-				if (Mathf.Abs (DampAngle (degree) - DampAngle (brn.connectAngle)) <= errorVal  * 5f) {
+				if (Mathf.Abs (DampAngle (degree) - DampAngle (brn.connectAngle)) <= errorVal  * 20f) {
 					isConnected = true;
 					_isCorrectConnection = true;
 					_myNodeInfo.isConnected = _isCorrectConnection;
@@ -472,6 +475,10 @@ public class PathNode : MonoBehaviour {
 						}
 						_myNodeInfo.isConnected = _isCorrectConnection;
 						if (_isCorrectConnection) {
+							// when correctly connected snap to that angle + disable drag for 1 sec 
+
+
+							//isDragStart = false;
 							Events.G.Raise (new MBNodeConnect (_nodeIndex));
 						}
 					}
@@ -571,6 +578,8 @@ public class PathNode : MonoBehaviour {
 					hitDist = hit.distance;
 					// create a plane ;
 					circlePlane = new Plane(Vector3.up, hit.point);
+					preAxis = new Vector3 (0, 0, 0);
+					preChangingTime = -1;
 					//debugPos1 = hit.point;
 				}
 
@@ -622,11 +631,26 @@ public class PathNode : MonoBehaviour {
 			vb.y = 0;
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
-			Vector3 rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
+			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
 			//print ("Debug: rotate axis " + rotateAxis);
+
+			// remove rotate jitter (changing axis direction abruptly)
+			if(rotateAxis != preAxis){
+				float deltaChangeTime = Time.time - preChangingTime;
+
+				if (deltaChangeTime <= 0.2f) {
+					print("############# Axis Jitter !!!!!");
+					return;
+
+				} else {
+					preAxis = rotateAxis;
+					preChangingTime = Time.time;
+				}
+			}
 
 			// determine the angle with the mouse position offset 
 			float dragDistance = Vector3.Distance(Input.mousePosition, dragPreviousMousePos);
+			//print ("Jitter test drag distance: " + dragDistance);
 			float distanceToCenter = Vector3.Distance (dragStartPos, transform.position);
 			float angle = dragDistance * dragSensitivity * Mathf.Rad2Deg * (5/distanceToCenter);
 
@@ -637,16 +661,19 @@ public class PathNode : MonoBehaviour {
 			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
 			//print ("Angle Check: " + accAngle);
-			if (accAngle >= 0f) {
-				Quaternion tempRot = Quaternion.Euler (-accAngle*rotateAxis);
+			if (accAngle >= 10f) {
+				accAngle = 10f;
+				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
 				//print ("Temp rot: " + tempRot);
 				Quaternion curRot = gameObject.transform.rotation;
 				//curRot = curRot + tempRot;
-				gameObject.transform.Rotate(-accAngle*rotateAxis*0.5f, Space.World);
+				gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.World);
 				dragStartPos = curMousePos;
 				accAngle = 0;
 
-				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, accAngle));
+				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
+			} else {
+				//Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 			}
 
 
@@ -726,4 +753,8 @@ public class PathNode : MonoBehaviour {
 			_isDescending = false;
 		}
 	}
+
+
+
+
 }

@@ -40,8 +40,11 @@ public class MusicBoxSoundEffect : AudioSourceController {
 	}
 
 	void PlayDraggingSound(){
-		_audio.clip = _clips [0];
-		_audio.Play ();
+		if (_audio != _clips [0]) {
+			_audio.clip = _clips [0];
+			_audio.Play ();
+		} 
+
 	}
 
 	void StopDraggingSound(){
