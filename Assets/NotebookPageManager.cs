@@ -25,7 +25,7 @@ public class NotebookPage {
 public class NotebookPageManager : MonoBehaviour {
 
 	[SerializeField] int _currentPage = 0;	// Use this for initialization
-	int _pageToFlip = 0;
+	[SerializeField] int _pageToFlip = 0;
 	bool _isTurningRight = false;
 	[SerializeField] NotebookPage[] _noteBookPages;
 	[SerializeField] GameObject _musicbox;
@@ -37,49 +37,73 @@ public class NotebookPageManager : MonoBehaviour {
 
 	Timer _pageTurnTimer;
 	Timer _hideObjectTimer;
+	Timer _leftPageFadeInTimer;
+
+	bool _waitForLeftPage = false;
+	bool _isLeftTurning = false;
 
 	void Start () {
 		_pageTurnTimer = new Timer (1.5f);
 		_hideObjectTimer = new Timer (0.4f);
+		_leftPageFadeInTimer = new Timer (0.5f);
 		_emptyColor = Color.white;
 		_emptyColor.a = 0.0f;
+
 	}
 
 	public void TurnPageRight(){
-		if (_currentPage >= _noteBookPages.Length || _noteBookPages[_currentPage].nextPageLocked) {
-			return;
-		} else {
-			_pageToFlip = _currentPage;
-			_currentPage = _currentPage + 1;
-			_isTurningRight = true;
-			_pageTurnTimer.Reset ();
-		}
+		_pageToFlip = _currentPage;
+		_currentPage = _currentPage + 1;
+		_isTurningRight = true;
+		_pageTurnTimer.Reset ();
 	}
 
 	public void TurnPageLeft(){
-		if (_currentPage == 0) {
-			return;
-		} else {
-			_currentPage = _currentPage - 1;
-			_pageToFlip = _currentPage;
-			_isTurningRight = false;
-			_pageTurnTimer.Reset ();
-		}
+		_pageToFlip = _currentPage;
+		_currentPage = _currentPage - 1;
+		_isTurningRight = false;
+		_pageTurnTimer.Reset ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (_pageTurnTimer.IsOffCooldown) {
+
+	public void CheckPageFlipInput(bool isRightPressed){
+		if (_pageTurnTimer.IsOffCooldown && !_isLeftTurning) {
 			if (_hideObjectTimer.IsOffCooldown) {
-				if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-					_hideObjectTimer.Reset ();
-					StartCoroutine (DelayForObjectHide(false));
-				} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-					_hideObjectTimer.Reset ();
-					StartCoroutine (DelayForObjectHide(true));
+				if (!isRightPressed) {
+					if (_currentPage != 0) {
+						_hideObjectTimer.Reset ();
+						_isLeftTurning = true;
+					
+						StartCoroutine (DelayForObjectHide(false));
+					}
+				} else {
+					if (_currentPage < _noteBookPages.Length - 1 && !_noteBookPages [_currentPage].nextPageLocked) {
+						_hideObjectTimer.Reset ();
+						StartCoroutine (DelayForObjectHide (true));
+					}
 				}
 			}
-		} else {
+		}
+	}
+
+	// Update is called once per frame
+	void Update () {
+		if (_pageTurnTimer.IsOffCooldown && !_isLeftTurning) {
+			if (_hideObjectTimer.IsOffCooldown) {
+				if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+					if (_currentPage != 0) {
+						_hideObjectTimer.Reset ();
+						_isLeftTurning = true;
+					
+						StartCoroutine (DelayForObjectHide (false));
+					}
+				} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
+					if (_currentPage < _noteBookPages.Length - 1 && !_noteBookPages [_currentPage].nextPageLocked) {
+						_hideObjectTimer.Reset ();
+						StartCoroutine (DelayForObjectHide (true));
+					}
+				}
+			}
+		} else if(!_pageTurnTimer.IsOffCooldown || _isLeftTurning) {
 			if(_isTurningRight){
 				_noteBookPages [_pageToFlip].pageObject.rotation = Quaternion.Euler (Vector3.Lerp (_originRot, _goalROt, _pageTurnTimer.PercentTimePassed));
 
@@ -87,17 +111,39 @@ public class NotebookPageManager : MonoBehaviour {
 					_renderTextureLayer.color = Color.Lerp (_emptyColor, Color.white, (_pageTurnTimer.PercentTimePassed - 0.5f)*2f);
 				}
 			} else {
-				_noteBookPages[_pageToFlip].pageObject.rotation = Quaternion.Euler(Vector3.Lerp (_goalROt, _originRot, _pageTurnTimer.PercentTimePassed));
-//				if (_noteBookPages [_currentPage].objectsInPage.Length != 0) {
-//					_renderTextureLayer.color = Color.Lerp (_emptyColor, Color.white, (_pageTurnTimer.PercentTimePassed - 0.5f)*2f);
-//				}
-				//_renderTextureLayer.color = Color.Lerp (Color.white, _emptyColor, (_pageTurnTimer.PercentTimePassed *2f));
+				_noteBookPages[_currentPage].pageObject.rotation = Quaternion.Euler(Vector3.Lerp (_goalROt, _originRot, _pageTurnTimer.PercentTimePassed));
+				if (_pageTurnTimer.IsOffCooldown) {
+					if (!_waitForLeftPage) {
+						_waitForLeftPage = true;
+						_leftPageFadeInTimer.Reset ();
+					} else {
+						_renderTextureLayer.color = Color.Lerp (_emptyColor, Color.white, (_leftPageFadeInTimer.PercentTimePassed));
+						if (_leftPageFadeInTimer.IsOffCooldown) {
+							_renderTextureLayer.color = Color.white;
+							_isLeftTurning = false;
+							_waitForLeftPage = false;
+						}
+					}
+				}
 			}
+		}
+	}
+
+	void SwapDisplayedBookObjects(){
+		for (int i = 0; i < _noteBookPages [_pageToFlip].objectsInPage.Length; i++) {
+			_noteBookPages [_pageToFlip].objectsInPage [i].SetActive (false);
+		}
+		for (int i = 0; i < _noteBookPages [_currentPage].objectsInPage.Length; i++) {
+			_noteBookPages [_currentPage].objectsInPage [i].SetActive (true);
 		}
 	}
 
 	IEnumerator DelayForObjectHide(bool isRight){
 		Color tempColor = _renderTextureLayer.color;
+
+		if (!isRight) {
+			TurnPageLeft ();
+		}
 		while (!_hideObjectTimer.IsOffCooldown) {
 			_renderTextureLayer.color = Color.Lerp (tempColor, _emptyColor, (_hideObjectTimer.PercentTimePassed));
 			yield return null;
@@ -106,9 +152,8 @@ public class NotebookPageManager : MonoBehaviour {
 			_renderTextureLayer.color = _emptyColor;
 			if (isRight) {
 				TurnPageRight ();
-			} else {
-				TurnPageLeft ();
 			}
+			SwapDisplayedBookObjects ();
 			yield return null;
 		}
 	}
