@@ -202,6 +202,10 @@ public class PathNode : MonoBehaviour {
 		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
 		//print ("world up " + Vector3.up);
 
+		print ("360 --> " + DampAngle (360));
+		print ("1080 --> " + DampAngle (1080));
+		print ("360 - 0 --> " + DampAngle (360 - 0));
+
 
 
 	}
@@ -257,31 +261,10 @@ public class PathNode : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Rotate Circles
+		RotateWithMouse();	
+
 		if(_isActive){
 			//ClickWithMouse ();
-
-			RotateWithMouse();	
-
-
-
-			if(isRotating){
-				// rotate the node 
-				if(Quaternion.Angle(transform.localRotation,finalAngle) > errorVal*20f){
-					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
-				} else {
-					//print ("####### reset boolean #######");
-					transform.localRotation = finalAngle;
-					isRotating = false;
-					// TODO change the node checking 
-//					if (_isActive) {
-//						CheckNodeConnection ();
-//					}
-				}
-			}
-
-			CheckDescend ();
-			//CheckNodeConnection ();
-
 
 			if (_isDescending) {
 				DescendNode ();
@@ -291,20 +274,43 @@ public class PathNode : MonoBehaviour {
 				isTempDisable = false;
 				//isDragStart = false;
 			}
-
-			CheckNodeConnection ();
-
-
+				
 		}// end of checking isActive
 
 
 
 	}
 
+
+	void FixedUpdate(){
+		if (_isActive) {
+			if(isRotating){
+				// rotate the node 
+
+				if(Mathf.Abs(Quaternion.Angle(transform.localRotation , finalAngle)) > errorVal*20f){
+					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
+				} else {
+					//print ("####### reset boolean #######");
+					transform.localRotation = finalAngle;
+					isRotating = false;
+					// TODO change the node checking 
+					//					if (_isActive) {
+					//						CheckNodeConnection ();
+					//					}
+				}
+			}
+
+			CheckDescend ();
+			//CheckNodeConnection ();
+		
+		}
+
+	}
+
 	void LateUpdate(){
 		// only check connection when node is active 
 		if (_isActive) {
-			
+			CheckNodeConnection ();
 		}
 
 		//		if (ischeckingConnection) {
@@ -511,7 +517,8 @@ public class PathNode : MonoBehaviour {
 
 							}
 						} else {
-							if (Mathf.Abs (DampAngle (tempRotDegree) - DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
+							//print("node angle check: " + _nodeIndex + " " +DampAngle(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)));
+							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								_isCorrectConnection = true;
 								if (_cylinderRenderer) {
 									_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
@@ -530,21 +537,21 @@ public class PathNode : MonoBehaviour {
 				}
 			}
 
-			if (_isCorrectConnection) {
-
-				if (isDragStart && isTempDisableActive) {
-					DisableRotate (0.4f);
-				}
-
-				Events.G.Raise (new MBNodeConnect (_nodeIndex));
-				// when correctly connected snap to that angle + disable drag for 1 sec 
-
-
-			} else {
-				if (!isTempDisableActive && disableRotateTimer.IsOffCooldown) {
-					isTempDisableActive = true;
-				}
-			}
+//			if (_isCorrectConnection) {
+//
+//				if (isDragStart && isTempDisableActive) {
+//					DisableRotate (0.4f);
+//				}
+//
+//				Events.G.Raise (new MBNodeConnect (_nodeIndex));
+//				// when correctly connected snap to that angle + disable drag for 1 sec 
+//
+//
+//			} else {
+//				if (!isTempDisableActive && disableRotateTimer.IsOffCooldown) {
+//					isTempDisableActive = true;
+//				}
+//			}
 
 		}
 
@@ -621,6 +628,9 @@ public class PathNode : MonoBehaviour {
 
 	// TODO: put into camera selection manager or something 
 	void RotateWithMouse(){
+		
+
+
 		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
 			_intersectionPart.transform.parent = transform;
 		}
@@ -632,14 +642,20 @@ public class PathNode : MonoBehaviour {
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					isDragStart = true;
-					dragStartPos = hit.point;
-					//print ("hit point :" + hit.point);
-					hitDist = hit.distance;
-					// create a plane ;
-					circlePlane = new Plane(Vector3.up, hit.point);
-					preAxis = new Vector3 (0, 0, 0);
-					preChangingTime = -1;
+					if (_isActive) {
+						isDragStart = true;
+						dragStartPos = hit.point;
+						//print ("hit point :" + hit.point);
+						hitDist = hit.distance;
+						// create a plane ;
+						circlePlane = new Plane (Vector3.up, hit.point);
+						preAxis = new Vector3 (0, 0, 0);
+						preChangingTime = -1;
+					} else {
+						// lock behaviour  + sound
+
+					}
+
 					//debugPos1 = hit.point;
 				}
 
@@ -672,16 +688,16 @@ public class PathNode : MonoBehaviour {
 		}
 
 		if (isDragStart && !isTempDisable) {
-			
+
 			Vector3 curMousePos = Vector3.zero;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
 			if (circlePlane.Raycast (ray, out rayDistance)) {
 				curMousePos = ray.GetPoint(rayDistance);
 			}
-				
-//			debugPos1 = curMousePos;
-//			Debug.DrawLine (ray.origin, curMousePos);
+
+			//			debugPos1 = curMousePos;
+			//			Debug.DrawLine (ray.origin, curMousePos);
 
 			//curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
 			// TODO: z needs to be switched to any customized axis
@@ -699,7 +715,7 @@ public class PathNode : MonoBehaviour {
 				float deltaChangeTime = Time.time - preChangingTime;
 
 				if (deltaChangeTime <= 0.4f) {
-					print("############# Axis Jitter !!!!!");
+					//print("############# Axis Jitter !!!!!");
 					return;
 
 				} else {
@@ -741,6 +757,11 @@ public class PathNode : MonoBehaviour {
 		}
 
 
+
+	}
+
+	void NodeLocked(){
+		
 	}
 
 	void DisableRotate(float stopseconds){
@@ -787,16 +808,16 @@ public class PathNode : MonoBehaviour {
 	float DampAngle(float angle){
 		if (angle >= 360) {
 			angle -= 360;
-			DampAngle (angle);
+			return DampAngle (angle);
 		} else if (angle < 0) {
 			angle += 360;
-			DampAngle (angle);
+			return DampAngle (angle);
 		} else {
 			return angle;
 			//break;
 		}
 
-		return angle;
+		//return angle;
 	}
 
 	void PlayModeHandle(MBPlayModeEvent e){
