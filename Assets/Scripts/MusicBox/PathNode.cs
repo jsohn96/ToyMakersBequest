@@ -495,7 +495,7 @@ public class PathNode : MonoBehaviour {
 							PathNode adjNode = _myNetWork.FindNodeWithIndex (_adjacentNode [curCheckIdx].adjNodeIdx);
 							//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
 							if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
-								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 5f) {
+								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								_isCorrectConnection = true;
 								//adjNode._isCorrectConnection = true;
 								if (_cylinderRenderer) {
@@ -525,24 +525,27 @@ public class PathNode : MonoBehaviour {
 							}
 
 						}
+
 						_myNodeInfo.isConnected = _isCorrectConnection;
-						if (_isCorrectConnection) {
 
-							if (isDragStart && isTempDisableActive) {
-								DisableRotate (0.4f);
-							}
-
-							Events.G.Raise (new MBNodeConnect (_nodeIndex));
-							// when correctly connected snap to that angle + disable drag for 1 sec 
-
-
-						} else {
-							if (!isTempDisableActive) {
-								isTempDisableActive = true;
-							}
-						}
 					}
 				
+				}
+			}
+
+			if (_isCorrectConnection) {
+
+				if (isDragStart && isTempDisableActive) {
+					DisableRotate (0.4f);
+				}
+
+				Events.G.Raise (new MBNodeConnect (_nodeIndex));
+				// when correctly connected snap to that angle + disable drag for 1 sec 
+
+
+			} else {
+				if (!isTempDisableActive && disableRotateTimer.IsOffCooldown) {
+					isTempDisableActive = true;
 				}
 			}
 
@@ -774,7 +777,7 @@ public class PathNode : MonoBehaviour {
 		// if the nearest snap to angle is found 
 		float matchAngle = 0;
 		foreach (float snp in snapToAngle) {
-			if (Mathf.Abs (DampAngle (angle) - DampAngle (snp)) <= 20f) {
+			if (Mathf.Abs (DampAngle (angle) - DampAngle (snp)) <= 30f) {
 				matchAngle = DampAngle (snp);
 				return matchAngle;
 			}
