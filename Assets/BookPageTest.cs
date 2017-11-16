@@ -4,17 +4,42 @@ using UnityEngine;
 
 public class BookPageTest : MonoBehaviour {
 	Animator _bookAnim;
+	bool _isOnRight = true;
+	Timer _bookFlipAnimationTimer;
+	[SerializeField] AnimationClip _bookFlipAnimation;
 
-	// Use this for initialization
+
 	void Start () {
 		_bookAnim = GetComponent<Animator> ();
+		float reducedLength = (_bookFlipAnimation.length * 0.8f);
+		_bookFlipAnimationTimer = new Timer (reducedLength);
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			_bookAnim.Play ("Flip");
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			FlipRight ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			FlipLeft ();
 		}
 		
+	}
+
+	public void FlipRight() {
+		if (!_isOnRight && _bookFlipAnimationTimer.IsOffCooldown) {
+			_bookAnim.Play ("BackFlip");
+			_bookFlipAnimationTimer.Reset ();
+			_isOnRight = true;
+		}
+	}
+
+	public void FlipLeft() {
+		if (_isOnRight && _bookFlipAnimationTimer.IsOffCooldown) {
+			_bookAnim.Play ("Flip");
+			_bookFlipAnimationTimer.Reset ();
+			_isOnRight = false;
+
+		}
 	}
 }
