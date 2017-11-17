@@ -3,25 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class NotebookPage {
-	public int pageNumber;
-	public Transform pageObject;
-	public GameObject[] objectsInPage;
-	public bool nextPageLocked;
-
-	public NotebookPage (
-		int _pageNumber,
-		Transform _pageObject,
-		GameObject[] _objectsInPage,
-		bool _nextPageLocked){
-		pageNumber = _pageNumber;
-		pageObject = _pageObject;
-		objectsInPage = _objectsInPage;
-		nextPageLocked = _nextPageLocked;
-	}
-}
-
 public class NotebookPageManager : MonoBehaviour {
 
 	[SerializeField] int _currentPage = 0;	// Use this for initialization
@@ -39,7 +20,6 @@ public class NotebookPageManager : MonoBehaviour {
 	Timer _hideObjectTimer;
 	Timer _leftPageFadeInTimer;
 
-	[SerializeField] BookAudioController _bookAudioController;
 
 	bool _waitForLeftPage = false;
 	bool _isLeftTurning = false;
@@ -58,7 +38,6 @@ public class NotebookPageManager : MonoBehaviour {
 		_currentPage = _currentPage + 1;
 		_isTurningRight = true;
 		_pageTurnTimer.Reset ();
-		_bookAudioController.PlayPageLift ();
 	}
 
 	public void TurnPageLeft(){
@@ -66,7 +45,6 @@ public class NotebookPageManager : MonoBehaviour {
 		_currentPage = _currentPage - 1;
 		_isTurningRight = false;
 		_pageTurnTimer.Reset ();
-		_bookAudioController.PlayPageLift ();
 	}
 
 	public void CheckPageFlipInput(bool isRightPressed){
@@ -92,7 +70,6 @@ public class NotebookPageManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (_pageTurnTimer.IsOffCooldown && !_isLeftTurning) {
-			_bookAudioController.PlayPageDrop ();
 			if (_hideObjectTimer.IsOffCooldown) {
 				if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 					if (_currentPage != 0) {
@@ -118,7 +95,6 @@ public class NotebookPageManager : MonoBehaviour {
 			} else {
 				_noteBookPages[_currentPage].pageObject.rotation = Quaternion.Euler(Vector3.Lerp (_goalROt, _originRot, _pageTurnTimer.PercentTimePassed));
 				if (_pageTurnTimer.IsOffCooldown) {
-					_bookAudioController.PlayPageDrop ();
 					if (!_waitForLeftPage) {
 						_waitForLeftPage = true;
 						_leftPageFadeInTimer.Reset ();

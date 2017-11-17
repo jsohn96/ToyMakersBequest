@@ -7,6 +7,7 @@ public class PageFlipAnimation : MonoBehaviour {
 	bool _isOnRight = true;
 	Timer _bookFlipAnimationTimer;
 	[SerializeField] AnimationClip _bookFlipAnimation;
+	[SerializeField] BookAudioController _bookAudioController;
 
 	IEnumerator _pageZLerpCoroutine;
 	Vector3 _tempPos;
@@ -15,10 +16,11 @@ public class PageFlipAnimation : MonoBehaviour {
 	void Start () {
 		_bookAnim = GetComponent<Animator> ();
 		float reducedLength = (_bookFlipAnimation.length * 0.8f);
-		Debug.Log (reducedLength);
 		_bookFlipAnimationTimer = new Timer (reducedLength);
-	
-		Debug.Log (_bookFlipAnimationTimer.IsOffCooldown);
+	}
+
+	public bool CheckIfReady(){
+		return _bookFlipAnimationTimer.IsOffCooldown;
 	}
 
 	public void FlipRight(float newY, bool firstHalf = true) {
@@ -81,5 +83,13 @@ public class PageFlipAnimation : MonoBehaviour {
 		_tempPos.y = newY;
 		transform.parent.localPosition = _tempPos;
 		yield return null;
+	}
+
+	public void CallPageLift(){
+		_bookAudioController.PlayPageLift ();
+	}
+
+	public void CallPageDrop(){
+		_bookAudioController.PlayPageDrop ();
 	}
 }
