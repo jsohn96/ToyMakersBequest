@@ -1,23 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class NotebookPage {
 	public int pageNumber;
-	public Transform pageObject;
-	public GameObject[] objectsInPage;
+	public GameObject objectsInPageContainer;
 	public bool nextPageLocked;
+	public Material pageMaterial;
 
 	public NotebookPage (
 		int _pageNumber,
 		Transform _pageObject,
-		GameObject[] _objectsInPage,
-		bool _nextPageLocked){
+		GameObject _objectsInPageContainer,
+		bool _nextPageLocked,
+		Material _pageMaterial){
 		pageNumber = _pageNumber;
-		pageObject = _pageObject;
-		objectsInPage = _objectsInPage;
+		objectsInPageContainer = _objectsInPageContainer;
 		nextPageLocked = _nextPageLocked;
+		pageMaterial = _pageMaterial;
 	}
 }
 
@@ -26,23 +28,37 @@ public class PageFlipManagement : MonoBehaviour {
 	[SerializeField] Transform[] _pagePool;
 	[SerializeField] Transform _coverPage, _endPage;
 	PageFlipAnimation _coverFlipAnimation, _endFlipAnimation;
-	[SerializeField] Material[] _pageContents;
 
 	float _coverYPos, _endYPos;
 
 	float[] _inBetweenY;
 	// 0: empty slot
 
-	int _currentPage = 0;
+	[SerializeField] int _currentPage = 0;
 	//0 = CoverPage;
 
 	Vector3 _tempVector3;
 
 	int _totalPages;
 	int _lastFlippedPage;
+	[SerializeField] int _pageToFlip = 0;
+
+	[SerializeField] NotebookPage[] _noteBookPages;
+	[SerializeField] RawImage _renderTextureLayer;
+	Color _emptyColor;
+
+	Timer _pageTurnTimer;
+	Timer _hideObjectTimer;
+	Timer _fadeInTimer;
+	[SerializeField] AnimationClip _flipAnimation;
+
+	bool _waitingForFadeIn = false;
 
 	void Start(){
-		_totalPages = _pageContents.Length + 2;
+		_totalPages = _noteBookPages.Length + 1;
+		for (int i = 0; i < _noteBookPages.Length; i++) {
+			_noteBookPages [i].pageNumber = i + 1;
+		}
 
 		// gets references for page flipping animation
 		_pageFlipAnimations = new PageFlipAnimation[_pagePool.Length];
@@ -66,19 +82,42 @@ public class PageFlipManagement : MonoBehaviour {
 				_pagePool [i].localPosition = _tempVector3;
 			}
 		}
+
+		//initialization section
+		_emptyColor = Color.white;
+		_emptyColor.a = 0.0f;
+		_pageTurnTimer = new Timer (_flipAnimation.length);
+		_hideObjectTimer = new Timer (0.4f);
+		_fadeInTimer = new Timer (0.2f);
+
 	}
 		
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			FlipPageLeft ();
+			CheckPageFlipInput (false);
 		}
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			FlipPageRight ();
+			CheckPageFlipInput (true);
+		} 
+
+		if (_waitingForFadeIn && _pageTurnTimer.IsOffCooldown) {
+			_waitingForFadeIn = false;
+			_fadeInTimer.Reset ();
 		}
+
+		if (_pageTurnTimer.IsOffCooldown && _renderTextureLayer.color != Color.white) {
+			if (!_fadeInTimer.IsOffCooldown) {
+				_renderTextureLayer.color = Color.Lerp (_emptyColor, Color.white, (_fadeInTimer.PercentTimePassed));
+			} else {
+				_renderTextureLayer.color = Color.white;
+			}
+		}
+
+
 	}
 
 	public void FlipPageRight(){
-		if (_currentPage < _totalPages && (_lastFlippedPage != null) && _pageFlipAnimations [MathHelpers.Mod (_lastFlippedPage, 4)].CheckIfReady() && _endFlipAnimation.CheckIfReady() && _coverFlipAnimation.CheckIfReady()) {
+		//if (_currentPage < _totalPages && (_lastFlippedPage != null) && _pageFlipAnimations [MathHelpers.Mod (_lastFlippedPage, 4)].CheckIfReady() && _endFlipAnimation.CheckIfReady() && _coverFlipAnimation.CheckIfReady()) {
 			_lastFlippedPage = _currentPage - 1;
 			if (_currentPage > 2) {
 				if (_currentPage == _totalPages - 1) {
@@ -103,13 +142,18 @@ public class PageFlipManagement : MonoBehaviour {
 			} else if (_currentPage == 2) {
 				_pageFlipAnimations [_currentPage - 1].FlipLeft (_inBetweenY [2]);
 			}
-
+			_pageToFlip = _currentPage;
+			_pageTurnTimer.Reset ();
+		_waitingForFadeIn = true;
 			_currentPage = _currentPage + 1;
-		}
+		//}
 	}
 
 	public void FlipPageLeft(){
-		if (_currentPage > 0 && (_lastFlippedPage != null) && _pageFlipAnimations [MathHelpers.Mod (_lastFlippedPage, 4)].CheckIfReady() && _endFlipAnimation.CheckIfReady() && _coverFlipAnimation.CheckIfReady()) {
+		//if (_currentPage > 0) {
+			_pageToFlip = _currentPage;
+			_pageTurnTimer.Reset ();
+		_waitingForFadeIn = true;
 			_currentPage = _currentPage - 1;
 			_lastFlippedPage = _currentPage - 1;
 			if (_currentPage > 2) {
@@ -134,6 +178,55 @@ public class PageFlipManagement : MonoBehaviour {
 				_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [0], false);
 			} else if (_currentPage == 2) {
 				_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [1], false);
+			}
+		//}
+	}
+
+	void SwapDisplayedBookObjects(){
+		if (_pageToFlip-1 >= 0 && _pageToFlip < _totalPages && _noteBookPages [_pageToFlip-1].objectsInPageContainer != null) {
+			_noteBookPages [_pageToFlip-1].objectsInPageContainer.SetActive (false);
+		}
+		if (_currentPage-1 >= 0 && _currentPage < _totalPages && _noteBookPages [_currentPage-1].objectsInPageContainer != null) {
+			_noteBookPages [_currentPage-1].objectsInPageContainer.SetActive (true);
+		}
+	}
+
+	IEnumerator DelayForObjectHide(bool isRight){
+		Color tempColor = _renderTextureLayer.color;
+
+		while (!_hideObjectTimer.IsOffCooldown) {
+			_renderTextureLayer.color = Color.Lerp (tempColor, _emptyColor, (_hideObjectTimer.PercentTimePassed));
+			yield return null;
+		}
+		if (_hideObjectTimer.IsOffCooldown) {
+			_renderTextureLayer.color = _emptyColor;
+			if (isRight) {
+				FlipPageRight ();
+			} else {
+				FlipPageLeft ();
+			}
+			SwapDisplayedBookObjects ();
+			yield return null;
+		}
+	}
+
+
+	public void CheckPageFlipInput(bool isRightPressed){
+		if (_pageTurnTimer.IsOffCooldown) {
+			if (_hideObjectTimer.IsOffCooldown) {
+				if (!isRightPressed) {
+					if (_currentPage > 0) {
+						_hideObjectTimer.Reset ();
+						StartCoroutine (DelayForObjectHide(false));
+					}
+				} else {
+					if (_currentPage < _totalPages && (_lastFlippedPage != null)) {
+						if (_currentPage <= 0 || _currentPage >= _totalPages-1 || !_noteBookPages [_currentPage - 1].nextPageLocked) {
+							_hideObjectTimer.Reset ();
+							StartCoroutine (DelayForObjectHide (true));
+						}
+					}
+				}
 			}
 		}
 	}
