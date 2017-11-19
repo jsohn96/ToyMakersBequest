@@ -263,6 +263,8 @@ public class PathNode : MonoBehaviour {
 		// Rotate Circles
 		RotateWithMouse();	
 
+		print ("debug check temp rotate disabled: " + isTempDisable);
+
 		if(_isActive){
 			//ClickWithMouse ();
 
@@ -537,21 +539,34 @@ public class PathNode : MonoBehaviour {
 				}
 			}
 
-//			if (_isCorrectConnection) {
-//
-//				if (isDragStart && isTempDisableActive) {
-//					DisableRotate (0.4f);
-//				}
-//
-//				Events.G.Raise (new MBNodeConnect (_nodeIndex));
-//				// when correctly connected snap to that angle + disable drag for 1 sec 
-//
-//
-//			} else {
-//				if (!isTempDisableActive && disableRotateTimer.IsOffCooldown) {
-//					isTempDisableActive = true;
-//				}
-//			}
+			// temp disable turning when dragging 
+			if (_isCorrectConnection) {
+
+				if (isDragStart && isTempDisableActive && !isTempDisable) {
+					// call disable rotating for this node 
+					DisableRotate (0.4f);
+					Events.G.Raise (new MBNodeConnect (_nodeIndex));
+				}
+
+
+				// when correctly connected snap to that angle + disable drag for 1 sec 
+
+
+			} else {
+				// when disconnected from the correct angle, enable temp disable 
+				if (!isTempDisableActive && disableRotateTimer.IsOffCooldown && !isTempDisable) {
+					isTempDisableActive = true;
+				}
+
+				// when hop on to node that in and out angles are different s
+				if(isTempDisable && !isTempDisableActive){
+					isTempDisable = false;
+					//disableRotateTimer.IsOffCooldown = true;
+					isTempDisableActive = true;
+
+					
+				}
+			}
 
 		}
 
@@ -629,8 +644,6 @@ public class PathNode : MonoBehaviour {
 	// TODO: put into camera selection manager or something 
 	void RotateWithMouse(){
 		
-
-
 		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
 			_intersectionPart.transform.parent = transform;
 		}
@@ -696,10 +709,7 @@ public class PathNode : MonoBehaviour {
 				curMousePos = ray.GetPoint(rayDistance);
 			}
 
-			//			debugPos1 = curMousePos;
-			//			Debug.DrawLine (ray.origin, curMousePos);
-
-			//curMousePos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, hitDist));
+		
 			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
 			va.y = 0;
