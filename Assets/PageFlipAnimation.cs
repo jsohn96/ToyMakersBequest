@@ -45,6 +45,19 @@ public class PageFlipAnimation : MonoBehaviour {
 		}
 	}
 
+	public void InstantMoveZ (float newY, bool isRight){
+		if (!isRight) {
+			if (_bookAnim == null) {
+				_bookAnim = GetComponent<Animator> ();
+			}
+			_bookAnim.Play("Flip", -1, _bookFlipAnimation.length);
+			_isOnRight = false;
+		}
+		_tempPos = transform.parent.localPosition;
+		_tempPos.y = newY;
+		transform.parent.localPosition = _tempPos;
+	}
+
 	public void MoveZ(float newY, bool firstHalf = true){
 		_bookFlipAnimationTimer.Reset ();
 		if (_pageZLerpCoroutine != null) {

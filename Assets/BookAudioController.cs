@@ -7,16 +7,6 @@ public class BookAudioController : AudioSourceController {
 	bool _liftedThePage = false;
 	[SerializeField] AudioSystem _interactAudioSystem;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	public void PlayPageLift(){
 		_pageFlipAudioSystem.audioSource.clip = _pageFlipAudioSystem.clips [0];
 		_pageFlipAudioSystem.audioSource.Play ();

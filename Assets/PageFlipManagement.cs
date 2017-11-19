@@ -24,6 +24,8 @@ public class NotebookPage {
 }
 
 public class PageFlipManagement : MonoBehaviour {
+	[SerializeField] int _whichPageToStart = 0;
+
 	PageFlipAnimation[] _pageFlipAnimations;
 	[SerializeField] Transform[] _pagePool;
 	[SerializeField] Transform _coverPage, _endPage;
@@ -90,6 +92,7 @@ public class PageFlipManagement : MonoBehaviour {
 		_hideObjectTimer = new Timer (0.4f);
 		_fadeInTimer = new Timer (0.2f);
 
+		CalculatePagePosition (_whichPageToStart);
 	}
 		
 	void Update () {
@@ -112,8 +115,119 @@ public class PageFlipManagement : MonoBehaviour {
 				_renderTextureLayer.color = Color.white;
 			}
 		}
+	}
 
+	void CalculatePagePosition(int pageIndex){
+		if (pageIndex > _totalPages) {
+			pageIndex = _totalPages;
+		}
+		_currentPage = pageIndex;
 
+		if (_currentPage != 0) {
+			if (_currentPage >= _totalPages) {
+				_coverFlipAnimation.InstantMoveZ (_endYPos, false);
+				_endFlipAnimation.InstantMoveZ (_coverYPos, false);
+
+			} else {
+				_coverFlipAnimation.InstantMoveZ (_endYPos, false);
+				_endFlipAnimation.InstantMoveZ (_endYPos, true);
+			}
+
+			// The section below is for the non-cover/end pages
+			if (_currentPage == 1) {
+				// dont really need this because other than cover everything is the same
+			} else if (_currentPage == 2) {
+				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], false); 
+			} else {
+				int modValue;
+				if (_currentPage >= _totalPages - 2) {
+					modValue = MathHelpers.Mod (_totalPages-3, 4);
+					ContentPageInit (modValue, false);
+					switch (modValue) {
+					case 0:
+						_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [1], false);
+						if (_currentPage >= _totalPages - 1) {
+							_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [0], false);
+						} else if (_currentPage == _totalPages - 2) {
+							_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], true);
+						}
+						break;
+					case 1:
+						_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [1], false);
+
+						if (_currentPage >= _totalPages - 1) {
+							_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [0], false);
+						} else if (_currentPage == _totalPages - 2) {
+							_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], true);
+						}
+						break;
+					case 2:
+						_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [1], false);
+
+						if (_currentPage >= _totalPages - 1) {
+							_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [0], false);
+						} else if (_currentPage == _totalPages - 2) {
+							_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], true);
+						}
+						break;
+					case 3:
+						_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [1], false);
+
+						if (_currentPage >= _totalPages - 1) {
+							_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [0], false);
+						} else if (_currentPage == _totalPages - 2) {
+							_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], true);
+						}
+						break;
+					default:
+						break;
+					}
+
+				} else {
+					modValue = MathHelpers.Mod (_currentPage, 4);
+					ContentPageInit (modValue);
+				}
+			}
+		}
+	}
+
+	void ContentPageInit(int modValue, bool doAll = true) {
+		switch (modValue) {
+		case 0:
+			if (doAll) {
+				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], true);
+				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], true);
+			}
+			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], false);
+			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], false);
+			break;
+		case 1:
+			if (doAll) {
+				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], true);
+				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], true);
+			}
+			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], false);
+			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], false);
+			break;
+		case 2:
+			if (doAll) {
+				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], true);
+				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], true);
+			}
+			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], false);
+			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], false);
+			break;
+		case 3:
+			if (doAll) {
+				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], true);
+				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], true);
+			}
+			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], false);
+			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], false);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void FlipPageRight(){
