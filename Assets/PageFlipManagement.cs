@@ -56,6 +56,9 @@ public class PageFlipManagement : MonoBehaviour {
 
 	bool _waitingForFadeIn = false;
 
+
+	[SerializeField] ButtonManager _buttonManagerScript;
+
 	void Start(){
 		_totalPages = _noteBookPages.Length + 1;
 		for (int i = 0; i < _noteBookPages.Length; i++) {
@@ -233,34 +236,35 @@ public class PageFlipManagement : MonoBehaviour {
 	public void FlipPageRight(){
 		//if (_currentPage < _totalPages && (_lastFlippedPage != null) && _pageFlipAnimations [MathHelpers.Mod (_lastFlippedPage, 4)].CheckIfReady() && _endFlipAnimation.CheckIfReady() && _coverFlipAnimation.CheckIfReady()) {
 			_lastFlippedPage = _currentPage - 1;
-			if (_currentPage > 2) {
-				if (_currentPage == _totalPages - 1) {
-					//last page
-					_endFlipAnimation.FlipLeft (_coverYPos, false);
-				} else if (_currentPage == _totalPages - 2) {
-					_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipLeft (_inBetweenY [0], false);
-				} else if (_currentPage == _totalPages - 3) {
-					_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipLeft (_inBetweenY [1], false);
-				} else {
-					int whichPageToFlip = MathHelpers.Mod ((_currentPage - 1), 4);
+		if (_currentPage > 2) {
+			if (_currentPage == _totalPages - 1) {
+				//last page
+				_endFlipAnimation.FlipLeft (_coverYPos, false);
+			} else if (_currentPage == _totalPages - 2) {
+				_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipLeft (_inBetweenY [0], false);
+			} else if (_currentPage == _totalPages - 3) {
+				_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipLeft (_inBetweenY [1], false);
+			} else {
+				int whichPageToFlip = MathHelpers.Mod ((_currentPage - 1), 4);
 
-					_pageFlipAnimations [whichPageToFlip].FlipLeft (_inBetweenY [2]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [2]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [3]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
-				}
-			} else if (_currentPage == 0) {
-				_coverFlipAnimation.FlipLeft (_endYPos);
-			} else if (_currentPage == 1) {
-				_pageFlipAnimations [_currentPage - 1].FlipLeft (_inBetweenY [3]);
-			} else if (_currentPage == 2) {
-				_pageFlipAnimations [_currentPage - 1].FlipLeft (_inBetweenY [2]);
+				_pageFlipAnimations [whichPageToFlip].FlipLeft (_inBetweenY [2]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [2]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [3]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
 			}
-			_pageToFlip = _currentPage;
-			_pageTurnTimer.Reset ();
+		} else if (_currentPage == 0) {
+			_coverFlipAnimation.FlipLeft (_endYPos);
+		} else if (_currentPage == 1) {
+			_pageFlipAnimations [_currentPage - 1].FlipLeft (_inBetweenY [3]);
+		} else if (_currentPage == 2) {
+			_pageFlipAnimations [_currentPage - 1].FlipLeft (_inBetweenY [2]);
+		}
+		_pageToFlip = _currentPage;
+		_pageTurnTimer.Reset ();
 		_waitingForFadeIn = true;
-			_currentPage = _currentPage + 1;
-		//}
+		_currentPage = _currentPage + 1;
+
+		_buttonManagerScript.BeginFade (_currentPage, _totalPages);
 	}
 
 	public void FlipPageLeft(){
@@ -270,29 +274,30 @@ public class PageFlipManagement : MonoBehaviour {
 		_waitingForFadeIn = true;
 			_currentPage = _currentPage - 1;
 			_lastFlippedPage = _currentPage - 1;
-			if (_currentPage > 2) {
-				if (_currentPage == _totalPages - 1) {
-					//last page
-					_endFlipAnimation.FlipRight (_endYPos);
-				} else if (_currentPage == _totalPages - 2) {
-					_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipRight (_inBetweenY [3]);
-				} else if (_currentPage == _totalPages - 3) {
-					_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipRight (_inBetweenY [2]);
-				} else {
+		if (_currentPage > 2) {
+			if (_currentPage == _totalPages - 1) {
+				//last page
+				_endFlipAnimation.FlipRight (_endYPos);
+			} else if (_currentPage == _totalPages - 2) {
+				_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipRight (_inBetweenY [3]);
+			} else if (_currentPage == _totalPages - 3) {
+				_pageFlipAnimations [MathHelpers.Mod (_currentPage - 1, 4)].FlipRight (_inBetweenY [2]);
+			} else {
 
-					int whichPageToFlip = MathHelpers.Mod ((_currentPage - 1), 4);
-					_pageFlipAnimations [whichPageToFlip].FlipRight (_inBetweenY [2]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [2]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [3]);
-					_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
-				}
-			} else if (_currentPage == 0) {
-				_coverFlipAnimation.FlipRight (_coverYPos, false);
-			} else if (_currentPage == 1) {
-				_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [0], false);
-			} else if (_currentPage == 2) {
-				_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [1], false);
+				int whichPageToFlip = MathHelpers.Mod ((_currentPage - 1), 4);
+				_pageFlipAnimations [whichPageToFlip].FlipRight (_inBetweenY [2]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [2]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [3]);
+				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
 			}
+		} else if (_currentPage == 0) {
+			_coverFlipAnimation.FlipRight (_coverYPos, false);
+		} else if (_currentPage == 1) {
+			_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [0], false);
+		} else if (_currentPage == 2) {
+			_pageFlipAnimations [_currentPage - 1].FlipRight (_inBetweenY [1], false);
+		}
+		_buttonManagerScript.BeginFade (_currentPage, _totalPages);
 		//}
 	}
 
@@ -327,7 +332,7 @@ public class PageFlipManagement : MonoBehaviour {
 
 	public void CheckPageFlipInput(bool isRightPressed){
 		if (_pageTurnTimer.IsOffCooldown) {
-			if (_hideObjectTimer.IsOffCooldown) {
+			if (_hideObjectTimer.IsOffCooldown && _fadeInTimer.IsOffCooldown) {
 				if (!isRightPressed) {
 					if (_currentPage > 0) {
 						_hideObjectTimer.Reset ();
@@ -343,5 +348,18 @@ public class PageFlipManagement : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+
+	public bool IsPageTurnDone(){
+		if (_pageTurnTimer.IsOffCooldown) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int GetStartingPage(){
+		return _whichPageToStart;
 	}
 }
