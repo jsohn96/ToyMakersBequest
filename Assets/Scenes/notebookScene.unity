@@ -945,6 +945,97 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 181690612}
   m_Mesh: {fileID: 4300002, guid: 5ea830152566d42daa1ea7f3652a6246, type: 3}
+--- !u!1 &184460735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 184460736}
+  - component: {fileID: 184460739}
+  - component: {fileID: 184460738}
+  - component: {fileID: 184460737}
+  m_Layer: 15
+  m_Name: TMP SubMesh [Emperors SDF Material + LiberationSans SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &184460736
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184460735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 973980136}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &184460737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184460735}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1330537494, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fontAsset: {fileID: 11400000, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 0.5
+  m_renderer: {fileID: 184460738}
+  m_meshFilter: {fileID: 184460739}
+  m_boxCollider: {fileID: 0}
+  m_TextComponent: {fileID: 973980137}
+--- !u!23 &184460738
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184460735}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &184460739
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184460735}
+  m_Mesh: {fileID: 0}
 --- !u!1 &261929958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,7 +2060,7 @@ MonoBehaviour:
     nextPageLocked: 0
     pageMaterial: {fileID: 0}
   - pageNumber: 0
-    objectsInPageContainer: {fileID: 1199066079}
+    objectsInPageContainer: {fileID: 2097882759}
     nextPageLocked: 0
     pageMaterial: {fileID: 0}
   - pageNumber: 0
@@ -3840,11 +3931,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 768c5d8d8a875474a8090e24a1dee67b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 768c5d8d8a875474a8090e24a1dee67b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 768c5d8d8a875474a8090e24a1dee67b, type: 3}
       propertyPath: m_RootOrder
@@ -3904,7 +3995,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: a349d7f3c0d65aa4495d89b3db2d5e5e, type: 2}
     - target: {fileID: 400002, guid: 768c5d8d8a875474a8090e24a1dee67b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 768c5d8d8a875474a8090e24a1dee67b, type: 3}
@@ -3992,7 +4083,7 @@ GameObject:
   - component: {fileID: 943693829}
   - component: {fileID: 943693828}
   - component: {fileID: 943693827}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4006,7 +4097,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 943693825}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 2097882760}
@@ -4014,9 +4105,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.791}
+  m_AnchoredPosition: {x: -0.116, y: -0.188}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &943693827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,14 +4157,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 257
+  m_textAlignment: 264
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: -10.15
   m_wordSpacing: 0
@@ -4114,11 +4205,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 943693829}
@@ -4279,7 +4370,7 @@ GameObject:
   - component: {fileID: 973980139}
   - component: {fileID: 973980138}
   - component: {fileID: 973980137}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4293,17 +4384,18 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 973980135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000000029802322}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
-  m_Children: []
+  m_Children:
+  - {fileID: 184460736}
   m_Father: {fileID: 2097882760}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.32799911}
+  m_AnchoredPosition: {x: -1.248, y: -0.014}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &973980137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4323,9 +4415,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Hidden within these pages
-
-    is my life''s greatest accomplishment.'
+  m_text: "Hidden within these pages \nis my life's greatest accomplishment."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818ec8d9ac1d4754c963423f4ed57d71, type: 2}
   m_sharedMaterial: {fileID: 21047551276287966, guid: 818ec8d9ac1d4754c963423f4ed57d71,
@@ -4353,18 +4443,18 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: -10.15
   m_wordSpacing: 0
-  m_lineSpacing: -30.3
+  m_lineSpacing: -6.1
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -4390,28 +4480,28 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.021626413, y: 0, z: 1.0160917, w: 1.0100352}
+  m_margin: {x: 0.021626413, y: 0, z: 1.0689719, w: 1.0100352}
   m_textInfo:
     textComponent: {fileID: 973980137}
-    characterCount: 63
+    characterCount: 64
     spriteCount: 0
-    spaceCount: 8
+    spaceCount: 9
     wordCount: 9
     linkCount: 0
-    lineCount: 2
+    lineCount: 3
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 973980139}
   m_subTextObjects:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 184460737}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4476,7 +4566,7 @@ GameObject:
   - component: {fileID: 1002536754}
   - component: {fileID: 1002536753}
   - component: {fileID: 1002536752}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4498,9 +4588,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.072}
+  m_AnchoredPosition: {x: -1.186, y: 0.408}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &1002536752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4520,9 +4610,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'To the new owner of this notebook,
-
-'
+  m_text: "To the new owner \n     of this notebook,\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818ec8d9ac1d4754c963423f4ed57d71, type: 2}
   m_sharedMaterial: {fileID: 21047551276287966, guid: 818ec8d9ac1d4754c963423f4ed57d71,
@@ -4550,8 +4638,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.49
+  m_fontSizeBase: 0.49
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4590,19 +4678,19 @@ MonoBehaviour:
   m_margin: {x: 0.021626413, y: 0, z: 1.0160917, w: 1.0100352}
   m_textInfo:
     textComponent: {fileID: 1002536752}
-    characterCount: 35
+    characterCount: 41
     spriteCount: 0
-    spaceCount: 7
+    spaceCount: 13
     wordCount: 7
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1002536754}
@@ -5165,7 +5253,7 @@ GameObject:
   - component: {fileID: 1091699157}
   - component: {fileID: 1091699156}
   - component: {fileID: 1091699155}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5179,7 +5267,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1091699153}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000000044703484}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 2097882760}
@@ -5187,9 +5275,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.44999957}
+  m_AnchoredPosition: {x: -0.527, y: 0.378}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &1091699155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5209,11 +5297,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Examine four of my creations
-
-    and listen to what each has to say,
-
-    so that the notebook may reveal its secrets to you.'
+  m_text: "Examine four of my creations \nand listen to what each has to say.\n\nThen
+    the notebook may reveal its secrets to you."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818ec8d9ac1d4754c963423f4ed57d71, type: 2}
   m_sharedMaterial: {fileID: 21047551276287966, guid: 818ec8d9ac1d4754c963423f4ed57d71,
@@ -5241,8 +5326,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5252,7 +5337,7 @@ MonoBehaviour:
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: -10.15
   m_wordSpacing: 0
-  m_lineSpacing: -30.3
+  m_lineSpacing: -28.1
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -5278,22 +5363,22 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.021626413, y: 0, z: 1.0160917, w: 1.0100352}
+  m_margin: {x: 0.021626413, y: 0, z: 1.0487592, w: 1.0100352}
   m_textInfo:
     textComponent: {fileID: 1091699155}
-    characterCount: 116
+    characterCount: 115
     spriteCount: 0
-    spaceCount: 22
-    wordCount: 23
+    spaceCount: 23
+    wordCount: 22
     linkCount: 0
-    lineCount: 4
+    lineCount: 6
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1091699157}
@@ -6870,7 +6955,7 @@ GameObject:
   - component: {fileID: 1597848144}
   - component: {fileID: 1597848143}
   - component: {fileID: 1597848142}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6884,7 +6969,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1597848140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 2097882760}
@@ -6892,9 +6977,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.672}
+  m_AnchoredPosition: {x: -0.535, y: 0.04}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &1597848142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6914,9 +6999,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'This is my bequest to you, and I hope I may
-
-    entrust you with my life''s work.'
+  m_text: This is my bequest to you, and I hope I may entrust you with my life's work.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818ec8d9ac1d4754c963423f4ed57d71, type: 2}
   m_sharedMaterial: {fileID: 21047551276287966, guid: 818ec8d9ac1d4754c963423f4ed57d71,
@@ -6944,18 +7027,18 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: -10.15
   m_wordSpacing: 0
-  m_lineSpacing: -30.3
+  m_lineSpacing: -15.4
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -6992,11 +7075,11 @@ MonoBehaviour:
     lineCount: 3
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1597848144}
@@ -9123,13 +9206,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2097882760}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: IntroTextContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2097882760
 Transform:
   m_ObjectHideFlags: 0
@@ -9333,7 +9416,7 @@ GameObject:
   - component: {fileID: 2138525971}
   - component: {fileID: 2138525970}
   - component: {fileID: 2138525969}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9347,7 +9430,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2138525967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 2097882760}
@@ -9355,9 +9438,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.159}
+  m_AnchoredPosition: {x: -1.159, y: 0.249}
   m_SizeDelta: {x: 1.7, y: 1.77}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.19, y: 0.78}
 --- !u!114 &2138525969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9379,9 +9462,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'My name is Shiloh,
 
-    the original owner of this notebook
 
-    that now belongs to you.'
+    the original owner of this notebook that now belongs to you.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818ec8d9ac1d4754c963423f4ed57d71, type: 2}
   m_sharedMaterial: {fileID: 21047551276287966, guid: 818ec8d9ac1d4754c963423f4ed57d71,
@@ -9409,25 +9491,25 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.42
-  m_fontSizeBase: 0.42
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: -10.15
   m_wordSpacing: 0
-  m_lineSpacing: -30.3
+  m_lineSpacing: -16.79
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: -19.6
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 56
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_enableKerning: 1
@@ -9446,22 +9528,22 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.021626413, y: 0, z: 1.0160917, w: 1.0100352}
+  m_margin: {x: -0.050372988, y: 0, z: 1.1042581, w: 1.5684574}
   m_textInfo:
     textComponent: {fileID: 2138525969}
-    characterCount: 79
+    characterCount: 80
     spriteCount: 0
-    spaceCount: 14
+    spaceCount: 15
     wordCount: 15
     linkCount: 0
-    lineCount: 3
+    lineCount: 4
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2138525971}
