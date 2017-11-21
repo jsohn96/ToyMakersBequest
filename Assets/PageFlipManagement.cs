@@ -127,6 +127,7 @@ public class PageFlipManagement : MonoBehaviour {
 		_currentPage = pageIndex;
 
 		if (_currentPage != 0) {
+			SwapDisplayedBookObjects ();
 			if (_currentPage >= _totalPages) {
 				_coverFlipAnimation.InstantMoveZ (_endYPos, false);
 				_endFlipAnimation.InstantMoveZ (_coverYPos, false);
