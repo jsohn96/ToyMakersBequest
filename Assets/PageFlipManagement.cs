@@ -59,6 +59,10 @@ public class PageFlipManagement : MonoBehaviour {
 
 	[SerializeField] ButtonManager _buttonManagerScript;
 
+	[SerializeField] Transform _bookSpine;
+	Quaternion _goalSpineRotation;
+	Quaternion _originSpineRotation;
+
 	void Start(){
 		_totalPages = _noteBookPages.Length + 1;
 		for (int i = 0; i < _noteBookPages.Length; i++) {
@@ -96,6 +100,9 @@ public class PageFlipManagement : MonoBehaviour {
 		_fadeInTimer = new Timer (0.2f);
 
 		CalculatePagePosition (_whichPageToStart);
+
+		_originSpineRotation = _bookSpine.localRotation;
+		_goalSpineRotation = Quaternion.Euler(0f, 0f, 90f);
 	}
 		
 	void Update () {
@@ -262,6 +269,7 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 		_pageToFlip = _currentPage;
 		_pageTurnTimer.Reset ();
+		StartCoroutine (BookSpineLerp(true));
 		_waitingForFadeIn = true;
 		_currentPage = _currentPage + 1;
 
@@ -272,6 +280,7 @@ public class PageFlipManagement : MonoBehaviour {
 		//if (_currentPage > 0) {
 			_pageToFlip = _currentPage;
 			_pageTurnTimer.Reset ();
+		StartCoroutine (BookSpineLerp(false));
 		_waitingForFadeIn = true;
 			_currentPage = _currentPage - 1;
 			_lastFlippedPage = _currentPage - 1;
@@ -362,5 +371,45 @@ public class PageFlipManagement : MonoBehaviour {
 
 	public int GetStartingPage(){
 		return _whichPageToStart;
+	}
+
+	public int GetCurrentPage(){
+		return _currentPage; 
+	}
+
+	public int GetTotalPage(){
+		return _totalPages;
+	}
+
+	public Transform GetPageTransform(int index){
+		if (_pagePool [index] != null) {
+			return _pagePool [index];
+		} else {
+			return null;
+		}
+	}
+
+
+	IEnumerator BookSpineLerp(bool opening){
+		bool checkIfValidToContinue = false;
+		if ((opening && _currentPage == 0) || (!opening && _currentPage == 1)) {
+			checkIfValidToContinue = true;
+		}
+		if (checkIfValidToContinue) {
+			while (!_pageTurnTimer.IsOffCooldown) {
+				if (opening) {
+					_bookSpine.transform.localRotation = Quaternion.Lerp (_originSpineRotation, _goalSpineRotation, (_pageTurnTimer.PercentTimePassed - 0.5f) * 2f);
+				} else {
+					_bookSpine.transform.localRotation = Quaternion.Lerp (_goalSpineRotation, _originSpineRotation, (_pageTurnTimer.PercentTimePassed) * 2f);
+				}
+				yield return null;
+			}
+			if (opening) {
+				_bookSpine.transform.localRotation = _goalSpineRotation;
+			} else {
+				_bookSpine.transform.localRotation = _originSpineRotation;
+			}
+		}
+		yield return null;
 	}
 }
