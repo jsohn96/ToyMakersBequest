@@ -54,7 +54,7 @@ public class TurnCrank : MonoBehaviour {
 				_crankCnt++;
 
 				PlayCrankSound ();
-				transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
+				transform.Rotate (Vector3.back * Time.deltaTime * _crankTurnSensitivity);
 
 				for (int i = 0; i < _otherGears.Length; i++) {
 					if (!_isReverse) {
@@ -68,7 +68,7 @@ public class TurnCrank : MonoBehaviour {
 				PlayCrankSound ();
 				_crankCnt++;
 
-				transform.Rotate (Vector3.left * Time.deltaTime * _crankTurnSensitivity);
+				transform.Rotate (Vector3.back * Time.deltaTime * _crankTurnSensitivity);
 
 				for (int i = 0; i < _otherGears.Length; i++) {
 					if (!_isReverse) {
@@ -102,7 +102,7 @@ public class TurnCrank : MonoBehaviour {
 
 				_speed = MathHelpers.LinMapFrom01(_speedRange.Min, _speedRange.Max, _speedCurve.Evaluate (_speedTimer.PercentTimePassed));
 
-				transform.Rotate (Vector3.right * Time.deltaTime * _speed);
+				transform.Rotate (Vector3.back * Time.deltaTime * _speed);
 				for (int i = 0; i < _otherGears.Length; i++) {
 					_otherGears [i].Rotate (Vector3.up * Time.deltaTime * _speed);
 				}
