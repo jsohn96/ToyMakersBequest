@@ -151,6 +151,8 @@ public class PathNode : MonoBehaviour {
 	bool _isDescending = false;
 	Vector3 _finalDescendPos;
  
+	[SerializeField] float _dragSensitivity = 10f;
+
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
@@ -747,8 +749,8 @@ public class PathNode : MonoBehaviour {
 			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
 			//print ("Angle Check: " + accAngle);
-			if (accAngle >= 10f) {
-				accAngle = 10f;
+			if (accAngle >= _dragSensitivity) {
+				accAngle = _dragSensitivity;
 				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
 				//print ("Temp rot: " + tempRot);
 				Quaternion curRot = gameObject.transform.rotation;
