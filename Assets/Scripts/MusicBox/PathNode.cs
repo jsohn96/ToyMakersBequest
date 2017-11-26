@@ -152,6 +152,9 @@ public class PathNode : MonoBehaviour {
 	Vector3 _finalDescendPos;
  
 	[SerializeField] float _dragSensitivity = 10f;
+	[SerializeField] bool _isNotebook = false;
+	[SerializeField] Camera _nonMainCameraForRayCast;
+	int _3DBookLayerMask = 1 << 15;
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
@@ -617,29 +620,25 @@ public class PathNode : MonoBehaviour {
 	}
 
 	void ClickWithMouse(){
+		
 		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
 		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
 			_intersectionPart.transform.parent = transform;
 		}
-	
 		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
-			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray mousePositionRay;
+			mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			//dragPreviousMousePos = Input.mousePosition;
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				//print ("git the circle: " + hit.point);
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-
 					RotateNode();
 					hitDist = hit.distance;
 					//Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
-
-
 				}
 			}
-
-
 		}
 	}
 
@@ -651,10 +650,21 @@ public class PathNode : MonoBehaviour {
 		}
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
-			Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray mousePositionRay;
+			if (!_isNotebook) {
+				mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+			} else {
+				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
+			}
 			RaycastHit hit;
 			dragPreviousMousePos = Input.mousePosition;
-			bool isHit = Physics.Raycast (mousePositionRay, out hit);
+			bool isHit;
+			if (!_isNotebook) {
+				isHit = Physics.Raycast (mousePositionRay, out hit);
+			} else {
+				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
+			}
+			Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					if (_isActive) {
@@ -766,6 +776,7 @@ public class PathNode : MonoBehaviour {
 				accAngle = 0;
 
 				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
+				Debug.Log ("is this on its way?");
 			} else {
 				//Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 			}
