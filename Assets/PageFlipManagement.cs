@@ -47,6 +47,7 @@ public class PageFlipManagement : MonoBehaviour {
 
 	[SerializeField] NotebookPage[] _noteBookPages;
 	[SerializeField] RawImage _renderTextureLayer;
+	[SerializeField] Camera _renderTextureCamera;
 	Color _emptyColor;
 
 	Timer _pageTurnTimer;
@@ -119,6 +120,9 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 
 		if (_pageTurnTimer.IsOffCooldown && _renderTextureLayer.color != Color.white) {
+			if (!_renderTextureCamera.enabled) {
+				_renderTextureCamera.enabled = true;
+			}
 			if (!_fadeInTimer.IsOffCooldown) {
 				_renderTextureLayer.color = Color.Lerp (_emptyColor, Color.white, (_fadeInTimer.PercentTimePassed));
 			} else {
@@ -329,6 +333,7 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 		if (_hideObjectTimer.IsOffCooldown) {
 			_renderTextureLayer.color = _emptyColor;
+			_renderTextureCamera.enabled = false;
 			if (isRight) {
 				FlipPageRight ();
 			} else {
