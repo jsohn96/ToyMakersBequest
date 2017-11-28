@@ -11,6 +11,7 @@ public class MusicBoxTitleBookInteractive : BookInteractive {
 	Light _spotLight;
 	MinMax _spotLightAngle = new MinMax(65f, 80f);
 	MinMax _dancerRotateAngleBound= new MinMax (20f, 120f);
+	Quaternion _originRotation;
 	bool _beginRotating = false;
 	bool _beginTurningAround = false;
 
@@ -20,21 +21,25 @@ public class MusicBoxTitleBookInteractive : BookInteractive {
 		_beginTurningAround = !_beginTurningAround;
 	}
 
+	void Start(){
+		_originRotation = _rotateAroundPivot.rotation;
+	}
+
 	void OnEnable() {
 		_spotLight = _spotLightTransform.GetComponent<Light> ();
 
 		float tempYRot = _rotateAroundPivot.rotation.eulerAngles.y;
 		tempYRot = tempYRot > 180.0f ? (tempYRot - 360f) * -1f : tempYRot;
 		_spotLight.spotAngle = MathHelpers.LinMap (_dancerRotateAngleBound.Min, _dancerRotateAngleBound.Max, _spotLightAngle.Min, _spotLightAngle.Max, Mathf.Clamp(tempYRot, _dancerRotateAngleBound.Min, _dancerRotateAngleBound.Max));
-		//_beginRotating = true;
+		_beginRotating = true;
 	}
 
 	void OnDisable(){
+		_rotateAroundPivot.rotation = _originRotation;
 		_beginRotating = false;
 		_beginTurningAround = false;
 	}
 
-	// Update is called once per frame
 	void FixedUpdate () {
 		if (_beginRotating) {
 			_dancer.Rotate (Vector3.up, 1.2f);

@@ -414,14 +414,14 @@ public class PageFlipManagement : MonoBehaviour {
 				//This is where a new material swap needs to happen This is the other spot
 				MeshRenderer tempMeshRenderer = _pagePool[switchSidesPageIndex].GetChild (0).GetChild(2).GetComponent<MeshRenderer>();
 				Material[] tempMaterialArray = tempMeshRenderer.materials;
-				if (_noteBookPages [_currentPage - 2].pageFrontMaterial != null) {
-					tempMaterialArray [1] = _noteBookPages [_currentPage - 2].pageFrontMaterial;
+				if (_noteBookPages [_currentPage - 3].pageFrontMaterial != null) {
+					tempMaterialArray [1] = _noteBookPages [_currentPage - 3].pageFrontMaterial;
 				} else {
 					tempMaterialArray [1] = _defaultPageMaterial;
 				}
 
-				if (_noteBookPages [_currentPage - 2].pageBackMaterial != null) {
-					tempMaterialArray [2] = _noteBookPages [_currentPage - 2].pageBackMaterial;
+				if (_noteBookPages [_currentPage - 3].pageBackMaterial != null) {
+					tempMaterialArray [2] = _noteBookPages [_currentPage - 3].pageBackMaterial;
 				} else {
 					tempMaterialArray[2] = _defaultPageMaterial;
 				}
