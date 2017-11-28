@@ -403,10 +403,12 @@ public class PathNode : MonoBehaviour {
 			foreach (InterlockNode itn in _interlockNodes) {
 				if (Mathf.Abs (DampAngle (degree) - DampAngle (itn.lockAngle)) <= errorVal  * 20f) {
 					Events.G.Raise (new InterlockNodeStateEvent (true, _nodeIndex, itn.sendToIdx));
+					Events.G.Raise (new MBLotusFlower (true, _nodeIndex));
 					isfoundMatch = true;
 					_intersectionPart = itn.intersection;
 				} else {
 					Events.G.Raise (new InterlockNodeStateEvent (false, _nodeIndex, itn.sendToIdx));
+					Events.G.Raise (new MBLotusFlower (false, _nodeIndex));
 				}
 			}
 
@@ -664,7 +666,7 @@ public class PathNode : MonoBehaviour {
 			} else {
 				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
 			}
-			Debug.Log (hit.collider.gameObject.name + ": this is the tag");
+			//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					if (_isActive) {
