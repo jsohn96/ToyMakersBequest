@@ -268,7 +268,7 @@ public class PathNode : MonoBehaviour {
 		// Rotate Circles
 		RotateWithMouse();	
 
-		print ("debug check temp rotate disabled: " + isTempDisable);
+		//print ("debug check temp rotate disabled: " + isTempDisable);
 
 		if(_isActive){
 			//ClickWithMouse ();
