@@ -8,18 +8,21 @@ public class NotebookPage {
 	public int pageNumber;
 	public GameObject objectsInPageContainer;
 	public bool nextPageLocked;
-	public Material pageMaterial;
+	public Material pageFrontMaterial;
+	public Material pageBackMaterial;
 
 	public NotebookPage (
 		int _pageNumber,
 		Transform _pageObject,
 		GameObject _objectsInPageContainer,
 		bool _nextPageLocked,
-		Material _pageMaterial){
+		Material _pageFrontMaterial,
+		Material _pageBackMaterial){
 		pageNumber = _pageNumber;
 		objectsInPageContainer = _objectsInPageContainer;
 		nextPageLocked = _nextPageLocked;
-		pageMaterial = _pageMaterial;
+		pageFrontMaterial = _pageFrontMaterial;
+		pageBackMaterial = _pageBackMaterial;
 	}
 }
 
@@ -63,6 +66,7 @@ public class PageFlipManagement : MonoBehaviour {
 	[SerializeField] Transform _bookSpine;
 	Quaternion _goalSpineRotation;
 	Quaternion _originSpineRotation;
+	[SerializeField] Material _defaultPageMaterial;
 
 	void Start(){
 		_totalPages = _noteBookPages.Length + 1;
@@ -100,10 +104,14 @@ public class PageFlipManagement : MonoBehaviour {
 		_hideObjectTimer = new Timer (0.4f);
 		_fadeInTimer = new Timer (0.2f);
 
+
 		CalculatePagePosition (_whichPageToStart);
 
 		_originSpineRotation = _bookSpine.localRotation;
 		_goalSpineRotation = Quaternion.Euler(0f, 0f, 90f);
+		if (_whichPageToStart != 0) {
+			_bookSpine.transform.localRotation = _goalSpineRotation;
+		}
 	}
 		
 	void Update () {
@@ -137,6 +145,10 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 		_currentPage = pageIndex;
 
+		if (_currentPage < 3) {
+			PopulatePages (0, 1, 2, 3, 0, 1, 2, 3);
+		}
+
 		if (_currentPage != 0) {
 			SwapDisplayedBookObjects ();
 			if (_currentPage >= _totalPages) {
@@ -166,6 +178,7 @@ public class PageFlipManagement : MonoBehaviour {
 						} else if (_currentPage == _totalPages - 2) {
 							_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], true);
 						}
+						PopulatePages (3, 0, 1, 2, _totalPages-5 , _totalPages-4, _totalPages -3, _totalPages -2);
 						break;
 					case 1:
 						_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [1], false);
@@ -175,6 +188,7 @@ public class PageFlipManagement : MonoBehaviour {
 						} else if (_currentPage == _totalPages - 2) {
 							_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], true);
 						}
+						PopulatePages (3, 0, 1, 2, _totalPages-5 , _totalPages-4, _totalPages -3, _totalPages -2);
 						break;
 					case 2:
 						_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [1], false);
@@ -184,6 +198,7 @@ public class PageFlipManagement : MonoBehaviour {
 						} else if (_currentPage == _totalPages - 2) {
 							_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], true);
 						}
+						PopulatePages (3, 0, 1, 2, _totalPages-5 , _totalPages-4, _totalPages -3, _totalPages -2);
 						break;
 					case 3:
 						_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [1], false);
@@ -193,6 +208,7 @@ public class PageFlipManagement : MonoBehaviour {
 						} else if (_currentPage == _totalPages - 2) {
 							_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], true);
 						}
+						PopulatePages (3, 0, 1, 2, _totalPages-5 , _totalPages-4, _totalPages -3, _totalPages -2);
 						break;
 					default:
 						break;
@@ -207,11 +223,14 @@ public class PageFlipManagement : MonoBehaviour {
 	}
 
 	void ContentPageInit(int modValue, bool doAll = true) {
+		MeshRenderer tempMeshRenderer;
 		switch (modValue) {
 		case 0:
+			
 			if (doAll) {
 				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], true);
 				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], true);
+				PopulatePages (1, 2, 3, 0, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
 			}
 			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], false);
@@ -220,6 +239,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], true);
+				PopulatePages (2, 3, 0, 1, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
 			}
 			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], false);
@@ -228,6 +248,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], true);
+				PopulatePages (3, 0, 1, 2, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
 			}
 			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], false);
 			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], false);
@@ -236,6 +257,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], true);
+				PopulatePages (0, 1, 2, 3, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
 			}
 			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], false);
@@ -243,6 +265,73 @@ public class PageFlipManagement : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	// b c
+	// a d : this is what the structure is, so the third one is the current page
+	void PopulatePages(int a, int b, int c, int d, int aPage, int bPage, int cPage, int dPage){
+		MeshRenderer tempMeshRenderer;
+		Material[] tempMaterialArray;
+		//a
+		tempMeshRenderer = _pagePool [a].GetChild (0).GetChild(2).GetComponent<MeshRenderer> ();
+		tempMaterialArray = tempMeshRenderer.materials;
+		if (_noteBookPages [aPage].pageFrontMaterial != null) {
+			tempMaterialArray [1] = _noteBookPages [aPage].pageFrontMaterial;
+		} else {
+			tempMaterialArray [1] = _defaultPageMaterial;
+		}
+
+		if (_noteBookPages [aPage].pageBackMaterial != null) {
+			tempMaterialArray [2] = _noteBookPages [aPage].pageBackMaterial;
+		} else {
+			tempMaterialArray [2] = _defaultPageMaterial;
+		}
+		tempMeshRenderer.materials = tempMaterialArray;
+		//b
+		tempMeshRenderer = _pagePool [b].GetChild (0).GetChild (2).GetComponent<MeshRenderer> ();
+		tempMaterialArray = tempMeshRenderer.materials;
+		if (_noteBookPages [bPage].pageFrontMaterial != null) {
+			tempMaterialArray [1] = _noteBookPages [bPage].pageFrontMaterial;
+		} else {
+			tempMaterialArray [1] = _defaultPageMaterial;
+		}
+
+		if (_noteBookPages [bPage].pageBackMaterial != null) {
+			tempMaterialArray [2] = _noteBookPages [bPage].pageBackMaterial;
+		} else {
+			tempMaterialArray [2] = _defaultPageMaterial;
+		}
+		tempMeshRenderer.materials = tempMaterialArray;
+		//c
+		tempMeshRenderer = _pagePool [c].GetChild (0).GetChild (2).GetComponent<MeshRenderer> ();
+		tempMaterialArray = tempMeshRenderer.materials;
+		if (_noteBookPages [cPage].pageFrontMaterial != null) {
+			tempMaterialArray [1] = _noteBookPages [cPage].pageFrontMaterial;
+		} else {
+			tempMaterialArray [1] = _defaultPageMaterial;
+		}
+
+		if (_noteBookPages [cPage].pageBackMaterial != null) {
+			tempMaterialArray [2] = _noteBookPages [cPage].pageBackMaterial;
+		} else {
+			tempMaterialArray [2] = _defaultPageMaterial;
+		}
+		tempMeshRenderer.materials = tempMaterialArray;
+		//d
+		tempMeshRenderer = _pagePool [d].GetChild (0).GetChild (2).GetComponent<MeshRenderer> ();
+		tempMaterialArray = tempMeshRenderer.materials;
+		if (_noteBookPages [dPage].pageFrontMaterial != null) {
+			tempMaterialArray [1] = _noteBookPages [dPage].pageFrontMaterial;
+		} else {
+			tempMaterialArray [1] = _defaultPageMaterial;
+		}
+
+		if (_noteBookPages [dPage].pageBackMaterial != null) {
+			tempMaterialArray [2] = _noteBookPages [dPage].pageBackMaterial;
+		} else {
+			tempMaterialArray [2] = _defaultPageMaterial;
+		}
+		tempMeshRenderer.materials = tempMaterialArray;
 	}
 
 	public void FlipPageRight(){
@@ -262,7 +351,24 @@ public class PageFlipManagement : MonoBehaviour {
 				_pageFlipAnimations [whichPageToFlip].FlipLeft (_inBetweenY [2]);
 				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [2]);
 				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [3]);
-				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
+				int switchSidesPageIndex = MathHelpers.Mod ((whichPageToFlip - 2), 4);
+				_pageFlipAnimations [switchSidesPageIndex].SwapSides (_inBetweenY [4], _inBetweenY [3]);
+
+				//This is where a new material swap needs to happen
+				MeshRenderer tempMeshRenderer = _pagePool[switchSidesPageIndex].GetChild (0).GetChild(2).GetComponent<MeshRenderer>();
+				Material[] tempMaterialArray = tempMeshRenderer.materials;
+				if (_noteBookPages [_currentPage + 1].pageFrontMaterial != null) {
+					tempMaterialArray [1] = _noteBookPages [_currentPage + 1].pageFrontMaterial;
+				} else {
+					tempMaterialArray [1] = _defaultPageMaterial;
+				}
+
+				if (_noteBookPages [_currentPage + 1].pageBackMaterial != null) {
+					tempMaterialArray [2] = _noteBookPages [_currentPage + 1].pageBackMaterial;
+				} else {
+					tempMaterialArray [2] = _defaultPageMaterial;
+				}
+				tempMeshRenderer.materials = tempMaterialArray;
 			}
 		} else if (_currentPage == 0) {
 			_coverFlipAnimation.FlipLeft (_endYPos);
@@ -302,7 +408,24 @@ public class PageFlipManagement : MonoBehaviour {
 				_pageFlipAnimations [whichPageToFlip].FlipRight (_inBetweenY [2]);
 				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip - 1), 4)].MoveZ (_inBetweenY [2]);
 				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 1), 4)].MoveZ (_inBetweenY [3]);
-				_pageFlipAnimations [MathHelpers.Mod ((whichPageToFlip + 2), 4)].SwapSides (_inBetweenY [4], _inBetweenY [3]);
+				int switchSidesPageIndex = MathHelpers.Mod ((whichPageToFlip + 2), 4);
+				_pageFlipAnimations [switchSidesPageIndex].SwapSides (_inBetweenY [4], _inBetweenY [3]);
+
+				//This is where a new material swap needs to happen This is the other spot
+				MeshRenderer tempMeshRenderer = _pagePool[switchSidesPageIndex].GetChild (0).GetChild(2).GetComponent<MeshRenderer>();
+				Material[] tempMaterialArray = tempMeshRenderer.materials;
+				if (_noteBookPages [_currentPage - 2].pageFrontMaterial != null) {
+					tempMaterialArray [1] = _noteBookPages [_currentPage - 2].pageFrontMaterial;
+				} else {
+					tempMaterialArray [1] = _defaultPageMaterial;
+				}
+
+				if (_noteBookPages [_currentPage - 2].pageBackMaterial != null) {
+					tempMaterialArray [2] = _noteBookPages [_currentPage - 2].pageBackMaterial;
+				} else {
+					tempMaterialArray[2] = _defaultPageMaterial;
+				}
+				tempMeshRenderer.materials = tempMaterialArray;
 			}
 		} else if (_currentPage == 0) {
 			_coverFlipAnimation.FlipRight (_coverYPos, false);

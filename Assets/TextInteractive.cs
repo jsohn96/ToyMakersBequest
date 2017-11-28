@@ -78,7 +78,6 @@ public class TextInteractive : BookInteractive {
 	}
 
 	IEnumerator EndVO(){
-		Debug.Log ("call me");
 		_onWhichVO = 0;
 		_textMeshPros [_onWhichVO].font = _nonGlowAsset;
 		_glowTimer.Reset ();
