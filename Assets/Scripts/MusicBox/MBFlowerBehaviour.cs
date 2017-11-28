@@ -28,7 +28,7 @@ public class MBFlowerBehaviour : MonoBehaviour {
 
 
 	void LotusBlossomHandle(MBLotusFlower e){
-		print ("REcv from " + e.sendFromNode);
+		//print ("REcv from " + e.sendFromNode);
 		if (e.sendFromNode == _resposeToNodeIdx && e.isBlossom!= _isBlossom) {
 			_isBlossom = e.isBlossom;
 			if (_isBlossom) {
