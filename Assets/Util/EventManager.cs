@@ -122,6 +122,16 @@ public class MBExitPondLoop:GameEvent{
 	
 }
 
+public class MBLotusFlower:GameEvent{
+	
+	public bool isBlossom{ get; private set; }
+	public int sendFromNode{ get; private set; }
+	public MBLotusFlower(bool bls, int sfn){
+		isBlossom = bls;
+		sendFromNode = sfn;
+	}
+}
+
 
 // music box audio event 
 // when the node is rotating, sending over the node index and rotate speed 
