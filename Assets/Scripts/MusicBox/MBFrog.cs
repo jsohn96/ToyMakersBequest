@@ -46,6 +46,7 @@ public class MBFrog : MonoBehaviour {
 		_isDetecting = true;
 		// 
 		_originAngle = _pondMain.transform.localEulerAngles.z;
+		ActivateFrog (_curNodeOrderIdx);
 		
 	}
 	
@@ -72,7 +73,6 @@ public class MBFrog : MonoBehaviour {
 
 	void FrogDetectDancer(){
 		// if the current node that the player is step on is the one that's behind then check for the next position 
-		// or do it by distance? 
 		int tempIdx = -1;
 		if(_dancerOnNodeIdx == _JumpNode[_curNodeOrderIdx].readNodeInfo().index){
 			if (_curNodeOrderIdx + 1 < _JumpNode.Length) {
@@ -84,17 +84,35 @@ public class MBFrog : MonoBehaviour {
 				tempIdx = _JumpNode.Length - _loopNodeNum;
 			}
 
-			JumpToNextNode(_JumpNode[tempIdx]);
+			JumpToNextNode(tempIdx);
 			_curNodeOrderIdx = tempIdx;
 		}
 
 	}
 
-	void JumpToNextNode(PathNode pn){
+	void ActivateFrog(int index){
+		MBFrogAnimationBehaviour _curBehaviour = _JumpNode[index].gameObject.GetComponentInChildren<MBFrogAnimationBehaviour>();
+		if (_curBehaviour != null) {
+			_curBehaviour.ShowFrog ();
+		}
+	}
+
+	void JumpToNextNode(int jumptoIndex){
 		// move on to the next node 
-		print("Jump to Node: " + pn.readNodeInfo().index);
-		_frogTransform.position = pn.gameObject.transform.position;
-		_frogTransform.parent = pn.gameObject.transform;
+		//print("Jump to Node: " + pn.readNodeInfo().index);
+
+		// hide the frog in the current node 
+		MBFrogAnimationBehaviour _curBehaviour = _JumpNode[_curNodeOrderIdx].gameObject.GetComponentInChildren<MBFrogAnimationBehaviour>();
+		if (_curBehaviour != null) {
+			_curBehaviour.HideFrog ();
+		}
+
+		ActivateFrog (jumptoIndex);
+		//_frogTransform.position = pn.gameObject.transform.position;
+		//_frogTransform.parent = pn.gameObject.transform;
+
+		//TODO:change code to use animation behaviour 
+
 
 	}
 
