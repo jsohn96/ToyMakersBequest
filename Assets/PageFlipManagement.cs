@@ -488,6 +488,10 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 	}
 
+	public float GetPageTurnTimerPercentTimePassed(){
+		return _pageTurnTimer.PercentTimePassed;
+	}
+
 
 	public bool IsPageTurnDone(){
 		if (_pageTurnTimer.IsOffCooldown) {

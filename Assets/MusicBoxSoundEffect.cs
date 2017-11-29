@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicBoxSoundEffect : AudioSourceController {
 	[SerializeField] AudioSystem _crankTickAudioSystem;
 	int curRotateNode = -1;
+	bool _stopForSceneTransition = false;
 
 	void OnEnable(){
 		Events.G.AddListener<MBNodeRotate> (NodeRotateHandle);
@@ -17,11 +18,15 @@ public class MusicBoxSoundEffect : AudioSourceController {
 	}
 
 	void NodeRotateHandle(MBNodeRotate e){
-		if (e.isRoating) {
+		if (e.isRoating && !_stopForSceneTransition) {
 			SwapClip (_crankTickAudioSystem, true);
 			curRotateNode = e.nodeIndex;
 		} else if(!e.isRoating && curRotateNode == e.nodeIndex){
 			curRotateNode = -1;
 		}
+	}
+
+	public void StopCrankSound(){
+		_stopForSceneTransition = true;
 	}
 }
