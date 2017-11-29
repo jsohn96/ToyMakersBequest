@@ -142,6 +142,7 @@ public class PathNode : MonoBehaviour {
 
 	[SerializeField] InterlockNode[] _interlockNodes;
 	[SerializeField] BranchNode[] _branchNodes;
+	[SerializeField] bool _isSnapEnable = true;
 
 	// audio 
 	AudioSource _NodeAudio;
@@ -207,9 +208,9 @@ public class PathNode : MonoBehaviour {
 		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
 		//print ("world up " + Vector3.up);
 
-		print ("360 --> " + DampAngle (360));
-		print ("1080 --> " + DampAngle (1080));
-		print ("360 - 0 --> " + DampAngle (360 - 0));
+//		print ("360 --> " + DampAngle (360));
+//		print ("1080 --> " + DampAngle (1080));
+//		print ("360 - 0 --> " + DampAngle (360 - 0));
 
 
 
@@ -696,18 +697,21 @@ public class PathNode : MonoBehaviour {
 				//hitDist = 0;
 				accAngle = 0;
 
-				float tempAngle = transform.localEulerAngles.z;
-				tempAngle = DampAngle (tempAngle);
-				float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
+				if (_isSnapEnable) {
+					float tempAngle = transform.localEulerAngles.z;
+					tempAngle = DampAngle (tempAngle);
+					float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
 
-				print ("Release drag final angle: " + AngleSnap (tempAngle));
+					//print ("Release drag final angle: " + AngleSnap (tempAngle));
 
+					isRotating = true;
+					originAngle = transform.localRotation;
+					//transform.Rotate(0,0,-90);
+					finalAngle = transform.localRotation;
+					finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+				
+				}
 
-				isRotating = true;
-				originAngle = transform.localRotation;
-				//transform.Rotate(0,0,-90);
-				finalAngle = transform.localRotation;
-				finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
 
 				Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 
@@ -807,6 +811,12 @@ public class PathNode : MonoBehaviour {
 		}
 	}
 
+
+	public void SetAngleSnapWhenMouseUp(bool val){
+		if (_isSnapEnable != val) {
+			_isSnapEnable = val;
+		}
+	}
 	// snap rotation angle to the clock --> use in the clock puzzle 
 	float AngleSnap(float angle){
 		float subDeg = 360/36;

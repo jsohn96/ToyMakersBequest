@@ -24,7 +24,8 @@ public enum PathState{
 	activateInterlockNode,
 	enter_pond,
 	pond_loop,
-	move_on_seesaw
+	move_on_seesaw,
+	activate_pond
 }
 
 
