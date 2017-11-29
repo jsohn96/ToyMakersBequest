@@ -5,6 +5,7 @@ using UnityEngine;
 public class MBNetCatcher : MonoBehaviour {
 	[SerializeField] Animator _netAnim;
 	float duration = 180f;
+	float _originalVal;
 	// Use this for initialization
 	void Start () {
 		//_netAnim.Play ("catch");
@@ -13,12 +14,12 @@ public class MBNetCatcher : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		CheckAnimationProgress ();
-		
+		_originalVal = transform.localEulerAngles.z;
 	}
 
 	void CheckAnimationProgress(){
-		float animPlaybackVal = Mathf.Abs(DampAngle (transform.localEulerAngles.z)-180) / duration;
-		animPlaybackVal = AnimationOptimizer (animPlaybackVal);
+		float animPlaybackVal = 1 - Mathf.Abs(DampAngle (transform.localEulerAngles.z)-180) / duration;
+		//animPlaybackVal = AnimationOptimizer (animPlaybackVal);
 		print ("Catcher progress " + animPlaybackVal);
 		_netAnim.Play ("catch", -1, animPlaybackVal);
 	}
