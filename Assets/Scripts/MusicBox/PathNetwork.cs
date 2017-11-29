@@ -171,7 +171,7 @@ public class PathNetwork : MonoBehaviour {
 						_loopToIdx = _orderIdx + 6;
 						print ("enter loop from to: " + _loopToIdx);
 						PathNode tempNode = FindNodeWithIndex (_correctOrder [_orderIdx].index);
-						tempNode.resetAdjNodeAngle(0, 150f);
+						tempNode.resetAdjNodeAngle(0, 90f);
 
 					}
 
