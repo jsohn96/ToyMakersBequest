@@ -110,6 +110,10 @@ public class MBToyMaker : MonoBehaviour {
 		case PathState.flip_TM_stage:
 			FlipTMStage ();
 			break;
+		case PathState.TM_move_to_location:
+			// temp sulotion
+			gameObject.SetActive (false);
+			break;
 		}
 	}
 }

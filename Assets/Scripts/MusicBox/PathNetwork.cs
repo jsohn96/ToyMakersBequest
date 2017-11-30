@@ -25,7 +25,8 @@ public enum PathState{
 	enter_pond,
 	pond_loop,
 	move_on_seesaw,
-	activate_pond
+	activate_pond,
+	TM_move_to_location
 }
 
 
@@ -178,8 +179,9 @@ public class PathNetwork : MonoBehaviour {
 
 					_isPathPause = false;
 					CheckNextIdx ();
-				}else {
-					
+				}else if(_correctOrder[_orderIdx].nameOfEvent == PathState.TM_move_to_location){
+					_isPathPause = false;
+					CheckNextIdx ();
 				}
 
 			}
