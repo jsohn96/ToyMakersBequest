@@ -91,7 +91,7 @@ namespace Test{
 			yield return new WaitForSeconds (4f);
 			_gameTitle.SetActive (false);
 			yield return new WaitForSeconds (1f);
-			yield return StartCoroutine(StateManager._stateManager.ChangeLevel (5));
+			yield return StartCoroutine(StateManager._stateManager.ChangeLevel (2));
 		}
 
 		void TurnOnlight(){

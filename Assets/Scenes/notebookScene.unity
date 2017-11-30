@@ -402,6 +402,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25200483}
   m_Mesh: {fileID: 0}
+--- !u!1 &31281985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 31281987}
+  - component: {fileID: 31281986}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &31281986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 31281985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dced8bbaaebd94180548b0c3397a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioFadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!4 &31281987
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 31281985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.13287354, y: 2.543518, z: -2.7680054}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &39308238
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +953,7 @@ GameObject:
   - component: {fileID: 102491048}
   - component: {fileID: 102491051}
   - component: {fileID: 102491050}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Envelope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,15 +985,15 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 102491047}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.26730013, y: 2.5004005, z: -2.756764}
-  m_LocalScale: {x: 0.27365977, y: 0.09000004, z: 0.35575783}
+  m_LocalPosition: {x: -0.07883002, y: -0.00045995714, z: 0.011423612}
+  m_LocalScale: {x: 0.027365977, y: 0.009000004, z: 0.035575785}
   m_Children:
   - {fileID: 1354325220}
   - {fileID: 1306193821}
   - {fileID: 1197014606}
   - {fileID: 743021521}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 1422220431}
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &102491050
 MonoBehaviour:
@@ -1006,7 +1064,7 @@ Transform:
   - {fileID: 1827583178}
   - {fileID: 2053494753}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &126366923
 GameObject:
@@ -1576,7 +1634,7 @@ Transform:
   - {fileID: 1778799899}
   - {fileID: 1422220431}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &172030463
 GameObject:
@@ -2006,7 +2064,7 @@ GameObject:
   - component: {fileID: 234680219}
   - component: {fileID: 234680221}
   - component: {fileID: 234680220}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Lid (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2396,7 +2454,7 @@ GameObject:
   - component: {fileID: 297070149}
   - component: {fileID: 297070148}
   - component: {fileID: 297070147}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2516,11 +2574,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 297070149}
@@ -2702,7 +2760,7 @@ GameObject:
   - component: {fileID: 310496077}
   - component: {fileID: 310496076}
   - component: {fileID: 310496075}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2822,11 +2880,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 310496077}
@@ -2913,7 +2971,7 @@ Transform:
   - {fileID: 85341523}
   - {fileID: 2143565601}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &317361417 stripped
 GameObject:
@@ -4099,7 +4157,7 @@ RectTransform:
   - {fileID: 576048635}
   - {fileID: 1058000417}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4887,7 +4945,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &565746748
 GameObject:
@@ -5994,7 +6052,7 @@ Transform:
   - {fileID: 132972016}
   - {fileID: 1425089999}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &669491611
 GameObject:
@@ -6300,7 +6358,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 6}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688623880
 GameObject:
@@ -6604,7 +6662,7 @@ GameObject:
   - component: {fileID: 707407656}
   - component: {fileID: 707407655}
   - component: {fileID: 707407654}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6724,11 +6782,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 707407656}
@@ -7015,7 +7073,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 743021521}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: EnvelopLidPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8439,7 +8497,7 @@ GameObject:
   - component: {fileID: 921526959}
   - component: {fileID: 921526958}
   - component: {fileID: 921526957}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8559,11 +8617,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 921526959}
@@ -11076,7 +11134,7 @@ GameObject:
   - component: {fileID: 1175922534}
   - component: {fileID: 1175922533}
   - component: {fileID: 1175922532}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11196,11 +11254,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1175922534}
@@ -11639,7 +11697,7 @@ GameObject:
   - component: {fileID: 1197014606}
   - component: {fileID: 1197014608}
   - component: {fileID: 1197014607}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Plane02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11760,7 +11818,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1202127753
 GameObject:
@@ -11998,7 +12056,7 @@ GameObject:
   - component: {fileID: 1228828455}
   - component: {fileID: 1228828454}
   - component: {fileID: 1228828453}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextMeshPro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12118,11 +12176,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1228828455}
@@ -12920,7 +12978,7 @@ GameObject:
   - component: {fileID: 1306193824}
   - component: {fileID: 1306193823}
   - component: {fileID: 1306193822}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: LetterBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13237,7 +13295,7 @@ Transform:
   - {fileID: 393820271}
   - {fileID: 155237184}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1351178964
 GameObject:
@@ -13331,7 +13389,7 @@ GameObject:
   - component: {fileID: 1354325220}
   - component: {fileID: 1354325219}
   - component: {fileID: 1354325217}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Letter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13641,6 +13699,7 @@ Transform:
   - {fileID: 1770346482}
   - {fileID: 1196698024}
   - {fileID: 565746749}
+  - {fileID: 102491049}
   m_Father: {fileID: 166586397}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15824,7 +15883,7 @@ GameObject:
   - component: {fileID: 1695305770}
   - component: {fileID: 1695305772}
   - component: {fileID: 1695305771}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Lid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16047,7 +16106,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1756436308}
   - component: {fileID: 1756436307}
-  - component: {fileID: 1756436309}
   m_Layer: 0
   m_Name: BookAudioController
   m_TagString: Untagged
@@ -16100,37 +16158,8 @@ Transform:
   - {fileID: 478230077}
   - {fileID: 1588562013}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1756436309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1756436306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43dced8bbaaebd94180548b0c3397a6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioFadeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!1 &1760202506
 GameObject:
   m_ObjectHideFlags: 0
@@ -17639,7 +17668,7 @@ Transform:
   - {fileID: 1696406639}
   - {fileID: 2023788853}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1892184128
 GameObject:
@@ -19003,6 +19032,7 @@ MonoBehaviour:
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
+  _isSnapEnable: 1
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 1505171993}
@@ -19612,7 +19642,7 @@ Transform:
   - {fileID: 1597848141}
   - {fileID: 943693826}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 89.99999, z: 89.99999}
 --- !u!114 &2097882761
 MonoBehaviour:
