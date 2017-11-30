@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TriggeredSoundEffect : MonoBehaviour {
 	AudioSource _audioSource;
-	string _objectNameToCollide = "Toymaker";
+	string _objectNameToCollide = "Dancer";
 	[SerializeField] Transform _bell;
 	Quaternion _leftAngle;
 	Quaternion _rightAngle;
