@@ -23,7 +23,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 
 
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetMouseButtonDown (0)) {
 			if (!_initialized) {
 				_initialized = true;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraStartPoint.transform, _cameraStartPoint.duration, _cameraStartPoint.fov);
@@ -38,7 +38,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				cnt++;
 			}
 		}
-		if (Input.GetKeyDown (KeyCode.S)) {
+		if (Input.GetMouseButtonDown (0)) {
 			_musicBoxCameraManager.ActivateStaticFollow ();
 		}
 	}

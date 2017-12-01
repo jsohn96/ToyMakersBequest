@@ -60,10 +60,10 @@ public class MusicBoxManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetMouseButtonDown (0)) {
 			if (!isBoxOpen) {
 				isBoxOpen = true;
-				_tempSText.DisplayText();
+				//_tempSText.DisplayText();
 				Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_off));
 			}
 
@@ -85,7 +85,7 @@ public class MusicBoxManager : MonoBehaviour {
 //		}
 
 
-		if (Input.GetKeyDown (KeyCode.S) && !_isStartPath) {
+		if (Input.GetMouseButtonDown (0) && !_isStartPath) {
 			_isStartPath = true;
 			_musicPaths[0].SetPathActive(true);
 			_activePathIndex = 0;
