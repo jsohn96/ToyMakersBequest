@@ -230,7 +230,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], true);
 				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], true);
-				PopulatePages (1, 2, 3, 0, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
+				PopulatePages (1, 2, 3, 0, _currentPage-3, _currentPage-2, _currentPage-1, _currentPage);
 			}
 			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], false);
@@ -239,7 +239,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [3], true);
-				PopulatePages (2, 3, 0, 1, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
+				PopulatePages (2, 3, 0, 1, _currentPage-3, _currentPage-2, _currentPage-1, _currentPage);
 			}
 			_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [2], false);
@@ -248,7 +248,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [3], true);
-				PopulatePages (3, 0, 1, 2, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
+				PopulatePages (3, 0, 1, 2, _currentPage-3, _currentPage-2, _currentPage-1, _currentPage);
 			}
 			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [2], false);
 			_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], false);
@@ -257,7 +257,7 @@ public class PageFlipManagement : MonoBehaviour {
 			if (doAll) {
 				_pageFlipAnimations [2].InstantMoveZ (_inBetweenY [2], true);
 				_pageFlipAnimations [3].InstantMoveZ (_inBetweenY [3], true);
-				PopulatePages (0, 1, 2, 3, _currentPage-2, _currentPage -1, _currentPage, _currentPage+1);
+				PopulatePages (0, 1, 2, 3, _currentPage-3, _currentPage-2, _currentPage-1, _currentPage);
 			}
 			_pageFlipAnimations [0].InstantMoveZ (_inBetweenY [3], false);
 			_pageFlipAnimations [1].InstantMoveZ (_inBetweenY [2], false);
