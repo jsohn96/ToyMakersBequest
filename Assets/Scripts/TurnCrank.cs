@@ -64,7 +64,7 @@ public class TurnCrank : MonoBehaviour {
 					}
 				}
 			}
-			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.DownArrow)) {
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.DownArrow) ||Input.GetMouseButton(0)) {
 				PlayCrankSound ();
 				_crankCnt++;
 
@@ -72,9 +72,9 @@ public class TurnCrank : MonoBehaviour {
 
 				for (int i = 0; i < _otherGears.Length; i++) {
 					if (!_isReverse) {
-						_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 300.0f);
+						_otherGears [i].Rotate (Vector3.up * Time.deltaTime * 200.0f);
 					} else {
-						_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 300.0f);
+						_otherGears [i].Rotate (Vector3.down * Time.deltaTime * 200.0f);
 					}
 				}
 			}

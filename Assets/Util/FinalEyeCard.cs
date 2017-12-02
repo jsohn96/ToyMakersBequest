@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FinalEyeCard : MonoBehaviour {
+	[SerializeField] int _nextSceneIndex = 3;
 	bool _transitionIsHappening = false;
 	bool _isTransitioning = false;
 	Timer _transitionTimer;
@@ -73,6 +74,6 @@ public class FinalEyeCard : MonoBehaviour {
 		yield return new WaitForSeconds (1.5f);
 		_transitionAudio.Play ();
 		yield return new WaitForSeconds (1.0f);
-		SceneManager.LoadScene (3);
+		SceneManager.LoadScene (_nextSceneIndex);
 	}
 }
