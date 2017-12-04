@@ -697,7 +697,9 @@ public class PathNode : MonoBehaviour {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					if (_isActive) {
 						isDragStart = true;
-						_shaderGlowCustom.lightOn ();
+						if (_shaderGlowCustom != null) {
+							_shaderGlowCustom.lightOn ();
+						}
 						Events.G.Raise (new PathGlowEvent (isDragStart));
 						dragStartPos = hit.point;
 						//print ("hit point :" + hit.point);
@@ -721,7 +723,9 @@ public class PathNode : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
 				isDragStart = false;
-				_shaderGlowCustom.lightOff ();
+				if (_shaderGlowCustom != null) {
+					_shaderGlowCustom.lightOff ();
+				}
 				Events.G.Raise (new PathGlowEvent (isDragStart));
 				//hitDist = 0;
 				accAngle = 0;
