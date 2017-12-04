@@ -43,6 +43,13 @@ public class PathCompeleteEvent:GameEvent{
 	
 }
 
+public class PathGlowEvent:GameEvent {
+	public bool IsRotating { get; private set; }
+	public PathGlowEvent (bool isRotating){
+		IsRotating = isRotating;
+	}
+}
+
 // update path node info 
 // update frog info 
 public class DancerOnBoard: GameEvent{

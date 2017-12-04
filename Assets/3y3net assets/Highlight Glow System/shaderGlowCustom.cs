@@ -7,19 +7,20 @@ using System.Collections.Generic;
 public class shaderGlowCustom : MonoBehaviour
 {
 	[SerializeField] Renderer[] _renderers;
-	[SerializeField] bool _isUsingMultipleRenderers;
 	int _rendererCnt;
-    public enum allowedModes { onMouseEnter, alwaysOn, userCallFunctions };
+    public enum allowedModes { onMouseEnter, alwaysOn, pathNodeMode };
     public allowedModes glowMode;
     public bool flashing = false; //Object will flash glow
     [Range(0.1f, 4.0f)]
     public float flashSpeed = 1f; //Flash speed
     public bool noOcclusion = false; //Show glow when object is occluded
     [Range(0f,10.0f)]
-    public float glowIntensity = 1f; //Glow intensity on screen of the object
+    public float glowIntensity = 0.08f; //Glow intensity on screen of the object
     [Range(0.5f, 2.0f)]
     public float glowOpacity = 1f; //Glow opacity on screen of the object
-    public Color glowColor = Color.red; //Glow color of the object
+	public Color glowColor = new Color(1.0f, 0.92f, 0.59f); //Glow color of the object
+
+	Color _connectedColor = Color.green;
 
     private float clipGlow = 0.04f; //Min real allowed glow
     private float maxGlow = 0.25f; //Max real allowed glow
@@ -46,6 +47,9 @@ public class shaderGlowCustom : MonoBehaviour
 	int _opactiyShaderString;
 	int _outlineShaderString;
 	float _tempGlow;
+
+	bool _someoneIsRotating = false;
+	bool _isConnected = false;
 
     void Awake()
     {
@@ -99,47 +103,80 @@ public class shaderGlowCustom : MonoBehaviour
 
     void OnMouseExit()
     {
-        if (!highlighted)
-            return;
-        if (glowMode == allowedModes.onMouseEnter)
-            lightOff();
+		if (!_disablePointerEnter) {
+			if (!highlighted)
+				return;
+			if (glowMode == allowedModes.onMouseEnter) {
+				lightOff ();
+			}
+		}
     }
 
     public void lightOn()
     {
-		for (int i = 0; i < _rendererCnt; i++) {
-			if (!_renderers[i].enabled) {
-				continue;
-			}
-			if (!_firstInitialization) {
-				_materials[i] = new Material[_renderers[i].sharedMaterials.Length+1];
-				_materials[i] = _renderers [i].sharedMaterials;
-				_renderers [i].sharedMaterials = _materials[i];
-			}
+		if (!_isConnected) {
+			for (int i = 0; i < _rendererCnt; i++) {
+				if (!_renderers [i].enabled) {
+					continue;
+				}
+				if (!_firstInitialization) {
+					_materials [i] = new Material[_renderers [i].sharedMaterials.Length + 1];
+					for (int f = 0; f < _renderers [i].sharedMaterials.Length; f++) {
+						_materials [i] [f] = _renderers [i].sharedMaterials [f];
+					}
+					_renderers [i].sharedMaterials = _materials [i];
+				}
 
-			//Set glow color
-			_newMat.SetColor(_glowColorShaderString, glowColor);
-			_materials [i] [_materials [i].Length - 1] = _newMat;
-			_renderers [i].sharedMaterials = _materials [i];
+				//Set glow color
+				_newMat.SetColor (_glowColorShaderString, glowColor);
+				_materials [i] [_materials [i].Length - 1] = _newMat;
+				_renderers [i].sharedMaterials = _materials [i];
+			}
+			_firstInitialization = true;
+			highlighted = true;
 		}
-		_firstInitialization = true;
-		highlighted = true;
     }
 
     public void lightOff()
     {
-        
-		for (int i = 0; i < _rendererCnt; i++) {
-			if (!_renderers[i].enabled) {
-				continue;
+		if (!_isConnected) {
+			for (int i = 0; i < _rendererCnt; i++) {
+				if (!_renderers [i].enabled) {
+					continue;
+				}
+				_renderers [i].materials [_renderers [i].materials.Length - 1].SetFloat (_outlineShaderString, 0.0f);
 			}
-			_materials [i] [_materials [i].Length - 1] = null;
-			_renderers [i].sharedMaterials = _materials[i];
-		}
 			
-        lastGlow = 0;
-        highlighted = false;
+			lastGlow = 0;
+			highlighted = false;
+		}
     }
+
+	public void ConnectionIsTrue(bool isTrue){
+		if (!_isConnected && isTrue) {
+			for (int i = 0; i < _rendererCnt; i++) {
+				if (!_renderers [i].enabled) {
+					continue;
+				}
+				if (!_firstInitialization) {
+					_materials [i] = new Material[_renderers [i].sharedMaterials.Length + 1];
+					for (int f = 0; f < _renderers [i].sharedMaterials.Length; f++) {
+						_materials [i] [f] = _renderers [i].sharedMaterials [f];
+					}
+					_renderers [i].sharedMaterials = _materials [i];
+				}
+
+				//Set glow color
+				_newMat.SetColor (_glowColorShaderString, _connectedColor);
+				_materials [i] [_materials [i].Length - 1] = _newMat;
+				_renderers [i].sharedMaterials = _materials [i];
+			}
+			_firstInitialization = true;
+			highlighted = true;
+
+		}
+		_isConnected = isTrue;
+	}
 
     // Update is called once per frame
     void Update()
@@ -184,17 +221,39 @@ public class shaderGlowCustom : MonoBehaviour
 				{
 					_renderers [i].materials [tempMaterialLength].SetFloat(_opactiyShaderString, glowOpacity);
 				}
+				if (_isConnected) {
+					if (_connectedColor != lastColor) {
+						_renderers [i].materials [tempMaterialLength].SetColor (_glowColorShaderString, _connectedColor);
+					}
+				} else {
+					if (glowColor != lastColor) {
+						_renderers [i].materials [tempMaterialLength].SetColor (_glowColorShaderString, glowColor);
 
-				if (glowColor != lastColor)
-				{
-					_renderers [i].materials [tempMaterialLength].SetColor(_glowColorShaderString, glowColor);
-
+					}
 				}
 			}
 			lastOpacity = glowOpacity;
-			lastColor = glowColor;
+			if (_isConnected) {
+				lastColor = _connectedColor;
+			} else {
+				lastColor = glowColor;
+			}
         }
     }
 
+	void OnEnable(){
+		Events.G.AddListener<PathGlowEvent> (PathGlowEventHandler);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<PathGlowEvent> (PathGlowEventHandler);
+	}
+
+	void PathGlowEventHandler( PathGlowEvent e){
+		if (e.IsRotating != _someoneIsRotating) {
+			_someoneIsRotating = !_someoneIsRotating;
+			_disablePointerEnter = _someoneIsRotating;
+		}
+	}
 
 }

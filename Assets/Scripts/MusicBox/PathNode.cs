@@ -157,6 +157,9 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] Camera _nonMainCameraForRayCast;
 	int _3DBookLayerMask = 1 << 15;
 
+	bool _glowInfoSent = false;
+	[SerializeField] shaderGlowCustom _shaderGlowCustom;
+
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
@@ -292,10 +295,14 @@ public class PathNode : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (_isActive) {
-			if(isRotating){
-				// rotate the node 
+			if (isRotating) {
+				if (!_glowInfoSent) {
+					//do the mouse enter thing _shaderGlowCustom
+					_glowInfoSent = true;
+				}
 
-				if(Mathf.Abs(Quaternion.Angle(transform.localRotation , finalAngle)) > errorVal*20f){
+				// rotate the node
+				if (Mathf.Abs (Quaternion.Angle (transform.localRotation, finalAngle)) > errorVal * 20f) {
 					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
 				} else {
 					//print ("####### reset boolean #######");
@@ -305,6 +312,11 @@ public class PathNode : MonoBehaviour {
 					//					if (_isActive) {
 					//						CheckNodeConnection ();
 					//					}
+				}
+			} else {
+				if (_glowInfoSent) {
+					// send the mouse out
+					_glowInfoSent = false;
 				}
 			}
 
@@ -516,11 +528,18 @@ public class PathNode : MonoBehaviour {
 								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								_isCorrectConnection = true;
 								//adjNode._isCorrectConnection = true;
-								if (_cylinderRenderer) {
-									_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+								if (_shaderGlowCustom == null) {
+									if (_cylinderRenderer) {
+										_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+									}
+								} else {
+									_shaderGlowCustom.ConnectionIsTrue (_isCorrectConnection);
 								}
 							} else {
 								_isCorrectConnection = false;
+								if (_shaderGlowCustom != null) {
+									_shaderGlowCustom.ConnectionIsTrue (_isCorrectConnection);
+								}
 								if (_cylinderRenderer) {
 									_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
 								}
@@ -530,12 +549,18 @@ public class PathNode : MonoBehaviour {
 							//print("node angle check: " + _nodeIndex + " " +DampAngle(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)));
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								_isCorrectConnection = true;
-								if (_cylinderRenderer) {
-									_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+								if (_shaderGlowCustom == null) {
+									if (_cylinderRenderer) {
+										_cylinderRenderer.GetComponent<Renderer> ().material = _GreenMat;
+									}
+								} else {
+									_shaderGlowCustom.ConnectionIsTrue (_isCorrectConnection);
 								}
-
 							} else {
 								_isCorrectConnection = false;
+								if (_shaderGlowCustom != null) {
+									_shaderGlowCustom.ConnectionIsTrue (_isCorrectConnection);
+								}
 								if (_cylinderRenderer) {
 									_cylinderRenderer.GetComponent<Renderer> ().material = _originMat;
 								}
@@ -672,6 +697,8 @@ public class PathNode : MonoBehaviour {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					if (_isActive) {
 						isDragStart = true;
+						_shaderGlowCustom.lightOn ();
+						Events.G.Raise (new PathGlowEvent (isDragStart));
 						dragStartPos = hit.point;
 						//print ("hit point :" + hit.point);
 						hitDist = hit.distance;
@@ -694,6 +721,8 @@ public class PathNode : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
 				isDragStart = false;
+				_shaderGlowCustom.lightOff ();
+				Events.G.Raise (new PathGlowEvent (isDragStart));
 				//hitDist = 0;
 				accAngle = 0;
 
@@ -782,7 +811,6 @@ public class PathNode : MonoBehaviour {
 				accAngle = 0;
 
 				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
-				Debug.Log ("is this on its way?");
 			} else {
 				//Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 			}
