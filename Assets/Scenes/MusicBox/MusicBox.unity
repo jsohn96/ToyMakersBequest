@@ -221,6 +221,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 1604410262}
 --- !u!1 &26358489
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +985,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 2039748251}
 --- !u!1 &74588834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,6 +1662,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &105793476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,6 +2341,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &127282519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,6 +3160,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &179497094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3832,6 +3837,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &229815801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,6 +3972,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &233897093
 GameObject:
   m_ObjectHideFlags: 0
@@ -5909,6 +5916,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &357961573
 GameObject:
   m_ObjectHideFlags: 0
@@ -6247,6 +6255,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &381467183
 GameObject:
   m_ObjectHideFlags: 0
@@ -7300,7 +7309,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.7118511, z: -0, w: -0.70233047}
   m_LocalPosition: {x: 12.528774, y: 12.5, z: -29.025726}
   m_LocalScale: {x: 648.76886, y: 461.54843, z: 668.442}
-  m_Children: []
+  m_Children:
+  - {fileID: 1533701130}
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7400,12 +7410,21 @@ MonoBehaviour:
     volume: 1
     fadeDuration: 0
     clips:
-    - {fileID: 8300000, guid: b4399a8e758e4f5419c94ef89f3cf31d, type: 3}
     - {fileID: 8300000, guid: f4d0ee8afa7e5174e8d338ace1a41d10, type: 3}
     - {fileID: 8300000, guid: 3b86a0935be31cb47bd3f3924f8b5b86, type: 3}
+    - {fileID: 8300000, guid: b4399a8e758e4f5419c94ef89f3cf31d, type: 3}
     pitchRange:
       _min: 0
       _max: 0
+    previouslyPlayedIndex: 0
+  _connectedAudioSystem:
+    audioSource: {fileID: 1533701129}
+    volume: 0.1
+    fadeDuration: 0
+    clips: []
+    pitchRange:
+      _min: 0.9
+      _max: 1.1
     previouslyPlayedIndex: 0
 --- !u!1 &431131461
 GameObject:
@@ -7849,6 +7868,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &461650717
 GameObject:
   m_ObjectHideFlags: 0
@@ -8003,6 +8023,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &465957738
 GameObject:
   m_ObjectHideFlags: 0
@@ -9851,6 +9872,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &574349913
 GameObject:
   m_ObjectHideFlags: 0
@@ -10094,6 +10116,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &587456562
 GameObject:
   m_ObjectHideFlags: 0
@@ -10275,6 +10298,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &600259852
 GameObject:
   m_ObjectHideFlags: 0
@@ -10787,6 +10811,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &630491763
 GameObject:
   m_ObjectHideFlags: 0
@@ -12644,6 +12669,7 @@ GameObject:
   - component: {fileID: 761780068}
   - component: {fileID: 761780067}
   - component: {fileID: 761780066}
+  - component: {fileID: 761780069}
   m_Layer: 0
   m_Name: CylinderRenderer
   m_TagString: RotateCircle
@@ -12723,6 +12749,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 761780064}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &761780069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 761780064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 761780067}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
+  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &764598789
 GameObject:
   m_ObjectHideFlags: 0
@@ -12924,6 +12970,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &780551426
 GameObject:
   m_ObjectHideFlags: 0
@@ -13145,6 +13192,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &797696205
 GameObject:
   m_ObjectHideFlags: 0
@@ -13209,6 +13257,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &802363776
 GameObject:
   m_ObjectHideFlags: 0
@@ -13387,6 +13436,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &806913184
 GameObject:
   m_ObjectHideFlags: 0
@@ -15997,6 +16047,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &926699328
 GameObject:
   m_ObjectHideFlags: 0
@@ -16860,6 +16911,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &958325101
 GameObject:
   m_ObjectHideFlags: 0
@@ -17016,6 +17068,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &964336014
 GameObject:
   m_ObjectHideFlags: 0
@@ -17824,6 +17877,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!114 &991931731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18518,6 +18572,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1019382531
 GameObject:
   m_ObjectHideFlags: 0
@@ -18667,6 +18722,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1030685348
 GameObject:
   m_ObjectHideFlags: 0
@@ -19071,6 +19127,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1053341535
 GameObject:
   m_ObjectHideFlags: 0
@@ -19842,6 +19899,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1103427759
 GameObject:
   m_ObjectHideFlags: 0
@@ -20270,6 +20328,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1117529580
 GameObject:
   m_ObjectHideFlags: 0
@@ -20513,6 +20572,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1125618693
 GameObject:
   m_ObjectHideFlags: 0
@@ -20723,6 +20783,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1131100689
 GameObject:
   m_ObjectHideFlags: 0
@@ -21609,6 +21670,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!114 &1185622040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22989,6 +23051,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!114 &1268681061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24344,6 +24407,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1327530044
 GameObject:
   m_ObjectHideFlags: 0
@@ -25298,6 +25362,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1371462022
 GameObject:
   m_ObjectHideFlags: 0
@@ -25729,6 +25794,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1387252085
 GameObject:
   m_ObjectHideFlags: 0
@@ -25792,6 +25858,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 761780069}
 --- !u!1 &1388373378
 GameObject:
   m_ObjectHideFlags: 0
@@ -26006,6 +26073,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1001 &1398994189
 Prefab:
   m_ObjectHideFlags: 0
@@ -26294,9 +26362,7 @@ MonoBehaviour:
     volume: 0.5
     fadeDuration: 0
     clips:
-    - {fileID: 8300000, guid: 6ae2975126a06044db8cd13494251775, type: 3}
-    - {fileID: 8300000, guid: e7c586d56fe4d924793ddc7ae224815e, type: 3}
-    - {fileID: 8300000, guid: bbff2524b60450b49a1355067c0fbb65, type: 3}
+    - {fileID: 8300000, guid: a148e3f1da866a74ea2f18542d103605, type: 3}
     pitchRange:
       _min: 0
       _max: 0
@@ -26390,6 +26456,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1409536013
 GameObject:
   m_ObjectHideFlags: 0
@@ -26643,6 +26710,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1426127899
 GameObject:
   m_ObjectHideFlags: 0
@@ -27172,6 +27240,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1445891443
 GameObject:
   m_ObjectHideFlags: 0
@@ -27541,6 +27610,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1467971549
 GameObject:
   m_ObjectHideFlags: 0
@@ -27691,6 +27761,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1475509997
 GameObject:
   m_ObjectHideFlags: 0
@@ -27755,6 +27826,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1492695173
 GameObject:
   m_ObjectHideFlags: 0
@@ -28746,6 +28818,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1530597379
 GameObject:
   m_ObjectHideFlags: 0
@@ -28833,6 +28906,115 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1530597379}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1533701128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1533701130}
+  - component: {fileID: 1533701129}
+  m_Layer: 0
+  m_Name: PathConnectedAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1533701129
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1533701128}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a148e3f1da866a74ea2f18542d103605, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!4 &1533701130
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1533701128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 430384547}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534545881
 GameObject:
   m_ObjectHideFlags: 0
@@ -29640,6 +29822,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1575739830
 GameObject:
   m_ObjectHideFlags: 0
@@ -29949,6 +30132,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1597000362
 GameObject:
   m_ObjectHideFlags: 0
@@ -30011,6 +30195,7 @@ GameObject:
   - component: {fileID: 1604410261}
   - component: {fileID: 1604410260}
   - component: {fileID: 1604410259}
+  - component: {fileID: 1604410262}
   m_Layer: 0
   m_Name: CylinderRenderer
   m_TagString: RotateCircle
@@ -30089,6 +30274,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1604410257}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1604410262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1604410257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 1604410260}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
+  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &1609572174
 GameObject:
   m_ObjectHideFlags: 0
@@ -31557,6 +31762,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1696773197
 GameObject:
   m_ObjectHideFlags: 0
@@ -32324,6 +32530,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1757939838
 GameObject:
   m_ObjectHideFlags: 0
@@ -32388,6 +32595,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1760024553
 GameObject:
   m_ObjectHideFlags: 0
@@ -32824,6 +33032,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1786836401
 GameObject:
   m_ObjectHideFlags: 0
@@ -33010,6 +33219,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1790890934
 GameObject:
   m_ObjectHideFlags: 0
@@ -34383,6 +34593,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1874208068
 GameObject:
   m_ObjectHideFlags: 0
@@ -34661,6 +34872,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1883462796
 GameObject:
   m_ObjectHideFlags: 0
@@ -35405,6 +35617,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1959244635
 GameObject:
   m_ObjectHideFlags: 0
@@ -35625,6 +35838,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1966395851
 GameObject:
   m_ObjectHideFlags: 0
@@ -35686,6 +35900,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1969645805
 GameObject:
   m_ObjectHideFlags: 0
@@ -36194,6 +36409,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &1991886431
 GameObject:
   m_ObjectHideFlags: 0
@@ -36300,6 +36516,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1001 &1998118354
 Prefab:
   m_ObjectHideFlags: 0
@@ -36502,6 +36719,7 @@ MonoBehaviour:
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
+  _shaderGlowCustom: {fileID: 0}
 --- !u!1 &2012728352
 GameObject:
   m_ObjectHideFlags: 0
@@ -37204,6 +37422,7 @@ GameObject:
   - component: {fileID: 2039748250}
   - component: {fileID: 2039748249}
   - component: {fileID: 2039748248}
+  - component: {fileID: 2039748251}
   m_Layer: 0
   m_Name: CylinderRenderer
   m_TagString: RotateCircle
@@ -37282,6 +37501,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2039748246}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2039748251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2039748246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 2039748249}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
+  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &2040677683
 GameObject:
   m_ObjectHideFlags: 0
