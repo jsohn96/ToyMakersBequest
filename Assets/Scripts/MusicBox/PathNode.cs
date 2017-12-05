@@ -144,9 +144,6 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] BranchNode[] _branchNodes;
 	[SerializeField] bool _isSnapEnable = true;
 
-	// audio 
-	AudioSource _NodeAudio;
-
 	// descend node --> for stairs 
 	bool _isDescended = false;
 	bool _isDescending = false;
@@ -526,6 +523,9 @@ public class PathNode : MonoBehaviour {
 							//print("Current Node " + _nodeIndex + "Current Angle: " + DampAngle(tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z));
 							if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
 								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
+								if (!_isCorrectConnection) {
+									Events.G.Raise (new PathConnectedEvent ());
+								}
 								_isCorrectConnection = true;
 								//adjNode._isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
@@ -548,6 +548,9 @@ public class PathNode : MonoBehaviour {
 						} else {
 							//print("node angle check: " + _nodeIndex + " " +DampAngle(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)));
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
+								if (!_isCorrectConnection) {
+									Events.G.Raise (new PathConnectedEvent ());
+								}
 								_isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
 									if (_cylinderRenderer) {

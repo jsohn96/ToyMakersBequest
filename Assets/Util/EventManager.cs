@@ -50,6 +50,10 @@ public class PathGlowEvent:GameEvent {
 	}
 }
 
+public class PathConnectedEvent:GameEvent {
+
+}
+
 // update path node info 
 // update frog info 
 public class DancerOnBoard: GameEvent{
