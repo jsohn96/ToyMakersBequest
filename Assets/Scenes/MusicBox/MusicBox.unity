@@ -726,11 +726,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 51637001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
+  m_Script: {fileID: -1913711003, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncPlayDelay: 0
+  pitch: 1
+  loop: 1
   autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: bbf3e000d3f04814991f2ba1f9cd5af0, type: 2}
+  musicLayers:
+  - name: 
+    koreography: {fileID: 11400000, guid: bbf3e000d3f04814991f2ba1f9cd5af0, type: 2}
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 51637006}
   targetKoreographer: {fileID: 0}
 --- !u!114 &51637004
 MonoBehaviour:
@@ -767,7 +774,7 @@ MonoBehaviour:
     previouslyPlayedIndex: 0
   _whichLayer: 4
   _sampleRate: 48000
-  _sourceSimpleMusicPlayer: {fileID: 277907413}
+  _sourceMultiMusicPlayer: {fileID: 277907413}
 --- !u!82 &51637006
 AudioSource:
   m_ObjectHideFlags: 0
@@ -781,7 +788,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.25
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4351,8 +4358,8 @@ GameObject:
   - component: {fileID: 277907417}
   - component: {fileID: 277907416}
   - component: {fileID: 277907415}
-  - component: {fileID: 277907413}
   - component: {fileID: 277907414}
+  - component: {fileID: 277907413}
   m_Layer: 0
   m_Name: MusicBoxMelody
   m_TagString: Untagged
@@ -4368,11 +4375,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 277907412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
+  m_Script: {fileID: -1913711003, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncPlayDelay: 0
+  pitch: 1
+  loop: 1
   autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: c64b6e679205ca4458a854d1f4694ac5, type: 2}
+  musicLayers:
+  - name: 
+    koreography: {fileID: 11400000, guid: c64b6e679205ca4458a854d1f4694ac5, type: 2}
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 277907416}
   targetKoreographer: {fileID: 0}
 --- !u!114 &277907414
 MonoBehaviour:
@@ -4396,7 +4410,7 @@ MonoBehaviour:
     previouslyPlayedIndex: 0
   _whichLayer: 0
   _sampleRate: 48000
-  _sourceSimpleMusicPlayer: {fileID: 277907413}
+  _sourceMultiMusicPlayer: {fileID: 277907413}
 --- !u!114 &277907415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4423,7 +4437,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.22
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -13284,7 +13298,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 802363776}
-  m_LocalRotation: {x: 0.15536052, y: 0.68137884, z: 0.6917861, w: 0.18170844}
+  m_LocalRotation: {x: 0.15536053, y: 0.6813789, z: 0.69178617, w: 0.18170846}
   m_LocalPosition: {x: 3.22, y: 1.21, z: 0.76}
   m_LocalScale: {x: 3.0726438, y: 0.13479026, z: 0.4243898}
   m_Children: []
@@ -22014,11 +22028,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201716253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
+  m_Script: {fileID: -1913711003, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncPlayDelay: 0
+  pitch: 1
+  loop: 1
   autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: 1eb0b80d5b7a6074c84af96ca447229a, type: 2}
+  musicLayers:
+  - name: 
+    koreography: {fileID: 11400000, guid: 1eb0b80d5b7a6074c84af96ca447229a, type: 2}
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 1201716258}
   targetKoreographer: {fileID: 0}
 --- !u!114 &1201716256
 MonoBehaviour:
@@ -22055,7 +22076,7 @@ MonoBehaviour:
     previouslyPlayedIndex: 0
   _whichLayer: 1
   _sampleRate: 48000
-  _sourceSimpleMusicPlayer: {fileID: 277907413}
+  _sourceMultiMusicPlayer: {fileID: 277907413}
 --- !u!82 &1201716258
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22069,7 +22090,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -29055,11 +29076,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534545881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
+  m_Script: {fileID: -1913711003, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncPlayDelay: 0
+  pitch: 1
+  loop: 1
   autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: 00d61ec097f9f6a45ad7d71b4ccf2b26, type: 2}
+  musicLayers:
+  - name: 
+    koreography: {fileID: 11400000, guid: 00d61ec097f9f6a45ad7d71b4ccf2b26, type: 2}
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 1534545886}
   targetKoreographer: {fileID: 0}
 --- !u!114 &1534545884
 MonoBehaviour:
@@ -29096,7 +29124,7 @@ MonoBehaviour:
     previouslyPlayedIndex: 0
   _whichLayer: 2
   _sampleRate: 48000
-  _sourceSimpleMusicPlayer: {fileID: 277907413}
+  _sourceMultiMusicPlayer: {fileID: 277907413}
 --- !u!82 &1534545886
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29110,7 +29138,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -36897,11 +36925,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2014098102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
+  m_Script: {fileID: -1913711003, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncPlayDelay: 0
+  pitch: 1
+  loop: 1
   autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: 59da344b2c69dbf40a85d7f00f40627f, type: 2}
+  musicLayers:
+  - name: 
+    koreography: {fileID: 11400000, guid: 59da344b2c69dbf40a85d7f00f40627f, type: 2}
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 2014098107}
   targetKoreographer: {fileID: 0}
 --- !u!114 &2014098105
 MonoBehaviour:
@@ -36938,7 +36973,7 @@ MonoBehaviour:
     previouslyPlayedIndex: 0
   _whichLayer: 3
   _sampleRate: 48000
-  _sourceSimpleMusicPlayer: {fileID: 277907413}
+  _sourceMultiMusicPlayer: {fileID: 277907413}
 --- !u!82 &2014098107
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36952,7 +36987,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

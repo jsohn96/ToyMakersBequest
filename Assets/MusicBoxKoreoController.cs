@@ -22,8 +22,8 @@ public class MusicBoxKoreoController : AudioSourceController {
 	//sample rate will likely be 44100 for calculating delay for koreography
 	[SerializeField] int _sampleRate = 44100;
 
-	SimpleMusicPlayer _simpleMusicPlayer;
-	[SerializeField] SimpleMusicPlayer _sourceSimpleMusicPlayer;
+	MultiMusicPlayer _multiMusicPlayer;
+	[SerializeField] MultiMusicPlayer _sourceMultiMusicPlayer;
 
 	// check this bool if koreography needs to be paused
 	bool _stop = false;
@@ -56,7 +56,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 		Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
 
 		// get koreography music player
-		_simpleMusicPlayer = GetComponent<SimpleMusicPlayer> ();
+		_multiMusicPlayer = GetComponent<MultiMusicPlayer> ();
 	
 	}
 
@@ -70,7 +70,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 				_audioFadeStarted = false;
 			}
 			if (!isInterrupted) {
-				_simpleMusicPlayer.SeekToSample(_tempSampleForUnpause);
+				Debug.Log ("RESUME RESUME RESUEME");
+				_multiMusicPlayer.SeekToSample(_tempSampleForUnpause);
+				_multiMusicPlayer.Play ();
+
 			}
 			AdjustVolume (_audioSystem, _audioSystem.fadeDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
 			_readyToEnter = false;
@@ -85,7 +88,6 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_audioFadeStarted = true;
 			_waitingForResume = true;
 			float fadeDuration = CalculateFadeDuration (koreoEvent);
-
 
 			if (_whichLayer != MusicBoxLayer.WoodClick) {
 				//reduces the volume of the audio to 0, because koreographer requires a separate Pause
@@ -113,11 +115,9 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 	IEnumerator CountdownToKoreoPause(float fadeDuration){
 		//Maybe have the stop sound play at the halfway point?
-
-
 		yield return new WaitForSeconds (fadeDuration);
 		AdjustVolume (_audioSystem, 0.0f, 0.0f, _audioSystem.audioSource.volume, true);
-		_simpleMusicPlayer.Pause ();
+		_multiMusicPlayer.Pause ();
 		_audioFadeStarted = false;
 
 		/*if (_dancerStopSoundEffectScript != null) {
@@ -130,7 +130,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	//Calculates the duration of the koreoevent and converts it into seconds
 	//Used for calculating the duration of the audio fade out
 	float CalculateFadeDuration(KoreographyEvent koreoEvent){
-		int sampleDifference = koreoEvent.EndSample - _sourceSimpleMusicPlayer.GetSampleTimeForClip(_sourceSimpleMusicPlayer.GetCurrentClipName());
+		int sampleDifference = koreoEvent.EndSample - _sourceMultiMusicPlayer.GetSampleTimeForClip(_sourceMultiMusicPlayer.GetCurrentClipName());
 		_tempSampleForUnpause = koreoEvent.EndSample;
 		float duration = (float)sampleDifference / (float)_sampleRate;
 		return duration;
@@ -140,7 +140,8 @@ public class MusicBoxKoreoController : AudioSourceController {
 	void StopMusicBoxMusic(MBMusicMangerEvent e){
 		_stop = !e.isMusicPlaying;
 		if (!_isStarted && !_stop) {
-			_simpleMusicPlayer.Play ();
+			_isStarted = true;
+			_multiMusicPlayer.Play ();
 		}
 
 		if (!_stop && _waitingForResume) {
@@ -151,8 +152,6 @@ public class MusicBoxKoreoController : AudioSourceController {
 			_audioFadeStarted = false;
 			_readyToEnter = true;
 		}
-
-		Debug.Log ("THIS IS WHERE THE EVENT WAS CALLED: " + _stop);
 	}
 
 
