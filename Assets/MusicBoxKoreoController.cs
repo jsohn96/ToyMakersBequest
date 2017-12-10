@@ -75,7 +75,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 				_multiMusicPlayer.Play ();
 
 			}
-			AdjustVolume (_audioSystem, _audioSystem.fadeDuration, _audioSystem.volume, _audioSystem.audioSource.volume, true);
+			AdjustVolume (_audioSystem, _audioSystem.fadeDuration, _audioSystem.volume, _audioSystem.audioSource.volume, false, true);
 			_readyToEnter = false;
 
 
@@ -116,7 +116,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 	IEnumerator CountdownToKoreoPause(float fadeDuration){
 		//Maybe have the stop sound play at the halfway point?
 		yield return new WaitForSeconds (fadeDuration);
-		AdjustVolume (_audioSystem, 0.0f, 0.0f, _audioSystem.audioSource.volume, true);
+		AdjustVolume (_audioSystem, 0.0f, 0.0f, _audioSystem.audioSource.volume, false, true);
 		_multiMusicPlayer.Pause ();
 		_audioFadeStarted = false;
 

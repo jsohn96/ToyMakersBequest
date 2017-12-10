@@ -118,7 +118,7 @@ public class AudioManager : MonoBehaviour {
 		audioSource.volume = goalVolume;
 	}
 
-	public IEnumerator FadeOut(AudioSource audioSource, float duration, float goalVolume = 0.0f, float originVolume = 1.0f, bool isKoreo = false){
+	public IEnumerator FadeOut(AudioSource audioSource, float duration, float goalVolume = 0.0f, float originVolume = 1.0f, bool continuePlayWhileZero = false, bool isKoreo = false){
 		float tempOnVolume = audioSource.volume;
 		Timer fadeTimer = new Timer (duration);
 		fadeTimer.Reset ();
@@ -126,7 +126,7 @@ public class AudioManager : MonoBehaviour {
 			audioSource.volume = MathHelpers.LinMapFrom01(originVolume, goalVolume, _audioFadeCurve.Evaluate (fadeTimer.PercentTimePassed));
 			yield return null;
 		}
-		if (goalVolume == 0.0f) {
+		if (goalVolume == 0.0f && !continuePlayWhileZero) {
 			if (!isKoreo) {
 				audioSource.Stop ();
 			}
