@@ -228,3 +228,10 @@ public class GearsReadyForPickupEvent: GameEvent {
 
 public class NotebookInteractionEvent: GameEvent {
 }
+
+public class NotebookTextBeingReadEvent: GameEvent {
+	public int WhichText { get; private set; }
+	public NotebookTextBeingReadEvent (int whichText) {
+		WhichText = whichText;
+	}
+}

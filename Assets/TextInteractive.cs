@@ -13,6 +13,7 @@ public class TextInteractive : BookInteractive {
 	Timer _fadeTimer;
 	Timer _glowTimer;
 	int _onWhichVO = 0;
+	[SerializeField] int _thisTextID = 0;
 
 	bool _beginVOSequence = false;
 	float _dilateGoal = -0.246f;
@@ -34,20 +35,32 @@ public class TextInteractive : BookInteractive {
 	public override void Interact(){
 		base.Interact ();
 		Reset ();
+		Events.G.Raise (new NotebookTextBeingReadEvent (_thisTextID));
 		_tempCoroutine = DelayBeforeVoBegin ();
 		StartCoroutine (_tempCoroutine);
 	}
 
 	void OnEnable(){
 		for (int i = 0; i <= _introVO.clips.Length-1; i++) {
-			_textMeshPros [i].font = _glowAsset;
+			_textMeshPros [i].font = _nonGlowAsset;
 		}
 		_nonGlowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _dilateGoal);
 		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _dilateGoal);
+		Events.G.AddListener<NotebookTextBeingReadEvent>(NotebookReadInterruption);
 	}
 
 	void OnDisable(){
 		Reset();
+		Events.G.RemoveListener<NotebookTextBeingReadEvent> (NotebookReadInterruption);
+	}
+
+	void NotebookReadInterruption(NotebookTextBeingReadEvent e){
+		if (e.WhichText != _thisTextID) {
+			for (int i = 0; i <= _introVO.clips.Length-1; i++) {
+				_textMeshPros [i].font = _nonGlowAsset;
+			} 
+			Reset ();
+		}
 	}
 
 	void Reset(){
@@ -73,8 +86,6 @@ public class TextInteractive : BookInteractive {
 			yield return null;
 		}
 		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _originDilate);
-
-
 
 		yield return null;
 	}
