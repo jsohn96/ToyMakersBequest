@@ -34,6 +34,7 @@ public class TextInteractive : BookInteractive {
 	
 	public override void Interact(){
 		base.Interact ();
+		Events.G.Raise (new AmbientSoundAdjustmentEvent (true));
 		Reset ();
 		Events.G.Raise (new NotebookTextBeingReadEvent (_thisTextID));
 		_tempCoroutine = DelayBeforeVoBegin ();
@@ -91,6 +92,7 @@ public class TextInteractive : BookInteractive {
 	}
 
 	IEnumerator EndVO(){
+		Events.G.Raise (new AmbientSoundAdjustmentEvent (false));
 		_onWhichVO = 0;
 
 		_glowTimer.Reset ();
@@ -105,32 +107,32 @@ public class TextInteractive : BookInteractive {
 		yield return null;
 	}
 
-//	IEnumerator PlayNext(){
-//		_onWhichVO++;
-//		_glowTimer.Reset ();
-//		float tempDilate;
-//		while (!_glowTimer.IsOffCooldown) {
-//			tempDilate = Mathf.Lerp (_dilateGoal, _originDilate, _glowTimer.PercentTimePassed);
-//			_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, tempDilate);
-//			yield return null;
-//		}
-//		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _dilateGoal);
-//
-//		_textMeshPros [_onWhichVO - 1].font = _glowAsset;
-//		_textMeshPros [_onWhichVO].font = _nonGlowAsset;
-//		_introVO.audioSource.clip = _introVO.clips [_onWhichVO];
-//		_introVO.audioSource.Play ();
-//		_beginVOSequence = true;
-//		_glowTimer.Reset ();
-//		while (!_glowTimer.IsOffCooldown) {
-//			tempDilate = Mathf.Lerp (_originDilate, _dilateGoal, _glowTimer.PercentTimePassed);
-//			_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, tempDilate);
-//			yield return null;
-//		}
-//		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _dilateGoal);
-//		yield return null;
-//	}
-//
+	IEnumerator PlayNext(){
+		_onWhichVO++;
+		_glowTimer.Reset ();
+		float tempDilate;
+		while (!_glowTimer.IsOffCooldown) {
+			tempDilate = Mathf.Lerp (_originDilate, _dilateGoal, _glowTimer.PercentTimePassed);
+			_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, tempDilate);
+			yield return null;
+		}
+		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _dilateGoal);
+
+		_textMeshPros [_onWhichVO - 1].font = _nonGlowAsset;
+		_textMeshPros [_onWhichVO].font = _glowAsset;
+		_introVO.audioSource.clip = _introVO.clips [_onWhichVO];
+		_introVO.audioSource.Play ();
+		_beginVOSequence = true;
+		_glowTimer.Reset ();
+		while (!_glowTimer.IsOffCooldown) {
+			tempDilate = Mathf.Lerp (_dilateGoal, _originDilate, _glowTimer.PercentTimePassed);
+			_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, tempDilate);
+			yield return null;
+		}
+		_glowTextMaterial.SetFloat (ShaderUtilities.ID_FaceDilate, _originDilate);
+		yield return null;
+	}
+
 	void FixedUpdate() {
 //		if (Input.GetKeyDown (KeyCode.Space)) {
 //			Interact ();
@@ -143,11 +145,11 @@ public class TextInteractive : BookInteractive {
 					_tempCoroutine = EndVO ();
 					StartCoroutine (_tempCoroutine);
 				}
-//				else if (_onWhichVO < _introVO.clips.Length - 1) {
-//					_beginVOSequence = false;
-//					_tempCoroutine = PlayNext ();
-//					StartCoroutine (_tempCoroutine);
-//				}
+				else if (_onWhichVO < _introVO.clips.Length - 1) {
+					_beginVOSequence = false;
+					_tempCoroutine = PlayNext ();
+					StartCoroutine (_tempCoroutine);
+				}
 			}
 		}
 	}

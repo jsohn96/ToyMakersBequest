@@ -39,6 +39,7 @@ public class MusicBoxTitleBookInteractive : BookInteractive {
 		tempYRot = tempYRot > 180.0f ? (tempYRot - 360f) * -1f : tempYRot;
 		_spotLight.spotAngle = MathHelpers.LinMap (_dancerRotateAngleBound.Min, _dancerRotateAngleBound.Max, _spotLightAngle.Min, _spotLightAngle.Max, Mathf.Clamp(tempYRot, _dancerRotateAngleBound.Min, _dancerRotateAngleBound.Max));
 		_beginRotating = true;
+		Events.G.Raise (new AmbientSoundAdjustmentEvent (true));
 	}
 
 	void OnDisable(){
@@ -46,6 +47,7 @@ public class MusicBoxTitleBookInteractive : BookInteractive {
 		_rotateAroundPivot.rotation = _originRotation;
 		_beginRotating = false;
 		_beginTurningAround = false;
+		Events.G.Raise (new AmbientSoundAdjustmentEvent (false));
 	}
 
 	void FixedUpdate () {

@@ -8,6 +8,8 @@ public class AmbientSoundController : AudioSourceController {
 	[SerializeField] AudioSystem _ambientAudioSystem2;
 	//Use _abientAudioSystem, 0: RoomToneForBook
 
+	bool _ambienceReduced = false;
+
 	void OnSceneLoaded(Scene Scene, LoadSceneMode mode){
 		if (Scene.name == "notebookScene") {
 			if (_ambientAudioSystem1.audioSource.isPlaying) {
@@ -20,11 +22,31 @@ public class AmbientSoundController : AudioSourceController {
 		}
 	}
 
+	void AmbienceAdjustment(AmbientSoundAdjustmentEvent e){
+		if (!_ambienceReduced && e.ReduceAmbientSound) {
+			if (_ambientAudioSystem1.audioSource.isPlaying) {
+				AdjustVolume (_ambientAudioSystem1, _ambientAudioSystem1.fadeDuration, 0.0f, _ambientAudioSystem1.audioSource.volume, true);
+			} else {
+				AdjustVolume (_ambientAudioSystem2, _ambientAudioSystem2.fadeDuration, 0.0f, _ambientAudioSystem2.audioSource.volume, true);
+			}
+			_ambienceReduced = true;
+		} else if (_ambienceReduced && !e.ReduceAmbientSound) {
+			if (_ambientAudioSystem1.audioSource.isPlaying) {
+				AdjustVolume (_ambientAudioSystem1, _ambientAudioSystem1.fadeDuration, _ambientAudioSystem1.volume, _ambientAudioSystem1.audioSource.volume, true);
+			} else {
+				AdjustVolume (_ambientAudioSystem2, _ambientAudioSystem2.fadeDuration, _ambientAudioSystem2.volume, _ambientAudioSystem2.audioSource.volume, true);
+			}
+			_ambienceReduced = false;
+		}
+	}
+
 	void OnEnable() {
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		Events.G.AddListener<AmbientSoundAdjustmentEvent> (AmbienceAdjustment);
 	}
 
 	void OnDisable() {
 		SceneManager.sceneLoaded -= OnSceneLoaded;
+		Events.G.RemoveListener<AmbientSoundAdjustmentEvent> (AmbienceAdjustment);
 	}
 }

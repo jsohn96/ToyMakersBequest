@@ -235,3 +235,10 @@ public class NotebookTextBeingReadEvent: GameEvent {
 		WhichText = whichText;
 	}
 }
+
+public class AmbientSoundAdjustmentEvent: GameEvent {
+	public bool ReduceAmbientSound { get; private set; }
+	public AmbientSoundAdjustmentEvent (bool reduceAmbientSound) {
+		ReduceAmbientSound = reduceAmbientSound;
+	}
+}
