@@ -29,6 +29,7 @@ public class InteractGearButton : BookInteractive {
 
 	void OnDisable() {
 		_isOn = false;
+		_linkedTextMeshPro.color = _emptyColor;
 	}
 	
 	void FixedUpdate () {
