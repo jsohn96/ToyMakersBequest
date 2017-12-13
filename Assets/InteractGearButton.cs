@@ -14,6 +14,7 @@ public class InteractGearButton : BookInteractive {
 	IEnumerator _fadeInCoroutine;
 	IEnumerator _fadeOutCoroutine;
 	[SerializeField] TextMeshPro _textToHide;
+	[SerializeField] ToggleAction _toggleAction;
 
 	void Start(){
 		_originColor = _linkedTextMeshPro.color;
@@ -51,6 +52,9 @@ public class InteractGearButton : BookInteractive {
 			}
 			_fadeInCoroutine = FadeInText ();
 			StartCoroutine (_fadeInCoroutine);
+			if (_toggleAction != null) {
+				_toggleAction.ToggleActionOn ();
+			}
 		}
 	}
 
