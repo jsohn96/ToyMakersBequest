@@ -62,8 +62,8 @@ public class MusicBoxCameraManager : MonoBehaviour {
 	void Update () {
 		if (_cameraIsMoving) {
 			if (!_cameraMoveTimer.IsOffCooldown) {
-				_tempPos = Vector3.Slerp (_originPosition, _goalPosition, _cameraMoveTimer.PercentTimePassed);
-				_tempRot = Quaternion.Slerp (_originRotation, _goalRotation, _cameraMoveTimer.PercentTimePassed);
+				_tempPos = Vector3.Lerp (_originPosition, _goalPosition, _cameraMoveTimer.PercentTimePassed);
+				_tempRot = Quaternion.Lerp (_originRotation, _goalRotation, _cameraMoveTimer.PercentTimePassed);
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
 				if (_includeFOVShift) {
