@@ -88,8 +88,8 @@ public class MusicBoxManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0) && !_isStartPath) {
 			_isStartPath = true;
 			_musicPaths[0].SetPathActive(true);
-			_activePathIndex = 0;
-			Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
+			//_activePathIndex = 0;
+			//Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
 
 		}
 	}

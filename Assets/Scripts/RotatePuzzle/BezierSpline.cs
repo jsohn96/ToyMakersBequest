@@ -12,6 +12,15 @@ public class BezierSpline : MonoBehaviour {
 	[SerializeField]
 	private bool loop;
 
+	float _setDuration = -1;
+
+	void Start(){
+		DurationContainer durationContainer = GetComponent<DurationContainer> ();
+		if (durationContainer != null) {
+			_setDuration = durationContainer._presetDuration;
+		}
+	}
+
 	public bool Loop {
 		get {
 			return loop;
@@ -22,6 +31,15 @@ public class BezierSpline : MonoBehaviour {
 				modes[modes.Length - 1] = modes[0];
 				SetControlPoint(0, points[0]);
 			}
+		}
+	}
+
+	public float Duration {
+		get {
+			return _setDuration;
+		}
+		set {
+			_setDuration = value;
 		}
 	}
 
@@ -200,17 +218,26 @@ public class BezierSpline : MonoBehaviour {
 
 	// add get spline length
 	public float GetSplineDuration(){
-		float length = 0f;
-		//float progress = 0;
-		Vector3 prevPoint = GetPoint(0);
-		Vector3 curPoint;
-		for(float progress = 0; progress < 1f;progress += Time.deltaTime){
-			curPoint = GetPoint (progress);
-			length += Vector3.Distance (prevPoint, curPoint);
-			prevPoint = curPoint;
+		if (_setDuration >= 0) {
+			//to tell dancer that we dont want to use this script
+			// and use predetermined duration instead
+			return -1f;
+		} else {
+			float length = 0f;
+			//float progress = 0;
+			Vector3 prevPoint = GetPoint (0);
+			Vector3 curPoint;
+			for (float progress = 0; progress < 1f; progress += Time.deltaTime) {
+				curPoint = GetPoint (progress);
+				length += Vector3.Distance (prevPoint, curPoint);
+				prevPoint = curPoint;
 			
+			}
+			return length;
 		}
-		return length;
+	}
 
+	public float GetPresetDuration(){
+		return _setDuration;
 	}
 }

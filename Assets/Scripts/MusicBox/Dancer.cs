@@ -204,8 +204,12 @@ public class Dancer : MonoBehaviour {
 			_curStartPos = _activeSpline.GetPoint (0);
 
 			float pathLength = _activeSpline.GetSplineDuration ();
-			//print ("Current Spline Length: " + pathLength);
-			_duration = pathLength * _DurationSensitivity;
+			if (pathLength == -1f) {
+				_duration = _activeSpline.GetPresetDuration ();
+			} else {
+				//print ("Current Spline Length: " + pathLength);
+				_duration = pathLength * _DurationSensitivity;
+			}
 		} else {
 			_isNodeWithPath = false;
 			print ("Enter Node");

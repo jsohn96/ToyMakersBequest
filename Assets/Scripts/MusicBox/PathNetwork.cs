@@ -239,7 +239,12 @@ public class PathNetwork : MonoBehaviour {
 	// for loop in the path
 
 	void EnterLoop(int fromIdx, int toIdx){
-		
+		_isPathLoop = true;
+		_loopFromIdx = fromIdx;
+		_loopToIdx = toIdx;
+		//print ("enter loop from to: " + _loopToIdx);
+		//PathNode tempNode = FindNodeWithIndex (_correctOrder [_orderIdx].index);
+		//tempNode.resetAdjNodeAngle(0, 90f);
 	}
 
 	// loop the next node order between the fromIdx and toIdx
