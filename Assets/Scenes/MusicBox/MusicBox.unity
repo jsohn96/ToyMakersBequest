@@ -13480,6 +13480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 806710882}
   - component: {fileID: 806710883}
+  - component: {fileID: 806710884}
   m_Layer: 0
   m_Name: CameraTimeline
   m_TagString: Untagged
@@ -13523,6 +13524,20 @@ MonoBehaviour:
   _cameraControlPoints:
   - {fileID: 0}
   _musicBoxAccompany: {fileID: 1201716258}
+--- !u!114 &806710884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 806710881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e685379c668a4fe9baf612e8ee159a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startLights: []
+  _layer1Lights:
+  - {fileID: 1551284719}
 --- !u!1 &806913184
 GameObject:
   m_ObjectHideFlags: 0
@@ -29063,6 +29078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1551284717}
   - component: {fileID: 1551284718}
+  - component: {fileID: 1551284719}
   m_Layer: 0
   m_Name: Point light (1)
   m_TagString: Untagged
@@ -29119,6 +29135,22 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1551284719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1551284716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b060d68c85ea694496559a363456d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thisLightSystem:
+    light: {fileID: 1551284718}
+    intensity: 1.42
+    color: {r: 1, g: 0.7921569, b: 0.2509804, a: 1}
+    range: 13.9
 --- !u!1 &1552225227
 GameObject:
   m_ObjectHideFlags: 0
@@ -30074,7 +30106,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1601073639}
   m_LocalRotation: {x: 0.24179237, y: -0.059073824, z: 0.01474945, w: 0.96841586}
-  m_LocalPosition: {x: 0, y: 0, z: 62.9}
+  m_LocalPosition: {x: 0, y: 0, z: 61.7}
   m_LocalScale: {x: 1, y: 1, z: 0.9999999}
   m_Children: []
   m_Father: {fileID: 1662273531}
@@ -30082,7 +30114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9, y: -24.899994}
+  m_AnchoredPosition: {x: -8.9, y: -27.2}
   m_SizeDelta: {x: 28.3, y: 9.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1604410257
