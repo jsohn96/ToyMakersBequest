@@ -36,6 +36,8 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 	bool _readyToEnter = false;
 
+	bool _init = false;
+
 	//[SerializeField] float _resumeAudioDuration = 0.05f;
 
 	//The end sample value for holding where the track left off at
@@ -57,6 +59,11 @@ public class MusicBoxKoreoController : AudioSourceController {
 
 		// get koreography music player
 		_multiMusicPlayer = GetComponent<MultiMusicPlayer> ();
+
+		if (_whichLayer == MusicBoxLayer.MusicBoxAccompany) {
+			_multiMusicPlayer.Volume = 0.3f;
+			_multiMusicPlayer.Play ();
+		}
 	
 	}
 
@@ -139,7 +146,14 @@ public class MusicBoxKoreoController : AudioSourceController {
 	// Function to set a bool to wait for pause
 	void StopMusicBoxMusic(MBMusicMangerEvent e){
 		_stop = !e.isMusicPlaying;
+
 		if (!_isStarted && !_stop) {
+			if (!_init) {
+				if (_whichLayer == MusicBoxLayer.MusicBoxAccompany) {
+					_audioSystem.audioSource.volume = 1.0f;
+				}
+				_init = true;
+			}
 			_isStarted = true;
 			_multiMusicPlayer.Play ();
 		}

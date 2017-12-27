@@ -77,6 +77,15 @@ public class PathStateManagerEvent:GameEvent{
 	}
 }
 
+public class MBCameraStateManagerEvent:GameEvent{
+	public MusicBoxCameraStates activeState{ get; private set;}
+	public float CamDuration { get; private set; }
+	public MBCameraStateManagerEvent(MusicBoxCameraStates state, float camDuration){
+		activeState = state;
+		CamDuration = camDuration;
+	}
+}
+
 public class PathResumeEvent:GameEvent{
 	
 }

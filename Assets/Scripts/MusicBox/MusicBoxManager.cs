@@ -9,7 +9,6 @@ public enum PlayMode{
 }
 
 public class MusicBoxManager : MonoBehaviour {
-	bool isBoxOpen = false;
 	Animator _myAnim;
 	[SerializeField] PlayMode _playMode;
 	[SerializeField] GameObject[] _Layers;
@@ -52,29 +51,16 @@ public class MusicBoxManager : MonoBehaviour {
 
 	void OnEnable(){
 		Events.G.AddListener<PathStateManagerEvent> (PathStateManagerHandle);
+		Events.G.AddListener<MBCameraStateManagerEvent> (MBCameraStateHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<PathStateManagerEvent> (PathStateManagerHandle);
+		Events.G.RemoveListener<MBCameraStateManagerEvent> (MBCameraStateHandle);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			if (!isBoxOpen) {
-				isBoxOpen = true;
-				//_tempSText.DisplayText();
-				Events.G.Raise (new MBLightManagerEvent (LightState.turn_main_lights_off));
-			}
-
-		}
-
-		if (isBoxOpen) {
-			//_myAnim.Play("Open");
-			// activate the first layer path 
-
-
-		}
 			
 //		if (_hideFirstLayer) {
 //			//HideLayer (_Layers [0].transform);
@@ -84,14 +70,6 @@ public class MusicBoxManager : MonoBehaviour {
 //			_hideFirstLayer = false;
 //		}
 
-
-		if (Input.GetMouseButtonDown (0) && !_isStartPath) {
-			_isStartPath = true;
-			_musicPaths[0].SetPathActive(true);
-			//_activePathIndex = 0;
-			//Events.G.Raise (new DancerChangeMoveEvent (DancerMove.none));
-
-		}
 	}
 
 	void PathStateManagerHandle(PathStateManagerEvent e){
@@ -115,6 +93,23 @@ public class MusicBoxManager : MonoBehaviour {
 			EndScene ();
 			break;
 			
+		}
+	}
+
+	void MBCameraStateHandle(MBCameraStateManagerEvent e){
+		switch (e.activeState) {
+		case MusicBoxCameraStates.init:
+			break;
+		case MusicBoxCameraStates.intro:
+			break;
+		case MusicBoxCameraStates.activation:
+			if (!_isStartPath) {
+				_isStartPath = true;
+				_musicPaths[0].SetPathActive(true);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
