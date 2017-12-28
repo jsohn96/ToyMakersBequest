@@ -18,9 +18,9 @@ public class shaderGlowCustom : MonoBehaviour
     public float glowIntensity = 0.08f; //Glow intensity on screen of the object
     [Range(0.5f, 2.0f)]
     public float glowOpacity = 1f; //Glow opacity on screen of the object
-	public Color glowColor = new Color(1.0f, 0.92f, 0.59f); //Glow color of the object
+	Color glowColor = new Color(0.75f, 0.65f, 0.3f); //Glow color of the object
 
-	Color _connectedColor = Color.green;
+	Color _connectedColor = new Color(0.95f, 0.94f, 0.61f);
 
     private float clipGlow = 0.04f; //Min real allowed glow
     private float maxGlow = 0.25f; //Max real allowed glow

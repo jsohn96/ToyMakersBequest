@@ -2251,6 +2251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 127282520}
   - component: {fileID: 127282521}
+  - component: {fileID: 127282522}
   m_Layer: 0
   m_Name: StreetLight
   m_TagString: Untagged
@@ -2307,6 +2308,22 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &127282522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 127282519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b060d68c85ea694496559a363456d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thisLightSystem:
+    light: {fileID: 127282521}
+    intensity: 2
+    color: {r: 0.9843138, g: 0.92549026, b: 0.43529415, a: 1}
+    range: 23.259
 --- !u!1001 &129857185
 Prefab:
   m_ObjectHideFlags: 0
@@ -12771,7 +12788,6 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &764598789
 GameObject:
   m_ObjectHideFlags: 0
@@ -13538,6 +13554,9 @@ MonoBehaviour:
   _startLights: []
   _layer1Lights:
   - {fileID: 1551284719}
+  - {fileID: 1492695176}
+  - {fileID: 127282522}
+  - {fileID: 1811044089}
 --- !u!1 &806913184
 GameObject:
   m_ObjectHideFlags: 0
@@ -27514,6 +27533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492695174}
   - component: {fileID: 1492695175}
+  - component: {fileID: 1492695176}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -27570,6 +27590,22 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1492695176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1492695173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b060d68c85ea694496559a363456d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thisLightSystem:
+    light: {fileID: 1492695175}
+    intensity: 2
+    color: {r: 1, g: 0.65882355, b: 0.14901961, a: 1}
+    range: 20.3
 --- !u!1 &1493328184
 GameObject:
   m_ObjectHideFlags: 0
@@ -30227,7 +30263,6 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &1609572174
 GameObject:
   m_ObjectHideFlags: 0
@@ -33515,6 +33550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1811044087}
   - component: {fileID: 1811044088}
+  - component: {fileID: 1811044089}
   m_Layer: 0
   m_Name: StreetLight
   m_TagString: Untagged
@@ -33571,6 +33607,22 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1811044089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1811044086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b060d68c85ea694496559a363456d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thisLightSystem:
+    light: {fileID: 1811044088}
+    intensity: 2
+    color: {r: 1, g: 0.9568628, b: 0.62352943, a: 1}
+    range: 23.259
 --- !u!1 &1811107800
 GameObject:
   m_ObjectHideFlags: 0
@@ -36855,7 +36907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &2014644398
 Light:
   m_ObjectHideFlags: 0
@@ -37244,7 +37296,6 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.92156863, b: 0.5882353, a: 1}
 --- !u!1 &2040677683
 GameObject:
   m_ObjectHideFlags: 0

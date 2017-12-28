@@ -58,12 +58,10 @@ public class MBLightManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_layer1Lights [0]._thisLightSystem.light.intensity = 0.0f;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		float lightArrayLength = _layer1Lights.Length;
+		for (int i = 0; i < lightArrayLength; i++) {
+			_layer1Lights [i]._thisLightSystem.light.intensity = 0.0f;
+		}
 	}
 
 	void TurnLightsOff(MBLightUtil[] lights){
