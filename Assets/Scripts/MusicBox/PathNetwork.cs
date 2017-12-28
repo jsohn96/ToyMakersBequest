@@ -131,7 +131,7 @@ public class PathNetwork : MonoBehaviour {
 	// todo Tell the dancer where she should start
 	// have the dancer get a copy of the info about the path on the node 
 	// have the dancer reports back to the network about her status
-	void PositionDancer (){
+	public void PositionDancer (){
 		// pass down the game object
 
 		_curNode = FindNodeWithIndex (_curNodeIdx);

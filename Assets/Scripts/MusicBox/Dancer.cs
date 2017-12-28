@@ -64,7 +64,7 @@ public class Dancer : MonoBehaviour {
 		Events.G.RemoveListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
 		Events.G.RemoveListener<PathStateManagerEvent> (DancerHoldHandEvent);
 		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
-
+		isMoving = false;
 	}
 	
 	// Update is called once per frame
@@ -248,7 +248,5 @@ public class Dancer : MonoBehaviour {
 	void PlayModeHandle(MBPlayModeEvent e){
 		_myPlayMode = e.activePlayMode;
 	}
-
-
 }
 
