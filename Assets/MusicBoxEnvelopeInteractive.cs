@@ -40,7 +40,7 @@ public class MusicBoxEnvelopeInteractive : BookInteractive {
 	IEnumerator OpenEnvelope(){
 		_envelopeOpenAudioSource.Play ();
 		_envelopeOpened = true;
-		_openEnvelopeTimer.CooldownTime = 0.3f;
+		_openEnvelopeTimer.CooldownTime = 0.5f;
 		_openEnvelopeTimer.Reset ();
 		while (!_openEnvelopeTimer.IsOffCooldown) {
 			_envelopeLidPivot.localRotation = Quaternion.Lerp (_originRotation, _goalRotation, _openEnvelopeTimer.PercentTimePassed);
@@ -50,7 +50,7 @@ public class MusicBoxEnvelopeInteractive : BookInteractive {
 		_envelopeLidPivot.localRotation = _goalRotation;
 		_envelopeLidPivot.localPosition = _goalPosition;
 
-		_openEnvelopeTimer.CooldownTime = 0.5f;
+		_openEnvelopeTimer.CooldownTime = 0.8f;
 		_openEnvelopeTimer.Reset ();
 		while (!_openEnvelopeTimer.IsOffCooldown) {
 			_weddingLetterTransform.localPosition = Vector3.Lerp (_letterOriginPosition, _letterGoalPosition, _openEnvelopeTimer.PercentTimePassed);
@@ -63,6 +63,4 @@ public class MusicBoxEnvelopeInteractive : BookInteractive {
 		_sideInteractGear.SetActive (true);
 		yield return null;
 	}
-
-
 }
