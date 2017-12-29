@@ -44,9 +44,11 @@ public class MusicBoxCameraManager : MonoBehaviour {
 
 	ObjectRotator _objectRotator;
 	PathNode _cachedPathNode = null;
+	Camera _mainCamera;
 
 	// Use this for initialization
 	void Start () {
+		_mainCamera = Camera.main;
 		_cameraMoveTimer = new Timer (3.0f);
 		_targetFieldOfViewScript = GetComponent<TargetFieldOfView> ();
 		_lookAtTargetScript = transform.parent.GetComponent<LookatTarget> ();
@@ -67,7 +69,7 @@ public class MusicBoxCameraManager : MonoBehaviour {
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
 				if (_includeFOVShift) {
-					Camera.main.fieldOfView = Mathf.Lerp (_originFOV, _goalFOV, _cameraMoveTimer.PercentTimePassed);
+					_mainCamera.fieldOfView = Mathf.Lerp (_originFOV, _goalFOV, _cameraMoveTimer.PercentTimePassed);
 				}
 			} else {
 				_cameraIsMoving = false;
@@ -90,7 +92,7 @@ public class MusicBoxCameraManager : MonoBehaviour {
 		_goalPosition = wayPointTransform.position;
 		_goalRotation = wayPointTransform.rotation;
 
-		_originFOV = Camera.main.fieldOfView;
+		_originFOV = _mainCamera.fieldOfView;
 		if (fov != 0.0f) {
 			_goalFOV = fov;
 			_includeFOVShift = true;
@@ -168,7 +170,7 @@ public class MusicBoxCameraManager : MonoBehaviour {
 
 	void ChangeZoom(CamerafovAmountChange e){
 		_targetFieldOfViewScript.enabled = false;
-		_tempfov = Camera.main.fieldOfView;
+		_tempfov = _mainCamera.fieldOfView;
 		_tempGoalfov = e.FovAmount;
 		_zoomTimer.Reset ();
 		_zooming = true;

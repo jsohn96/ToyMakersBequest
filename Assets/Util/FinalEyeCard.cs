@@ -29,7 +29,7 @@ public class FinalEyeCard : MonoBehaviour {
 
 	void FixedUpdate () {
 		if (!_transitionIsHappening) {
-			if (_dragRotationScript.GetIsDragStart ()) {
+			if (_dragRotationScript.isDragStart) {
 				if (_isTransitioning && !_transitionTimer.IsPaused) {
 					_tempColor = Color.Lerp (_emptyColor, Color.black, _slowStartCurve.Evaluate (_transitionTimer.PercentTimePassed));
 					_endFadeScript.ChangeColor (_tempColor);
@@ -43,7 +43,7 @@ public class FinalEyeCard : MonoBehaviour {
 
 	void Update(){
 		if (!_transitionIsHappening) {
-			if (_dragRotationScript.GetIsDragStart ()) {
+			if (_dragRotationScript.isDragStart) {
 				if (_dragRotationScript.GetIsRotating ()) {
 					if (_isTransitioning && _transitionTimer.IsOffCooldown) {
 						_transitionIsHappening = true;

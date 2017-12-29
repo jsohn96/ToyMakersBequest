@@ -11,7 +11,7 @@ public class DragRotation : MonoBehaviour {
 	[SerializeField] int _oneDirectional = 0;
 
 	// mouse drag rotate 
-	bool isDragStart = false;
+	public bool isDragStart = false;
 	Vector3 dragStartPos;
 	Vector3 dragPreviousMousePos;
 	float dragSensitivity = 0.05f;
@@ -34,6 +34,7 @@ public class DragRotation : MonoBehaviour {
 
 	[SerializeField] float _dragSensitivity = 10f;
 	[SerializeField] bool _isNotebook = false;
+	Camera _mainCamera;
 	[SerializeField] Camera _nonMainCameraForRayCast;
 	int _3DBookLayerMask = 1 << 15;
 
@@ -43,18 +44,24 @@ public class DragRotation : MonoBehaviour {
 	[SerializeField] Transform[] _reverseRotation;
 	[SerializeField] float[] _reverseRelativeSpeed;
 	[SerializeField] axisToRotate[] _reverseAxisToRotate;
+	[SerializeField] bool _useZRotateAxisInstead = false;
+	[SerializeField] bool _flipDirection = false;
+	float _directionFlip = 1.0f;
 
 	void Start(){
 		snapToAngle = new List<float> (10);
+		if (!_isNotebook) {
+			_mainCamera = Camera.main;
+		}
+
+		if (_flipDirection) {
+			_directionFlip = -1.0f;
+		}
 	}
 
 
 	void Update(){
 		RotateWithMouse ();
-	}
-
-	public bool GetIsDragStart(){
-		return isDragStart;
 	}
 
 	public bool GetIsRotating(){
@@ -69,7 +76,7 @@ public class DragRotation : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 			Ray mousePositionRay;
 			if (!_isNotebook) {
-				mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
 			} else {
 				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
 			}
@@ -109,7 +116,7 @@ public class DragRotation : MonoBehaviour {
 		if (isDragStart) {
 
 			Vector3 curMousePos = Vector3.zero;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
 			if (circlePlane.Raycast (ray, out rayDistance)) {
 				curMousePos = ray.GetPoint(rayDistance);
@@ -170,8 +177,11 @@ public class DragRotation : MonoBehaviour {
 				} else if (rotateAxis.y < 0 && _oneDirectional == 2) {
 					accAngle = accAngle * -1f;
 				}
-
-				gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
+				if (_useZRotateAxisInstead) {
+					gameObject.transform.Rotate (-accAngle * _directionFlip * zRotateAxis * 0.5f, Space.Self);
+				} else {
+					gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.Self);
+				}
 				for (int i = 0; i < _reverseRotation.Length; i++) {
 					if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
 						_reverseRotation [i].Rotate ((accAngle * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.Self);
