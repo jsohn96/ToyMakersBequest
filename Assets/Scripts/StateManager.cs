@@ -23,6 +23,16 @@ public class StateManager : MonoBehaviour {
 	}
 	public State _currentState = State.Zoetrope;
 
+	public bool _isShadowPuppetCompleted = false, 
+		_isMarionetteCompleted = false, 
+		_isMusicBoxCompleted = false, 
+		_isPeepHoleCompleted = false,
+		_finalCompleted = false;
+
+	public bool _justUnlocked = false;
+
+	public int _notebookStartingPage = 0;
+
 	void Awake () {
 		if (_stateManager == null) {
 			DontDestroyOnLoad (gameObject);
@@ -46,5 +56,33 @@ public class StateManager : MonoBehaviour {
 		float fadeTime = GameObject.Find ("Fade").GetComponent<Fading> ().BeginFade (1);
 		yield return new WaitForSeconds(fadeTime);
 		SceneManager.LoadScene (sceneIndex);
+	}
+
+
+	void OnEnable(){
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+
+	void OnDisable(){
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
+
+	void OnSceneLoaded (Scene scene, LoadSceneMode mode){
+		//0 = unlock all, and 1~4 are corresponding locks
+		if (scene.name == "notebookScene") {
+			if (_isMusicBoxCompleted) {
+				if (_finalCompleted) {
+					Events.G.Raise (new LeatherUnlockEvent (0, _justUnlocked));
+				} else {
+					_notebookStartingPage = 4;
+					Events.G.Raise (new LeatherUnlockEvent (3, _justUnlocked));
+				}
+			} else {
+				_notebookStartingPage = 0;
+				Events.G.Raise (new LeatherUnlockEvent (2, _justUnlocked));
+			}
+
+			_justUnlocked = false;
+		}
 	}
 }

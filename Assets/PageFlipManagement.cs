@@ -104,7 +104,9 @@ public class PageFlipManagement : MonoBehaviour {
 		_hideObjectTimer = new Timer (0.4f);
 		_fadeInTimer = new Timer (0.2f);
 
+		_whichPageToStart = StateManager._stateManager._notebookStartingPage;
 
+		_currentPage = _whichPageToStart + 1;
 		CalculatePagePosition (_whichPageToStart);
 
 		_originSpineRotation = _bookSpine.localRotation;
@@ -521,6 +523,9 @@ public class PageFlipManagement : MonoBehaviour {
 		}
 	}
 
+	public bool CheckCurrentPageLock(){
+		return _noteBookPages [_currentPage-1].nextPageLocked;
+	}
 
 	IEnumerator BookSpineLerp(bool opening){
 		bool checkIfValidToContinue = false;
@@ -543,5 +548,30 @@ public class PageFlipManagement : MonoBehaviour {
 			}
 		}
 		yield return null;
+	}
+
+
+
+	void UnlockEventHandle(LeatherUnlockEvent e){
+		int unlockIndex = e.UnlockIndex;
+		//musicBoxonly exception
+		unlockIndex -= 2;
+		int unlockedCnt = 0;
+		for (int i = 0; i < _noteBookPages.Length; i++) {
+			if (_noteBookPages [i].nextPageLocked) {
+				unlockedCnt++;
+				_noteBookPages [i].nextPageLocked = false;
+			}
+			if(unlockIndex != 0 && unlockedCnt == unlockIndex){
+				break;
+			}
+		}
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<LeatherUnlockEvent> (UnlockEventHandle);
+	}
+	void OnDisable(){
+		Events.G.RemoveListener<LeatherUnlockEvent> (UnlockEventHandle);
 	}
 }

@@ -17,45 +17,67 @@ public class LeatherLockScript : MonoBehaviour {
 	[SerializeField] int _pageNumberToLock = 0;
 	int _lastPage = 0;
 
-	void Start(){
-		_lowerHeight = transform.localPosition;
-		_lowerHeight.y = _lower;
-		_upperHeight = _lowerHeight;
-		_upperHeight.y = _upper;
-		_lowestHeight = _upperHeight;
-		_lowestHeight.y = _lowest;
+	[SerializeField] Animator _anim;
+	[SerializeField] BoxCollider _boxCollider;
+	[SerializeField] int _id;
+	bool _preUnlocked = false;
 
-		if (_pageNumberToLock == _pageFlipManagementScript.GetCurrentPage ()) {
-			transform.localPosition = _upperHeight;
-		} else if (_pageNumberToLock - 1 == _pageFlipManagementScript.GetCurrentPage ()) {
-			transform.localPosition = _lowerHeight;
-		} else {
-			transform.localPosition = _lowestHeight;
-			_isLowest = true;
+	[SerializeField] ButtonManager _buttonManager;
+
+	void Start(){
+		if (_preUnlocked) {
+			_anim.Play ("LeatherLock", 0, 1.0f);
+			_boxCollider.enabled = false;
 		}
-		_lastPage = _pageFlipManagementScript.GetCurrentPage ();
+
+		if (!_unlocked && !_preUnlocked) {
+			_lowerHeight = transform.localPosition;
+			_lowerHeight.y = _lower;
+			_upperHeight = _lowerHeight;
+			_upperHeight.y = _upper;
+			_lowestHeight = _upperHeight;
+			_lowestHeight.y = _lowest;
+
+			if (_pageNumberToLock == _pageFlipManagementScript.GetCurrentPage ()) {
+				transform.localPosition = _upperHeight;
+			} else if (_pageNumberToLock - 1 == _pageFlipManagementScript.GetCurrentPage ()) {
+				transform.localPosition = _lowerHeight;
+			} else {
+				transform.localPosition = _lowestHeight;
+				_isLowest = true;
+			}
+			_lastPage = _pageFlipManagementScript.GetCurrentPage ();
+		}
 	}
 
 	void Update () {
-		if (_pageNumberToLock == _pageFlipManagementScript.GetCurrentPage ()) {
-			if (!_pageFlipManagementScript.IsPageTurnDone ()) {
-				StartCoroutine (LeatherLockHeightAdjustment (true));
-			}
-			_isLowest = false;
-		} else if (_pageNumberToLock-1 == _pageFlipManagementScript.GetCurrentPage ()) {
-			if (!_pageFlipManagementScript.IsPageTurnDone ()) {
-				if (_lastPage > _pageFlipManagementScript.GetCurrentPage ()) {
-					StartCoroutine (LeatherLockHeightAdjustment (false));
-				} else {
-					StartCoroutine (LeatherLockHeightAdjustment (false, true));
+		if (!_unlocked && !_preUnlocked) {
+			if (_pageNumberToLock == _pageFlipManagementScript.GetCurrentPage ()) {
+				if (!_pageFlipManagementScript.IsPageTurnDone ()) {
+					StartCoroutine (LeatherLockHeightAdjustment (true));
 				}
+				_isLowest = false;
+			} else if (_pageNumberToLock - 1 == _pageFlipManagementScript.GetCurrentPage ()) {
+				if (!_pageFlipManagementScript.IsPageTurnDone ()) {
+					if (_lastPage > _pageFlipManagementScript.GetCurrentPage ()) {
+						StartCoroutine (LeatherLockHeightAdjustment (false));
+					} else {
+						StartCoroutine (LeatherLockHeightAdjustment (false, true));
+					}
+				}
+				_isLowest = false;
+			} else if (!_isLowest) {
+				_isLowest = true;
+				transform.localPosition = _lowestHeight;
 			}
-			_isLowest = false;
-		} else if (!_isLowest) {
-			_isLowest = true;
-			transform.localPosition = _lowestHeight;
+			_lastPage = _pageFlipManagementScript.GetCurrentPage ();
 		}
-		_lastPage = _pageFlipManagementScript.GetCurrentPage ();
+	}
+
+	void OnMouseDown(){
+		if (_unlocked) {
+			Unlock ();
+		}
 	}
 
 	IEnumerator LeatherLockHeightAdjustment(bool goUp, bool isComingFromLeft = false){
@@ -78,5 +100,35 @@ public class LeatherLockScript : MonoBehaviour {
 			transform.localPosition = _lowerHeight;
 		}
 		yield return null;
+	}
+
+	public void Unlock(){
+		_anim.SetBool ("Unlock", true);         
+		_boxCollider.enabled = false;
+		_buttonManager.FadeInArrows ();
+	}
+
+	void UnlockEventHandle(LeatherUnlockEvent e){
+		int unlockIndex = e.UnlockIndex;
+		bool justUnlocked = e.JustUnlocked;
+		if (unlockIndex != 0) {
+			if (unlockIndex > _id) {
+				_preUnlocked = true;
+			} else if (unlockIndex == _id) {
+				if (justUnlocked) {
+					_unlocked = true;
+				} else {
+					_preUnlocked = true;
+				}
+			}
+		}
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<LeatherUnlockEvent> (UnlockEventHandle);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<LeatherUnlockEvent> (UnlockEventHandle);
 	}
 }

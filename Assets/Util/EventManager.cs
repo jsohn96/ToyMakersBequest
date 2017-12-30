@@ -185,6 +185,14 @@ public class CircleTurnButtonPressEvent:GameEvent {
 	}
 }
 
+public class LeatherUnlockEvent:GameEvent {
+	public int UnlockIndex { get; private set; }
+	public bool JustUnlocked { get; private set; }
+	public LeatherUnlockEvent(int unlockIndex, bool justUnlocked) {
+		UnlockIndex = unlockIndex;
+		JustUnlocked = justUnlocked;
+	}
+}
 
 //***********//
 // Main Box  //
