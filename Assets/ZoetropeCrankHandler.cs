@@ -30,7 +30,7 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (_crankCnt > 122) {
+		if (_crankCnt > 9060) {
 			if (!_startRotate) {
 				_dragRotationScript.enabled = false;
 				_startRotate = true;
@@ -38,9 +38,9 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 				_dLight.PlayTick ();
 				StartCoroutine (DelayShutDown ());
 			}
-		} else if (_crankCnt > 90) {
+		} else if (_crankCnt > 8120) {
 			_dLight.DarkerFlicker ();
-		} else if (_crankCnt > 45) {
+		} else if (_crankCnt > 8060) {
 			_dLight.LittleFlicker ();
 		}
 
@@ -50,7 +50,7 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 
 			transform.Rotate (Vector3.back * Time.deltaTime * _speed);
 			for (int i = 0; i < _otherGears.Length; i++) {
-				_otherGears [i].Rotate (Vector3.up * Time.deltaTime * _speed);
+				_otherGears [i].Rotate (Vector3.forward * Time.deltaTime * _speed);
 			}
 
 

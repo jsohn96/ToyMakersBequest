@@ -50,9 +50,7 @@ public class DragRotation : MonoBehaviour {
 
 	void Start(){
 		snapToAngle = new List<float> (10);
-		if (!_isNotebook) {
-			_mainCamera = Camera.main;
-		}
+		_mainCamera = Camera.main;
 
 		if (_flipDirection) {
 			_directionFlip = -1.0f;
@@ -116,6 +114,7 @@ public class DragRotation : MonoBehaviour {
 		if (isDragStart) {
 
 			Vector3 curMousePos = Vector3.zero;
+
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
 			if (circlePlane.Raycast (ray, out rayDistance)) {
