@@ -329,7 +329,7 @@ Transform:
   m_LocalScale: {x: 648.76904, y: 461.54843, z: 668.44214}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49637598
 GameObject:
@@ -972,7 +972,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50.836002, y: -30.743002, z: -0.57600003}
 --- !u!114 &812389684
 MonoBehaviour:
@@ -1188,7 +1188,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -295, y: -30, z: 0}
 --- !u!1 &898588427
 GameObject:
@@ -1274,6 +1274,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.017608104, z: 0.01}
   m_Center: {x: -0.000000031462637, y: 0.01206934, z: 0.000000019284368}
+--- !u!1 &899277132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 899277133}
+  m_Layer: 0
+  m_Name: DOF focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &899277133
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 899277132}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.584, y: 1.624, z: -6.039}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899563121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,7 +1333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &899563123
 Light:
@@ -1577,7 +1605,7 @@ Transform:
   - {fileID: 1025976876}
   - {fileID: 1682963399}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 177.20801, z: 0}
 --- !u!1 &1265733255
 GameObject:
@@ -1707,7 +1735,7 @@ Transform:
   m_Children:
   - {fileID: 1867694245}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1319212230
 GameObject:
@@ -1750,7 +1778,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 6}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1333183494
 GameObject:
@@ -1798,7 +1826,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1354247296
 GameObject:
@@ -1924,9 +1952,61 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354247296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Quality: 2
+  BloomEnabled: 1
+  BloomParams:
+    Quality: 2
+    BloomTint: {r: 1, g: 1, b: 1, a: 1}
+    BloomThreshold: 0.8
+    BloomIntensity: 1.5
+    BloomSoftness: 0.5
+  VisualizeBloom: 0
+  LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
+  LensDirtIntensity: 1
+  ChromaticAberration: 0
+  ChromaticAberrationPrecise: 0
+  ChromaticAberrationOffset: 1
+  SCurveIntensity: 0.5
+  LensCurvatureEnabled: 0
+  LensCurvaturePower: 1.1
+  LensCurvaturePrecise: 0
+  FilmGrainIntensity: 0.5
+  FilmGrainTiling: 4
+  VignettingIntensity: 0.5
+  DOFEnabled: 1
+  BlurCOCTexture: 1
+  DOFParams:
+    UseUnityDepthBuffer: 1
+    AutoFocus: 0
+    AutoFocusLayerMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    AutoFocusSpeed: 5
+    FocalLengthMultiplier: 0.62
+    FocalDistMultiplier: 1
+    DOFBlurSize: 2
+    BokehEnabled: 0
+    DepthCompression: 4
+    EffectCamera: {fileID: 1354247300}
+    Target: {fileID: 899277133}
+    BokehThreshold: 0.5
+    BokehGain: 2
+    BokehBias: 0.5
+    DoubleIntensityBlur: 0
+  VisualizeCOC: 0
+  ColorEffectsEnabled: 0
+  CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
+  FarTint: {r: 0, g: 0, b: 1, a: 1}
+  CloseTintStrength: 0.5
+  FarTintStrength: 0.5
+  DesaturateDarksStrength: 0.5
+  DesaturateFarObjsStrength: 0.5
+  FogTint: {r: 1, g: 1, b: 1, a: 1}
+  FogStrength: 0.5
+  HalfResolution: 1
 --- !u!1 &1358683620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,7 +2105,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1409821859
 SpriteRenderer:
@@ -2291,7 +2371,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: a357502b4a81448269de15890dc3ed4e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: a357502b4a81448269de15890dc3ed4e, type: 3}
       propertyPath: m_LocalScale.x
@@ -2687,7 +2767,7 @@ Transform:
   m_LocalScale: {x: 4.621679, y: 4.621679, z: 4.6216774}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
 --- !u!82 &2008081261
 AudioSource:
@@ -2899,7 +2979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2061862470
 GameObject:

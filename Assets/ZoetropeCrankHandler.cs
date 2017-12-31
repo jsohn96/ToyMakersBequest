@@ -67,16 +67,23 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	}
 
 	void OnEnable(){
-		Events.G.AddListener<MBNodeRotate> (NodeRotateHandle);
+		Events.G.AddListener<DragRotationEvent> (DragRotationHandle);
 	}
 
 	void OnDisable(){
-		Events.G.RemoveListener<MBNodeRotate> (NodeRotateHandle);
+		Events.G.RemoveListener<DragRotationEvent> (DragRotationHandle);
 	}
 
-	void NodeRotateHandle(MBNodeRotate e){
+	void DragRotationHandle(DragRotationEvent e){
 		if (e.isRoating) {
-			_crankCnt++;
+			if (e.isDesiredDirection) {
+				_crankCnt++;
+			} else {
+				if (_crankCnt > 0) {
+					_crankCnt--;
+				}
+			}
+
 		}
 	}
 }
