@@ -48,6 +48,8 @@ public class DragRotation : MonoBehaviour {
 	[SerializeField] bool _flipDirection = false;
 	float _directionFlip = 1.0f;
 
+	[SerializeField] bool _isTopDown = false;
+
 	void Start(){
 		snapToAngle = new List<float> (10);
 		_mainCamera = Camera.main;
@@ -92,7 +94,11 @@ public class DragRotation : MonoBehaviour {
 				//print ("hit point :" + hit.point);
 				hitDist = hit.distance;
 				// create a plane ;
-				circlePlane = new Plane (Vector3.forward, hit.point);
+				if (_isTopDown) {
+					circlePlane = new Plane (Vector3.up, hit.point);
+				} else {
+					circlePlane = new Plane (Vector3.forward, hit.point);
+				}
 				preAxis = new Vector3 (0, 0, 0);
 				preChangingTime = -1;
 			}
@@ -124,9 +130,17 @@ public class DragRotation : MonoBehaviour {
 
 			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
-			va.z = 0;
+			if (_isTopDown) {
+				va.y = 0;
+			} else {
+				va.z = 0;
+			}
 			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
-			vb.z = 0;
+			if (_isTopDown) {
+				vb.y = 0;
+			} else {
+				vb.z = 0;
+			}
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
