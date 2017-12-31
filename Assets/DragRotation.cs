@@ -87,14 +87,14 @@ public class DragRotation : MonoBehaviour {
 				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
 			}
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-						isDragStart = true;
-						dragStartPos = hit.point;
-						//print ("hit point :" + hit.point);
-						hitDist = hit.distance;
-						// create a plane ;
-						circlePlane = new Plane (Vector3.up, hit.point);
-						preAxis = new Vector3 (0, 0, 0);
-						preChangingTime = -1;
+				isDragStart = true;
+				dragStartPos = hit.point;
+				//print ("hit point :" + hit.point);
+				hitDist = hit.distance;
+				// create a plane ;
+				circlePlane = new Plane (Vector3.forward, hit.point);
+				preAxis = new Vector3 (0, 0, 0);
+				preChangingTime = -1;
 			}
 		}
 
@@ -107,7 +107,7 @@ public class DragRotation : MonoBehaviour {
 				//hitDist = 0;
 				accAngle = 0;
 				isRotating = false;
-				Events.G.Raise (new MBNodeRotate (0, false, 0));
+				//Events.G.Raise (new MBNodeRotate (0, false, 0));
 			}
 		}
 
@@ -124,20 +124,20 @@ public class DragRotation : MonoBehaviour {
 
 			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
-			va.y = 0;
+			va.z = 0;
 			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
-			vb.y = 0;
+			vb.z = 0;
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-			//print ("Debug: rotate axis " + rotateAxis);
+			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
 			if(rotateAxis != preAxis){
 				float deltaChangeTime = Time.time - preChangingTime;
 
-				if (deltaChangeTime <= 0.4f) {
-					//print("############# Axis Jitter !!!!!");
+				if (deltaChangeTime <= 0.2f) {
+					print("############# Axis Jitter !!!!!");
 					return;
 
 				} else {
@@ -162,19 +162,14 @@ public class DragRotation : MonoBehaviour {
 			if (accAngle >= _dragSensitivity) {
 				isRotating = true;
 				accAngle = _dragSensitivity;
-				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
-				//print ("Temp rot: " + tempRot);
-				Quaternion curRot = gameObject.transform.rotation;
-				//curRot = curRot + tempRot;
-				if (rotateAxis.y > 0f) {
-					zRotateAxis = Vector3.back;
+//				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
+//				//print ("Temp rot: " + tempRot);
+//				Quaternion curRot = gameObject.transform.rotation;
+//				//curRot = curRot + tempRot;
+				if (rotateAxis.z > 0f) {
+					zRotateAxis =- transform.forward;
 				} else {
-					zRotateAxis = Vector3.forward;
-				}
-				if (rotateAxis.y > 0 && _oneDirectional == 1) {
-					accAngle = accAngle * -1f;
-				} else if (rotateAxis.y < 0 && _oneDirectional == 2) {
-					accAngle = accAngle * -1f;
+					zRotateAxis = transform.forward;
 				}
 				if (_useZRotateAxisInstead) {
 					gameObject.transform.Rotate (-accAngle * _directionFlip * zRotateAxis * 0.5f, Space.Self);
