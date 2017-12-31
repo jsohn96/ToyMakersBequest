@@ -166,6 +166,15 @@ public class MBNodeRotate:GameEvent{
 	}
 }
 
+public class DragRotationEvent:GameEvent{
+	public bool isRoating{ get; private set; }
+	public bool isDesiredDirection{ get; private set; }
+	public DragRotationEvent(bool isRot, bool isDir){
+		isRoating = isRot;
+		isDesiredDirection = isDir;
+	}
+}
+
 // when the node is correctly connected, sending over node index 
 public class MBNodeConnect:GameEvent{
 	public int nodeIndex{ get; private set; }

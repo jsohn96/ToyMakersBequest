@@ -11,14 +11,22 @@ public class MusicBoxSoundEffect : AudioSourceController {
 
 	void OnEnable(){
 		Events.G.AddListener<MBNodeRotate> (NodeRotateHandle);
+		Events.G.AddListener<DragRotationEvent> (DragRotationHandle);
 		Events.G.AddListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.AddListener<DancerChangeMoveEvent> (Initialize);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<MBNodeRotate> (NodeRotateHandle);
+		Events.G.RemoveListener<DragRotationEvent> (DragRotationHandle);
 		Events.G.RemoveListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.RemoveListener<DancerChangeMoveEvent> (Initialize);
+	}
+
+	void DragRotationHandle(DragRotationEvent e) {
+		if (e.isRoating) {
+			SwapClip (_crankTickAudioSystem, true);
+		}
 	}
 
 	void NodeRotateHandle(MBNodeRotate e){

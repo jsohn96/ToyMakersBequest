@@ -5,7 +5,7 @@ using Test;
 
 public class ZoetropeLightFlicker : MonoBehaviour {
 
-	MinMax _flickerRange = new MinMax (1.1f, 1.5f);
+	MinMax _flickerRange = new MinMax (1.5f, 1.9f);
 	AudioSource _audioSource;
 	bool _littleFlicker = false;
 	bool _darkerFlicker = false;
@@ -57,7 +57,7 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 	void Update () {
 		if (_littleFlicker) {
 			if (_darkerFlicker) {
-				_dLight.intensity = MathHelpers.LinMapFrom01 (0.8f, _flickerRange.Min, Mathf.PingPong (Time.time, 1.8f));
+				_dLight.intensity = MathHelpers.LinMapFrom01 (1.1f, _flickerRange.Min, Mathf.PingPong (Time.time, 1.8f));
 			} else {
 				_dLight.intensity = MathHelpers.LinMapFrom01 (_flickerRange.Min, _flickerRange.Max, Mathf.PingPong (Time.time, 1.3f));
 			}

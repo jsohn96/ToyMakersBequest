@@ -220,7 +220,7 @@ public class DragRotation : MonoBehaviour {
 				}
 				dragStartPos = curMousePos;
 				accAngle = 0;
-				Events.G.Raise (new MBNodeRotate (0, true, 0));
+				Events.G.Raise (new DragRotationEvent (true, true));
 			} else {
 				isRotating = false;
 			}

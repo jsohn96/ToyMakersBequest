@@ -30,7 +30,7 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (_crankCnt > 9060) {
+		if (_crankCnt > 240) {
 			if (!_startRotate) {
 				_dragRotationScript.enabled = false;
 				_startRotate = true;
@@ -38,9 +38,9 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 				_dLight.PlayTick ();
 				StartCoroutine (DelayShutDown ());
 			}
-		} else if (_crankCnt > 8120) {
+		} else if (_crankCnt > 180) {
 			_dLight.DarkerFlicker ();
-		} else if (_crankCnt > 8060) {
+		} else if (_crankCnt > 140) {
 			_dLight.LittleFlicker ();
 		}
 
