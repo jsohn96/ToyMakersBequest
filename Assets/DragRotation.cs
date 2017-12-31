@@ -5,7 +5,7 @@ using UnityEngine;
 public class DragRotation : MonoBehaviour {
 
 	enum axisToRotate {
-		xAxis, yAxis, zAxis
+		xAxis, yAxis, zAxis, drivenByMain
 	}
 	[Header("0: for both directions, 1: left, 2: right")] 
 	[SerializeField] int _oneDirectional = 0;
@@ -41,14 +41,13 @@ public class DragRotation : MonoBehaviour {
 	Plane circlePlane;
 	List<float> snapToAngle;
 
+	[SerializeField] axisToRotate _mainAxis;
 	[SerializeField] Transform[] _reverseRotation;
 	[SerializeField] float[] _reverseRelativeSpeed;
 	[SerializeField] axisToRotate[] _reverseAxisToRotate;
-	[SerializeField] bool _useZRotateAxisInstead = false;
 	[SerializeField] bool _flipDirection = false;
 	float _directionFlip = 1.0f;
-
-	[SerializeField] bool _isTopDown = false;
+	Vector3 curMousePos;
 
 	void Start(){
 		snapToAngle = new List<float> (10);
@@ -57,6 +56,36 @@ public class DragRotation : MonoBehaviour {
 		if (_flipDirection) {
 			_directionFlip = -1.0f;
 		}
+
+		Vector3 p = transform.position;
+
+		// rotate around Y 
+		if (_mainAxis == axisToRotate.yAxis) {
+			p = p + transform.right;
+			circlePlane = new Plane (transform.up, p);
+			//print ("init debug: " + p);
+		} else if (_mainAxis == axisToRotate.zAxis) {
+			p = p + transform.right;
+			circlePlane = new Plane (transform.forward, p);
+			//print ("init debug: " + p);
+		} else if (_mainAxis == axisToRotate.xAxis) {
+			p = p + transform.up;
+			circlePlane = new Plane (transform.right, p);
+			//print ("init debug: " + p);
+		}
+
+
+	}
+
+	void OnDrawGizmosSelected() {
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawSphere(dragStartPos, 0.01f);
+		Gizmos.color = Color.blue;
+		Gizmos.DrawLine(transform.position, dragStartPos);
+		Gizmos.color = Color.red;
+		Gizmos.DrawSphere(curMousePos, 0.01f);
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(transform.position, curMousePos);
 	}
 
 
@@ -90,15 +119,15 @@ public class DragRotation : MonoBehaviour {
 			}
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				isDragStart = true;
-				dragStartPos = hit.point;
-				//print ("hit point :" + hit.point);
-				hitDist = hit.distance;
-				// create a plane ;
-				if (_isTopDown) {
-					circlePlane = new Plane (Vector3.up, hit.point);
-				} else {
-					circlePlane = new Plane (Vector3.forward, hit.point);
+				//dragStartPos = hit.point;
+				float rayDistance;
+				if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
+					dragStartPos = mousePositionRay.GetPoint(rayDistance);
 				}
+				//print ("hit point :" + hit.point);
+				//hitDist = rayDistance;
+				// create a plane ;
+				//circlePlane = new Plane (transform.up, hit.point);
 				preAxis = new Vector3 (0, 0, 0);
 				preChangingTime = -1;
 			}
@@ -119,7 +148,7 @@ public class DragRotation : MonoBehaviour {
 
 		if (isDragStart) {
 
-			Vector3 curMousePos = Vector3.zero;
+			curMousePos = Vector3.zero;
 
 			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
@@ -130,20 +159,17 @@ public class DragRotation : MonoBehaviour {
 
 			// TODO: z needs to be switched to any customized axis
 			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
-			if (_isTopDown) {
-				va.y = 0;
-			} else {
-				va.z = 0;
-			}
+			//va.z = 0;
 			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
-			if (_isTopDown) {
-				vb.y = 0;
-			} else {
-				vb.z = 0;
-			}
+			//vb.z = 0;
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
+			//			if (rotateAxis.z > 0f) {
+			//				rotateAxis =- transform.forward;
+			//			} else {
+			//				rotateAxis = transform.forward;
+			//			}
 			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
@@ -176,26 +202,21 @@ public class DragRotation : MonoBehaviour {
 			if (accAngle >= _dragSensitivity) {
 				isRotating = true;
 				accAngle = _dragSensitivity;
-//				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
-//				//print ("Temp rot: " + tempRot);
-//				Quaternion curRot = gameObject.transform.rotation;
-//				//curRot = curRot + tempRot;
-				if (rotateAxis.z > 0f) {
-					zRotateAxis =- transform.forward;
-				} else {
-					zRotateAxis = transform.forward;
-				}
-				if (_useZRotateAxisInstead) {
-					gameObject.transform.Rotate (-accAngle * _directionFlip * zRotateAxis * 0.5f, Space.Self);
-				} else {
-					gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.Self);
-				}
+				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
 				for (int i = 0; i < _reverseRotation.Length; i++) {
-					if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
-						_reverseRotation [i].Rotate ((accAngle * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.Self);
-					} else if (_reverseAxisToRotate [i] == axisToRotate.zAxis) {
-						_reverseRotation [i].Rotate ((accAngle * zRotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.Self);
+					if (_reverseAxisToRotate[i] == axisToRotate.drivenByMain) {
+						_reverseRotation [i].Rotate ((accAngle * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+					} else if (_reverseAxisToRotate[i] == axisToRotate.yAxis) {
+						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].up * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+					} else if (_reverseAxisToRotate[i] == axisToRotate.zAxis) {
+						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+					} else if (_reverseAxisToRotate[i] == axisToRotate.xAxis) {
+						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+					} else {
+						return;
 					}
+
+
 				}
 				dragStartPos = curMousePos;
 				accAngle = 0;
