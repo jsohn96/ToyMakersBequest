@@ -19,7 +19,7 @@ public class FinalEyeCard : MonoBehaviour {
 
 	void Start () {
 		//OnTrackingLost();
-		_transitionTimer = new Timer(3.0f);
+		_transitionTimer = new Timer(1000.0f);
 		_emptyColor = Color.black;
 		_emptyColor.a = 0.0f;
 		_transitionTimer.Reset ();
