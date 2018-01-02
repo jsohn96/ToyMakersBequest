@@ -165,13 +165,13 @@ public class DragRotation : MonoBehaviour {
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-//			print ("Debug: rotate axis " + rotateAxis);
+			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
 			if(rotateAxis != preAxis){
 				float deltaChangeTime = Time.time - preChangingTime;
 
-				if (deltaChangeTime <= 0.2f) {
+				if (deltaChangeTime <= 0.02f) {
 //					print("############# Axis Jitter !!!!!");
 					return;
 
@@ -204,6 +204,10 @@ public class DragRotation : MonoBehaviour {
 					positiveDirection = true;
 				} else {
 					positiveDirection = false;
+				}
+
+				if (rotateAxis.z == 0) {
+					rotateAxis.z = 1f;
 				}
 
 				for (int i = 0; i < _reverseRotation.Length; i++) {
