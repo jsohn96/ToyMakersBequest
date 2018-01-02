@@ -30,6 +30,8 @@ namespace Test{
 
 		[SerializeField] ZoetropeCrankHandler _ZcrankHandler;
 
+		[SerializeField] FxPro _fxPro;
+
 		bool _began48fps = false;
 		bool _began36fps = false;
 
@@ -96,7 +98,7 @@ namespace Test{
 			}
 
 			_isFlashing = true;
-
+			_fxPro.DOFParams.FocalLengthMultiplier = 0.0f;
 			yield return new WaitForSeconds (2f);
 			_onTimer.CooldownTime = (1.0f / 36.0f);
 			_offTimer.CooldownTime = (1.0f / 36.0f);
