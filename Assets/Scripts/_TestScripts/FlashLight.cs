@@ -34,8 +34,8 @@ namespace Test{
 		bool _began36fps = false;
 
 		void Awake(){
-			_offTimer = new Timer (1.0f / 24.0f);
-			_onTimer = new Timer (1.0f / 24.0f);
+			_offTimer = new Timer (1.0f / 30.0f);
+			_onTimer = new Timer (1.0f / 30.0f);
 			_boxCollider = GetComponent<BoxCollider> ();
 		}
 
