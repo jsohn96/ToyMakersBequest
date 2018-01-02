@@ -8,7 +8,7 @@ public class shaderGlowCustom : MonoBehaviour
 {
 	[SerializeField] Renderer[] _renderers;
 	int _rendererCnt;
-    public enum allowedModes { onMouseEnter, alwaysOn, pathNodeMode };
+    public enum allowedModes { onMouseEnter, alwaysOn, pathNodeMode, FadeWhileHold};
     public allowedModes glowMode;
     public bool flashing = false; //Object will flash glow
     [Range(0.1f, 4.0f)]
@@ -50,6 +50,7 @@ public class shaderGlowCustom : MonoBehaviour
 
 	bool _someoneIsRotating = false;
 	bool _isConnected = false;
+	Timer _reduceGlowTimerForFadeWhileHold;
 
     void Awake()
     {
@@ -73,6 +74,9 @@ public class shaderGlowCustom : MonoBehaviour
 		_glowColorShaderString = Shader.PropertyToID ("_GlowColor");
 		_opactiyShaderString = Shader.PropertyToID ("_Opacity");
 		_outlineShaderString = Shader.PropertyToID ("_Outline");
+		if (glowMode == allowedModes.FadeWhileHold) {
+			_reduceGlowTimerForFadeWhileHold = new Timer (1.8f);
+		}
     }
 
 	public void DisablePointerEnter(bool disabled){
@@ -89,12 +93,31 @@ public class shaderGlowCustom : MonoBehaviour
     void OnMouseEnter()
     {
 		if (!_disablePointerEnter) {
-			if (highlighted)
+			if (highlighted) {
 				return;
-			if (glowMode == allowedModes.onMouseEnter)
+			} 
+			if (glowMode == allowedModes.onMouseEnter) {
 				lightOn ();
+			}
 		}
     }
+
+	void OnMouseDown() {
+		if (glowMode == allowedModes.FadeWhileHold) {
+			lightOn ();
+			_reduceGlowTimerForFadeWhileHold.Reset ();
+		}
+	}
+
+	void OnMouseUp() {
+		if (!_disablePointerEnter) {
+			if (!highlighted)
+				return;
+			if (glowMode == allowedModes.FadeWhileHold) {
+				lightOff ();
+			}
+		}
+	}
 
     public void OtherPointerExit()
     {
@@ -108,6 +131,7 @@ public class shaderGlowCustom : MonoBehaviour
 				return;
 			if (glowMode == allowedModes.onMouseEnter) {
 				lightOff ();
+				glowOpacity = 1.0f;
 			}
 		}
     }
@@ -181,8 +205,12 @@ public class shaderGlowCustom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (glowMode == allowedModes.alwaysOn && !highlighted)
-            lightOn();
+		if (glowMode == allowedModes.alwaysOn && !highlighted) {
+			lightOn ();
+		}
+		else if (glowMode == allowedModes.FadeWhileHold) {
+			glowOpacity = _reduceGlowTimerForFadeWhileHold.PercentTimeLeft;
+		}
 
         if (highlighted)
         {

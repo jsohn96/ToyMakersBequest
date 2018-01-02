@@ -9,6 +9,14 @@ public class RotateObject : ToggleAction {
 	[Header ("0:x, 1:y, 2:z")]
 	[SerializeField] int _whichAxis;
 	bool _isRotating = false;
+	[SerializeField] bool _rotateOnStart = false;
+
+
+	void Start() {
+		if (_rotateOnStart) {
+			ToggleActionOn ();
+		}
+	}
 
 	void FixedUpdate () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
