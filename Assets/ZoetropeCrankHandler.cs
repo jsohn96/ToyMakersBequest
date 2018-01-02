@@ -21,6 +21,9 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	[SerializeField] DragRotation _dragRotationScript;
 
 
+	float _hijackSpeed = 5f;
+	bool _hijack = false;
+
 	// Use this for initialization
 	void Awake () {
 		_audioSource = GetComponent<AudioSource> ();
@@ -45,18 +48,24 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 		}
 
 		if (_startRotate) {
-
-			_speed = MathHelpers.LinMapFrom01(_speedRange.Min, _speedRange.Max, _speedCurve.Evaluate (_speedTimer.PercentTimePassed));
-
+			if (_hijack) {
+				_speed = _hijackSpeed;
+			} else {
+				_speed = MathHelpers.LinMapFrom01 (_speedRange.Min, _speedRange.Max, _speedCurve.Evaluate (_speedTimer.PercentTimePassed));
+			}
 			transform.Rotate (Vector3.back * Time.deltaTime * _speed);
 			for (int i = 0; i < _otherGears.Length; i++) {
 				_otherGears [i].Rotate (Vector3.forward * Time.deltaTime * _speed);
 			}
 
-
 		}
 	}
 
+
+	public void HijackSpeed(float speed){
+		_hijack = true;
+		_hijackSpeed = speed;
+	}
 
 	IEnumerator DelayShutDown(){
 		_audioSourceWhir.Play ();

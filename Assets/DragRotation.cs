@@ -165,11 +165,6 @@ public class DragRotation : MonoBehaviour {
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-			//			if (rotateAxis.z > 0f) {
-			//				rotateAxis =- transform.forward;
-			//			} else {
-			//				rotateAxis = transform.forward;
-			//			}
 			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
@@ -177,7 +172,7 @@ public class DragRotation : MonoBehaviour {
 				float deltaChangeTime = Time.time - preChangingTime;
 
 				if (deltaChangeTime <= 0.2f) {
-					print("############# Axis Jitter !!!!!");
+//					print("############# Axis Jitter !!!!!");
 					return;
 
 				} else {
@@ -203,24 +198,43 @@ public class DragRotation : MonoBehaviour {
 				isRotating = true;
 				accAngle = _dragSensitivity;
 				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
+
+				bool positiveDirection;
+				if (rotateAxis.z > 0f) {
+					positiveDirection = true;
+				} else {
+					positiveDirection = false;
+				}
+
 				for (int i = 0; i < _reverseRotation.Length; i++) {
-					if (_reverseAxisToRotate[i] == axisToRotate.drivenByMain) {
-						_reverseRotation [i].Rotate ((accAngle * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-					} else if (_reverseAxisToRotate[i] == axisToRotate.yAxis) {
-						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].up * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-					} else if (_reverseAxisToRotate[i] == axisToRotate.zAxis) {
-						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-					} else if (_reverseAxisToRotate[i] == axisToRotate.xAxis) {
-						_reverseRotation [i].Rotate ((accAngle * _reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-					} else {
-						return;
+					if (_reverseAxisToRotate [i] == axisToRotate.drivenByMain) {
+						_reverseRotation [i].Rotate ((-accAngle * _directionFlip * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.World);
 					}
-
-
+					else if (positiveDirection) {
+						if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].up * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else if (_reverseAxisToRotate [i] == axisToRotate.zAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else if (_reverseAxisToRotate [i] == axisToRotate.xAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else {
+							return;
+						}
+					} else {
+						if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else if (_reverseAxisToRotate [i] == axisToRotate.zAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else if (_reverseAxisToRotate [i] == axisToRotate.xAxis) {
+							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
+						} else {
+							return;
+						}
+					}
 				}
 				dragStartPos = curMousePos;
 				accAngle = 0;
-				Events.G.Raise (new DragRotationEvent (true, true));
+				Events.G.Raise (new DragRotationEvent (true, positiveDirection));
 			} else {
 				isRotating = false;
 			}
