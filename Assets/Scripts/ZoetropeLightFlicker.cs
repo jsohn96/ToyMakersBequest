@@ -16,7 +16,6 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 
 	float _dlightTempIntensity;
 	[SerializeField] FlashLight _flashLightScript;
-	[SerializeField] Light _dogDirectionalLight;
 
 	bool _dogDLightGo = false;
 	Timer _dogDLightTimer;
@@ -46,10 +45,6 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 			_shuttingDown = true;
 			_dlightTempIntensity = _dLight.intensity;
 			_shutDownLightTimer.Reset ();
-			if (!_dogDLightGo) {
-				_dogDLightGo = true;
-				StartCoroutine (FadeOutDogDLight ());
-			}
 		}
 	}
 	
@@ -69,17 +64,5 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 				_flashLightScript.StartZoetrope ();
 			}
 		}
-	}
-
-	IEnumerator FadeOutDogDLight(){
-		yield return new WaitForSeconds (1.0f);
-		_dogDLightTimer.Reset ();
-		float originIntensity = _dogDirectionalLight.intensity;
-		while (!_dogDLightTimer.IsOffCooldown) {
-			_dogDirectionalLight.intensity = Mathf.Lerp (originIntensity, 0.0f, _dogDLightTimer.PercentTimePassed);
-			yield return null;
-		}
-		_dogDirectionalLight.intensity = 0.0f;
-		yield return null;
 	}
 }
