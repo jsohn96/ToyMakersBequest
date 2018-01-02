@@ -87,11 +87,12 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 		if (e.isRoating) {
 			if (e.isDesiredDirection) {
 				_crankCnt++;
-			} else {
-				if (_crankCnt > 0) {
-					_crankCnt--;
-				}
-			}
+			} 
+//			else {
+//				if (_crankCnt > 0) {
+//					_crankCnt--;
+//				}
+//			}
 
 		}
 	}

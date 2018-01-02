@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResizeRenderTexture : MonoBehaviour {
-	[SerializeField] RenderTexture _renderTexture;
+	[SerializeField] Camera _secondCamera;
+	[SerializeField] RawImage _rawImage;
+	RenderTexture _renderTexture;
 
 	// Use this for initialization
 	void Awake () {
-		_renderTexture.width = Screen.width;
-		_renderTexture.height = Screen.height;
+		_renderTexture = new RenderTexture (Screen.width, Screen.height, 24);
+		_secondCamera.targetTexture = _renderTexture;
+		_rawImage.texture = _renderTexture;
 	}
 }
