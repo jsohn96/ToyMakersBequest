@@ -4,6 +4,17 @@ using System.Collections;
 public class FPSDisplay : MonoBehaviour
 {
 	float deltaTime = 0.0f;
+	public static FPSDisplay instance = null;
+
+	void Awake () {
+		//assign an instance of this gameobject if it hasn't been assigned before
+		if (instance == null) {
+			instance = this;
+		} else if (instance != this) {
+			Destroy (gameObject);
+		}
+		DontDestroyOnLoad (this);
+	}
 
 	void Update()
 	{
