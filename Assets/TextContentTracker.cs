@@ -36,6 +36,7 @@ public class TextContentTracker : MonoBehaviour {
 			//_entireBackImage.color = _emptyColor;
 			_uiBackground.color = _emptyColor;
 			_uiMask.color = _emptyColor;
+			_scrollView.SetActive (false);
 		}
 	}
 	

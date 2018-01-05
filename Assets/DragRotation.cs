@@ -49,6 +49,8 @@ public class DragRotation : MonoBehaviour {
 	float _directionFlip = 1.0f;
 	Vector3 curMousePos;
 
+	[SerializeField] TextContentTracker _textContentTracker;
+
 	void Start(){
 		snapToAngle = new List<float> (10);
 		_mainCamera = Camera.main;
@@ -103,33 +105,39 @@ public class DragRotation : MonoBehaviour {
 
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
-			Ray mousePositionRay;
-			if (!_isNotebook) {
-				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
-			} else {
-				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
+			bool proceed = true;
+			if (_textContentTracker != null) {
+				proceed = !_textContentTracker._isDisplaying;
 			}
-			RaycastHit hit;
-			dragPreviousMousePos = Input.mousePosition;
-			bool isHit;
-			if (!_isNotebook) {
-				isHit = Physics.Raycast (mousePositionRay, out hit);
-			} else {
-				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
-			}
-			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				isDragStart = true;
-				//dragStartPos = hit.point;
-				float rayDistance;
-				if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
-					dragStartPos = mousePositionRay.GetPoint(rayDistance);
+			if (proceed) {
+				Ray mousePositionRay;
+				if (!_isNotebook) {
+					mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
+				} else {
+					mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
 				}
-				//print ("hit point :" + hit.point);
-				//hitDist = rayDistance;
-				// create a plane ;
-				//circlePlane = new Plane (transform.up, hit.point);
-				preAxis = new Vector3 (0, 0, 0);
-				preChangingTime = -1;
+				RaycastHit hit;
+				dragPreviousMousePos = Input.mousePosition;
+				bool isHit;
+				if (!_isNotebook) {
+					isHit = Physics.Raycast (mousePositionRay, out hit);
+				} else {
+					isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
+				}
+				if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+					isDragStart = true;
+					//dragStartPos = hit.point;
+					float rayDistance;
+					if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
+						dragStartPos = mousePositionRay.GetPoint (rayDistance);
+					}
+					//print ("hit point :" + hit.point);
+					//hitDist = rayDistance;
+					// create a plane ;
+					//circlePlane = new Plane (transform.up, hit.point);
+					preAxis = new Vector3 (0, 0, 0);
+					preChangingTime = -1;
+				}
 			}
 		}
 
