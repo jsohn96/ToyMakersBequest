@@ -7,6 +7,7 @@ public class BookAudioController : AudioSourceController {
 	bool _liftedThePage = false;
 	[SerializeField] AudioSystem _interactAudioSystem;
 	[SerializeField] AudioSystem[] _musicBoxTitleAudioSystems = new AudioSystem[2];
+	[SerializeField] AudioSource _leatherSnapSound;
 
 	public void PlayPageLift(){
 		_pageFlipAudioSystem.audioSource.clip = _pageFlipAudioSystem.clips [0];
@@ -19,6 +20,10 @@ public class BookAudioController : AudioSourceController {
 			_pageFlipAudioSystem.audioSource.Play ();
 			_liftedThePage = false;
 		}
+	}
+
+	public void LeatherUnlockSnapSound() {
+		_leatherSnapSound.Play ();
 	}
 
 	void InteractedWithNotebookObject(NotebookInteractionEvent e){

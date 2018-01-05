@@ -9,6 +9,7 @@ public class LeatherLockScript : MonoBehaviour {
 	Vector3 _lowerHeight;
 	Vector3 _upperHeight;
 	Vector3 _lowestHeight;
+	[SerializeField] BookAudioController _bookAudio;
 
 	bool _isLowest = false;
 	[SerializeField] bool _unlocked = false;
@@ -104,6 +105,7 @@ public class LeatherLockScript : MonoBehaviour {
 
 	public void Unlock(){
 		_anim.SetBool ("Unlock", true);         
+		_bookAudio.LeatherUnlockSnapSound ();
 		_boxCollider.enabled = false;
 		_buttonManager.FadeInArrows ();
 	}
