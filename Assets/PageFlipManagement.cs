@@ -524,7 +524,11 @@ public class PageFlipManagement : MonoBehaviour {
 	}
 
 	public bool CheckCurrentPageLock(){
-		return _noteBookPages [_currentPage-1].nextPageLocked;
+		if (_currentPage != 0) {
+			return _noteBookPages [_currentPage - 1].nextPageLocked;
+		} else {
+			return false;
+		}
 	}
 
 	IEnumerator BookSpineLerp(bool opening){
@@ -557,13 +561,15 @@ public class PageFlipManagement : MonoBehaviour {
 		//musicBoxonly exception
 		unlockIndex -= 2;
 		int unlockedCnt = 0;
-		for (int i = 0; i < _noteBookPages.Length; i++) {
-			if (_noteBookPages [i].nextPageLocked) {
-				unlockedCnt++;
-				_noteBookPages [i].nextPageLocked = false;
-			}
-			if(unlockIndex != 0 && unlockedCnt == unlockIndex){
-				break;
+		if (unlockIndex != 0) {
+			for (int i = 0; i < _noteBookPages.Length; i++) {
+				if (_noteBookPages [i].nextPageLocked) {
+					unlockedCnt++;
+					_noteBookPages [i].nextPageLocked = false;
+				}
+				if (unlockIndex != 0 && unlockedCnt == unlockIndex) {
+					break;
+				}
 			}
 		}
 	}

@@ -21,6 +21,10 @@ public class TextInteractive : BookInteractive {
 
 	IEnumerator _tempCoroutine;
 
+	[SerializeField] bool _useTextContentTracker = false;
+	[SerializeField] TextContentTracker _textContentTracker;
+	[SerializeField] int _textIndex;
+
 	void Start () {
 		_fadeTimer = new Timer (0.7f);
 		_glowTimer = new Timer (0.5f);
@@ -39,6 +43,9 @@ public class TextInteractive : BookInteractive {
 		Events.G.Raise (new NotebookTextBeingReadEvent (_thisTextID));
 		_tempCoroutine = DelayBeforeVoBegin ();
 		StartCoroutine (_tempCoroutine);
+		if (_useTextContentTracker) {
+			_textContentTracker.DisplayUI (_textIndex);
+		}
 	}
 
 	void OnEnable(){

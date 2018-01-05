@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class FinalEyeCard : MonoBehaviour {
 	[SerializeField] int _nextSceneIndex = 3;
-	bool _transitionIsHappening = false;
+	bool _transitionIsHappening = true;
 	bool _isTransitioning = false;
+
+	bool _dragHadStarted = false;
+
 	Timer _transitionTimer;
 	[SerializeField] DragRotation _dragRotationScript;
 
@@ -30,13 +33,19 @@ public class FinalEyeCard : MonoBehaviour {
 	void FixedUpdate () {
 		if (!_transitionIsHappening) {
 			if (_dragRotationScript.isDragStart) {
+				_dragHadStarted = true;
 				if (_isTransitioning && !_transitionTimer.IsPaused) {
 					_tempColor = Color.Lerp (_emptyColor, Color.black, _slowStartCurve.Evaluate (_transitionTimer.PercentTimePassed));
 					_endFadeScript.ChangeColor (_tempColor);
 				} 
-			} else {
-				_tempColor.a -= 0.02f;
-				_endFadeScript.ChangeColor (_tempColor);
+			} else if (_dragHadStarted) {
+				float alpha =  _tempColor.a;
+				if (alpha > 0f) {
+					_tempColor.a -= 0.02f;
+					_endFadeScript.ChangeColor (_tempColor);
+				} else {
+					_dragHadStarted = false;
+				}
 			}
 		}
 	}
