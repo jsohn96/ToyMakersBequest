@@ -20,6 +20,8 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 	bool _dogDLightGo = false;
 	Timer _dogDLightTimer;
 
+	bool _turnOnFlashLightOnce = false;
+
 	// Use this for initialization
 	void Awake () {
 		_dLight = GetComponent<Light> ();
@@ -60,6 +62,10 @@ public class ZoetropeLightFlicker : MonoBehaviour {
 
 		if (_shuttingDown) {
 			_dLight.intensity = Mathf.Lerp (_dlightTempIntensity, 0.0f, _shutDownLightTimer.PercentTimePassed);
+			if (!_turnOnFlashLightOnce && _shutDownLightTimer.PercentTimePassed >= 0.5f) {
+				_flashLightScript.EnableFlashLight ();
+				_turnOnFlashLightOnce = true;
+			}
 			if (_shutDownLightTimer.IsOffCooldown) {
 				_flashLightScript.StartZoetrope ();
 			}

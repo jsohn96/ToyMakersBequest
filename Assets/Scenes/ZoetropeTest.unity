@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -51,8 +51,8 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 9
     m_Resolution: 2
@@ -1088,17 +1088,17 @@ Light:
   m_SpotAngle: 48
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1115,13 +1115,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 812389681}
-  m_LocalRotation: {x: 0.41506225, y: -0.23733541, z: 0.109395094, w: 0.8714516}
-  m_LocalPosition: {x: 1.68, y: 5.07, z: -7.9}
+  m_LocalRotation: {x: 0.1589998, y: -0.27372283, z: 0.037055727, w: 0.9478512}
+  m_LocalPosition: {x: 2.88, y: 3.18, z: -9.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 50.836002, y: -30.743002, z: -0.57600003}
+  m_LocalEulerAnglesHint: {x: 18.766, y: -32.384003, z: -1.016}
 --- !u!114 &812389684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1423,7 +1423,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 899563121}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.9254902, g: 0.8980392, b: 0.76862746, a: 1}
@@ -1442,7 +1442,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2002,12 +2002,12 @@ Camera:
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.030179435
     y: 0
-    width: 1
+    width: 0.9396411
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.03
+  far clip plane: 5.76
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2092,10 +2092,10 @@ MonoBehaviour:
   LensCurvatureEnabled: 0
   LensCurvaturePower: 1.1
   LensCurvaturePrecise: 0
-  FilmGrainIntensity: 0.5
+  FilmGrainIntensity: 0
   FilmGrainTiling: 4
   VignettingIntensity: 0.5
-  DOFEnabled: 1
+  DOFEnabled: 0
   BlurCOCTexture: 1
   DOFParams:
     UseUnityDepthBuffer: 1
@@ -3099,6 +3099,7 @@ MonoBehaviour:
   - 0.5
   _reverseAxisToRotate: 02000000
   _flipDirection: 0
+  _textContentTracker: {fileID: 0}
 --- !u!65 &2008081263
 BoxCollider:
   m_ObjectHideFlags: 0

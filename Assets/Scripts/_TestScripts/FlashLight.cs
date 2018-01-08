@@ -35,6 +35,8 @@ namespace Test{
 		bool _began48fps = false;
 		bool _began36fps = false;
 
+		bool _flashLightEnabled = false;
+
 		void Awake(){
 			_offTimer = new Timer (1.0f / 30.0f);
 			_onTimer = new Timer (1.0f / 30.0f);
@@ -62,7 +64,7 @@ namespace Test{
 		}
 
 		void OnTriggerEnter(Collider other){
-			if (!_bringInAnimation) {
+			if (!_bringInAnimation && _flashLightEnabled) {
 				if (other.tag == "RotateCircle") {
 					TurnOnlight ();
 				}
@@ -71,12 +73,18 @@ namespace Test{
 
 
 		void OnTriggerExit(Collider other){
-			if (!_bringInAnimation) {
+			if (!_bringInAnimation && _flashLightEnabled) {
 				if (other.tag == "RotateCircle") {
 					TurnOfflight ();
 				}
 			}
 		}
+
+		public void EnableFlashLight(){
+			myLight.enabled = true;
+			_flashLightEnabled = true;
+		}
+
 		public void StartZoetrope(){
 			if (!_started) {
 				TurnOfflight ();
@@ -122,11 +130,7 @@ namespace Test{
 			if (_bringInAnimation) {
 				_onTimer.Reset ();
 			}
-
-		}
-
-		//TODO: figure out why flicker isnt working properly
-		 
+		}		 
 
 		void TurnOfflight(){
 			myLight.intensity = 0;

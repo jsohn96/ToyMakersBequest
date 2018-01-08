@@ -9,7 +9,7 @@ public class ResizeRenderTexture : MonoBehaviour {
 	RenderTexture _renderTexture;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		_renderTexture = new RenderTexture (Screen.width, Screen.height, 24);
 		_secondCamera.targetTexture = _renderTexture;
 		_rawImage.texture = _renderTexture;

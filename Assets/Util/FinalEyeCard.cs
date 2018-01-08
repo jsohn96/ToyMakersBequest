@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class FinalEyeCard : MonoBehaviour {
 	[SerializeField] int _nextSceneIndex = 3;
-	bool _transitionIsHappening = true;
+	bool _transitionIsHappening = false;
 	bool _isTransitioning = false;
 
 	bool _dragHadStarted = false;
