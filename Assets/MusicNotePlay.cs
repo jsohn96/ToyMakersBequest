@@ -14,7 +14,12 @@ public class MusicNotePlay : ToggleAction {
 	Color _fullColor;
 	Color _tempColor;
 
+	[SerializeField] ToggleAction[] _toggleAction;
+	bool _once = false;
+	float _toggleActionLength = 0;
+
 	void Start () {
+		_toggleActionLength = _toggleAction.Length;
 		_musicNoteLength = _musicNotes.Length;
 		Koreographer.Instance.RegisterForEvents ("MusicBoxNotebook", ToggleNoteOn);
 		_fullColor = Color.black;
@@ -26,6 +31,14 @@ public class MusicNotePlay : ToggleAction {
 		if (_musicNoteLength > _musicNoteCounter) {
 			_musicNotes [_musicNoteCounter].SetActive (true);
 			_musicNoteCounter++;
+			if (!_once && _musicNoteCounter >= _musicNoteLength) {
+				_once = true;
+				if (_toggleActionLength != 0) {
+					for (int i = 0; i < _toggleActionLength; i++) {
+						_toggleAction[i].ToggleActionOn ();	
+					}
+				}
+			}
 		}
 	}
 
@@ -38,9 +51,6 @@ public class MusicNotePlay : ToggleAction {
 	IEnumerator MusicStartDelay(){
 		yield return new WaitForSeconds (1.0f);
 		_simpleMusicPlayer.Play ();
-	}
-
-	void OnEnable(){
 	}
 
 	void OnDisable() {

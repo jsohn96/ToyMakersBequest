@@ -31,6 +31,8 @@ public class StateManager : MonoBehaviour {
 
 	public bool _justUnlocked = false;
 
+
+	public bool _openSpecificPage = false;
 	public int _notebookStartingPage = 0;
 
 	void Awake () {
@@ -74,11 +76,15 @@ public class StateManager : MonoBehaviour {
 				if (_finalCompleted) {
 					Events.G.Raise (new LeatherUnlockEvent (0, _justUnlocked));
 				} else {
-					_notebookStartingPage = 4;
+					if (!_openSpecificPage) {
+						_notebookStartingPage = 4;
+					} 
 					Events.G.Raise (new LeatherUnlockEvent (3, _justUnlocked));
 				}
 			} else {
-				_notebookStartingPage = 0;
+				if (!_openSpecificPage) {
+					_notebookStartingPage = 0;
+				} 
 				Events.G.Raise (new LeatherUnlockEvent (2, _justUnlocked));
 			}
 

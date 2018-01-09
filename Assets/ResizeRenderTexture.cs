@@ -13,5 +13,6 @@ public class ResizeRenderTexture : MonoBehaviour {
 		_renderTexture = new RenderTexture (Screen.width, Screen.height, 24);
 		_secondCamera.targetTexture = _renderTexture;
 		_rawImage.texture = _renderTexture;
+		_rawImage.enabled = true;
 	}
 }
