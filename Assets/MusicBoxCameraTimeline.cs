@@ -49,7 +49,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				case MusicBoxCameraStates.activation:
 					StartCoroutine (DelayEventFiring (3.0f));
 					StartCoroutine(AudioManager.instance.FadeOut (_musicBoxAccompany, 2.2f, 0.0f, 0.3f, false, true));
-					_musicBoxCameraManager.ActivateStaticFollow ();
+					_musicBoxCameraManager.ActivateStaticFollow (5.0f);
 					break;
 				default:
 					break;
@@ -66,12 +66,12 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 			} else if (Input.GetKeyDown (KeyCode.E)) {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraEndPoint.transform, _cameraEndPoint.duration, _cameraEndPoint.fov, true);
 			}
-
-			if (Input.GetKeyDown (KeyCode.A)) {
-				if (cnt < GetControlPointCount ()) {
-					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
-					cnt++;
-				}
+		}
+		if (Input.GetKeyDown (KeyCode.A)) {
+			if (cnt < GetControlPointCount ()) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration));
+				cnt++;
 			}
 		}
 	}
@@ -103,4 +103,10 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 		Events.G.Raise (new MBCameraStateManagerEvent (_currentCameraState, 0.0f));
 	}
 
+
+	IEnumerator DelayedFollowCam(float duration){
+		_preventInput = true;
+		yield return new WaitForSeconds(duration+0.5f);
+		_musicBoxCameraManager.ActivateStaticFollow (3.0f);
+	}
 }
