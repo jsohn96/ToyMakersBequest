@@ -157,6 +157,8 @@ public class PathNode : MonoBehaviour {
 	bool _glowInfoSent = false;
 	[SerializeField] shaderGlowCustom _shaderGlowCustom;
 
+	public float _betweenTransitionLerpDuration = 0.25f;
+
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);

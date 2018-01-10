@@ -250,6 +250,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 1604410262}
+  _betweenTransitionLerpDuration: 0.35
 --- !u!1 &23443239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,12 +1209,12 @@ GameObject:
   - component: {fileID: 63488156}
   - component: {fileID: 63488155}
   m_Layer: 0
-  m_Name: StartPositionControlPoint (2)
+  m_Name: TowardsGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &63488154
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,13 +1222,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 63488153}
-  m_LocalRotation: {x: -0.07890666, y: 0.88016057, z: 0.15757294, w: 0.44075164}
-  m_LocalPosition: {x: 65.74, y: 63.92, z: 62.91}
+  m_LocalRotation: {x: -0.0435277, y: 0.88991916, z: 0.08692272, w: 0.44563848}
+  m_LocalPosition: {x: 64.97, y: 63.69, z: 63.49}
   m_LocalScale: {x: 13, y: 13.000001, z: 13.000002}
   m_Children: []
   m_Father: {fileID: 1191530702}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -20.3, y: 126.8, z: 0}
+  m_LocalEulerAnglesHint: {x: -11.157001, y: 126.8, z: 0}
 --- !u!114 &63488155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,8 +1241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a4f92b056631c469cd8e46bc6bcb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fov: 50
-  _duration: 2
+  _fov: 60
+  _duration: 3
 --- !u!20 &63488156
 Camera:
   m_ObjectHideFlags: 0
@@ -1261,7 +1262,7 @@ Camera:
     height: 1
   near clip plane: 1
   far clip plane: 4000
-  field of view: 50
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1415,6 +1416,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 2039748251}
+  _betweenTransitionLerpDuration: 0.4
 --- !u!1 &71496463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,6 +2287,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &105346822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,6 +3002,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &127282519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,20 +3065,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -3675,6 +3665,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1001 &165797392
 Prefab:
   m_ObjectHideFlags: 0
@@ -3908,6 +3899,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &179497094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4824,6 +4816,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &229815801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4959,6 +4952,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &233279662
 GameObject:
   m_ObjectHideFlags: 0
@@ -6933,6 +6927,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &329183812
 GameObject:
   m_ObjectHideFlags: 0
@@ -7514,6 +7509,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.1
 --- !u!1 &356522826
 GameObject:
   m_ObjectHideFlags: 0
@@ -8315,6 +8311,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &381467183
 GameObject:
   m_ObjectHideFlags: 0
@@ -9443,7 +9440,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 417424743}
   m_LocalRotation: {x: 0.24179237, y: -0.059073824, z: 0.01474945, w: 0.96841586}
-  m_LocalPosition: {x: 0, y: 0, z: -2.75}
+  m_LocalPosition: {x: 0, y: 0, z: 22.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1230093857}
@@ -9452,7 +9449,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.11, y: -9.13}
+  m_AnchoredPosition: {x: -5.7, y: -11.9}
   m_SizeDelta: {x: 28.3, y: 9.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417424745
@@ -9673,6 +9670,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &420920240
 GameObject:
   m_ObjectHideFlags: 0
@@ -10563,6 +10561,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &460930774
 GameObject:
   m_ObjectHideFlags: 0
@@ -10767,6 +10766,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &465957738
 GameObject:
   m_ObjectHideFlags: 0
@@ -13067,6 +13067,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &574317539
 GameObject:
   m_ObjectHideFlags: 0
@@ -13502,6 +13503,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &587456562
 GameObject:
   m_ObjectHideFlags: 0
@@ -13684,6 +13686,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &600259852
 GameObject:
   m_ObjectHideFlags: 0
@@ -14339,6 +14342,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &630491763
 GameObject:
   m_ObjectHideFlags: 0
@@ -14963,7 +14967,7 @@ GameObject:
   - component: {fileID: 646410695}
   - component: {fileID: 646410694}
   m_Layer: 0
-  m_Name: StartPositionControlPoint (1)
+  m_Name: DownStairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15987,6 +15991,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &699622020
 GameObject:
   m_ObjectHideFlags: 0
@@ -17058,7 +17063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &755053397
 Transform:
   m_ObjectHideFlags: 0
@@ -17704,6 +17709,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &774643387
 GameObject:
   m_ObjectHideFlags: 0
@@ -18185,6 +18191,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &797696205
 GameObject:
   m_ObjectHideFlags: 0
@@ -18250,6 +18257,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &802363776
 GameObject:
   m_ObjectHideFlags: 0
@@ -18457,6 +18465,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &806167892
 GameObject:
   m_ObjectHideFlags: 0
@@ -19599,6 +19608,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &836570972
 GameObject:
   m_ObjectHideFlags: 0
@@ -21651,6 +21661,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.7
 --- !u!1 &926699328
 GameObject:
   m_ObjectHideFlags: 0
@@ -22564,6 +22575,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &958325101
 GameObject:
   m_ObjectHideFlags: 0
@@ -22721,6 +22733,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &971028309
 GameObject:
   m_ObjectHideFlags: 0
@@ -23510,6 +23523,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!114 &991931731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24390,6 +24404,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1019382531
 GameObject:
   m_ObjectHideFlags: 0
@@ -24681,6 +24696,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1026511411
 GameObject:
   m_ObjectHideFlags: 0
@@ -25460,6 +25476,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1053341535
 GameObject:
   m_ObjectHideFlags: 0
@@ -25982,20 +25999,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -26731,6 +26734,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1103427759
 GameObject:
   m_ObjectHideFlags: 0
@@ -26839,20 +26843,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -27174,6 +27164,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1117529580
 GameObject:
   m_ObjectHideFlags: 0
@@ -27418,6 +27409,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1123363460
 GameObject:
   m_ObjectHideFlags: 0
@@ -27700,6 +27692,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1131100689
 GameObject:
   m_ObjectHideFlags: 0
@@ -28961,6 +28954,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!114 &1185622040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29538,6 +29532,24 @@ MonoBehaviour:
   _endPositionCamera: {fileID: 363177860}
   _dancer: {fileID: 1946491787}
   _musicBoxManager: {fileID: 1336773173}
+  _cameraLerpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &1206158842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29614,7 +29626,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.05844506, g: 0.11874254, b: 0.16911763, a: 0.019607844}
+  m_BackGroundColor: {r: 0.028114177, g: 0.0648759, b: 0.09558821, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -29676,7 +29688,7 @@ MonoBehaviour:
     BloomSoftness: 0.5
   VisualizeBloom: 0
   LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
-  LensDirtIntensity: 1
+  LensDirtIntensity: 0.44
   ChromaticAberration: 0
   ChromaticAberrationPrecise: 1
   ChromaticAberrationOffset: 1
@@ -29708,7 +29720,7 @@ MonoBehaviour:
     BokehBias: 0.5
     DoubleIntensityBlur: 0
   VisualizeCOC: 0
-  ColorEffectsEnabled: 0
+  ColorEffectsEnabled: 1
   CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
   FarTint: {r: 0, g: 0, b: 1, a: 1}
   CloseTintStrength: 0.5
@@ -30800,20 +30812,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -31038,6 +31036,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!114 &1268681061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32357,6 +32356,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1305149456
 GameObject:
   m_ObjectHideFlags: 0
@@ -32696,6 +32696,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1327530044
 GameObject:
   m_ObjectHideFlags: 0
@@ -33847,6 +33848,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1371462022
 GameObject:
   m_ObjectHideFlags: 0
@@ -34421,6 +34423,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1387252085
 GameObject:
   m_ObjectHideFlags: 0
@@ -34485,6 +34488,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 761780069}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1388373378
 GameObject:
   m_ObjectHideFlags: 0
@@ -34703,6 +34707,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1001 &1398994189
 Prefab:
   m_ObjectHideFlags: 0
@@ -35075,6 +35080,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1409536013
 GameObject:
   m_ObjectHideFlags: 0
@@ -35357,6 +35363,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1426127899
 GameObject:
   m_ObjectHideFlags: 0
@@ -35862,6 +35869,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1445891443
 GameObject:
   m_ObjectHideFlags: 0
@@ -36159,6 +36167,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1467971549
 GameObject:
   m_ObjectHideFlags: 0
@@ -36310,6 +36319,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1475509997
 GameObject:
   m_ObjectHideFlags: 0
@@ -36375,6 +36385,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1477798911
 GameObject:
   m_ObjectHideFlags: 0
@@ -36666,20 +36677,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -37101,20 +37098,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -37627,6 +37610,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1528227759
 GameObject:
   m_ObjectHideFlags: 0
@@ -38423,7 +38407,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1551284716}
   m_LocalRotation: {x: 0.13262707, y: 0.00000035166275, z: 0.99116606, w: -0.0000009838653}
-  m_LocalPosition: {x: 1.1203694, y: 6.202294, z: 3.5525591}
+  m_LocalPosition: {x: 0.41, y: 8, z: 0.95}
   m_LocalScale: {x: 67.32483, y: 67.45712, z: 67.60214}
   m_Children: []
   m_Father: {fileID: 1745158792}
@@ -38461,20 +38445,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -38928,6 +38898,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1575520809
 GameObject:
   m_ObjectHideFlags: 0
@@ -38953,7 +38924,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1575520809}
   m_LocalRotation: {x: 0.18498212, y: 0.0000000037252903, z: 0.0000000037252903, w: 0.9827419}
-  m_LocalPosition: {x: 4.447155, y: 4.981099, z: -0.882141}
+  m_LocalPosition: {x: 4.333716, y: 4.81, z: 1.0963166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1206158850}
@@ -39360,6 +39331,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1597000362
 GameObject:
   m_ObjectHideFlags: 0
@@ -41541,6 +41513,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1696773197
 GameObject:
   m_ObjectHideFlags: 0
@@ -42811,6 +42784,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1757939838
 GameObject:
   m_ObjectHideFlags: 0
@@ -42876,6 +42850,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1760024553
 GameObject:
   m_ObjectHideFlags: 0
@@ -43552,6 +43527,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1786836401
 GameObject:
   m_ObjectHideFlags: 0
@@ -43739,6 +43715,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1790890934
 GameObject:
   m_ObjectHideFlags: 0
@@ -44234,20 +44211,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -45375,6 +45338,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1874355062
 GameObject:
   m_ObjectHideFlags: 0
@@ -45526,6 +45490,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1883462796
 GameObject:
   m_ObjectHideFlags: 0
@@ -46643,6 +46608,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1959244635
 GameObject:
   m_ObjectHideFlags: 0
@@ -46984,6 +46950,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1966395851
 GameObject:
   m_ObjectHideFlags: 0
@@ -47046,6 +47013,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.15
 --- !u!1 &1969507366
 GameObject:
   m_ObjectHideFlags: 0
@@ -47557,20 +47525,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -47640,6 +47594,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1986160485
 GameObject:
   m_ObjectHideFlags: 0
@@ -47775,6 +47730,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &1997750629
 GameObject:
   m_ObjectHideFlags: 0
@@ -48124,6 +48080,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &2012728352
 GameObject:
   m_ObjectHideFlags: 0
@@ -48478,20 +48435,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -51026,6 +50969,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &2135245351
 GameObject:
   m_ObjectHideFlags: 0
@@ -51308,6 +51252,7 @@ MonoBehaviour:
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
+  _betweenTransitionLerpDuration: 0.25
 --- !u!1 &2146461706
 GameObject:
   m_ObjectHideFlags: 0

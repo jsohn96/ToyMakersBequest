@@ -23,7 +23,6 @@ public class Dancer : MonoBehaviour {
 	bool isPathFinished = true;           // is the current path finished 
 	bool isMoving = false; 				  // is the dancer currently moving 
 	Vector3 _curStartPos;
-	Vector3 _curEndPos;
 	Vector3 _curDirection;                 // moving direction --> local movement axis 
 	int _curPathLength;
 	int _curIndex;                         // link index 
@@ -182,13 +181,10 @@ public class Dancer : MonoBehaviour {
 		// set the boolean vals 
 		//print("Place dancer on node " + pn.readNodeInfo().index);
 		isMoving = true;
-		isPathFinished = false;
-
-	
 
 		//_myTransform.parent = pn.gameObject.transform.parent;
 		_myTransform.parent = pn.gameObject.transform;
-		Quaternion tempRot = pn.gameObject.transform.rotation;
+		//Quaternion tempRot = pn.gameObject.transform.rotation;
 		//_myTransform.rotation = tempRot;
 
 
@@ -216,7 +212,21 @@ public class Dancer : MonoBehaviour {
 			//_activeSpline == null;
 		}
 
+		//* Activate isPathFinished at end of coroutine:  isPathFinished = false;
+		StartCoroutine (LerpBetweenPaths (pn._betweenTransitionLerpDuration));
+	}
 
+	IEnumerator LerpBetweenPaths(float duration){
+		float timer = 0.0f;
+		Vector3 tempOriginPos = transform.position;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			transform.position = Vector3.Lerp (tempOriginPos, _curStartPos, timer / duration);
+			yield return null;
+		}
+		transform.position = _curStartPos;
+		isPathFinished = false;
+		yield return null;
 	}
 
 	// TODO: set the dancer behavior --> what the dancer's moves are 

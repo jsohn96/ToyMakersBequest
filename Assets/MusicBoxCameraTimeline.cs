@@ -5,7 +5,8 @@ using UnityEngine;
 public enum MusicBoxCameraStates {
 	init = 0,
 	intro = 1,
-	activation = 2
+	activation = 2,
+	firstStairsToDoor =3
 }
 
 public class MusicBoxCameraTimeline : MonoBehaviour {
@@ -14,6 +15,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 	[SerializeField] CameraControlPoint _cameraStartPoint, _cameraEndPoint;
 	[SerializeField] Transform _camerControlContainer;
 	[SerializeField] CameraControlPoint[] _cameraControlPoints;
+	int _controlPointCnt;
 
 	bool _preventInput = true;
 
@@ -24,6 +26,8 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 
 	[SerializeField] AudioSource _musicBoxAccompany;
 
+	int _nodeDancerIsAboutToEnter = 0;
+
 	void Start(){
 		int childCnt = _camerControlContainer.childCount;
 		_cameraControlPoints = new CameraControlPoint[childCnt];
@@ -31,6 +35,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 			_cameraControlPoints [i] = _camerControlContainer.GetChild (i).GetComponent<CameraControlPoint>();
 		}
 		StartCoroutine (Delay (0.5f));
+		_controlPointCnt = GetControlPointCount ();
 	}
 
 
@@ -104,9 +109,39 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 	}
 
 
-	IEnumerator DelayedFollowCam(float duration){
+	IEnumerator DelayedFollowCam(float duration, float fov = 0){
 		_preventInput = true;
-		yield return new WaitForSeconds(duration+0.5f);
-		_musicBoxCameraManager.ActivateStaticFollow (3.0f);
+		yield return new WaitForSeconds(duration);
+		if (fov == 0) {
+			_musicBoxCameraManager.ActivateStaticFollow ();
+		} else {
+			_musicBoxCameraManager.ActivateStaticFollow (fov);
+		}
+	}
+
+
+	void OnEnable(){
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
+	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		_nodeDancerIsAboutToEnter = e.NodeIdx;
+		// 5: down the stairs
+		if (cnt < _controlPointCnt) {
+			if (_nodeDancerIsAboutToEnter == 5) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3.5f));
+				cnt++;
+			} else if (_nodeDancerIsAboutToEnter == 6) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration + 0.7f, 3f));
+				cnt++;
+			}
+		}
+		// 6: towards the door
 	}
 }

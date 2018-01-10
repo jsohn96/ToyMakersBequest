@@ -36,6 +36,7 @@ public class PathNetwork : MonoBehaviour {
 	[SerializeField] PathOrder[] _correctOrder;
 
 	PathNode[] _myNodes;
+	int _myNodesLength = 0;
 	[SerializeField] Dancer _myDancer;
 	int _curNodeIdx;
 	int _orderIdx = 0;
@@ -60,7 +61,8 @@ public class PathNetwork : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		_myNodes = GetComponentsInChildren<PathNode> ();
-		print ("Init Info: " + "\nNode Count"+ _myNodes.Length);
+		_myNodesLength = _myNodes.Length;
+		print ("Init Info: " + "\nNode Count"+ _myNodesLength);
 		// init player position 
 		//_orderIdx = _startIndex;
 		//_curNodeIdx = _correctOrder[_orderIdx].index;
@@ -84,9 +86,12 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.RemoveListener<MBExitPondLoop> (ExitLoopHandle);
 	}
 
-	void Start(){
-		//Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
-		//PositionDancer ();
+	public PathNode GetNodeOfIndex(int index){
+		if (index >= _myNodesLength || index < 0) {
+			return null;
+		} else {
+			return _myNodes [index];
+		}
 	}
 
 

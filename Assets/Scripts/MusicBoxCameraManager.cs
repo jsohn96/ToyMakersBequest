@@ -46,6 +46,8 @@ public class MusicBoxCameraManager : MonoBehaviour {
 	PathNode _cachedPathNode = null;
 	Camera _mainCamera;
 
+	[SerializeField] AnimationCurve _cameraLerpCurve;
+
 	// Use this for initialization
 	void Start () {
 		_mainCamera = Camera.main;
@@ -64,8 +66,8 @@ public class MusicBoxCameraManager : MonoBehaviour {
 	void Update () {
 		if (_cameraIsMoving) {
 			if (!_cameraMoveTimer.IsOffCooldown) {
-				_tempPos = Vector3.Lerp (_originPosition, _goalPosition, _cameraMoveTimer.PercentTimePassed);
-				_tempRot = Quaternion.Lerp (_originRotation, _goalRotation, _cameraMoveTimer.PercentTimePassed);
+				_tempPos = Vector3.Lerp (_originPosition, _goalPosition, _cameraLerpCurve.Evaluate(_cameraMoveTimer.PercentTimePassed));
+				_tempRot = Quaternion.Lerp (_originRotation, _goalRotation, _cameraLerpCurve.Evaluate(_cameraMoveTimer.PercentTimePassed));
 				_tempRot = MathHelpers.KeepRotationLevel (_tempRot);
 				transform.parent.SetPositionAndRotation (_tempPos, _tempRot);
 				if (_includeFOVShift) {
@@ -76,8 +78,8 @@ public class MusicBoxCameraManager : MonoBehaviour {
 				_includeFOVShift = false;
 			}
 		}
-		// Checks to see if camera should focus on circle or dancer
-		FocusCameraOnCircle ();
+//		// Checks to see if camera should focus on circle or dancer
+//		FocusCameraOnCircle ();
 
 	}
 
@@ -151,18 +153,21 @@ public class MusicBoxCameraManager : MonoBehaviour {
 
 	//Have the camera focus on the circle that the dancer is on, instead of dancer
 	// An attempt to reduce nausea
-	void FocusCameraOnCircle() {
-		if (_cachedPathNode != _musicBoxManager.GetActivePathNetwork ()._curNode) {
-			_cachedPathNode = _musicBoxManager.GetActivePathNetwork ()._curNode;
+	void FocusCameraOnCircle(DancerOnBoard e) {
+		PathNode tempPathNode = _musicBoxManager.GetActivePathNetwork ().GetNodeOfIndex (e.NodeIdx);
+		if (tempPathNode != null) {
+			if (_cachedPathNode != tempPathNode) {
+				_cachedPathNode = tempPathNode;
 
-			if (_musicBoxManager.GetActivePathNetwork ()._curNode.GetControlColor() != ButtonColor.None) {
-				//if (_targetFieldOfViewScript.enabled) {
-				//	_targetFieldOfViewScript.SetTarget (_cachedPathNode.transform);
-				//}
-				_lookAtTargetScript.SetTarget (_cachedPathNode.transform);
-			} else {
-				//_targetFieldOfViewScript.SetTarget (_dancer);
-				_lookAtTargetScript.SetTarget (_dancer);
+				if (_musicBoxManager.GetActivePathNetwork ()._curNode.GetControlColor () != ButtonColor.None) {
+					//if (_targetFieldOfViewScript.enabled) {
+					//	_targetFieldOfViewScript.SetTarget (_cachedPathNode.transform);
+					//}
+					_lookAtTargetScript.SetTarget (_cachedPathNode.transform);
+				} else {
+					//_targetFieldOfViewScript.SetTarget (_dancer);
+					_lookAtTargetScript.SetTarget (_dancer);
+				}
 			}
 		}
 	}
@@ -178,10 +183,12 @@ public class MusicBoxCameraManager : MonoBehaviour {
 
 	void OnEnable(){
 		Events.G.AddListener<CamerafovAmountChange> (ChangeZoom);
+		Events.G.AddListener<DancerOnBoard> (FocusCameraOnCircle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<CamerafovAmountChange> (ChangeZoom);
+		Events.G.RemoveListener<DancerOnBoard> (FocusCameraOnCircle);
 	}
 }
 
