@@ -26,12 +26,12 @@ public class MBGate : MonoBehaviour {
 
 	void OnEnable(){
 		Events.G.AddListener<PathStateManagerEvent> (DoorLockHandle);
-
+		Events.G.AddListener<DancerOnBoard> (MakeGateInteractive);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<PathStateManagerEvent> (DoorLockHandle);
-
+		Events.G.RemoveListener<DancerOnBoard> (MakeGateInteractive);
 	}
  
 	// Use this for initialization
@@ -126,5 +126,11 @@ public class MBGate : MonoBehaviour {
 
 	void ResumePath(){
 		Events.G.Raise (new PathResumeEvent ());
+	}
+
+	void MakeGateInteractive(DancerOnBoard e){
+		if (e.NodeIdx == 6) {
+			isLockActivated = true;
+		}
 	}
 }

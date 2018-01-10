@@ -144,12 +144,21 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				cnt++;
 			} else if (_nodeDancerIsAboutToEnter == 6) {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
-				//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration + 0.7f, 3f));
 				cnt++;
 			} else if (_nodeDancerIsAboutToEnter == 7) {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt].duration - 0.8f));
+			} else if (_nodeDancerIsAboutToEnter == 8) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+//				_musicBoxCameraManager.ActivateStaticFollow (5f);
+			} else if (_nodeDancerIsAboutToEnter == 9) {
+				_musicBoxCameraManager.ActivateStaticFollow (5f);
+			} else if (_nodeDancerIsAboutToEnter == 10) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 5f));
 			}
 		}
 		// 6: towards the door

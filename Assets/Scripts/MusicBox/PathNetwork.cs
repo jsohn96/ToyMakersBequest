@@ -16,6 +16,7 @@ public enum PathState{
 	none,
 	descend_inital_stage,
 	open_gate,
+	gate_opened,
 	first_encounter_TM,
 	flip_TM_stage,
 	hold_hand_with_TM,
@@ -57,6 +58,7 @@ public class PathNetwork : MonoBehaviour {
 
 	// 
 	[SerializeField] bool _isActive = false;
+	bool _skipGatePause = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -148,6 +150,9 @@ public class PathNetwork : MonoBehaviour {
 
 	// 
 	void PathResumeHandle(PathResumeEvent e){
+		if (_curNodeIdx == 6) {
+			_skipGatePause = true;
+		}
 		if (_isPathPause) {
 			_isPathPause = false;
 			CheckNextIdx ();
@@ -169,7 +174,12 @@ public class PathNetwork : MonoBehaviour {
 				_isPathPause = true;
 				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
 				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
-					Events.G.Raise (new MBMusicMangerEvent (false));
+					if (!_skipGatePause) {
+						Events.G.Raise (new MBMusicMangerEvent (false));
+					} else {
+						_isPathPause = false;
+						CheckNextIdx ();
+					}
 				} else if(_correctOrder[_orderIdx].nameOfEvent == PathState.pond_loop){
 					
 					if (!_isPathLoop) {
