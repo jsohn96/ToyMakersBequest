@@ -119,6 +119,12 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 		}
 	}
 
+	IEnumerator DelayedNextControlPoint(float duration){
+		yield return new WaitForSeconds(duration);
+		_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+		cnt++;
+	}
+
 
 	void OnEnable(){
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
@@ -140,6 +146,10 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration + 0.7f, 3f));
 				cnt++;
+			} else if (_nodeDancerIsAboutToEnter == 7) {
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt].duration - 0.8f));
 			}
 		}
 		// 6: towards the door

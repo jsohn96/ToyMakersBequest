@@ -16,6 +16,7 @@ public class MBGate : MonoBehaviour {
 	bool isLockActivated = false;
 
 	Animator _anim;
+	[SerializeField] BoxCollider _gateBoxCollider;
 
 
 	float errorVal = 0.2f;
@@ -94,7 +95,7 @@ public class MBGate : MonoBehaviour {
 			//finalAngle *= temp;
 
 		}
-			
+		_gateBoxCollider.enabled = false;
 	}
 
 	void ClickWithMouse(){
