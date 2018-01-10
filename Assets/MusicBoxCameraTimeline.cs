@@ -139,26 +139,37 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 		// 5: down the stairs
 		if (cnt < _controlPointCnt) {
 			if (_nodeDancerIsAboutToEnter == 5) {
+				cnt = 0;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3.5f));
 				cnt++;
 			} else if (_nodeDancerIsAboutToEnter == 6) {
+				cnt = 1;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 			} else if (_nodeDancerIsAboutToEnter == 7) {
+				cnt = 2;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt].duration - 0.8f));
 			} else if (_nodeDancerIsAboutToEnter == 8) {
+				cnt = 4;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 //				_musicBoxCameraManager.ActivateStaticFollow (5f);
 			} else if (_nodeDancerIsAboutToEnter == 9) {
 				_musicBoxCameraManager.ActivateStaticFollow (5f);
 			} else if (_nodeDancerIsAboutToEnter == 10) {
+				cnt = 5;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
-				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 5f));
+				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
+			}
+			else if (_nodeDancerIsAboutToEnter == 11) {
+//				cnt = ;
+//				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+//				cnt++;
+				_musicBoxCameraManager.ActivateStaticFollow (5f);
 			}
 		}
 		// 6: towards the door

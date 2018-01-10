@@ -160,12 +160,12 @@ public class MusicBoxCameraManager : MonoBehaviour {
 				_cachedPathNode = tempPathNode;
 
 				if (_musicBoxManager.GetActivePathNetwork ()._curNode.GetControlColor () != ButtonColor.None) {
-					//if (_targetFieldOfViewScript.enabled) {
-					//	_targetFieldOfViewScript.SetTarget (_cachedPathNode.transform);
-					//}
+					if (e.NodeIdx == 10) {
+						_targetFieldOfViewScript.SetTarget (_cachedPathNode.transform);
+					}
 					_lookAtTargetScript.SetTarget (_cachedPathNode.transform);
 				} else {
-					//_targetFieldOfViewScript.SetTarget (_dancer);
+					_targetFieldOfViewScript.SetTarget (_dancer);
 					_lookAtTargetScript.SetTarget (_dancer);
 				}
 			}
