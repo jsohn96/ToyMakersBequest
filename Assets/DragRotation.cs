@@ -51,7 +51,11 @@ public class DragRotation : MonoBehaviour {
 
 	[SerializeField] TextContentTracker _textContentTracker;
 
+	int _thisInstanceID;
+
 	void Start(){
+		_thisInstanceID = transform.GetInstanceID ();
+
 		snapToAngle = new List<float> (10);
 		_mainCamera = Camera.main;
 
@@ -124,19 +128,21 @@ public class DragRotation : MonoBehaviour {
 				} else {
 					isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
 				}
-				if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-					isDragStart = true;
-					//dragStartPos = hit.point;
-					float rayDistance;
-					if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
-						dragStartPos = mousePositionRay.GetPoint (rayDistance);
+				if (isHit && hit.collider.gameObject.tag == "DragRotation") {
+					if (hit.transform.GetInstanceID() == _thisInstanceID) {
+						isDragStart = true;
+						//dragStartPos = hit.point;
+						float rayDistance;
+						if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
+							dragStartPos = mousePositionRay.GetPoint (rayDistance);
+						}
+						//print ("hit point :" + hit.point);
+						//hitDist = rayDistance;
+						// create a plane ;
+						//circlePlane = new Plane (transform.up, hit.point);
+						preAxis = new Vector3 (0, 0, 0);
+						preChangingTime = -1;
 					}
-					//print ("hit point :" + hit.point);
-					//hitDist = rayDistance;
-					// create a plane ;
-					//circlePlane = new Plane (transform.up, hit.point);
-					preAxis = new Vector3 (0, 0, 0);
-					preChangingTime = -1;
 				}
 			}
 		}
