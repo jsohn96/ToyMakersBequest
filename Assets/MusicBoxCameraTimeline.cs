@@ -213,6 +213,18 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 			}
+			else if (_nodeDancerIsAboutToEnter == 20) {
+				cnt = 11;
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
+			}
+			else if (_nodeDancerIsAboutToEnter == 21) {
+				cnt = 13;
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
+			}
 		}
 		// 6: towards the door
 	}
