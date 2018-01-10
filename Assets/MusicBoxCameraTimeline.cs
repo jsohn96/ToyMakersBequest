@@ -28,6 +28,8 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 
 	int _nodeDancerIsAboutToEnter = 0;
 
+	bool _doubleEntrance12 = false, _doubleEntrance13 = false, _doubleEntrance14 = false;
+
 	void Start(){
 		int childCnt = _camerControlContainer.childCount;
 		_cameraControlPoints = new CameraControlPoint[childCnt];
@@ -151,7 +153,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				cnt = 2;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
-				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt].duration - 0.8f));
+				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt-1].duration - 0.8f));
 			} else if (_nodeDancerIsAboutToEnter == 8) {
 				cnt = 4;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
@@ -163,13 +165,53 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				cnt = 5;
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
-				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
+				StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt-1].duration, 3f));
 			}
 			else if (_nodeDancerIsAboutToEnter == 11) {
 //				cnt = ;
 //				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 //				cnt++;
 				_musicBoxCameraManager.ActivateStaticFollow (5f);
+			}
+			else if (_nodeDancerIsAboutToEnter == 12) {
+				if (!_doubleEntrance12) {
+					cnt = 6;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+					cnt++;
+					StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
+//				_musicBoxCameraManager.ActivateStaticFollow (5f);
+					_doubleEntrance12 = true;
+				} else {
+					cnt = 8;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+					cnt++;
+				}
+			}
+			else if (_nodeDancerIsAboutToEnter == 13) {
+				if (!_doubleEntrance13) {
+					_musicBoxCameraManager.ActivateStaticFollow (7f);
+					_doubleEntrance13 = true;
+				} else {
+					_musicBoxCameraManager.ActivateStaticFollow (9f);
+				}
+			}
+			else if (_nodeDancerIsAboutToEnter == 14) {
+				if (!_doubleEntrance14) {
+					_musicBoxCameraManager.ActivateStaticFollow (5f);
+					_doubleEntrance14 = true;
+				} else {
+					_musicBoxCameraManager.ActivateStaticFollow (7f);
+				}
+			}
+			else if (_nodeDancerIsAboutToEnter == 17) {
+				cnt = 9;
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+			}
+			else if (_nodeDancerIsAboutToEnter == 18) {
+				cnt = 10;
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
 			}
 		}
 		// 6: towards the door
