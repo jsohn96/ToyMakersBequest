@@ -138,6 +138,7 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 
 	void DancerOnBoardHandle(DancerOnBoard e){
 		_nodeDancerIsAboutToEnter = e.NodeIdx;
+		Debug.Log(_nodeDancerIsAboutToEnter);
 		// 5: down the stairs
 		if (cnt < _controlPointCnt) {
 			if (_nodeDancerIsAboutToEnter == 5) {
@@ -224,6 +225,13 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
 				cnt++;
 				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
+			}
+
+			else if (_nodeDancerIsAboutToEnter == 200) {
+				cnt = 15;
+				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+				cnt++;
+//				_musicBoxCameraManager.ActivateStaticFollow ();
 			}
 		}
 		// 6: towards the door

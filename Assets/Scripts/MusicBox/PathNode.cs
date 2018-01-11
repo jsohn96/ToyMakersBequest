@@ -552,6 +552,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
 									Events.G.Raise (new PathConnectedEvent ());
+									Debug.Log ("YOU");
 								}
 								_isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
