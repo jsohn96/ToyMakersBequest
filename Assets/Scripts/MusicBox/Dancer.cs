@@ -39,6 +39,7 @@ public class Dancer : MonoBehaviour {
 	// playmode 
 	PlayMode _myPlayMode;
 	bool _isNodeWithPath = false;
+	Vector3 _tempVector3KeepingDancerLevel;
 
 	// Use this for initialization
 	void Awake () {
@@ -89,7 +90,9 @@ public class Dancer : MonoBehaviour {
 				Vector3 position = _activeSpline.GetPoint (_progress);
 				transform.position = position;
 				if (isMoving) {
-					transform.LookAt (position + _activeSpline.GetDirection (_progress));
+					_tempVector3KeepingDancerLevel = position + _activeSpline.GetDirection (_progress);
+					_tempVector3KeepingDancerLevel.y = transform.position.y;
+					transform.LookAt (_tempVector3KeepingDancerLevel);
 				}
 
 			} else if (isPathFinished) {
@@ -116,7 +119,9 @@ public class Dancer : MonoBehaviour {
 					Vector3 position = _activeSpline.GetPoint (_progress);
 					transform.position = position;
 					if (isMoving) {
-						transform.LookAt (position + _activeSpline.GetDirection (_progress));
+						_tempVector3KeepingDancerLevel = position + _activeSpline.GetDirection (_progress);
+						_tempVector3KeepingDancerLevel.y = transform.position.y;
+						transform.LookAt (_tempVector3KeepingDancerLevel);
 					}
 				} else {
 					print ("Dancer: dancer onboard the circle");
