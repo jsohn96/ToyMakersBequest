@@ -75,16 +75,18 @@ public class MBToyMaker : MonoBehaviour {
 		Events.G.Raise (new PathResumeEvent ());
 	}
 
-	void DancerHoldHandEvent(){
+	IEnumerator DancerHoldHandEvent(){
 		if (!_isFollow) {
 			_isFollow = true;
 		}
-
+		yield return new WaitForSeconds(3.0f);
+		Events.G.Raise (new PathResumeEvent ());
 	}
 
 
-	void FlipTMStage(){
+	IEnumerator FlipTMStage(){
 		print("TM Flip Stage");
+		yield return new WaitForSeconds(3.0f);
 		if (!_isFlip) {
 			_stageAnimator.Play ("Flip");
 			_isFlip = false;
@@ -104,11 +106,10 @@ public class MBToyMaker : MonoBehaviour {
 			Events.G.Raise (new PathResumeEvent ());
 			break;
 		case PathState.hold_hand_with_TM:
-			DancerHoldHandEvent ();
-			Events.G.Raise (new PathResumeEvent ());
+			StartCoroutine(DancerHoldHandEvent ());
 			break;
 		case PathState.flip_TM_stage:
-			FlipTMStage ();
+			StartCoroutine(FlipTMStage ());
 			break;
 		case PathState.TM_move_to_location:
 			// temp sulotion
