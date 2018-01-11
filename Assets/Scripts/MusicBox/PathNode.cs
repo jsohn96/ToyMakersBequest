@@ -91,8 +91,8 @@ public class PathNode : MonoBehaviour {
 	//Vector3[] _myPathPos;
 	//Path[] _myPaths;
 	BezierSpline[] _mySplines;
-	int _segCount;
-	int _curSegIdx = 0;
+	[SerializeField] int _segCount;
+	[SerializeField] int _curSegIdx = 0;
 	//float _duration = 10f;
 	//float progress = 0;
 
@@ -203,7 +203,7 @@ public class PathNode : MonoBehaviour {
 		}
 
 		if (!_isInterLocked && !_isActive) {
-			print ("ERROR: non interlock nodes should be active");
+			print ("ERROR: non interlock nodes should be active : " +_nodeIndex);
 			_isActive = true;
 		}
 
@@ -227,37 +227,17 @@ public class PathNode : MonoBehaviour {
 	void initNodePathInfo(){
 		//get the positions of the path links 	
 		_mySplines = GetComponentsInChildren<BezierSpline> ();
-		//print ("Debug " + _nodeIndex + " : has spline: " + _mySplines);
+		print ("Debug " + _nodeIndex + " : has spline: " + _mySplines.Length);
 		// TODO store the position value for different path segments 
-		if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
-//			if (_mySplines.Length > 0) {
-//
-//				_segCount = _mySplines.Length;
-//				print ("Check: path number in total " + _segCount);
-//			} else {
-//				print ("ERROR: need to construct path first");
-//
-//			}
-//			if (_ControlColor != ButtonColor.None && _adjacentNode.Length != _segCount * 2) {
-//				print ("ERROR: wrong assigned angles numbers, \ncheck Path No. " + _nodeIndex);
-//				//_myNodeInfo = new NodeInfo(_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-//			} else {
-//				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-//			}
 
+		if (_mySplines.Length > 0) {
+			_segCount = _mySplines.Length;
 			_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-
 		} else {
-			if (_mySplines.Length > 0) {
-
-				_segCount = _mySplines.Length;
-				print ("Check: path number in total " + _segCount);
-				_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-			} else {
-				//print ("ERROR: need to construct path first");
-				_myNodeInfo = new NodeInfo (null, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
-			}
+			//print ("ERROR: need to construct path first");
+			_myNodeInfo = new NodeInfo (null, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 		}
+
 
 
 
@@ -491,11 +471,11 @@ public class PathNode : MonoBehaviour {
 			float tempRotDegree = transform.localRotation.eulerAngles.z;
 			int curCheckIdx = 0;
 			if (!_isDancerOnBoard) {
-				//print (_nodeIndex + ": Check In ");
+				//print (_nodeIndex + ": Check In " + curCheckIdx);
 				curCheckIdx = _curSegIdx * 2;
 			} else {
 				curCheckIdx = _curSegIdx * 2 + 1;
-				//print (_nodeIndex + ": Check Out ");
+				//print (_nodeIndex + ": Check Out "+ curCheckIdx);
 			}
 
 			// check the correct snap-to-angle 
@@ -552,7 +532,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
 									Events.G.Raise (new PathConnectedEvent ());
-									Debug.Log ("YOU");
+									//Debug.Log ("YOU");
 								}
 								_isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
@@ -628,7 +608,9 @@ public class PathNode : MonoBehaviour {
 	void SetPathEventHandle(SetPathNodeEvent e){
 		if (e.NodeIdx == _nodeIndex) {
 			// set next path active 
+
 			_isDancerOnBoard = false;
+			print("seg : " + e.NodeIdx + "seg count: " +_segCount);
 			if (_curSegIdx + 1 < _segCount) {
 				_curSegIdx += 1;
 				// update node info --> move on to the next spline

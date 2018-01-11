@@ -111,6 +111,7 @@ public class PathNetwork : MonoBehaviour {
 				// music manager continues to play music 
 				Events.G.Raise (new MBMusicMangerEvent (true));
 				// icc the past pathnode --> active path +1, isOnboard = false
+				print("get off node: " + _curNode.readNodeInfo ().index);
 				Events.G.Raise (new SetPathNodeEvent (_curNode.readNodeInfo ().index));
 				_curNode = tempNode;
 				// when there is a path on the current node

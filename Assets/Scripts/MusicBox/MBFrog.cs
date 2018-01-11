@@ -131,9 +131,9 @@ public class MBFrog : MonoBehaviour {
 		float mainrotateAngle = _pondMain.transform.localEulerAngles.z - _originAngle;
 		_originAngle = _pondMain.transform.localEulerAngles.z;
 		float sideAngle = -mainrotateAngle * 2;
-		Quaternion angle = _ponfSide.transform.localRotation;
-		angle = angle * Quaternion.Euler (0, 0, sideAngle);
-		_ponfSide.transform.localRotation = angle;
+//		Quaternion angle = _ponfSide.transform.localRotation;
+//		angle = angle * Quaternion.Euler (0, 0, sideAngle);
+//		_ponfSide.transform.localRotation = angle;
 
 		// check side circle rotation 
 //		if(_ponfSide.transform.localEulerAngles.z == 360){

@@ -20,7 +20,7 @@ public class MBNetCatcher : MonoBehaviour {
 	void CheckAnimationProgress(){
 		float animPlaybackVal = 1 - Mathf.Abs(DampAngle (transform.localEulerAngles.z)-180) / duration;
 		//animPlaybackVal = AnimationOptimizer (animPlaybackVal);
-		print ("Catcher progress " + animPlaybackVal);
+		//print ("Catcher progress " + animPlaybackVal);
 		_netAnim.Play ("catch", -1, animPlaybackVal);
 	}
 

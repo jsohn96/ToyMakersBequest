@@ -77,7 +77,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 				_audioFadeStarted = false;
 			}
 			if (!isInterrupted) {
-				Debug.Log ("RESUME RESUME RESUEME");
+				//Debug.Log ("RESUME RESUME RESUEME");
 				_multiMusicPlayer.SeekToSample(_tempSampleForUnpause);
 				_multiMusicPlayer.Play ();
 
