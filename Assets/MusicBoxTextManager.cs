@@ -22,6 +22,7 @@ public class MusicBoxTextManager : MonoBehaviour {
 	float _dilateDuration = 0.7f;
 
 	int _nodeDancerIsAboutToEnter;
+	bool _doubleEntrance14 = false;
 
 	void Start () {
 		_fullColor = Color.white;
@@ -129,6 +130,39 @@ public class MusicBoxTextManager : MonoBehaviour {
 			StartCoroutine (Dilate (_textMeshPros [5], _dilateDuration, 1.2f));
 			StartCoroutine (FadeOut (_textMeshPros [5], _fadeDuration, 6.5f));
 //			StartCoroutine (FadeOut (_textMeshPros [4], _fadeDuration, 2f));
+		}
+		else if (_nodeDancerIsAboutToEnter == 14) {
+			if(!_doubleEntrance14){
+				StartCoroutine (Dilate (_textMeshPros [6], _dilateDuration, 3f));
+				StartCoroutine (FadeOut (_textMeshPros [6], _fadeDuration, 6.5f));
+//			StartCoroutine (FadeOut (_textMeshPros [4], _fadeDuration, 2f));
+				_doubleEntrance14 = true;
+			}
+		}
+		else if (_nodeDancerIsAboutToEnter == 16) {
+				StartCoroutine (Dilate (_textMeshPros [7], _dilateDuration, 0f));
+			
+//			StartCoroutine (FadeOut (_textMeshPros [4], _fadeDuration, 2f));
+		} else if (_nodeDancerIsAboutToEnter == 17){
+			StartCoroutine (FadeOut (_textMeshPros [7], _fadeDuration, 1.5f));
+		}
+		else if (_nodeDancerIsAboutToEnter == 18){
+			StartCoroutine (Dilate (_textMeshPros [8], _dilateDuration, 3.4f));
+			StartCoroutine (Dilate (_textMeshPros [9], _dilateDuration, 4.5f));
+			StartCoroutine (Dilate (_textMeshPros [10], _dilateDuration, 5.6f));
+
+		}
+		else if (_nodeDancerIsAboutToEnter == 19){
+			StartCoroutine (FadeOut (_textMeshPros [8], _fadeDuration, 2f));
+			StartCoroutine (FadeOut (_textMeshPros [9], _fadeDuration, 2.8f));
+			StartCoroutine (FadeOut (_textMeshPros [10], _fadeDuration, 3.6f));
+//			StartCoroutine (Dilate (_textMeshPros [9], _dilateDuration, 0f));
+//			StartCoroutine (Dilate (_textMeshPros [10], _dilateDuration, 1f));
+		}
+
+		else if (_nodeDancerIsAboutToEnter == 20){
+			StartCoroutine (Dilate (_textMeshPros [11], _dilateDuration, 5f));
+			StartCoroutine (Dilate (_textMeshPros [12], _dilateDuration, 6.2f));
 		}
 //				cnt = 4;
 //				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);

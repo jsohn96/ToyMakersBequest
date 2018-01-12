@@ -221,10 +221,10 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
 			}
 			else if (_nodeDancerIsAboutToEnter == 21) {
-				cnt = 13;
-				_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
-				cnt++;
-				StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
+			//	cnt = 13;
+			//	_musicBoxCameraManager.MoveToWayPoint (_cameraControlPoints [cnt].transform, _cameraControlPoints [cnt].duration, _cameraControlPoints [cnt].fov);
+			//	cnt++;
+			//	StartCoroutine (DelayedNextControlPoint (_cameraControlPoints [cnt - 1].duration - 0.8f));
 			}
 
 			else if (_nodeDancerIsAboutToEnter == 200) {

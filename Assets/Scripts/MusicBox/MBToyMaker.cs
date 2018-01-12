@@ -86,7 +86,7 @@ public class MBToyMaker : MonoBehaviour {
 
 	IEnumerator FlipTMStage(){
 		print("TM Flip Stage");
-		yield return new WaitForSeconds(3.0f);
+		yield return new WaitForSeconds(3.5f);
 		if (!_isFlip) {
 			_stageAnimator.Play ("Flip");
 			_isFlip = false;
