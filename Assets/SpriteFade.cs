@@ -38,6 +38,9 @@ public class SpriteFade : MonoBehaviour {
 		}
 
 		if (_initFadeIn) {
+			if (_fadeCoroutine != null) {
+				StopCoroutine (_fadeCoroutine);
+			}
 			_fadeCoroutine = FadeSpriteIn (1f);
 			StartCoroutine (_fadeCoroutine);
 		}
@@ -81,9 +84,6 @@ public class SpriteFade : MonoBehaviour {
 	}
 
 	IEnumerator FadeSpriteOut(){
-		if (_fadeCoroutine != null) {
-			StopCoroutine (_fadeCoroutine);
-		}
 		float timer = 0f;
 		Color tempColor = _sprite.color;
 		_coroutineIsOngoing = true;
@@ -103,8 +103,21 @@ public class SpriteFade : MonoBehaviour {
 
 	void OnMouseDown(){
 		if (specificUseCaseForZoetrope) {
-			specificUseCaseForZoetrope = false;
-			StartCoroutine(FadeSpriteOut ());
+			if (_fadeCoroutine != null) {
+				StopCoroutine (_fadeCoroutine);
+			}
+			_fadeCoroutine = FadeSpriteOut ();
+			StartCoroutine(_fadeCoroutine);
+		}
+	}
+
+	void OnMouseUp(){
+		if (specificUseCaseForZoetrope) {
+			if (_fadeCoroutine != null) {
+				StopCoroutine (_fadeCoroutine);
+			}
+			_fadeCoroutine = FadeSpriteIn (0f);
+			StartCoroutine (_fadeCoroutine);
 		}
 	}
 }
