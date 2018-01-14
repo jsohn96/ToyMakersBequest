@@ -198,7 +198,7 @@ public class PathNode : MonoBehaviour {
 		// 
 
 		if (_isInterLocked && _intersectionPart == null) {
-			print("Check interlock section");
+			//print("Check interlock section");
 			
 		}
 
@@ -227,22 +227,19 @@ public class PathNode : MonoBehaviour {
 	void initNodePathInfo(){
 		//get the positions of the path links 	
 		_mySplines = GetComponentsInChildren<BezierSpline> ();
-		print ("Debug " + _nodeIndex + " : has spline: " + _mySplines.Length);
+		//print ("Debug " + _nodeIndex + " : has spline: " + _mySplines.Length);
 		// TODO store the position value for different path segments 
 
 		if (_mySplines.Length > 0) {
+
 			_segCount = _mySplines.Length;
+			//print ("Check: path number in total " + _segCount + " " + _nodeIndex);
 			_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 		} else {
 			//print ("ERROR: need to construct path first");
 			_myNodeInfo = new NodeInfo (null, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 		}
-
-
-
-
-
-		//print ("Path position chaeck " + _myNodeInfo.paths[0].ToString());
+		
 
 	}
 

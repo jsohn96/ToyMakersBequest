@@ -16,6 +16,7 @@ public class MusicBoxManager : MonoBehaviour {
 	int _activePathIndex;
 	[SerializeField] GameObject _firstDescendCircle;
 	[SerializeField] GameObject[] _transitionNodes;
+	[SerializeField] GameObject[] _MBStages;
 
 	Vector3 _goalRotation = new Vector3 (0.0f, 360.0f, -90.0f);
 	Quaternion _originRotation;
@@ -41,17 +42,18 @@ public class MusicBoxManager : MonoBehaviour {
 
 
 		_transitionLayerTimer = new Timer (2.0f);
-		Events.G.Raise (new MBPlayModeEvent (_playMode));
+	
 	}
 
 	void Start(){
-		Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
+		//Events.G.Raise (new DancerChangeMoveEvent (DancerMove.idleDance));
 
 	}
 
 	void OnEnable(){
 		Events.G.AddListener<PathStateManagerEvent> (PathStateManagerHandle);
 		Events.G.AddListener<MBCameraStateManagerEvent> (MBCameraStateHandle);
+
 	}
 
 	void OnDisable(){
@@ -92,8 +94,19 @@ public class MusicBoxManager : MonoBehaviour {
 		case PathState.temp_end_scene:
 			EndScene ();
 			break;
+		case PathState.MB_Stage_EnterPlayScene:
+			RotateSceneStage (_MBStages [0], 70f);
+			break;
+		case PathState.MB_Stage_EnterPondScene:
+			RotateSceneStage (_MBStages [1], -70f);
+			break;
 			
 		}
+	}
+
+	void RotateSceneStage(GameObject stg, float amount){
+		
+		stg.GetComponent<MBSceneStageTransition> ().RotateNode (amount);
 	}
 
 	void MBCameraStateHandle(MBCameraStateManagerEvent e){
@@ -120,8 +133,8 @@ public class MusicBoxManager : MonoBehaviour {
 			transitionNode.transform.parent = _musicPaths[idx - 1].transform;
 
 		}
-		_musicPaths [idx - 2].GetComponent<PathNetwork> ().SetPathActive (false);
-		_musicPaths [idx - 1].GetComponent<PathNetwork>().SetPathActive(true);
+		_musicPaths [idx - 2].SetPathActive (false);
+		_musicPaths [idx - 1].SetPathActive(true);
 		Events.G.Raise (new PathResumeEvent ());
 		//_Layers [idx - 1].GetComponent<Animator> ().Play ("SideOpen");
 		//_Layers [idx - 2].SetPathActive(true);

@@ -152,6 +152,13 @@ public class MBLotusFlower:GameEvent{
 	}
 }
 
+public class MBSceneTriggerEvent:GameEvent{
+	public int triggerIndex{ get; private set; }
+	public MBSceneTriggerEvent(int tIdx){
+		triggerIndex = tIdx;
+	}
+}
+
 
 // music box audio event 
 // when the node is rotating, sending over the node index and rotate speed 

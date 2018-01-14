@@ -27,7 +27,9 @@ public enum PathState{
 	pond_loop,
 	move_on_seesaw,
 	activate_pond,
-	TM_move_to_location
+	TM_move_to_location,
+	MB_Stage_EnterPondScene,
+	MB_Stage_EnterPlayScene
 }
 
 
@@ -37,6 +39,7 @@ public class PathNetwork : MonoBehaviour {
 	[SerializeField] PathOrder[] _correctOrder;
 
 	PathNode[] _myNodes;
+
 	int _myNodesLength = 0;
 	[SerializeField] Dancer _myDancer;
 	int _curNodeIdx;
@@ -66,8 +69,8 @@ public class PathNetwork : MonoBehaviour {
 		_myNodesLength = _myNodes.Length;
 		print ("Init Info: " + "\nNode Count"+ _myNodesLength);
 		// init player position 
-		//_orderIdx = _startIndex;
-		//_curNodeIdx = _correctOrder[_orderIdx].index;
+		_orderIdx = _startIndex;
+		_curNodeIdx = _correctOrder[_orderIdx].index;
 	}
 
 	void OnEnable(){
@@ -104,8 +107,8 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
-			//print ("Check connection for " + _curNodeIdx + ":" + _curNode.readNodeInfo ().isConnected
-				//+ "and " +_curNode.readNodeInfo().index + ":" + tempNode.readNodeInfo ().isConnected);
+			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
+				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
 
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// music manager continues to play music 
@@ -120,13 +123,7 @@ public class PathNetwork : MonoBehaviour {
 				//TODO: or when interlocked node, it means it switches to the next state
 				Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
 				// check the 
-				if (_myPlayMode == PlayMode.MBPrototype_With_Path) {
-					_isCheckingNext = false;
-				} else if (_myPlayMode == PlayMode.MBPrototype2_Without_Path) {
-					if (_curNode.readNodeInfo ().paths.Length == 0) {
-						_isCheckingNext = true;
-					}
-				}
+				_isCheckingNext = false;
 
 			} else {
 				//print ("next node not correctly connected");
@@ -141,10 +138,13 @@ public class PathNetwork : MonoBehaviour {
 	// have the dancer reports back to the network about her status
 	public void PositionDancer (){
 		// pass down the game object
+		print("Current node in poisitondancer:"+ _curNodeIdx);
 
 		_curNode = FindNodeWithIndex (_curNodeIdx);
+
 		_myDancer.SetNewPath (_curNode);
 		Events.G.Raise (new DancerOnBoard (_curNode.readNodeInfo ().index));
+		print ("dance placed on " + _curNode.readNodeInfo ().index);
 
 	}
 
@@ -164,8 +164,9 @@ public class PathNetwork : MonoBehaviour {
 	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
 		//print ("Check next available node");
+		if (_isActive && _correctOrder [_orderIdx].index==e.NodeIdx) {
+			//print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
 
-		if (_isActive) {
 			// check if there is anyevent envoked when the path is finished 
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
 				Events.G.Raise (new MBMusicMangerEvent (false));
@@ -173,7 +174,7 @@ public class PathNetwork : MonoBehaviour {
 			} else {
 				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
 				_isPathPause = true;
-				//print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent);
+				//print (Time.time + "End of Path " + _correctOrder [_orderIdx].nameOfEvent + " " + _correctOrder[_orderIdx].index + " " + _orderIdx);
 				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
 					if (!_skipGatePause) {
 						Events.G.Raise (new MBMusicMangerEvent (false));
@@ -181,7 +182,7 @@ public class PathNetwork : MonoBehaviour {
 						_isPathPause = false;
 						CheckNextIdx ();
 					}
-				} else if(_correctOrder[_orderIdx].nameOfEvent == PathState.pond_loop){
+				} else if (_correctOrder [_orderIdx].nameOfEvent == PathState.pond_loop) {
 					
 					if (!_isPathLoop) {
 						_isPathLoop = true;
@@ -189,13 +190,19 @@ public class PathNetwork : MonoBehaviour {
 						_loopToIdx = _orderIdx + 6;
 						print ("enter loop from to: " + _loopToIdx);
 						PathNode tempNode = FindNodeWithIndex (_correctOrder [_orderIdx].index);
-						tempNode.resetAdjNodeAngle(0, 90f);
+						tempNode.resetAdjNodeAngle (0, 90f);
 
 					}
 
 					_isPathPause = false;
 					CheckNextIdx ();
-				}else if(_correctOrder[_orderIdx].nameOfEvent == PathState.TM_move_to_location){
+				} else if (_correctOrder [_orderIdx].nameOfEvent == PathState.TM_move_to_location) {
+					_isPathPause = false;
+					CheckNextIdx ();
+				} else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_EnterPlayScene) {
+					_isPathPause = false;
+					CheckNextIdx ();
+				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_EnterPondScene) {
 					_isPathPause = false;
 					CheckNextIdx ();
 				}
@@ -210,19 +217,23 @@ public class PathNetwork : MonoBehaviour {
 
 	// util functions 
 	public PathNode FindNodeWithIndex(int i){
-		//print ("find node idx: " + i);
+		PathNode result = _myNodes[0];
 		foreach (PathNode _pn in _myNodes) {
+			//print ("find node idx: " + i);
 			NodeInfo ninfo = _pn.readNodeInfo ();
 			if (ninfo.index == i) {
-				return _pn;
-				break;
+				result = _pn;
 			} 
 		}
 
-		return _myNodes [0];
+
+		return result;
+
+
 	}
 
 	public void SetPathActive(bool isActive){
+		_isCheckingNext = false;
 		UpdateNodes ();
 		_isActive = isActive;
 		if (_isActive) {
@@ -238,10 +249,10 @@ public class PathNetwork : MonoBehaviour {
 	public void UpdateNodes(){
 		//_myNodes = new PathNode();
 		_myNodes = GetComponentsInChildren<PathNode> ();
-		print ("Update Info: " + "\nNode Count"+ _myNodes.Length);
-		// init player position 
 		_orderIdx = _startIndex;
+		//_nxtCheckIdx = -1;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
+		print ("Start from: " + _curNodeIdx);
 	}
 
 	void PlayModeHandle(MBPlayModeEvent e){
@@ -284,6 +295,7 @@ public class PathNetwork : MonoBehaviour {
 		if (_isPathLoop) {
 			LoopBetween ();
 		}
+		//print("next index candidate " + _nxtCheckIdx);
 		if (_nxtCheckIdx >= 0 && _nxtCheckIdx < _correctOrder.Length ) {
 			_orderIdx = _nxtCheckIdx;
 			_curNodeIdx = _correctOrder [_orderIdx].index;

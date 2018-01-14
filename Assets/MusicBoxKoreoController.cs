@@ -176,14 +176,15 @@ public class MusicBoxKoreoController : AudioSourceController {
 		}
 	}
 
+
 	void OnEnable(){
 		Events.G.AddListener<MBMusicMangerEvent> (StopMusicBoxMusic);
 		Events.G.AddListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
-		//Events.G.AddListener<PathStateManagerEvent> (PathStateManage);
+
 	}
 	void OnDisable(){
 		Events.G.RemoveListener<MBMusicMangerEvent> (StopMusicBoxMusic);
 		Events.G.RemoveListener<MBMusicLayerAdjustmentEvent> (ToggleMusicLayer);
-		//Events.G.RemoveListener<PathStateManagerEvent> (PathStateManage);
+	
 	}
 }
