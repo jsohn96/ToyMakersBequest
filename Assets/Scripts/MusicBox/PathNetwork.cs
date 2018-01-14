@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
 
 [System.Serializable]
-public struct PathOrder{
+public class PathOrder{
 	public int index;
 	public PathState nameOfEvent;
-	PathOrder(int idx, PathState noe){
-		index = idx;
-		nameOfEvent = noe;	
+	public PathOrder(int _idx, string _noe){
+		index = _idx;
+		nameOfEvent = (PathState)System.Enum.Parse(typeof(PathState), _noe);
 	}
 }
 
@@ -36,7 +38,10 @@ public enum PathState{
 public class PathNetwork : MonoBehaviour {
 	// the solution for the puzzle --> the order of the correct path 
 	[SerializeField] int _startIndex;
+	[SerializeField] int PathNetworkID;
+	NodeOrderData nodeOrderData;
 	[SerializeField] PathOrder[] _correctOrder;
+
 
 	PathNode[] _myNodes;
 
@@ -56,7 +61,7 @@ public class PathNetwork : MonoBehaviour {
 	int _loopFromIdx = -1;
 	int _loopToIdx = -1;
 
-	PlayMode _myPlayMode;
+	string NodeOrderFileName;
 
 
 	// 
@@ -65,18 +70,23 @@ public class PathNetwork : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		// read in path order 
+		NodeOrderFileName = "NodeOrderData" + PathNetworkID.ToString() + ".json"; 
+		GetNodeOrderData();
+
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		_myNodesLength = _myNodes.Length;
 		print ("Init Info: " + "\nNode Count"+ _myNodesLength);
 		// init player position 
 		_orderIdx = _startIndex;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
+
 	}
 
 	void OnEnable(){
 		Events.G.AddListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
-		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
+		//Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.AddListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.AddListener<MBExitPondLoop> (ExitLoopHandle);
@@ -85,10 +95,26 @@ public class PathNetwork : MonoBehaviour {
 	void OnDisable(){
 		Events.G.RemoveListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
-		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
+		//Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.RemoveListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.RemoveListener<MBExitPondLoop> (ExitLoopHandle);
+	}
+
+	void GetNodeOrderData(){
+		
+		string path = Application.dataPath + "/LevelDesignData/NodeData/" + NodeOrderFileName;
+		if (File.Exists (path)) {
+			string jsonData = File.ReadAllText (path);
+
+			nodeOrderData = JsonUtility.FromJson<NodeOrderData> (jsonData);
+			_correctOrder = nodeOrderData.correctPathOrder;
+
+
+		} else {
+			Debug.LogError ("Can't find file " + NodeOrderFileName);
+			nodeOrderData = new NodeOrderData ();
+		}
 	}
 
 	public PathNode GetNodeOfIndex(int index){
@@ -97,6 +123,16 @@ public class PathNetwork : MonoBehaviour {
 		} else {
 			return _myNodes [index];
 		}
+	}
+
+	public void SaveNodeOrderData(){
+		nodeOrderData.correctPathOrder = _correctOrder;
+		if (nodeOrderData != null) {
+			string dataAsJson = JsonUtility.ToJson (nodeOrderData, true);
+			string path = Application.dataPath + "/LevelDesignData/NodeData/" + NodeOrderFileName;
+			File.WriteAllText (path, dataAsJson);
+		}
+
 	}
 
 
@@ -253,10 +289,6 @@ public class PathNetwork : MonoBehaviour {
 		//_nxtCheckIdx = -1;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
 		print ("Start from: " + _curNodeIdx);
-	}
-
-	void PlayModeHandle(MBPlayModeEvent e){
-		_myPlayMode = e.activePlayMode;
 	}
 
 	void InterlockNodeStateHandle(InterlockNodeStateEvent e){
