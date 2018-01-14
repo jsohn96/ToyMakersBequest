@@ -85,7 +85,7 @@ public class TextInteractive : BookInteractive {
 		float tempDilate;
 		_introVO.audioSource.clip = _introVO.clips [_onWhichVO];
 		//yield return new WaitForSeconds (0.5f);
-		_introVO.audioSource.Play ();
+//		_introVO.audioSource.Play ();
 		_beginVOSequence = true;
 
 		while (!_fadeTimer.IsOffCooldown) {
@@ -127,8 +127,8 @@ public class TextInteractive : BookInteractive {
 
 		_textMeshPros [_onWhichVO - 1].font = _nonGlowAsset;
 		_textMeshPros [_onWhichVO].font = _glowAsset;
-		_introVO.audioSource.clip = _introVO.clips [_onWhichVO];
-		_introVO.audioSource.Play ();
+//		_introVO.audioSource.clip = _introVO.clips [_onWhichVO];
+//		_introVO.audioSource.Play ();
 		_beginVOSequence = true;
 		_glowTimer.Reset ();
 		while (!_glowTimer.IsOffCooldown) {
@@ -140,24 +140,24 @@ public class TextInteractive : BookInteractive {
 		yield return null;
 	}
 
-	void FixedUpdate() {
+//	void FixedUpdate() {
 //		if (Input.GetKeyDown (KeyCode.Space)) {
 //			Interact ();
 //		}
 
-		if (_beginVOSequence) {
-			if (!_introVO.audioSource.isPlaying) {
-				if (_onWhichVO == _introVO.clips.Length-1) {
-					_beginVOSequence = false;
-					_tempCoroutine = EndVO ();
-					StartCoroutine (_tempCoroutine);
-				}
-				else if (_onWhichVO < _introVO.clips.Length - 1) {
-					_beginVOSequence = false;
-					_tempCoroutine = PlayNext ();
-					StartCoroutine (_tempCoroutine);
-				}
-			}
-		}
-	}
+//		if (_beginVOSequence) {
+//			if (!_introVO.audioSource.isPlaying) {
+//				if (_onWhichVO == _introVO.clips.Length-1) {
+//					_beginVOSequence = false;
+//					_tempCoroutine = EndVO ();
+//					StartCoroutine (_tempCoroutine);
+//				}
+//				else if (_onWhichVO < _introVO.clips.Length - 1) {
+//					_beginVOSequence = false;
+//					_tempCoroutine = PlayNext ();
+//					StartCoroutine (_tempCoroutine);
+//				}
+//			}
+//		}
+//	}
 }
