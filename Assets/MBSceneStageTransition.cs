@@ -42,6 +42,10 @@ public class MBSceneStageTransition : MonoBehaviour {
 
 	}
 
+	public void SwitchDirection(){
+		
+	}
+
 
 		
 

@@ -96,7 +96,7 @@ public class PathNode : MonoBehaviour {
 	//float _duration = 10f;
 	//float progress = 0;
 
-	bool _isWinded = false;
+	//bool _isWinded = false;
 
 
 	// mouse drag rotate 
@@ -106,8 +106,8 @@ public class PathNode : MonoBehaviour {
 	float dragSensitivity = 0.05f;
 	float hitDist;
 	float accAngle = 0; // accumulated angle
-	int circleDivision = 12; // default as the clock 
-	bool ischeckingConnection = false;
+	//int circleDivision = 12; // default as the clock 
+	//bool ischeckingConnection = false;
 
 	// lerp node rotation 
 	float rotateSpeed = 4f;
@@ -125,7 +125,7 @@ public class PathNode : MonoBehaviour {
 	bool isTempDisable = false;
 
 	// playmode 
-	PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
+	//PlayMode _myPlayMode = PlayMode.MBPrototype2_Without_Path;
 
 	Vector3 debugPos1;
 	Vector3 debugPos2;
@@ -136,9 +136,6 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] bool _isInterLocked = false;  
 	[SerializeField] bool _isActive = true;
 	[SerializeField] GameObject _intersectionPart;
-//	[SerializeField] int _lockNodeSenderIdx;      // the node that the current circle is being blocked
-//	[SerializeField] int _lockNodeReceiverIdx;      // the node that the current circle is blocking 
-//	[SerializeField] float _interLockAngle;
 
 	[SerializeField] InterlockNode[] _interlockNodes;
 	[SerializeField] BranchNode[] _branchNodes;
@@ -163,8 +160,6 @@ public class PathNode : MonoBehaviour {
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
-		//Events.G.AddListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
-		Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.AddListener<MBTurnColorCircle> (TurnColorCircleHandle);
 		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 	}
@@ -173,8 +168,6 @@ public class PathNode : MonoBehaviour {
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
 		//Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
-		//Events.G.RemoveListener<CircleTurnButtonPressEvent> (CircleButtonInputHandle);
-		Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
 		Events.G.RemoveListener<MBTurnColorCircle> (TurnColorCircleHandle);
 		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 	}
@@ -231,8 +224,12 @@ public class PathNode : MonoBehaviour {
 		// TODO store the position value for different path segments 
 
 		if (_mySplines.Length > 0) {
-
-			_segCount = _mySplines.Length;
+			if (_mySplines.Length <= (_adjacentNode.Length / 2)) {
+				_segCount = _mySplines.Length;
+			} else {
+				_segCount = _adjacentNode.Length / 2;
+			} 
+			//_segCount = _mySplines.Length;
 			//print ("Check: path number in total " + _segCount + " " + _nodeIndex);
 			_myNodeInfo = new NodeInfo (_mySplines, _nodeIndex, _isCorrectConnection, _curSegIdx, _adjacentNode, _ControlColor);
 		} else {
@@ -451,6 +448,7 @@ public class PathNode : MonoBehaviour {
 		} 
 
 		if (_adjacentNode.Length > 0) {
+			//print ("debug check segment id " + curCheckSegmentIdx);
 			float tempangle = _adjacentNode [curCheckSegmentIdx].relativeAngle;
 			if (!snapToAngle.Contains (tempangle)) {
 				snapToAngle.Add (tempangle);
@@ -634,7 +632,7 @@ public class PathNode : MonoBehaviour {
 
 	void ClickWithMouse(){
 		
-		Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
+		//Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
 		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
 			_intersectionPart.transform.parent = transform;
 		}
@@ -878,9 +876,9 @@ public class PathNode : MonoBehaviour {
 		//return angle;
 	}
 
-	void PlayModeHandle(MBPlayModeEvent e){
-		_myPlayMode = e.activePlayMode;
-	}
+//	void PlayModeHandle(MBPlayModeEvent e){
+//		_myPlayMode = e.activePlayMode;
+//	}
 
 	public ButtonColor GetControlColor(){
 		return _ControlColor;

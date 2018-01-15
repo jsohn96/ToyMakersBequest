@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.024005214, g: 0.028516913, b: 0.029411793, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientSkyColor: {r: 0.6102941, g: 0.6102941, b: 0.6102941, a: 1}
+  m_AmbientEquatorColor: {r: 0.49362022, g: 0.56116825, b: 0.6102941, a: 1}
+  m_AmbientGroundColor: {r: 0.72794116, g: 0.5316826, b: 0.13916522, a: 1}
   m_AmbientIntensity: 0.16
-  m_AmbientMode: 3
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -34,7 +34,7 @@ RenderSettings:
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
-  m_ReflectionBounces: 1
+  m_ReflectionBounces: 2
   m_ReflectionIntensity: 0.571
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
@@ -3054,7 +3054,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1760024554}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 37.846237, z: 0}
 --- !u!23 &115622982
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3367,6 +3367,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -16420,12 +16434,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a359e5431fe240e18382766c6c99d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ControlColor: 4
+  _ControlColor: 0
   _nodeIndex: 220
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 640314719}
   _adjacentNode:
-  - adjNodeIdx: -1
+  - adjNodeIdx: 220
     relativeAngle: 0
   - adjNodeIdx: -1
     relativeAngle: 190
@@ -16443,7 +16457,7 @@ MonoBehaviour:
     lockAngle: 190
     intersection: {fileID: 1224984466}
   _branchNodes: []
-  _isSnapEnable: 1
+  _isSnapEnable: 0
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
@@ -23849,7 +23863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794469c66b2cc4764a54333277996593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dancerTransform: {fileID: 0}
+  _dancerTransform: {fileID: 1745158792}
   _TMTransform: {fileID: 869618418}
   _spotLight: {fileID: 1259563212}
   _stageAnimator: {fileID: 2073310246}
@@ -24458,9 +24472,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 891011019}
-  m_LocalRotation: {x: 0.000000092644775, y: 0.00000031611793, z: 0.94239056, w: 0.3345146}
-  m_LocalPosition: {x: -2.41, y: 3.4, z: -0.33}
-  m_LocalScale: {x: 0.90655667, y: 1, z: 1}
+  m_LocalRotation: {x: 0.00000018531341, y: 0.00000029896262, z: 0.9423906, w: 0.33451453}
+  m_LocalPosition: {x: -2.4100025, y: 3.4000173, z: -0.33000237}
+  m_LocalScale: {x: 0.90655863, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 625350789}
   m_RootOrder: 0
@@ -30013,6 +30027,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -31103,6 +31131,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -34808,6 +34850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1253319571}
   - component: {fileID: 1253319572}
+  - component: {fileID: 1253319573}
   m_Layer: 0
   m_Name: PathNodeStaticConnection222
   m_TagString: Untagged
@@ -34865,6 +34908,17 @@ MonoBehaviour:
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!114 &1253319573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1253319570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd65dfb168044932876219509d1a85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1254856080
 GameObject:
   m_ObjectHideFlags: 0
@@ -35018,6 +35072,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -42050,6 +42118,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -43823,7 +43905,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1551284716}
   m_LocalRotation: {x: 0.13262707, y: 0.00000035166275, z: 0.99116606, w: -0.0000009838653}
-  m_LocalPosition: {x: 0.41, y: 8, z: 0.95}
+  m_LocalPosition: {x: 0.65, y: 5.6, z: 1.84}
   m_LocalScale: {x: 67.32483, y: 67.45712, z: 67.60214}
   m_Children: []
   m_Father: {fileID: 1745158792}
@@ -43861,6 +43943,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -46328,7 +46424,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1760024554}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -37.846237, z: 0}
 --- !u!23 &1680590358
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -47007,7 +47103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fee18a7be9940dda4da3b409b5d29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startIndex: 0
+  _startIndex: 25
   PathNetworkID: 1
   _correctOrder:
   - index: 0
@@ -49449,6 +49545,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -50189,7 +50299,7 @@ MonoBehaviour:
   - index: 220
     nameOfEvent: 0
   - index: 221
-    nameOfEvent: 0
+    nameOfEvent: 17
   - index: 202
     nameOfEvent: 16
   - index: 223
@@ -50215,7 +50325,7 @@ MonoBehaviour:
   - index: 234
     nameOfEvent: 0
   - index: 235
-    nameOfEvent: 0
+    nameOfEvent: 18
   - index: 222
     nameOfEvent: 0
   - index: 0
@@ -53363,6 +53473,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -54278,6 +54402,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0

@@ -31,7 +31,9 @@ public enum PathState{
 	activate_pond,
 	TM_move_to_location,
 	MB_Stage_EnterPondScene,
-	MB_Stage_EnterPlayScene
+	MB_Stage_EnterPlayScene,
+	MB_Stage_ExitPondScene,
+	MB_Stage_ExitPlayScene
 }
 
 
@@ -239,6 +241,12 @@ public class PathNetwork : MonoBehaviour {
 					_isPathPause = false;
 					CheckNextIdx ();
 				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_EnterPondScene) {
+					_isPathPause = false;
+					CheckNextIdx ();
+				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_ExitPondScene) {
+					_isPathPause = false;
+					CheckNextIdx ();
+				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_ExitPlayScene) {
 					_isPathPause = false;
 					CheckNextIdx ();
 				}
