@@ -89,7 +89,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.AddListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
 		//Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
-		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
+		//Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.AddListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.AddListener<MBExitPondLoop> (ExitLoopHandle);
 	}
@@ -98,7 +98,7 @@ public class PathNetwork : MonoBehaviour {
 		Events.G.RemoveListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
 		//Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
-		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
+		//Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.RemoveListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.RemoveListener<MBExitPondLoop> (ExitLoopHandle);
 	}
@@ -145,8 +145,8 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
-			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
-				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
+//			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
+//				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
 
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// music manager continues to play music 
@@ -177,7 +177,6 @@ public class PathNetwork : MonoBehaviour {
 	public void PositionDancer (){
 		// pass down the game object
 		print("Current node in poisitondancer:"+ _curNodeIdx);
-
 		_curNode = FindNodeWithIndex (_curNodeIdx);
 
 		_myDancer.SetNewPath (_curNode);
@@ -291,18 +290,12 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	public void UpdateNodes(){
-		//_myNodes = new PathNode();
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		_orderIdx = _startIndex;
-		//_nxtCheckIdx = -1;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
 		print ("Start from: " + _curNodeIdx);
 	}
-
-	void InterlockNodeStateHandle(InterlockNodeStateEvent e){
 		
-	}
-
 	// for loop in the path
 
 	void EnterLoop(int fromIdx, int toIdx){

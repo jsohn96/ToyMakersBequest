@@ -248,7 +248,7 @@ public class PathNode : MonoBehaviour {
 		//print ("debug check temp rotate disabled: " + isTempDisable);
 
 		if(_isActive){
-			//ClickWithMouse ();
+			//ClickWithMouse ();_curSegIdx
 
 			if (_isDescending) {
 				DescendNode ();
@@ -311,26 +311,6 @@ public class PathNode : MonoBehaviour {
 		//		}
 
 	}
-
-	// UI Code
-//	void CircleButtonInputHandle (CircleTurnButtonPressEvent e){
-//		if (_ControlColor == e.WhichCircleColor) {
-//			switch (_ControlColor) {
-//			case ButtonColor.Red:
-//				print ("Rotate Red");
-//				RotateNode ();
-//				break;
-//			case ButtonColor.Brown:
-//				print ("Rotate Brown");
-//				RotateNode ();
-//				break;
-//			case ButtonColor.Yellow:
-//				print ("Rotate Yellow");
-//				RotateNode ();
-//				break;
-//			}
-//		}
-//	}
 
 	void TurnColorCircleHandle(MBTurnColorCircle e){
 		if (_nodeIndex != e.activeIdx && _ControlColor == e.activeColor) {
@@ -398,9 +378,10 @@ public class PathNode : MonoBehaviour {
 				}
 			}
 
-			_isCorrectConnection = isfoundMatch;
-			_myNodeInfo.isConnected = _isCorrectConnection;
-			
+			if (_adjacentNode.Length <= 0) {
+				_isCorrectConnection = isfoundMatch;
+				_myNodeInfo.isConnected = _isCorrectConnection;
+			}
 		}
 	}
 
@@ -501,6 +482,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
 								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
+									print ("###raise sound effect");
 									Events.G.Raise (new PathConnectedEvent ());
 								}
 								_isCorrectConnection = true;
@@ -527,7 +509,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
 									Events.G.Raise (new PathConnectedEvent ());
-									//Debug.Log ("YOU");
+									Debug.Log ("YOU");
 								}
 								_isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
