@@ -436,24 +436,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.1, z: 0.01}
   m_Center: {x: 0.0000000027939688, y: 0.012069456, z: 0.0000000027939668}
---- !u!1 &234373008 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100062, guid: a357502b4a81448269de15890dc3ed4e, type: 3}
-  m_PrefabInternal: {fileID: 1779828881}
---- !u!114 &234373010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 234373008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f5fd9f4d6dfd8948960b397bf9d0de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeThrough: 0
-  random: 1
-  velocity: 0.13
 --- !u!1 &264955156
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,7 +2005,6 @@ GameObject:
   - component: {fileID: 1354247302}
   - component: {fileID: 1354247303}
   - component: {fileID: 1354247304}
-  - component: {fileID: 1354247305}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2188,75 +2169,6 @@ MonoBehaviour:
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0.5
   HalfResolution: 1
---- !u!114 &1354247305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1354247296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b765e0b5af3bcf4a9deb5895e477da8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _downsampleFactor: 4
-  _iterations: 1
-  _blurMinSpread: 0.65
-  _blurSpread: 0.25
-  _blurIntensity: 0.3
-  _blurDirections: 0
-  _blitter: {fileID: 0}
-  _antiAliasing: 0
-  _presets:
-  - _name: Default
-    _downsampleFactor: 4
-    _iterations: 2
-    _blurMinSpread: 0.65
-    _blurSpread: 0.25
-    _blurIntensity: 0.3
-    _blurDirections: 0
-  - _name: Wide
-    _downsampleFactor: 4
-    _iterations: 4
-    _blurMinSpread: 0.65
-    _blurSpread: 0.25
-    _blurIntensity: 0.3
-    _blurDirections: 0
-  - _name: Strong
-    _downsampleFactor: 4
-    _iterations: 2
-    _blurMinSpread: 0.5
-    _blurSpread: 0.15
-    _blurIntensity: 0.325
-    _blurDirections: 0
-  - _name: Speed
-    _downsampleFactor: 4
-    _iterations: 1
-    _blurMinSpread: 0.75
-    _blurSpread: 0
-    _blurIntensity: 0.35
-    _blurDirections: 0
-  - _name: Quality
-    _downsampleFactor: 2
-    _iterations: 3
-    _blurMinSpread: 0.5
-    _blurSpread: 0.5
-    _blurIntensity: 0.28
-    _blurDirections: 0
-  - _name: Solid 1px
-    _downsampleFactor: 1
-    _iterations: 1
-    _blurMinSpread: 1
-    _blurSpread: 0
-    _blurIntensity: 1
-    _blurDirections: 2
-  - _name: Solid 2px
-    _downsampleFactor: 1
-    _iterations: 2
-    _blurMinSpread: 1
-    _blurSpread: 0
-    _blurIntensity: 1
-    _blurDirections: 2
 --- !u!1 &1358683620
 GameObject:
   m_ObjectHideFlags: 0
