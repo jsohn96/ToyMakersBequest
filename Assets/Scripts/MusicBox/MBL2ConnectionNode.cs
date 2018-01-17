@@ -90,12 +90,12 @@ public class MBL2ConnectionNode : MonoBehaviour {
 				isDirectToPond = false;
 				SwitchDirection ();
 			}
-		} else if (e.activeEvent == PathState.MB_Stage_ExitPondScene) {
+		} else if (e.activeEvent == PathState.MB_Stage_ExitPlayScene) {
 			if (enterSceneTime < 1) {
 				Events.G.Raise (new MBPathIndexEvent (33));
 				enterSceneTime += 1;
 			} else {
-				Events.G.Raise (new MBPathIndexEvent (33));
+				Events.G.Raise (new MBPathIndexEvent (34));
 			}
 
 		
@@ -104,7 +104,7 @@ public class MBL2ConnectionNode : MonoBehaviour {
 				Events.G.Raise (new MBPathIndexEvent (33));
 				enterSceneTime += 1;
 			} else {
-				Events.G.Raise (new MBPathIndexEvent (33));
+				Events.G.Raise (new MBPathIndexEvent (37));
 			}
 
 

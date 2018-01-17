@@ -33,7 +33,8 @@ public enum PathState{
 	MB_Stage_EnterPondScene,
 	MB_Stage_EnterPlayScene,
 	MB_Stage_ExitPondScene,
-	MB_Stage_ExitPlayScene
+	MB_Stage_ExitPlayScene,
+	MB_Descend_to_layer_three
 }
 
 
@@ -247,6 +248,10 @@ public class PathNetwork : MonoBehaviour {
 					CheckNextIdx ();
 				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Stage_ExitPlayScene) {
 					_isPathPause = false;
+					CheckNextIdx ();
+				}else if (_correctOrder [_orderIdx].nameOfEvent == PathState.MB_Descend_to_layer_three) {
+					_isPathPause = false;
+					JumpToIndex (40);
 					CheckNextIdx ();
 				}
 
