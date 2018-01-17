@@ -164,8 +164,8 @@ public class MBFrog : MonoBehaviour {
 
 	void DancerOnBoardHandle(DancerOnBoard e){
 		_dancerOnNodeIdx = e.NodeIdx;
-		if (_dancerOnNodeIdx == 203) {
-			StartCoroutine (DelayedFrogActivation (4f));
+		if (_dancerOnNodeIdx == 201) {
+			StartCoroutine (DelayedFrogActivation (7.5f));
 		}
 		//print ("Frog! : the dancer is on : " + _dancerOnNodeIdx + " the frog is on: " + _JumpNode[_curNodeOrderIdx].readNodeInfo().index);
 	} 
