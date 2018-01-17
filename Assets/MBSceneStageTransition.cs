@@ -12,6 +12,8 @@ public class MBSceneStageTransition : MonoBehaviour {
 	void Start () {
 		
 	}
+
+
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -42,9 +44,7 @@ public class MBSceneStageTransition : MonoBehaviour {
 
 	}
 
-	public void SwitchDirection(){
-		
-	}
+
 
 
 		
