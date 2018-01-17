@@ -482,7 +482,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle (tempRotDegree - adjNode.gameObject.transform.localRotation.eulerAngles.z)
 								- DampAngle (_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
-									print ("###raise sound effect");
+									//print ("###raise sound effect");
 									Events.G.Raise (new PathConnectedEvent ());
 								}
 								_isCorrectConnection = true;
@@ -509,7 +509,7 @@ public class PathNode : MonoBehaviour {
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
 									Events.G.Raise (new PathConnectedEvent ());
-									Debug.Log ("YOU");
+									//Debug.Log ("YOU");
 								}
 								_isCorrectConnection = true;
 								if (_shaderGlowCustom == null) {
@@ -615,9 +615,10 @@ public class PathNode : MonoBehaviour {
 	void ClickWithMouse(){
 		
 		//Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
-		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
-			_intersectionPart.transform.parent = transform;
-		}
+//		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform.parent) {
+//			Debug.Log ("change parent");
+//			_intersectionPart.transform.parent = transform.parent;
+//		}
 		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
 			Ray mousePositionRay;
 			mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -638,11 +639,10 @@ public class PathNode : MonoBehaviour {
 	// TODO: put into camera selection manager or something 
 	void RotateWithMouse(){
 		
-		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform) {
-			_intersectionPart.transform.parent = transform;
-		}
+
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
+			
 			Ray mousePositionRay;
 			if (!_isNotebook) {
 				mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -661,6 +661,10 @@ public class PathNode : MonoBehaviour {
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 					if (_isActive) {
+						if (_isInterLocked && _intersectionPart!= null ) {
+							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+							_intersectionPart.transform.parent = gameObject.transform;
+						}
 						isDragStart = true;
 						if (_shaderGlowCustom != null) {
 							_shaderGlowCustom.lightOn ();
