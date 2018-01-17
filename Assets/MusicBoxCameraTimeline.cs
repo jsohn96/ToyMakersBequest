@@ -37,10 +37,10 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 
 	void Start(){
 		int childCnt = _camerControlContainer.childCount;
-		_cameraControlPoints = new CameraControlPoint[childCnt];
-		for (int i = 0; i < childCnt; i++) {
-			_cameraControlPoints [i] = _camerControlContainer.GetChild (i).GetComponent<CameraControlPoint>();
-		}
+//		_cameraControlPoints = new CameraControlPoint[childCnt];
+//		for (int i = 0; i < childCnt; i++) {
+//			_cameraControlPoints [i] = _camerControlContainer.GetChild (i).GetComponent<CameraControlPoint>();
+//		}
 		StartCoroutine (Delay (0.5f));
 		_controlPointCnt = GetControlPointCount ();
 	}
@@ -250,7 +250,11 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 					//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
 				}
 			} else if (_playgroundFirst) {
-				
+				if (_nodeDancerIsAboutToEnter == 224) {
+						cnt = 1;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
+
+				}
 			} else {
 				if (_nodeDancerIsAboutToEnter == 201) {
 					_pondFirst = true;
@@ -263,6 +267,9 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				}
 				if (_nodeDancerIsAboutToEnter == 202) {
 					_playgroundFirst = true;
+					cnt = 0;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
+					cnt++;
 				}
 			}
 		}
