@@ -233,8 +233,21 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 				//	_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPondFirst [cnt].transform, _cameraControlPointsPondFirst [cnt].duration, _cameraControlPointsPondFirst [cnt].fov);
 
 				}
-				if (_nodeDancerIsAboutToEnter == 205) {
+				else if (_nodeDancerIsAboutToEnter == 205) {
 					_musicBoxCameraManager.ActivateStaticFollow (3f);
+				} 
+				else if (_nodeDancerIsAboutToEnter == 206) {
+					_musicBoxCameraManager.ActivateStaticFollow (3f);
+				} 
+				else if (_nodeDancerIsAboutToEnter == 209) {
+					cnt = 3;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPondFirst [cnt].transform, _cameraControlPointsPondFirst [cnt].duration, _cameraControlPointsPondFirst [cnt].fov);
+					//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
+				}
+				else if (_nodeDancerIsAboutToEnter == 212) {
+					cnt = 4;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPondFirst [cnt].transform, _cameraControlPointsPondFirst [cnt].duration, _cameraControlPointsPondFirst [cnt].fov);
+					//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
 				}
 			} else if (_playgroundFirst) {
 				
