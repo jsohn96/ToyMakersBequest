@@ -190,6 +190,9 @@ public class MBNodeConnect:GameEvent{
 	}
 }
 
+public class FrogIsOnTheMoveEvent:GameEvent {
+}
+
 //***********//
 //    UI     //
 //***********//

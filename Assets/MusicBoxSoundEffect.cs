@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicBoxSoundEffect : AudioSourceController {
 	[SerializeField] AudioSystem _crankTickAudioSystem;
 	[SerializeField] AudioSystem _connectedAudioSystem;
+	[SerializeField] AudioSystem _frogAudioSystem;
 	int curRotateNode = -1;
 	bool _stopForSceneTransition = false;
 	bool _isInitialized = false;
@@ -14,6 +15,7 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		Events.G.AddListener<DragRotationEvent> (DragRotationHandle);
 		Events.G.AddListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.AddListener<DancerChangeMoveEvent> (Initialize);
+		Events.G.AddListener<FrogIsOnTheMoveEvent> (PlayFrogCroakSound);
 	}
 
 	void OnDisable(){
@@ -21,6 +23,7 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		Events.G.RemoveListener<DragRotationEvent> (DragRotationHandle);
 		Events.G.RemoveListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.RemoveListener<DancerChangeMoveEvent> (Initialize);
+		Events.G.RemoveListener<FrogIsOnTheMoveEvent> (PlayFrogCroakSound);
 	}
 
 	void DragRotationHandle(DragRotationEvent e) {
@@ -45,11 +48,23 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		}
 	}
 
+	void PlayFrogCroakSound(FrogIsOnTheMoveEvent e){
+		AudioManager.instance.RandomizePitchFromRange (_frogAudioSystem);
+		StartCoroutine (DelayAudioPlay (_frogAudioSystem.audioSource, 1.5f));
+	}
+
+	IEnumerator DelayAudioPlay(AudioSource audioSource, float duration){
+		yield return new WaitForSeconds (duration);
+		audioSource.Play ();
+	}
+
 	void Initialize(DancerChangeMoveEvent e) {
 		if (e.Move == DancerMove.none) {
 			_isInitialized = true;
 		}
 	}
+
+
 
 	public void StopCrankSound(){
 		_stopForSceneTransition = true;

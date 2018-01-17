@@ -46,7 +46,6 @@ public class MBFrog : MonoBehaviour {
 		_isDetecting = true;
 		// 
 		_originAngle = _pondMain.transform.localEulerAngles.z;
-		ActivateFrog (_curNodeOrderIdx);
 		
 	}
 	
@@ -67,7 +66,9 @@ public class MBFrog : MonoBehaviour {
 			}
 		}
 
-
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			ActivateFrog (_curNodeOrderIdx);
+		}
 
 	}
 
@@ -93,6 +94,7 @@ public class MBFrog : MonoBehaviour {
 	void ActivateFrog(int index){
 		MBFrogAnimationBehaviour _curBehaviour = _JumpNode[index].gameObject.GetComponentInChildren<MBFrogAnimationBehaviour>();
 		if (_curBehaviour != null) {
+			Events.G.Raise(new FrogIsOnTheMoveEvent());
 			_curBehaviour.ShowFrog ();
 		}
 	}
@@ -162,8 +164,16 @@ public class MBFrog : MonoBehaviour {
 
 	void DancerOnBoardHandle(DancerOnBoard e){
 		_dancerOnNodeIdx = e.NodeIdx;
+		if (_dancerOnNodeIdx == 203) {
+			StartCoroutine (DelayedFrogActivation (4f));
+		}
 		//print ("Frog! : the dancer is on : " + _dancerOnNodeIdx + " the frog is on: " + _JumpNode[_curNodeOrderIdx].readNodeInfo().index);
 	} 
+
+	IEnumerator DelayedFrogActivation(float duration){
+		yield return new WaitForSeconds (duration);
+		ActivateFrog (_curNodeOrderIdx);
+	}
 
 	// map angle to [0,2*PI)
 	float DampAngle(float angle){
