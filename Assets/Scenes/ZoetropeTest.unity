@@ -2004,6 +2004,7 @@ GameObject:
   - component: {fileID: 1354247297}
   - component: {fileID: 1354247302}
   - component: {fileID: 1354247303}
+  - component: {fileID: 1354247305}
   - component: {fileID: 1354247304}
   m_Layer: 0
   m_Name: Main Camera
@@ -2062,8 +2063,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -2117,14 +2118,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quality: 2
+  Quality: 0
   BloomEnabled: 1
   BloomParams:
-    Quality: 2
+    Quality: 0
     BloomTint: {r: 1, g: 1, b: 1, a: 1}
-    BloomThreshold: 0.8
-    BloomIntensity: 1.5
-    BloomSoftness: 0.5
+    BloomThreshold: 0
+    BloomIntensity: 1.45
+    BloomSoftness: 0.59
   VisualizeBloom: 0
   LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
   LensDirtIntensity: 1
@@ -2163,12 +2164,23 @@ MonoBehaviour:
   CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
   FarTint: {r: 0, g: 0, b: 1, a: 1}
   CloseTintStrength: 0.5
-  FarTintStrength: 0.5
+  FarTintStrength: 0
   DesaturateDarksStrength: 0.5
   DesaturateFarObjsStrength: 0.5
   FogTint: {r: 1, g: 1, b: 1, a: 1}
-  FogStrength: 0.5
-  HalfResolution: 1
+  FogStrength: 0
+  HalfResolution: 0
+--- !u!114 &1354247305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1354247296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301eca71255100647bb9bad1d5641921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1358683620
 GameObject:
   m_ObjectHideFlags: 0
