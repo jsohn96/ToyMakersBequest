@@ -250,10 +250,27 @@ public class MusicBoxCameraTimeline : MonoBehaviour {
 					//StartCoroutine (DelayedFollowCam (_cameraControlPoints [cnt].duration, 3f));
 				}
 			} else if (_playgroundFirst) {
-				if (_nodeDancerIsAboutToEnter == 224) {
-						cnt = 1;
+				if (_nodeDancerIsAboutToEnter == 223) {
+					cnt = 1;
 					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
 
+				} else if (_nodeDancerIsAboutToEnter == 226) {
+					cnt = 2;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
+					cnt++;
+					StartCoroutine (DelayedNextControlPoint (_cameraControlPointsPlaygroundFirst [cnt - 1].duration - 0.8f, _cameraControlPointsPlaygroundFirst [cnt]));
+					StartCoroutine (DelayedFollowCam (_cameraControlPointsPlaygroundFirst [cnt].duration + _cameraControlPointsPlaygroundFirst [cnt - 1].duration, 4f));
+
+				} else if (_nodeDancerIsAboutToEnter == 229) {
+					cnt = 4;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
+//					_musicBoxCameraManager.ActivateStaticFollow (3f);
+//					StartCoroutine (DelayedFollowCam (_cameraControlPointsPlaygroundFirst [cnt].duration, 3f));
+				} else if (_nodeDancerIsAboutToEnter == 231) {
+					cnt = 5;
+					_musicBoxCameraManager.MoveToWayPoint (_cameraControlPointsPlaygroundFirst [cnt].transform, _cameraControlPointsPlaygroundFirst [cnt].duration, _cameraControlPointsPlaygroundFirst [cnt].fov);
+					cnt++;
+					StartCoroutine (DelayedNextControlPoint (_cameraControlPointsPlaygroundFirst [cnt - 1].duration - 0.8f, _cameraControlPointsPlaygroundFirst [cnt]));
 				}
 			} else {
 				if (_nodeDancerIsAboutToEnter == 201) {
