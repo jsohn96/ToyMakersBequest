@@ -169,7 +169,11 @@ public class MusicBoxTextManager : MonoBehaviour {
 				StartCoroutine (FadeOut (_textMeshPros [12], _fadeDuration, 3.5f));
 			}
 		} else {
-			
+			if (_nodeDancerIsAboutToEnter == 201 || _nodeDancerIsAboutToEnter == 202) {
+				StartCoroutine (FadeOut (_textMeshProsLayer2 [0], _fadeDuration, 0.5f));
+				StartCoroutine (FadeOut (_textMeshProsLayer2 [1], _fadeDuration, 0.5f));
+				StartCoroutine (FadeOut (_textMeshProsLayer2 [2], _fadeDuration, 0.5f));
+			}
 		}
 	}
 }
