@@ -121,14 +121,15 @@ public class ClockInterlock : MonoBehaviour {
 				// compare angle 
 				if (nkey.relativeNodeIdx == -1) {
 					// absolute angle 
-					if (Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.001f) {
+					if (Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.1f) {
 						if (nkey.key.Length >= 2) {
 							foreach (GameObject k in nkey.key) {
 								if (!_activeKeys.Contains (k)) {
 									_activeKeys.Add (k);
-									foundKeysNumber += 1;
+
 								}
 							}
+							foundKeysNumber += 1;
 							nkey.isUnlock = true;
 							break;
 						} else if (nkey.key.Length <= 0 || nkey.key == null) {
@@ -151,15 +152,17 @@ public class ClockInterlock : MonoBehaviour {
 
 				} else {
 					PathNode relativeNode = _myPathNet.FindNodeWithIndex (nkey.relativeNodeIdx);
+					// TODO check angle difference
 					if ( Mathf.Abs(AngleUtil.DampAngle(Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) 
-						- AngleUtil.DampAngle (relativeNode.gameObject.transform.localEulerAngles.z)))-AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.001f) {
+						- AngleUtil.DampAngle (relativeNode.gameObject.transform.localEulerAngles.z)))-AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.1f) {
 						if (nkey.key.Length >= 2) {
 							foreach (GameObject k in nkey.key) {
 								if (!_activeKeys.Contains (k)) {
 									_activeKeys.Add (k);
-									foundKeysNumber += 1;
+
 								}
 							}
+							foundKeysNumber += 1;
 							nkey.isUnlock = true;
 							break;
 						} else if (nkey.key.Length <= 0 || nkey.key == null) {
