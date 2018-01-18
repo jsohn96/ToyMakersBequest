@@ -94,23 +94,25 @@ public class TextContentTracker : MonoBehaviour {
 	}
 
 	public void ShowNextText(){
-		StartCoroutine (FadeTMPIn(_tmpCrawls [_currentIndex].textMeshPros[_txtCnt]));
-		_audioTimer.CooldownTime = _tmpCrawls [_currentIndex].voLengths [_txtCnt];
-		_audioTimer.Reset ();
-		_nextArrowOnce = false;
-		if (_audioSource.isPlaying) {
-			_audioSource.Stop ();
-		}
-		_audioSource.clip = _tmpCrawls [_currentIndex].voClips[_txtCnt];
-		_audioSource.Play ();
+		if (_nextArrowOnce) {
+			StartCoroutine (FadeTMPIn (_tmpCrawls [_currentIndex].textMeshPros [_txtCnt]));
+			_audioTimer.CooldownTime = _tmpCrawls [_currentIndex].voLengths [_txtCnt];
+			_audioTimer.Reset ();
+			_nextArrowOnce = false;
+			if (_audioSource.isPlaying) {
+				_audioSource.Stop ();
+			}
+			_audioSource.clip = _tmpCrawls [_currentIndex].voClips [_txtCnt];
+			_audioSource.Play ();
 
-		_nextArrow.enabled = false;
-		if (_txtCnt < _currentIndexLength - 1) {
-			_nextArrow.rectTransform.anchoredPosition = _tmpCrawls [_currentIndex].arrowPositions [_txtCnt];
-		} else {
-			_backButton.enabled = true;
+			_nextArrow.enabled = false;
+			if (_txtCnt < _currentIndexLength - 1) {
+				_nextArrow.rectTransform.anchoredPosition = _tmpCrawls [_currentIndex].arrowPositions [_txtCnt];
+			} else {
+				_backButton.enabled = true;
+			}
+			_txtCnt++;
 		}
-		_txtCnt++;
 	}
 		
 	void ReadjustTextUI(int index){

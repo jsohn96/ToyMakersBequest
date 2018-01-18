@@ -23,6 +23,8 @@ public class SpriteFade : MonoBehaviour {
 	bool _flickerIn = false;
 	[SerializeField] bool specificUseCaseForZoetrope = false;
 
+	bool _turnitOffForGood = false;
+
 	void Start () {
 		_originColor = _sprite.color;
 		_emptyColor = _originColor;
@@ -102,22 +104,35 @@ public class SpriteFade : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if (specificUseCaseForZoetrope) {
-			if (_fadeCoroutine != null) {
-				StopCoroutine (_fadeCoroutine);
+		if (!_turnitOffForGood) {
+			if (specificUseCaseForZoetrope) {
+				if (_fadeCoroutine != null) {
+					StopCoroutine (_fadeCoroutine);
+				}
+				_fadeCoroutine = FadeSpriteOut ();
+				StartCoroutine (_fadeCoroutine);
 			}
-			_fadeCoroutine = FadeSpriteOut ();
-			StartCoroutine(_fadeCoroutine);
 		}
 	}
 
 	void OnMouseUp(){
-		if (specificUseCaseForZoetrope) {
-			if (_fadeCoroutine != null) {
-				StopCoroutine (_fadeCoroutine);
+		if (!_turnitOffForGood) {
+			if (specificUseCaseForZoetrope) {
+				if (_fadeCoroutine != null) {
+					StopCoroutine (_fadeCoroutine);
+				}
+				_fadeCoroutine = FadeSpriteIn (0f);
+				StartCoroutine (_fadeCoroutine);
 			}
-			_fadeCoroutine = FadeSpriteIn (0f);
-			StartCoroutine (_fadeCoroutine);
 		}
+	}
+
+	public void TurnItOffForGood(){
+		if (_fadeCoroutine != null) {
+			StopCoroutine (_fadeCoroutine);
+		}
+		_turnitOffForGood = true;
+		_fadeCoroutine = FadeSpriteOut ();
+		StartCoroutine(_fadeCoroutine);
 	}
 }

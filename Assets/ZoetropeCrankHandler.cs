@@ -20,6 +20,7 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	[SerializeField] AudioSource _audioSourceWhir;
 	[SerializeField] DragRotation _dragRotationScript;
 
+	[SerializeField] SpriteFade _rotationArrowSpriteFade;
 
 	float _hijackSpeed = 5f;
 	bool _hijack = false;
@@ -35,6 +36,7 @@ public class ZoetropeCrankHandler : MonoBehaviour {
 	void Update () {
 		if (_crankCnt > 240) {
 			if (!_startRotate) {
+				_rotationArrowSpriteFade.TurnItOffForGood ();
 				_dragRotationScript.enabled = false;
 				_startRotate = true;
 				_speedTimer.Reset ();
