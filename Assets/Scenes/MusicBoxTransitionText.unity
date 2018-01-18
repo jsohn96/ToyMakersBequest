@@ -404,9 +404,7 @@ GameObject:
   - component: {fileID: 897674685}
   - component: {fileID: 897674684}
   - component: {fileID: 897674683}
-  - component: {fileID: 897674682}
   - component: {fileID: 897674681}
-  - component: {fileID: 897674686}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -416,13 +414,6 @@ GameObject:
   m_IsActive: 1
 --- !u!81 &897674681
 AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 897674680}
-  m_Enabled: 1
---- !u!124 &897674682
-Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -464,8 +455,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -484,18 +475,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &897674686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 897674680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d9f5f269b87034eb17dc12d4f102cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _wantedAspectRatio: 1.7777778
 --- !u!1 &952534416
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +534,6 @@ GameObject:
   - component: {fileID: 987094625}
   - component: {fileID: 987094624}
   - component: {fileID: 987094623}
-  - component: {fileID: 987094622}
   - component: {fileID: 987094626}
   m_Layer: 5
   m_Name: Canvas
@@ -564,22 +542,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &987094622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 987094621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &987094623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +618,7 @@ MonoBehaviour:
   _textMeshProSequence:
   - {fileID: 434169989}
   - {fileID: 1370812137}
-  _nextScene: 4
+  _nextScene: 1
   _fadeScript: {fileID: 1671816429}
 --- !u!1 &1197692079
 GameObject:
@@ -706,7 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -912,6 +874,7 @@ MonoBehaviour:
   fadeOutTexture: {fileID: 2800000, guid: 333222d40d8c48b44952dd7ee106089d, type: 3}
   fadeSpeed: 1
   _noStartFade: 0
+  _EndStateForBuild: 0
 --- !u!4 &1671816430
 Transform:
   m_ObjectHideFlags: 0
