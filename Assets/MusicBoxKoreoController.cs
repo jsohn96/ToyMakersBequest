@@ -46,6 +46,10 @@ public class MusicBoxKoreoController : AudioSourceController {
 	IEnumerator _delayedPauseCoroutine;
 	IEnumerator _storedResumeKoreography;
 
+	void Awake(){
+		_multiMusicPlayer = GetComponent<MultiMusicPlayer> ();
+	}
+
 	void Start () {
 		if (_audioSystem.audioSource == null) {
 			_audioSystem.audioSource = GetComponent<AudioSource> ();
@@ -58,7 +62,7 @@ public class MusicBoxKoreoController : AudioSourceController {
 		Koreographer.Instance.RegisterForEvents ("MusicBoxMelodyTrack", CircleKoreoHandle);
 
 		// get koreography music player
-		_multiMusicPlayer = GetComponent<MultiMusicPlayer> ();
+
 
 		if (_whichLayer == MusicBoxLayer.MusicBoxAccompany) {
 			_multiMusicPlayer.Volume = 0.3f;

@@ -66,6 +66,35 @@ public struct NodeInfo{
 }
 
 
+[System.Serializable]
+public class InterlockStruct{
+	public int relativeNodeIdx;
+	public float unlockAngle;
+	public int unlockNodeIdx;
+	public GameObject intersection;
+	public bool isActive;
+}
+
+[System.Serializable]
+public class InterClockNode{
+	public List<InterlockStruct> _interlockMembers;
+	// check for each interlockmember, if all parts are collocted 
+	public bool checkActivity(){
+		bool isfoundmatch = false;
+		foreach (InterlockStruct its in _interlockMembers) {
+			if (its.isActive == true) {
+				isfoundmatch = true;
+			} else {
+				isfoundmatch = false;
+				break;
+			}
+		}
+
+		return isfoundmatch;
+	}
+}
+
+
 
 
 public class PathNode : MonoBehaviour {
@@ -141,6 +170,9 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] BranchNode[] _branchNodes;
 	[SerializeField] bool _isSnapEnable = true;
 
+	// for clock maze structure
+	[SerializeField] List<GameObject> _activeIntersections;
+
 	// descend node --> for stairs 
 	bool _isDescended = false;
 	bool _isDescending = false;
@@ -158,7 +190,6 @@ public class PathNode : MonoBehaviour {
 
 	void OnEnable(){
 		Events.G.AddListener<SetPathNodeEvent> (SetPathEventHandle);
-		//Events.G.AddListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.AddListener<MBTurnColorCircle> (TurnColorCircleHandle);
 		Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
@@ -166,7 +197,6 @@ public class PathNode : MonoBehaviour {
 
 	void OnDisable(){
 		Events.G.RemoveListener<SetPathNodeEvent> (SetPathEventHandle);
-		//Events.G.RemoveListener<DancerFinishPath> (DancerFinishPathHandle);
 		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.RemoveListener<MBTurnColorCircle> (TurnColorCircleHandle);
 		Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
@@ -175,6 +205,7 @@ public class PathNode : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		_activeIntersections = new List<GameObject> ();
 		_myNetWork = GetComponentInParent<PathNetwork> ();
 		_nodeTransform = gameObject.transform;
 		if (_ControlColor != ButtonColor.None) {
@@ -199,15 +230,6 @@ public class PathNode : MonoBehaviour {
 			print ("ERROR: non interlock nodes should be active : " +_nodeIndex);
 			_isActive = true;
 		}
-
-		//print ("axis right " + _nodeIndex + " " + gameObject.transform.right);
-		//print ("world up " + Vector3.up);
-
-//		print ("360 --> " + DampAngle (360));
-//		print ("1080 --> " + DampAngle (1080));
-//		print ("360 - 0 --> " + DampAngle (360 - 0));
-
-
 
 	}
 
@@ -240,6 +262,11 @@ public class PathNode : MonoBehaviour {
 
 	}
 
+	public void SetCheckClockInterlock(bool clockNodeActive, List<GameObject> activeIntersections){
+		_isActive = clockNodeActive;
+		_activeIntersections = activeIntersections;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		// Rotate Circles
@@ -261,8 +288,6 @@ public class PathNode : MonoBehaviour {
 				
 		}// end of checking isActive
 
-
-
 	}
 
 
@@ -278,13 +303,8 @@ public class PathNode : MonoBehaviour {
 				if (Mathf.Abs (Quaternion.Angle (transform.localRotation, finalAngle)) > errorVal * 20f) {
 					transform.localRotation = Quaternion.Lerp (transform.localRotation, finalAngle, Time.deltaTime * rotateSpeed);
 				} else {
-					//print ("####### reset boolean #######");
 					transform.localRotation = finalAngle;
 					isRotating = false;
-					// TODO change the node checking 
-					//					if (_isActive) {
-					//						CheckNodeConnection ();
-					//					}
 				}
 			} else {
 				if (_glowInfoSent) {
@@ -305,10 +325,6 @@ public class PathNode : MonoBehaviour {
 		if (_isActive) {
 			CheckNodeConnection ();
 		}
-
-		//		if (ischeckingConnection) {
-		//			CheckNodeConnection ();
-		//		}
 
 	}
 
@@ -361,6 +377,7 @@ public class PathNode : MonoBehaviour {
 
 
 	}
+		
 
 	// for interlock nodes 
 	void CheckInterlockNodes(float degree){
@@ -664,6 +681,13 @@ public class PathNode : MonoBehaviour {
 						if (_isInterLocked && _intersectionPart!= null ) {
 							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
 							_intersectionPart.transform.parent = gameObject.transform;
+						}
+
+						if (_activeIntersections.Count > 0 ) {
+							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+							foreach(GameObject itsc in _activeIntersections){
+								itsc.transform.parent = gameObject.transform;
+							}
 						}
 						isDragStart = true;
 						if (_shaderGlowCustom != null) {

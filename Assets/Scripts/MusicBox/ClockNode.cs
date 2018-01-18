@@ -12,14 +12,17 @@ public class ClockNode : MonoBehaviour {
 	Quaternion originAngle;
 	Quaternion finalAngle;
 
+	[SerializeField] List<GameObject> activeParts;
+
 
 	// Use this for initialization
 	void Start () {
 		isClockActive = true;
 		_intervalTimer = new Timer (intervalTime);
+		activeParts = new List<GameObject> ();
 	}
 	
-	// Update is called once per frame
+	// Update is called once per frame 
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			//isClockActive = !isClockActive;
@@ -33,6 +36,15 @@ public class ClockNode : MonoBehaviour {
 			
 		
 	}
+
+	public void SetClockCircle(bool _isActive, List<GameObject> _actparts){
+		Debug.Log (clockCircleID + ": receive check " + _isActive);
+		isClockActive = _isActive;
+		activeParts = _actparts;
+	
+	}
+
+		
 
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -48,7 +60,7 @@ public class ClockNode : MonoBehaviour {
 			if (diffAngle > 0.05f) {
 				transform.localRotation = Quaternion.Slerp (transform.localRotation, finalAngle, Time.deltaTime * 5f);
 			} else {
-				Debug.Log ("reset rotation");
+				//Debug.Log ("reset rotation");
 				transform.localRotation = finalAngle;
 				isRotating = false;
 			}
@@ -56,10 +68,17 @@ public class ClockNode : MonoBehaviour {
 	}
 
 	void RotateNode(float amount){
-		Debug.Log ("bug check: isrotating val" + isRotating);
+		//Debug.Log ("bug check: isrotating val" + isRotating);
 		// temp Rot Degree = 0, 90, 180, 270 
 		//float tempRotDegree = transform.rotation.eulerAngles.z;
-		if(!isRotating){
+		if(isClockActive && !isRotating){
+			if (activeParts != null && activeParts.Count > 0 ) {
+				Debug.Log ("Click on Clock: " + clockCircleID  + " changing intersection");
+				foreach(GameObject itsc in activeParts){
+					itsc.transform.parent = gameObject.transform;
+				}
+			}
+
 			isRotating = true;
 			originAngle = transform.localRotation;
 			//transform.Rotate(0,0,-90);
