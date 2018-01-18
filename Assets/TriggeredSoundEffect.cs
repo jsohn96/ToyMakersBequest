@@ -12,6 +12,7 @@ public class TriggeredSoundEffect : MonoBehaviour {
 
 	Timer _bellTimer;
 	Vector3 _tempVector3;
+	BoxCollider _boxCollider;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +25,8 @@ public class TriggeredSoundEffect : MonoBehaviour {
 		_leftAngle = Quaternion.Euler (_tempVector3);
 		_tempVector3.x = 12.0f;
 		_rightAngle = Quaternion.Euler (_tempVector3);
+		_boxCollider = GetComponent<BoxCollider> ();
+		_boxCollider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +46,23 @@ public class TriggeredSoundEffect : MonoBehaviour {
 		if (other.name == _objectNameToCollide) {
 			_audioSource.Play ();
 			_bellTimer.Reset ();
+		}
+	}
+
+	void OnEnable ()
+	{
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
+	}
+
+	void OnDisable ()
+	{
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
+	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		int nodeIndex = e.NodeIdx;
+		if (nodeIndex == 234) {
+			_boxCollider.enabled = true;
 		}
 	}
 }

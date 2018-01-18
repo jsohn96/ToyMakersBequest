@@ -1928,6 +1928,7 @@ MonoBehaviour:
   fadeOutTexture: {fileID: 2800000, guid: 333222d40d8c48b44952dd7ee106089d, type: 3}
   fadeSpeed: 1
   _noStartFade: 0
+  _EndStateForBuild: 0
 --- !u!4 &1319212232
 Transform:
   m_ObjectHideFlags: 0
@@ -2118,10 +2119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quality: 0
+  Quality: 3
   BloomEnabled: 1
   BloomParams:
-    Quality: 0
+    Quality: 3
     BloomTint: {r: 1, g: 1, b: 1, a: 1}
     BloomThreshold: 0
     BloomIntensity: 1.45
@@ -2139,8 +2140,8 @@ MonoBehaviour:
   FilmGrainIntensity: 0
   FilmGrainTiling: 4
   VignettingIntensity: 0.5
-  DOFEnabled: 0
-  BlurCOCTexture: 1
+  DOFEnabled: 1
+  BlurCOCTexture: 0
   DOFParams:
     UseUnityDepthBuffer: 1
     AutoFocus: 0
@@ -2169,7 +2170,7 @@ MonoBehaviour:
   DesaturateFarObjsStrength: 0.5
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0
-  HalfResolution: 0
+  HalfResolution: 1
 --- !u!114 &1354247305
 MonoBehaviour:
   m_ObjectHideFlags: 0

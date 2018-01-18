@@ -1631,11 +1631,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 96286929}
@@ -2116,6 +2116,7 @@ GameObject:
   - component: {fileID: 132972015}
   - component: {fileID: 132972014}
   - component: {fileID: 132972013}
+  - component: {fileID: 132972018}
   - component: {fileID: 132972017}
   m_Layer: 0
   m_Name: Main Camera
@@ -2251,6 +2252,17 @@ MonoBehaviour:
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0.5
   HalfResolution: 0
+--- !u!114 &132972018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132972012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301eca71255100647bb9bad1d5641921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &133977671
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,11 +2746,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 153778567}
@@ -2980,11 +2992,11 @@ MonoBehaviour:
     lineCount: 3
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 157640804}
@@ -5715,11 +5727,11 @@ MonoBehaviour:
     lineCount: 3
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 334308929}
@@ -7739,11 +7751,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 437871424}
@@ -9388,6 +9400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startIndex: 0
+  PathNetworkID: 0
   _correctOrder:
   - index: 0
     nameOfEvent: 0
@@ -10393,6 +10406,7 @@ MonoBehaviour:
   fadeOutTexture: {fileID: 2800000, guid: 333222d40d8c48b44952dd7ee106089d, type: 3}
   fadeSpeed: 1
   _noStartFade: 0
+  _EndStateForBuild: 0
 --- !u!4 &687256735
 Transform:
   m_ObjectHideFlags: 0
@@ -14356,6 +14370,46 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 966348848}
   m_Mesh: {fileID: 4300040, guid: 3e3b73e5ef37a0341af25f3c59d3d194, type: 3}
+--- !u!1 &966606193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 966606195}
+  - component: {fileID: 966606194}
+  m_Layer: 0
+  m_Name: FPS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &966606194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966606193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7e71cf22ecf2b40ad993d7a806ed56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &966606195
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966606193}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8567872, y: 0.6720451, z: -6.1897793}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &975500789
 GameObject:
   m_ObjectHideFlags: 0
@@ -16936,11 +16990,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1214939072}
@@ -19233,11 +19287,11 @@ MonoBehaviour:
     lineCount: 4
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1352858067}
@@ -21449,11 +21503,11 @@ MonoBehaviour:
     lineCount: 3
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1492898077}
@@ -21788,7 +21842,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1505171990}
   - component: {fileID: 1505171993}
-  - component: {fileID: 1505171992}
   m_Layer: 0
   m_Name: SecondCameraForModel
   m_TagString: Untagged
@@ -21809,13 +21862,6 @@ Transform:
   m_Father: {fileID: 132972016}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!124 &1505171992
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1505171989}
-  m_Enabled: 1
 --- !u!20 &1505171993
 Camera:
   m_ObjectHideFlags: 0
@@ -21833,7 +21879,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 200
   field of view: 30
   orthographic: 0
   orthographic size: 5
@@ -22721,11 +22767,11 @@ MonoBehaviour:
     lineCount: 6
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1561368639}
@@ -23099,6 +23145,15 @@ MonoBehaviour:
     pitchRange:
       _min: 0.7
       _max: 1.3
+    previouslyPlayedIndex: 0
+  _frogAudioSystem:
+    audioSource: {fileID: 0}
+    volume: 0
+    fadeDuration: 0
+    clips: []
+    pitchRange:
+      _min: 0
+      _max: 0
     previouslyPlayedIndex: 0
 --- !u!82 &1588562016
 AudioSource:
@@ -28868,11 +28923,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1923566629}

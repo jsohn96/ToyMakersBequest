@@ -12,6 +12,7 @@ public class Fading : MonoBehaviour {
 	private float alpha = 1.0f; // the texture's alpha value between 0 - 1
 	private int fadeDir = -1; // the direction to fade: in = -1 or out = 1
 	[SerializeField] bool _noStartFade = false;
+	[SerializeField] bool _EndStateForBuild = false;
 
 	void Awake(){
 		/*if (_fading) {
@@ -65,12 +66,23 @@ public class Fading : MonoBehaviour {
 	{
 //		SceneManager.sceneLoaded += WhenLevelLoads;
 //		Events.G.AddListener <Act1EndedEvent>(Fade);
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 	}
 //
 	void OnDisable ()
 	{
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 //		SceneManager.sceneLoaded -= WhenLevelLoads;
 //		Events.G.AddListener <Act1EndedEvent>(Fade);
+	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		int nodeIndex = e.NodeIdx;
+		if(_EndStateForBuild){
+			if (nodeIndex == 234 || nodeIndex == 213) {
+				StartCoroutine (ChangeLevel ());
+			}
+		}
 	}
 //
 //	void Fade(Act1EndedEvent e){
@@ -81,7 +93,14 @@ public class Fading : MonoBehaviour {
 //		yield return new WaitForSeconds(5f);
 //		BeginFade (1);
 //	}
-}
+	IEnumerator ChangeLevel(){
+		yield return new WaitForSeconds(0.5f);
+		float fadeTime = BeginFade (1);
+		yield return new WaitForSeconds(fadeTime);
+		SceneManager.LoadScene (5);
+	}
+
+
 //StartCoroutine(ChangeLevel());
 //IEnumerator ChangeLevel(){
 //	yield return new WaitForSeconds(0.5f);
@@ -92,4 +111,4 @@ public class Fading : MonoBehaviour {
 //	} else {
 //		Application.LoadLevel(5);
 //	}
-//}
+}
