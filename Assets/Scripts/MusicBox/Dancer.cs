@@ -159,6 +159,7 @@ public class Dancer : MonoBehaviour {
 			} else {
 				//print ("Current Spline Length: " + pathLength);
 				_duration = pathLength * _DurationSensitivity;
+				Debug.Log (pathLength + " path Length");
 			}
 
 
