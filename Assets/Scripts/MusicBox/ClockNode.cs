@@ -27,6 +27,7 @@ public class ClockNode : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			//isClockActive = !isClockActive;
 			RotateNode (_angle);
+
 		}
 
 		if (isClockActive && _intervalTimer.IsOffCooldown) {
@@ -38,7 +39,7 @@ public class ClockNode : MonoBehaviour {
 	}
 
 	public void SetClockCircle(bool _isActive, List<GameObject> _actparts){
-		Debug.Log (clockCircleID + ": receive check " + _isActive);
+		//Debug.Log (clockCircleID + ": receive check " + _isActive);
 		isClockActive = _isActive;
 		activeParts = _actparts;
 	

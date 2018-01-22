@@ -163,7 +163,8 @@ public class PathNode : MonoBehaviour {
 
 	// for interlocked nodes
 	[SerializeField] bool _isInterLocked = false;  
-	[SerializeField] bool _isActive = true;
+	[SerializeField] bool _isControlActive = true;
+	[SerializeField] bool _isCheckConnectionActive = true;
 	[SerializeField] GameObject _intersectionPart;
 
 	[SerializeField] InterlockNode[] _interlockNodes;
@@ -226,9 +227,9 @@ public class PathNode : MonoBehaviour {
 			
 		}
 
-		if (!_isInterLocked && !_isActive) {
+		if (!_isInterLocked && !_isControlActive) {
 			print ("ERROR: non interlock nodes should be active : " +_nodeIndex);
-			_isActive = true;
+			_isControlActive = true;
 		}
 
 	}
@@ -263,8 +264,15 @@ public class PathNode : MonoBehaviour {
 	}
 
 	public void SetCheckClockInterlock(bool clockNodeActive, List<GameObject> activeIntersections){
-		_isActive = clockNodeActive;
+		_isControlActive = clockNodeActive;
 		_activeIntersections = activeIntersections;
+	}
+	public void SetCheckConnection(bool checkConnectionActive, bool isCheckIn){
+		if (isCheckIn == !_isDancerOnBoard) {
+			_isCheckConnectionActive = checkConnectionActive;
+		}
+
+	
 	}
 
 	// Update is called once per frame
@@ -274,7 +282,7 @@ public class PathNode : MonoBehaviour {
 
 		//print ("debug check temp rotate disabled: " + isTempDisable);
 
-		if(_isActive){
+		if(_isControlActive){
 			//ClickWithMouse ();_curSegIdx
 
 			if (_isDescending) {
@@ -292,7 +300,7 @@ public class PathNode : MonoBehaviour {
 
 
 	void FixedUpdate(){
-		if (_isActive) {
+		if (_isControlActive) {
 			if (isRotating) {
 				if (!_glowInfoSent) {
 					//do the mouse enter thing _shaderGlowCustom
@@ -322,16 +330,21 @@ public class PathNode : MonoBehaviour {
 
 	void LateUpdate(){
 		// only check connection when node is active 
-		if (_isActive) {
+		if (_isCheckConnectionActive) {
 			CheckNodeConnection ();
+		} else {
+			//Debug.Log (_nodeIndex + "$$ set to false ");
+			if (_isCorrectConnection) {
+				_isCorrectConnection = false;
+				_myNodeInfo.isConnected = _isCorrectConnection;
+			}
 		}
-
 	}
 
 	void TurnColorCircleHandle(MBTurnColorCircle e){
 		if (_nodeIndex != e.activeIdx && _ControlColor == e.activeColor) {
 			print ("check control color: " + e.activeColor);
-			if (_isActive) {
+			if (_isControlActive) {
 				RotateNode ();
 			}
 
@@ -589,7 +602,7 @@ public class PathNode : MonoBehaviour {
 		//print ("Interlock State Check: " + _nodeIndex + " " + e.Unlock);
 		// TODO: for one with multiple index
 		if (e.SendFrom != _nodeIndex && e.SendTo == _nodeIndex) {
-			_isActive = e.Unlock;
+			_isControlActive = e.Unlock;
 		}
 
 	}
@@ -677,7 +690,7 @@ public class PathNode : MonoBehaviour {
 			//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					if (_isActive) {
+					if (_isControlActive) {
 						if (_isInterLocked && _intersectionPart!= null ) {
 							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
 							_intersectionPart.transform.parent = gameObject.transform;

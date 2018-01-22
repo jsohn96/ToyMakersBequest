@@ -19,6 +19,10 @@ public class Dancer : MonoBehaviour {
 	// 
 	[SerializeField] float _DurationSensitivity;      // dancer's moving speed 
 	[SerializeField] Transform _myBodyTransform;
+	[SerializeField] GameObject _underFootIntersection;
+	bool isOnIntersection;
+	int correctIdx = -1; // the node that the dancer is supposed to be on
+	int shifedIdx = -1;  // the parent of the intersection 
 
 	bool isPathFinished = true;           // is the current path finished 
 	bool isMoving = false; 				  // is the dancer currently moving 
@@ -37,6 +41,7 @@ public class Dancer : MonoBehaviour {
 	[SerializeField] SplineWalkerMode _mode;
 
 	bool _isNodeWithPath = false;
+	bool _isPreNodeWithPath = false;
 	Vector3 _tempVector3KeepingDancerLevel;
 
 	// Use this for initialization
@@ -62,29 +67,23 @@ public class Dancer : MonoBehaviour {
 		Events.G.RemoveListener<DancerChangeMoveEvent> (DancerChangeMoveHandel);
 		Events.G.RemoveListener<PathStateManagerEvent> (DancerHoldHandEvent);
 
-		isMoving = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// spline walker adapt 
 
-			if (isMoving && !isPathFinished) {
-				_progress += Time.deltaTime / _duration;
-				if (_progress >= 1f) {
-					_progress = 1f;
-					isMoving = false;
-					isPathFinished = true;
-					print ("Dancer: reaches the end");
-					Events.G.Raise (new DancerFinishPath (_curPathIndex));
-				}
-
-
-				// playing the music
-//				if (!_myAudio.isPlaying) {
-//					_myAudio.Play ();
-//					print ("Dancer Player Music");
-//				}
+		if (isMoving && !isPathFinished) {
+			_progress += Time.deltaTime / _duration;
+			if (_progress >= 1f) {
+				_progress = 1f;
+				isMoving = false;
+				isPathFinished = true;
+				print ("Dancer: reaches the end");
+				Events.G.Raise (new DancerFinishPath (_curPathIndex));
+				detectDancerExactPosition ();
+			}
+			if (_activeSpline != null) {
 				Vector3 position = _activeSpline.GetPoint (_progress);
 				transform.position = position;
 				if (isMoving) {
@@ -92,6 +91,8 @@ public class Dancer : MonoBehaviour {
 					_tempVector3KeepingDancerLevel.y = transform.position.y;
 					transform.LookAt (_tempVector3KeepingDancerLevel);
 				}
+			}
+				
 
 			} else if (isPathFinished) {
 //				if (_myAudio.isPlaying) {
@@ -100,14 +101,49 @@ public class Dancer : MonoBehaviour {
 			}
 		 
 
-		
+		CheckShiftedNodeIdx ();
 
 
 		if (_isDancerRotate) {
 			_myBodyTransform.Rotate (0, -1, 0);
 		}
 
+
+
 	
+	}
+
+	void detectDancerExactPosition(){
+		Ray FootRay = new Ray (gameObject.transform.position, -gameObject.transform.up);
+		RaycastHit hit;
+		int layerMask = 1 << 19;
+		if (Physics.Raycast (FootRay, out hit, 10f, layerMask) ) {
+			if (hit.collider.tag == "intersect") {
+				//Debug.Log ("under dance : " + hit.collider.gameObject.name);
+				_underFootIntersection = hit.collider.gameObject;
+				gameObject.transform.parent = _underFootIntersection.transform;
+				isOnIntersection = true;
+
+			} else {
+				isOnIntersection = false;			
+			}
+
+		}
+		
+	}
+
+	void CheckShiftedNodeIdx(){
+		if (isOnIntersection) {
+			int tempIdx = _underFootIntersection.GetComponentInParent<PathNode> ().readNodeInfo ().index;
+			if (tempIdx != shifedIdx) {
+				shifedIdx = tempIdx;
+				if (shifedIdx != correctIdx) {
+					Debug.Log("AHHHHHH DERAILED !!!! " + shifedIdx);
+				}	
+				// send out an event to imform the pathnetwork that the dancer is derailed 
+
+			}
+		}
 	}
 
 	void RotateForward(){
@@ -133,11 +169,15 @@ public class Dancer : MonoBehaviour {
 	public void SetNewPath (PathNode pn){
 		// set New Path --> get the current active path
 		// set the boolean vals 
-		print("Place dancer on node " + pn.readNodeInfo().index);
-		isMoving = true;
+		correctIdx = pn.readNodeInfo ().index;
+		print("Place dancer on node " + correctIdx);
+		isPathFinished = false;
 
-		//_myTransform.parent = pn.gameObject.transform.parent;
+		_curStartPos = transform.position;
 		_myTransform.parent = pn.gameObject.transform;
+
+		//_myTransform.parent = null;
+		//_myTransform.parent = pn.transform;
 		//Quaternion tempRot = pn.gameObject.transform.rotation;
 		//_myTransform.rotation = tempRot;
 
@@ -147,8 +187,10 @@ public class Dancer : MonoBehaviour {
 		int activePath = pn.readNodeInfo().activeSegIdx;
 		//TODO: add code for p2 
 		if (pn.readNodeInfo ().paths!= null && pn.readNodeInfo ().paths.Length > 0) {
-			_progress = 0f;
 			_isNodeWithPath = true;
+			isMoving = true;
+			_progress = 0f;
+
 			_activeSpline = pn.readNodeInfo ().paths [activePath];
 			//print ("Check Active Path" + activePath);
 			_curStartPos = _activeSpline.GetPoint (0);
@@ -159,19 +201,27 @@ public class Dancer : MonoBehaviour {
 			} else {
 				//print ("Current Spline Length: " + pathLength);
 				_duration = pathLength * _DurationSensitivity;
-				Debug.Log (pathLength + " path Length");
+				//detectDancerExactPosition ();
 			}
 
 
 		} else {
 			_isNodeWithPath = false;
-			_curStartPos = transform.position;
+			transform.position = _curStartPos;
 			print ("Enter Node");
-			//_activeSpline == null;
+			_activeSpline = null;
+			isMoving = true;
+			_progress = 1f;
+			//Events.G.Raise (new DancerFinishPath (_curPathIndex));
 		}
+			
+		//* Activate isPathFinished at end of coroutine:  isPathFinished = false;\
+		if (_isNodeWithPath && _isPreNodeWithPath) {
+			StartCoroutine (LerpBetweenPaths (pn._betweenTransitionLerpDuration));
+		} 
 
-		//* Activate isPathFinished at end of coroutine:  isPathFinished = false;
-		StartCoroutine (LerpBetweenPaths (pn._betweenTransitionLerpDuration));
+		_isPreNodeWithPath = _isNodeWithPath;
+
 
 	}
 
@@ -186,6 +236,7 @@ public class Dancer : MonoBehaviour {
 		transform.position = _curStartPos;
 		isPathFinished = false;
 		yield return null;
+
 	}
 
 	// TODO: set the dancer behavior --> what the dancer's moves are 

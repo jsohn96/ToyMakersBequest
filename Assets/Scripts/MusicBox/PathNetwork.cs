@@ -76,7 +76,6 @@ public class PathNetwork : MonoBehaviour {
 		// read in path order 
 		NodeOrderFileName = "NodeOrderData" + PathNetworkID.ToString() + ".json"; 
 		GetNodeOrderData();
-
 		_myNodes = GetComponentsInChildren<PathNode> ();
 		_myNodesLength = _myNodes.Length;
 		print ("Init Info: " + "\nNode Count"+ _myNodesLength);
@@ -89,8 +88,6 @@ public class PathNetwork : MonoBehaviour {
 	void OnEnable(){
 		Events.G.AddListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.AddListener<PathResumeEvent> (PathResumeHandle);
-		//Events.G.AddListener<MBPlayModeEvent> (PlayModeHandle);
-		//Events.G.AddListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.AddListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.AddListener<MBExitPondLoop> (ExitLoopHandle);
 	}
@@ -98,8 +95,6 @@ public class PathNetwork : MonoBehaviour {
 	void OnDisable(){
 		Events.G.RemoveListener<DancerFinishPath> (HandleDancerFinishPath);
 		Events.G.RemoveListener<PathResumeEvent> (PathResumeHandle);
-		//Events.G.RemoveListener<MBPlayModeEvent> (PlayModeHandle);
-		//Events.G.RemoveListener<InterlockNodeStateEvent> (InterlockNodeStateHandle);
 		Events.G.RemoveListener<MBPathIndexEvent> (PathIndexHandle);
 		Events.G.RemoveListener<MBExitPondLoop> (ExitLoopHandle);
 	}
@@ -177,7 +172,7 @@ public class PathNetwork : MonoBehaviour {
 	// have the dancer reports back to the network about her status
 	public void PositionDancer (){
 		// pass down the game object
-		print("Current node in poisitondancer:"+ _curNodeIdx);
+		//print("Current node in poisitondancer:"+ _curNodeIdx);
 		_curNode = FindNodeWithIndex (_curNodeIdx);
 
 		_myDancer.SetNewPath (_curNode);
@@ -201,7 +196,7 @@ public class PathNetwork : MonoBehaviour {
 
 	// When dancer finishes the current path, request to check the next connection
 	void HandleDancerFinishPath(DancerFinishPath e){
-		//print ("Check next available node");
+		//print ("Check next available node " + e.NodeIdx + "current waiting index " + _correctOrder [_orderIdx].index);
 		if (_isActive && _correctOrder [_orderIdx].index==e.NodeIdx) {
 			//print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
 
@@ -209,10 +204,11 @@ public class PathNetwork : MonoBehaviour {
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
 				Events.G.Raise (new MBMusicMangerEvent (false));
 				CheckNextIdx ();
+				//print ("#######3 checking next: " + _correctOrder [_orderIdx].index);
 			} else {
 				Events.G.Raise (new PathStateManagerEvent (_correctOrder [_orderIdx].nameOfEvent));
 				_isPathPause = true;
-				//print (Time.time + "End of Path " + _correctOrder [_orderIdx].nameOfEvent + " " + _correctOrder[_orderIdx].index + " " + _orderIdx);
+				print ("End of Path " + _correctOrder [_orderIdx].nameOfEvent + " " + _correctOrder[_orderIdx].index + " " + _orderIdx);
 				if (_correctOrder [_orderIdx].nameOfEvent == PathState.open_gate) {
 					if (!_skipGatePause) {
 						Events.G.Raise (new MBMusicMangerEvent (false));
@@ -342,6 +338,12 @@ public class PathNetwork : MonoBehaviour {
 	
 	}
 
+	public void ChangePathnetworkValue(int changeAtIdx, int changeTo){
+		if (changeAtIdx >= 0 && changeAtIdx < _correctOrder.Length) {
+			_correctOrder [changeAtIdx].index = changeTo;
+		}
+	}
+
 	// for handling all the different senarios for getting the next node index 
 	// call after path finished && after any end of path events finished 
 	void CheckNextIdx(){
@@ -353,6 +355,7 @@ public class PathNetwork : MonoBehaviour {
 			_curNodeIdx = _correctOrder [_orderIdx].index;
 			// TODO add other senarios 
 			_isCheckingNext = true;
+			//Debug.Log("##### next checking node is :")
 		} else if(_nxtCheckIdx > 0){
 			_orderIdx = _nxtCheckIdx;
 			_curNodeIdx = _correctOrder [_orderIdx].index;

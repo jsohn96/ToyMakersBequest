@@ -87,7 +87,7 @@ public class ClockInterlock : MonoBehaviour {
 		foundKeysNumber = 0;
 		_activeKeys.Clear ();
 		UpdateKeyPool ();
-		Debug.Log (_myNode.readNodeInfo().index + " check active number: " + foundKeysNumber + " " + requireKeysNumer);
+		//Debug.Log (_myNode.readNodeInfo().index + " check active number: " + foundKeysNumber + " " + requireKeysNumer);
 		if (requireKeysNumer > 0 && foundKeysNumber >= requireKeysNumer) {
 			isNodeActive = true;
 			_myNode.SetCheckClockInterlock (isNodeActive, _activeKeys);
@@ -153,8 +153,10 @@ public class ClockInterlock : MonoBehaviour {
 				} else {
 					PathNode relativeNode = _myPathNet.FindNodeWithIndex (nkey.relativeNodeIdx);
 					// TODO check angle difference
-					if ( Mathf.Abs(AngleUtil.DampAngle(Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) 
-						- AngleUtil.DampAngle (relativeNode.gameObject.transform.localEulerAngles.z)))-AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.1f) {
+					float angledifference = Mathf.Abs(Mathf.Abs(AngleUtil.DampAngle(providerNode.gameObject.transform.localEulerAngles.z)-AngleUtil.DampAngle(relativeNode.gameObject.transform.localEulerAngles.z)) - nkey.unlockAngle);
+					angledifference = Mathf.Min (angledifference, 360f - angledifference);
+					//Debug.Log ("$$$ check angle interlock : " + angledifference);
+					if ( angledifference <= 0.1f) {
 						if (nkey.key.Length >= 2) {
 							foreach (GameObject k in nkey.key) {
 								if (!_activeKeys.Contains (k)) {
