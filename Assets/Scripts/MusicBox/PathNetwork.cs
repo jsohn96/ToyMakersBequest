@@ -34,7 +34,8 @@ public enum PathState{
 	MB_Stage_EnterPlayScene,
 	MB_Stage_ExitPondScene,
 	MB_Stage_ExitPlayScene,
-	MB_Descend_to_layer_three
+	MB_Descend_to_layer_three,
+	pathPause
 }
 
 
@@ -184,9 +185,11 @@ public class PathNetwork : MonoBehaviour {
 
 	// 
 	void PathResumeHandle(PathResumeEvent e){
+		// TODO: potential bug 
 		if (_curNodeIdx == 6) {
 			_skipGatePause = true;
 		}
+
 		if (_isPathPause) {
 			_isPathPause = false;
 			CheckNextIdx ();
@@ -198,7 +201,7 @@ public class PathNetwork : MonoBehaviour {
 	void HandleDancerFinishPath(DancerFinishPath e){
 		//print ("Check next available node " + e.NodeIdx + "current waiting index " + _correctOrder [_orderIdx].index);
 		if (_isActive && _correctOrder [_orderIdx].index==e.NodeIdx) {
-			//print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
+			print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
 
 			// check if there is anyevent envoked when the path is finished 
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
@@ -292,9 +295,9 @@ public class PathNetwork : MonoBehaviour {
 
 	public void UpdateNodes(){
 		_myNodes = GetComponentsInChildren<PathNode> ();
-		_orderIdx = _startIndex;
+		//_orderIdx = _startIndex;
 		_curNodeIdx = _correctOrder[_orderIdx].index;
-		print ("Start from: " + _curNodeIdx);
+		//print ("Start from: " + _curNodeIdx);
 	}
 		
 	// for loop in the path
@@ -339,9 +342,18 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	public void ChangePathnetworkValue(int changeAtIdx, int changeTo){
-		if (changeAtIdx >= 0 && changeAtIdx < _correctOrder.Length) {
+		Debug.Log (Time.time + "chnage index: " + _orderIdx);
+		if (changeAtIdx >= 0 && changeAtIdx < _correctOrder.Length && _orderIdx == changeAtIdx) {
 			_correctOrder [changeAtIdx].index = changeTo;
+			//CheckNextIdx ();
+			UpdateNodes();
+
 		}
+		_isPathPause = false;
+
+		//_isCheckingNext = true;
+		//CheckNextIdx ();
+
 	}
 
 	// for handling all the different senarios for getting the next node index 

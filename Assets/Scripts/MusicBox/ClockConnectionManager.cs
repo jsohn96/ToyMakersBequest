@@ -13,6 +13,7 @@ public class ActivateRecord{
 	
 }
 
+[System.Serializable]
 public class ChangeRecord{
 	public int changeAtIdx;
 	public int changeValIdx;
@@ -50,36 +51,43 @@ public class ClockConnectionManager : MonoBehaviour {
 		if(_clockActivateRecords != null){
 			foreach (ActivateRecord r in _clockActivateRecords){
 				bool isConnecting = true;
-				foreach (Connection cnn in r.connections) {
-					PathNode fromPn = _myPathNetwork.FindNodeWithIndex (cnn.fromIdx);
-					if (cnn.toIdx < 0) {
-						if (Mathf.Abs (AngleUtil.DampAngle (fromPn.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (cnn.relativeAngle)) < 0.001f) {
-							isConnecting = true;
+				if (r.connections != null) {
+					foreach (Connection cnn in r.connections) {
+						PathNode fromPn = _myPathNetwork.FindNodeWithIndex (cnn.fromIdx);
+						if (cnn.toIdx < 0) {
+							if (Mathf.Abs (AngleUtil.DampAngle (fromPn.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (cnn.relativeAngle)) < 0.001f) {
+								isConnecting = true;
+							} else {
+								isConnecting = false;
+								break;
+							}
 						} else {
-							isConnecting = false;
-							break;
-						}
-					} else {
-						PathNode toPn = _myPathNetwork.FindNodeWithIndex (cnn.toIdx);
-						float angledifference = Mathf.Abs (Mathf.Abs (AngleUtil.DampAngle (fromPn.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (toPn.gameObject.transform.localEulerAngles.z))
-							- AngleUtil.DampAngle (cnn.relativeAngle));
-						angledifference = Mathf.Min (angledifference, 360f - angledifference);
-						//Debug.Log ("$$check angle diff: " + angledifference);
-						if(angledifference< 0.001f){
-							isConnecting = true;
-						} else {
-							isConnecting = false;
-							break;
-						}
+							PathNode toPn = _myPathNetwork.FindNodeWithIndex (cnn.toIdx);
+							float angledifference = Mathf.Abs (Mathf.Abs (AngleUtil.DampAngle (fromPn.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (toPn.gameObject.transform.localEulerAngles.z))
+							                        - AngleUtil.DampAngle (cnn.relativeAngle));
+							angledifference = Mathf.Min (angledifference, 360f - angledifference);
+							//Debug.Log ("$$check angle diff: " + angledifference);
+							if (angledifference < 0.001f) {
+								isConnecting = true;
+							} else {
+								isConnecting = false;
+								break;
+							}
 
+						}
+					}// for each connection check 
+					PathNode activePn = _myPathNetwork.FindNodeWithIndex (r.activateIdx);
+					if (isConnecting) {
+						activePn.SetCheckConnection (true, r.isIn);
+					} else {
+						activePn.SetCheckConnection (false, r.isIn);
 					}
-				}// for each connection check 
-				PathNode activePn = _myPathNetwork.FindNodeWithIndex (r.activateIdx);
-				if (isConnecting) {
-					activePn.SetCheckConnection (true, r.isIn);
+				
 				} else {
-					activePn.SetCheckConnection (false, r.isIn);
+					PathNode activePn = _myPathNetwork.FindNodeWithIndex (r.activateIdx);
+					//activePn.SetCheckConnection ();
 				}
+
 			}// for each records 
 			
 		}
@@ -92,7 +100,9 @@ public class ClockConnectionManager : MonoBehaviour {
 				PathNode fromPn = _myPathNetwork.FindNodeWithIndex (r.connection.fromIdx);
 				if (r.connection.toIdx < 0) {
 					if (Mathf.Abs (AngleUtil.DampAngle (fromPn.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (r.connection.relativeAngle)) < 0.001f) {
+						
 						_myPathNetwork.ChangePathnetworkValue (r.changeAtIdx, r.changeValIdx);
+						//Events.G.Raise (new PathResumeEvent ());
 					} 
 				} else {
 					PathNode toPn = _myPathNetwork.FindNodeWithIndex (r.connection.toIdx);
@@ -100,9 +110,12 @@ public class ClockConnectionManager : MonoBehaviour {
 						- AngleUtil.DampAngle (r.connection.relativeAngle));
 					angledifference = Mathf.Min (angledifference, 360f - angledifference);
 					//Debug.Log ("$$check angle diff: " + angledifference);
-					if(angledifference< 0.001f){
+					if (angledifference < 0.001f) {
 						_myPathNetwork.ChangePathnetworkValue (r.changeAtIdx, r.changeValIdx);
-					} 
+						//Events.G.Raise (new PathResumeEvent ());
+					} else {
+						//Events.G.Raise (new MBPathIndexEvent (PathState.pathPause));
+					}
 
 				}
 

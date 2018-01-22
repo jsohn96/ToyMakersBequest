@@ -163,13 +163,15 @@ public class PathNode : MonoBehaviour {
 
 	// for interlocked nodes
 	[SerializeField] bool _isInterLocked = false;  
-	[SerializeField] bool _isControlActive = true;
+	[SerializeField] bool _isControlActive = true ;
 	[SerializeField] bool _isCheckConnectionActive = true;
 	[SerializeField] GameObject _intersectionPart;
 
 	[SerializeField] InterlockNode[] _interlockNodes;
 	[SerializeField] BranchNode[] _branchNodes;
 	[SerializeField] bool _isSnapEnable = true;
+	[SerializeField] bool _isCheckSameAsControl = false;
+
 
 	// for clock maze structure
 	[SerializeField] List<GameObject> _activeIntersections;
@@ -232,12 +234,19 @@ public class PathNode : MonoBehaviour {
 			_isControlActive = true;
 		}
 
+
+
 	}
+
+
 
 	void Start(){
 		initNodePathInfo ();
 		snapToAngle = new List<float> (10);
 		disableRotateTimer = new Timer (1);
+		if (_isCheckSameAsControl) {
+			_isCheckConnectionActive = _isControlActive;
+		}
 	}
 
 	void initNodePathInfo(){
@@ -266,13 +275,15 @@ public class PathNode : MonoBehaviour {
 	public void SetCheckClockInterlock(bool clockNodeActive, List<GameObject> activeIntersections){
 		_isControlActive = clockNodeActive;
 		_activeIntersections = activeIntersections;
+		if (_isCheckSameAsControl) {
+			_isCheckConnectionActive = _isControlActive;
+		}
 	}
 	public void SetCheckConnection(bool checkConnectionActive, bool isCheckIn){
 		if (isCheckIn == !_isDancerOnBoard) {
 			_isCheckConnectionActive = checkConnectionActive;
 		}
-
-	
+			
 	}
 
 	// Update is called once per frame
