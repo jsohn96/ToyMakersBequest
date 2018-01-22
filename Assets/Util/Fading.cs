@@ -62,28 +62,28 @@ public class Fading : MonoBehaviour {
 //		BeginFade (-1);
 //	}
 //
-//	void OnEnable ()
-//	{
+	void OnEnable ()
+	{
 //		SceneManager.sceneLoaded += WhenLevelLoads;
 //		Events.G.AddListener <Act1EndedEvent>(Fade);
-//		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
-//	}
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
+	}
 //
-//	void OnDisable ()
-//	{
-//		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
+	void OnDisable ()
+	{
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 //		SceneManager.sceneLoaded -= WhenLevelLoads;
 //		Events.G.AddListener <Act1EndedEvent>(Fade);
-//	}
-//
-//	void DancerOnBoardHandle(DancerOnBoard e){
-//		int nodeIndex = e.NodeIdx;
-//		if(_EndStateForBuild){
-//			if (nodeIndex == 234 || nodeIndex == 213) {
-//				StartCoroutine (ChangeLevel ());
-//			}
-//		}
-//	}
+	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		int nodeIndex = e.NodeIdx;
+		if(_EndStateForBuild){
+			if (nodeIndex == 234 || nodeIndex == 213) {
+				StartCoroutine (ChangeLevel ());
+			}
+		}
+	}
 //
 //	void Fade(Act1EndedEvent e){
 //		StartCoroutine (FadetoBlack());
@@ -93,12 +93,12 @@ public class Fading : MonoBehaviour {
 //		yield return new WaitForSeconds(5f);
 //		BeginFade (1);
 //	}
-//	IEnumerator ChangeLevel(){
-//		yield return new WaitForSeconds(0.5f);
-//		float fadeTime = BeginFade (1);
-//		yield return new WaitForSeconds(fadeTime);
-//		SceneManager.LoadScene (5);
-//	}
+	IEnumerator ChangeLevel(){
+		yield return new WaitForSeconds(0.5f);
+		float fadeTime = BeginFade (1);
+		yield return new WaitForSeconds(fadeTime);
+		SceneManager.LoadScene (5);
+	}
 
 
 //StartCoroutine(ChangeLevel());
