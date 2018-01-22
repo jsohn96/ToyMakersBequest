@@ -330,6 +330,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -1577,6 +1578,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -1719,7 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fee18a7be9940dda4da3b409b5d29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startIndex: 5
+  _startIndex: 0
   PathNetworkID: 3
   _correctOrder:
   - index: 301
@@ -1756,6 +1758,18 @@ MonoBehaviour:
       toIdx: 308
       relativeAngle: 0
     isIn: 1
+  - activateIdx: 322
+    connections:
+    - fromIdx: 306
+      toIdx: 307
+      relativeAngle: 180
+    isIn: 1
+  - activateIdx: 321
+    connections:
+    - fromIdx: 306
+      toIdx: 307
+      relativeAngle: 0
+    isIn: 1
   _changeNodeRecords:
   - changeAtIdx: 7
     changeValIdx: 321
@@ -1770,6 +1784,9 @@ MonoBehaviour:
       toIdx: 306
       relativeAngle: 180
   _myPathNetwork: {fileID: 164738974}
+  _clockNodes: []
+  _isClockActive: 1
+  _clockIntervalTime: 5
 --- !u!1 &198674451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,6 +2354,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -2929,6 +2947,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -3877,6 +3896,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -5020,6 +5040,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -5348,6 +5369,7 @@ MonoBehaviour:
     intersection: {fileID: 0}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6404,6 +6426,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6424,7 +6447,7 @@ MonoBehaviour:
   clockCircleID: 0
   isClockActive: 0
   intervalTime: 2
-  _angle: -45
+  _angle: -90
   isRotating: 0
   activeParts: []
 --- !u!114 &690833143
@@ -6519,6 +6542,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -7120,6 +7144,7 @@ MonoBehaviour:
     intersection: {fileID: 1530219323}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -7592,6 +7617,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -7996,6 +8022,7 @@ MonoBehaviour:
     intersection: {fileID: 0}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -8086,7 +8113,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 46.719097
+  field of view: 10.1
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -8111,7 +8138,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 885114738}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -227, y: 144, z: -38}
+  m_LocalPosition: {x: -220, y: 398, z: -49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9602,6 +9629,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 1
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -9921,14 +9949,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a359e5431fe240e18382766c6c99d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ControlColor: 3
+  _ControlColor: 0
   _nodeIndex: 322
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 0}
   _adjacentNode:
-  - adjNodeIdx: -1
+  - adjNodeIdx: 322
     relativeAngle: 0
-  - adjNodeIdx: -1
+  - adjNodeIdx: 322
     relativeAngle: 0
   _isCorrectConnection: 0
   _segCount: 0
@@ -9940,6 +9968,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -10637,6 +10666,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -11831,14 +11861,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a359e5431fe240e18382766c6c99d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ControlColor: 3
+  _ControlColor: 0
   _nodeIndex: 321
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 0}
   _adjacentNode:
-  - adjNodeIdx: -1
+  - adjNodeIdx: 321
     relativeAngle: 0
-  - adjNodeIdx: -1
+  - adjNodeIdx: 321
     relativeAngle: 0
   _isCorrectConnection: 0
   _segCount: 0
@@ -11850,6 +11880,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -12015,8 +12046,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1372109138}
   m_LocalRotation: {x: -0, y: -0.48203176, z: -0, w: 0.8761538}
-  m_LocalPosition: {x: 0.062, y: 0.052500002, z: 0.327}
-  m_LocalScale: {x: 1.0001853, y: 1.0000011, z: 1.0001851}
+  m_LocalPosition: {x: 0.028, y: 0.052500002, z: 0.351}
+  m_LocalScale: {x: 0.7659997, y: 0.76585865, z: 0.7659996}
   m_Children:
   - {fileID: 164738973}
   - {fileID: 1367573116}
@@ -15421,6 +15452,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -15940,6 +15972,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -15960,7 +15993,7 @@ MonoBehaviour:
   clockCircleID: 0
   isClockActive: 0
   intervalTime: 2
-  _angle: 180
+  _angle: 90
   isRotating: 0
   activeParts: []
 --- !u!114 &1745628697
@@ -16081,6 +16114,7 @@ MonoBehaviour:
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -17434,7 +17468,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1996943601}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 42.571514, y: -14.163964, z: -2.0058768}
   m_LocalScale: {x: 9.903424, y: 9.903378, z: 20.314354}
   m_Children:
@@ -17447,7 +17481,7 @@ Transform:
   - {fileID: 2514177}
   m_Father: {fileID: 164738973}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1996943603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17483,6 +17517,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -17503,7 +17538,7 @@ MonoBehaviour:
   clockCircleID: 0
   isClockActive: 0
   intervalTime: 2
-  _angle: 45
+  _angle: -45
   isRotating: 0
   activeParts: []
 --- !u!114 &1996943605

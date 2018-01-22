@@ -142,8 +142,8 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
-//			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
-//				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
+			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
+				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
 
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// music manager continues to play music 
@@ -347,6 +347,7 @@ public class PathNetwork : MonoBehaviour {
 			_correctOrder [changeAtIdx].index = changeTo;
 			//CheckNextIdx ();
 			UpdateNodes();
+			//_isCheckingNext = true;
 
 		}
 		_isPathPause = false;

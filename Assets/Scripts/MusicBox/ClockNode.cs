@@ -26,7 +26,7 @@ public class ClockNode : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			//isClockActive = !isClockActive;
-			RotateNode (_angle);
+			RotateNode ();
 
 		}
 
@@ -59,7 +59,7 @@ public class ClockNode : MonoBehaviour {
 			//Debug.Log("### " + diffAngle);
 
 			if (diffAngle > 0.05f) {
-				transform.localRotation = Quaternion.Slerp (transform.localRotation, finalAngle, Time.deltaTime * 5f);
+				transform.localRotation = Quaternion.Slerp (transform.localRotation, finalAngle, Time.deltaTime * 2f);
 			} else {
 				//Debug.Log ("reset rotation");
 				transform.localRotation = finalAngle;
@@ -68,10 +68,11 @@ public class ClockNode : MonoBehaviour {
 		}
 	}
 
-	void RotateNode(float amount){
+	public void RotateNode(){
 		//Debug.Log ("bug check: isrotating val" + isRotating);
 		// temp Rot Degree = 0, 90, 180, 270 
 		//float tempRotDegree = transform.rotation.eulerAngles.z;
+		float amount = _angle;
 		if(isClockActive && !isRotating){
 			if (activeParts != null && activeParts.Count > 0 ) {
 				Debug.Log ("Click on Clock: " + clockCircleID  + " changing intersection");

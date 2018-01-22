@@ -34,14 +34,31 @@ public class ClockConnectionManager : MonoBehaviour {
 	[SerializeField] PathNetwork _myPathNetwork;
 
 
+	// clock control 
+	[SerializeField] ClockNode[] _clockNodes;
+	[SerializeField] bool _isClockActive  = true;
+	[SerializeField] float _clockIntervalTime;
+	Timer _ClockTimer;
+
+
+
 	// Use this for initialization
 	void Awake () {
 		_myPathNetwork = GetComponent<PathNetwork> ();
+		_clockNodes = GetComponentsInChildren<ClockNode> ();
+		_ClockTimer = new Timer (_clockIntervalTime);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		CheckingActivateRecords ();
+
+		if (_isClockActive && _ClockTimer.IsOffCooldown) {
+			_ClockTimer.Reset ();
+			foreach (ClockNode cln in _clockNodes) {
+				cln.RotateNode ();
+			}
+		}
 	}
 
 	// everytime the clc ticks
