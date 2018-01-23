@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
-  m_AmbientEquatorColor: {r: 0.49362022, g: 0.56116825, b: 0.6102941, a: 1}
-  m_AmbientGroundColor: {r: 0.72794116, g: 0.5316826, b: 0.13916522, a: 1}
+  m_AmbientSkyColor: {r: 0.029411793, g: 0.029411793, b: 0.029411793, a: 1}
+  m_AmbientEquatorColor: {r: 0.106617644, g: 0.117260054, b: 0.125, a: 1}
+  m_AmbientGroundColor: {r: 0.21323532, g: 0.15156436, b: 0.028222322, a: 1}
   m_AmbientIntensity: 0.16
-  m_AmbientMode: 3
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e878fc6c80029654e94b29fd39bc6699, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.571
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012121643, g: 0.0031997706, b: 0.0052146167, a: 0.571}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -57,7 +57,7 @@ LightmapSettings:
     serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 128
+    m_TextureWidth: 1024
     m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
@@ -110,6 +110,71 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2875878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2875880}
+  - component: {fileID: 2875879}
+  m_Layer: 0
+  m_Name: Spotlight (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &2875879
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2875878}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &2875880
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2875878}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 59.538, y: 52.741, z: 14.236}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &11132430
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +346,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &13776329
 Transform:
@@ -354,11 +419,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -832,7 +899,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &34906904
 Transform:
@@ -1397,12 +1464,12 @@ GameObject:
   - component: {fileID: 59342030}
   - component: {fileID: 59342032}
   - component: {fileID: 59342031}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &59342030
 Transform:
@@ -1700,11 +1767,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -1795,7 +1864,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &71496464
 Transform:
@@ -1981,7 +2050,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &76516398
 Transform:
@@ -2224,7 +2293,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &88038690
 Transform:
@@ -2395,7 +2464,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &93029676
 Transform:
@@ -2688,11 +2757,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -3586,11 +3657,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -3941,7 +4014,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &140414950
 Transform:
@@ -4012,7 +4085,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &141912886
 Transform:
@@ -4593,11 +4666,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -4878,11 +4953,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -5233,12 +5310,12 @@ GameObject:
   - component: {fileID: 187528416}
   - component: {fileID: 187528418}
   - component: {fileID: 187528417}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: floor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &187528416
 Transform:
@@ -6182,11 +6259,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6251,11 +6330,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6425,11 +6506,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6643,7 +6726,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &245554821
 Transform:
@@ -7090,6 +7173,71 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 268056955}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &273849398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 273849400}
+  - component: {fileID: 273849399}
+  m_Layer: 0
+  m_Name: Spotlight (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &273849399
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 273849398}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.7026384, g: 0.82140255, b: 0.83823526, a: 1}
+  m_Intensity: 0.8
+  m_Range: 0.73
+  m_SpotAngle: 41
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &273849400
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 273849398}
+  m_LocalRotation: {x: 0.00000014348373, y: -0.92519426, z: -0.00000018343066, w: 0.3794938}
+  m_LocalPosition: {x: 59.211, y: 52.536, z: 14.984}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &277907412
 GameObject:
   m_ObjectHideFlags: 0
@@ -8079,12 +8227,12 @@ GameObject:
   - component: {fileID: 304511540}
   - component: {fileID: 304511542}
   - component: {fileID: 304511541}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: window_frame1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &304511540
 Transform:
@@ -8439,7 +8587,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &322248433
 Transform:
@@ -8599,7 +8747,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 234
@@ -8607,6 +8756,7 @@ MonoBehaviour:
     intersection: {fileID: 1790890934}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -8666,17 +8816,23 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!4 &328391004 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+  m_PrefabInternal: {fileID: 953352486}
 --- !u!1 &329183812
 GameObject:
   m_ObjectHideFlags: 0
@@ -8773,7 +8929,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &330067823
 Transform:
@@ -9251,11 +9407,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -9661,7 +9819,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &361589238
 Transform:
@@ -10020,7 +10178,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &368004111
 Transform:
@@ -10325,7 +10483,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &376839788
 Transform:
@@ -10402,7 +10560,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 1790890934}
   _interlockNodes:
   - sendToIdx: 233
@@ -10413,6 +10572,7 @@ MonoBehaviour:
     intersection: {fileID: 1790890934}
   _branchNodes: []
   _isSnapEnable: 0
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -11588,11 +11748,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -11683,7 +11845,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &426211785
 Transform:
@@ -12109,7 +12271,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &442206467
 Transform:
@@ -12564,7 +12726,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 226
@@ -12572,6 +12735,7 @@ MonoBehaviour:
     intersection: {fileID: 868279221}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -12942,7 +13106,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 234
@@ -12950,6 +13115,7 @@ MonoBehaviour:
     intersection: {fileID: 1790890934}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -15221,12 +15387,12 @@ GameObject:
   - component: {fileID: 521115311}
   - component: {fileID: 521115313}
   - component: {fileID: 521115312}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &521115311
 Transform:
@@ -15282,6 +15448,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 521115310}
   m_Mesh: {fileID: 4300034, guid: 0a7fb206e0f3c4795a42a73e80b0d9ca, type: 3}
+--- !u!4 &535527105 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+  m_PrefabInternal: {fileID: 1431115883}
 --- !u!1 &536188046
 GameObject:
   m_ObjectHideFlags: 0
@@ -15718,7 +15888,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &561019043
 Transform:
@@ -16316,7 +16486,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 211
@@ -16324,6 +16495,7 @@ MonoBehaviour:
     intersection: {fileID: 311143752}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -16575,7 +16747,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &576480474
 Transform:
@@ -16802,11 +16974,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -16955,6 +17129,71 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a119e96c351054d05a4c3c4c13b44fd2, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &592243012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 592243014}
+  - component: {fileID: 592243013}
+  m_Layer: 0
+  m_Name: Spotlight (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &592243013
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 592243012}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &592243014
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 592243012}
+  m_LocalRotation: {x: 0.6504846, y: -0.27725396, z: 0.27725396, w: 0.6504846}
+  m_LocalPosition: {x: 59.216, y: 52.741, z: 13.564}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 90, y: -46.17, z: 0}
 --- !u!1 &594905111
 GameObject:
   m_ObjectHideFlags: 0
@@ -17092,7 +17331,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 210
@@ -17100,6 +17340,7 @@ MonoBehaviour:
     intersection: {fileID: 311143752}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -17657,7 +17898,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 213
@@ -17668,6 +17910,7 @@ MonoBehaviour:
     intersection: {fileID: 1224984466}
   _branchNodes: []
   _isSnapEnable: 0
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -18797,11 +19040,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -19771,11 +20016,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -21715,7 +21962,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 204
@@ -21723,6 +21971,7 @@ MonoBehaviour:
     intersection: {fileID: 1807496346}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -21986,7 +22235,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &779992936
 Transform:
@@ -22485,7 +22734,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 228
@@ -22493,6 +22743,7 @@ MonoBehaviour:
     intersection: {fileID: 1918757209}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -22557,11 +22808,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -22699,7 +22952,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &802572464
 Transform:
@@ -22935,11 +23188,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -24211,11 +24466,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -24235,7 +24492,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &836570973
 Transform:
@@ -24327,11 +24584,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -24605,7 +24864,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &848821389
 Transform:
@@ -25130,7 +25389,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &858699882
 Transform:
@@ -27236,11 +27495,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -28125,13 +28386,107 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 943465109}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 62.597267, y: 52.808388, z: 12.245512}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1001 &953352486
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1942382645}
+    m_Modifications:
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.1982595
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.28031942
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.2672231
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.2194886
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.22300507
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.46966875
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.82553303
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5205068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5203279
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.5204147
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.324
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -27.743002
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_IgnoreLayers.m_Bits
+      value: 4294965247
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_FieldOfView
+      value: 34.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_Orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_FarClipPlane
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 54.583004
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_AspectRatio
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_Name
+      value: BlobLightProjector (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &954219725
 GameObject:
   m_ObjectHideFlags: 0
@@ -28277,11 +28632,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -28438,11 +28795,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -28793,6 +29152,71 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!1 &978502608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 978502610}
+  - component: {fileID: 978502609}
+  m_Layer: 0
+  m_Name: Spotlight (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &978502609
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978502608}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &978502610
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978502608}
+  m_LocalRotation: {x: 0.6504846, y: -0.27725396, z: 0.27725396, w: 0.6504846}
+  m_LocalPosition: {x: 59.605, y: 52.741, z: 13.191}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 90, y: -46.17, z: 0}
 --- !u!1001 &984386073
 Prefab:
   m_ObjectHideFlags: 0
@@ -29352,11 +29776,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29557,11 +29983,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29771,7 +30199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9566aad45759c47aa298e173d28736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keepTriggersOn: 0
+  _objectNameToCollide: Dancer
   _bell: {fileID: 688133278}
+  _sliderScript: {fileID: 0}
+  _correctClip: {fileID: 0}
+  _wrongClip: {fileID: 0}
 --- !u!82 &1009274514
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29950,7 +30383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9566aad45759c47aa298e173d28736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keepTriggersOn: 0
+  _objectNameToCollide: Dancer
   _bell: {fileID: 186085872}
+  _sliderScript: {fileID: 0}
+  _correctClip: {fileID: 0}
+  _wrongClip: {fileID: 0}
 --- !u!82 &1009911894
 AudioSource:
   m_ObjectHideFlags: 0
@@ -30390,11 +30828,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -30756,11 +31196,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -30782,7 +31224,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1026620787
 Transform:
@@ -31317,7 +31759,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
       propertyPath: m_LocalScale.x
@@ -31426,6 +31868,170 @@ Prefab:
     - target: {fileID: 100036, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300018, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300008, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300038, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300034, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300006, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300032, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300020, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300036, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300022, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300014, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300016, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300012, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300040, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300010, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300024, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300028, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300004, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300030, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300026, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100040, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100030, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100036, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100042, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100028, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100016, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100022, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100032, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100038, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100026, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5160616c0c45f419792b43737aa6d269, type: 3}
@@ -31556,7 +32162,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1044071657
 Transform:
@@ -31581,7 +32187,7 @@ GameObject:
   - component: {fileID: 1046057119}
   - component: {fileID: 1046057121}
   - component: {fileID: 1046057120}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31842,7 +32448,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 214
@@ -31850,6 +32457,7 @@ MonoBehaviour:
     intersection: {fileID: 1224984466}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -31994,6 +32602,71 @@ Transform:
   m_Father: {fileID: 361373334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1058271928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1058271930}
+  - component: {fileID: 1058271929}
+  m_Layer: 0
+  m_Name: Spotlight (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &1058271929
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1058271928}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 0.7
+  m_Range: 0.6
+  m_SpotAngle: 41
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1058271930
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1058271928}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 59.1737, y: 52.1744, z: 13.6215}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1059605526
 GameObject:
   m_ObjectHideFlags: 0
@@ -33525,11 +34198,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -34265,11 +34940,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -34510,7 +35187,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 225
@@ -34518,6 +35196,7 @@ MonoBehaviour:
     intersection: {fileID: 868279221}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -34700,11 +35379,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -35915,7 +36596,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1175765353
 Transform:
@@ -36248,11 +36929,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -36288,7 +36971,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1185765863
 Transform:
@@ -37023,7 +37706,7 @@ Camera:
   m_GameObject: {fileID: 1206158840}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.028114177, g: 0.0648759, b: 0.09558821, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -37096,7 +37779,7 @@ MonoBehaviour:
   LensCurvaturePrecise: 0
   FilmGrainIntensity: 0
   FilmGrainTiling: 4
-  VignettingIntensity: 0.5
+  VignettingIntensity: 0.69
   DOFEnabled: 1
   BlurCOCTexture: 0
   DOFParams:
@@ -37121,11 +37804,11 @@ MonoBehaviour:
   ColorEffectsEnabled: 1
   CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
   FarTint: {r: 0, g: 0, b: 1, a: 1}
-  CloseTintStrength: 0.5
+  CloseTintStrength: 0.63
   FarTintStrength: 0
   DesaturateDarksStrength: 0.5
   DesaturateFarObjsStrength: 0
-  FogTint: {r: 0.14705884, g: 0.14705884, b: 0.14705884, a: 1}
+  FogTint: {r: 0.029411793, g: 0.029411793, b: 0.029411793, a: 1}
   FogStrength: 0
   HalfResolution: 0
 --- !u!1 &1217281071
@@ -38061,11 +38744,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -38096,7 +38781,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1254856081
 Transform:
@@ -38459,11 +39144,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -38499,7 +39186,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1275538809
 Transform:
@@ -38939,7 +39626,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1284782699
 Transform:
@@ -39579,7 +40266,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1291004121
 Transform:
@@ -39731,7 +40418,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9566aad45759c47aa298e173d28736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keepTriggersOn: 0
+  _objectNameToCollide: Dancer
   _bell: {fileID: 780551427}
+  _sliderScript: {fileID: 0}
+  _correctClip: {fileID: 0}
+  _wrongClip: {fileID: 0}
 --- !u!82 &1298858608
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39878,7 +40570,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1300267183
 Transform:
@@ -39947,11 +40639,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -40466,11 +41160,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -41009,7 +41705,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9566aad45759c47aa298e173d28736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keepTriggersOn: 0
+  _objectNameToCollide: Dancer
   _bell: {fileID: 381467184}
+  _sliderScript: {fileID: 0}
+  _correctClip: {fileID: 0}
+  _wrongClip: {fileID: 0}
 --- !u!82 &1337264701
 AudioSource:
   m_ObjectHideFlags: 0
@@ -41743,6 +42444,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1365122050}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1365532184
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1745158792}
+    m_Modifications:
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_FarClipPlane
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_FieldOfView
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+      propertyPath: m_IgnoreLayers.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1369423843
 GameObject:
   m_ObjectHideFlags: 0
@@ -41799,11 +42558,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -42202,7 +42963,7 @@ GameObject:
   - component: {fileID: 1383398135}
   - component: {fileID: 1383398136}
   - component: {fileID: 1383398133}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: A girl sneaks out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42401,7 +43162,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1383920017
 Transform:
@@ -42515,11 +43276,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -42583,11 +43346,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -42805,11 +43570,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -43400,7 +44167,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 204
@@ -43408,6 +44176,7 @@ MonoBehaviour:
     intersection: {fileID: 1807496346}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -43534,7 +44303,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1416228122
 Transform:
@@ -43791,11 +44560,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -44190,6 +44961,96 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1431033854}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1431115883
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1942382645}
+    m_Modifications:
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.19825947
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.28031942
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.26722196
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.21948862
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.223005
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.4696688
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.82553303
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.52005786
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.52005744
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.5200578
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.324
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -27.743002
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_IgnoreLayers.m_Bits
+      value: 4294965247
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_FieldOfView
+      value: 34.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_Orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_FarClipPlane
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 54.583004
+      objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_AspectRatio
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 21543d2b66928224f8a9536ff3811682, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1438139720
 GameObject:
   m_ObjectHideFlags: 0
@@ -44359,7 +45220,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1442473184
 Transform:
@@ -44474,11 +45335,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -44650,6 +45513,71 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1448719959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1448719961}
+  - component: {fileID: 1448719960}
+  m_Layer: 0
+  m_Name: Spotlight (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &1448719960
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1448719959}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 0.370891, g: 0.44565383, b: 0.7205882, a: 1}
+  m_Intensity: 3
+  m_Range: 2.69
+  m_SpotAngle: 64.23241
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1448719961
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1448719959}
+  m_LocalRotation: {x: -0, y: -0.7725001, z: -0, w: -0.6350147}
+  m_LocalPosition: {x: 57.903, y: 52.875, z: 15.482}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: -258.84198, z: 0}
 --- !u!1001 &1455633401
 Prefab:
   m_ObjectHideFlags: 0
@@ -44985,11 +45913,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -45053,7 +45983,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes:
@@ -45062,6 +45993,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -45155,6 +46087,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1467971549}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1470137206 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400002, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 2}
+  m_PrefabInternal: {fileID: 1365532184}
 --- !u!1 &1472221950
 GameObject:
   m_ObjectHideFlags: 0
@@ -45280,7 +46216,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 207
@@ -45288,6 +46225,7 @@ MonoBehaviour:
     intersection: {fileID: 406047330}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -45571,11 +46509,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -46612,11 +47552,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -47253,7 +48195,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes:
@@ -47262,6 +48205,7 @@ MonoBehaviour:
   - jumpToNodeIdx: 20
     connectAngle: 90
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -47299,7 +48243,7 @@ Transform:
   - {fileID: 390184473}
   - {fileID: 1104074222}
   m_Father: {fileID: 1745158792}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1546590813
 MeshRenderer:
@@ -47454,7 +48398,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1548393672
 Transform:
@@ -47625,7 +48569,7 @@ Transform:
   m_LocalScale: {x: 67.32484, y: 67.45713, z: 67.60216}
   m_Children: []
   m_Father: {fileID: 1745158792}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1551284718
 Light:
@@ -47676,7 +48620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _thisLightSystem:
     light: {fileID: 1551284718}
-    intensity: 0.3
+    intensity: 1
     color: {r: 1, g: 0.7921569, b: 0.2509804, a: 1}
     range: 0.5
 --- !u!1 &1552225227
@@ -48147,11 +49091,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -48567,11 +49513,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -50361,7 +51309,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 203
@@ -50372,6 +51321,7 @@ MonoBehaviour:
     intersection: {fileID: 1807496346}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -51006,7 +51956,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1734044113
 Transform:
@@ -51186,6 +52136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _DurationSensitivity: 5
   _myBodyTransform: {fileID: 1546590812}
+  _underFootIntersection: {fileID: 0}
   _mode: 0
 --- !u!4 &1745158792
 Transform:
@@ -51197,6 +52148,7 @@ Transform:
   m_LocalPosition: {x: 58.72589, y: 52.146446, z: 15.649025}
   m_LocalScale: {x: 0.08429843, y: 0.084298156, z: 0.08429845}
   m_Children:
+  - {fileID: 1470137206}
   - {fileID: 1777167951}
   - {fileID: 1546590812}
   - {fileID: 1551284717}
@@ -51588,12 +52540,12 @@ GameObject:
   - component: {fileID: 1750880516}
   - component: {fileID: 1750880518}
   - component: {fileID: 1750880517}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1750880516
 Transform:
@@ -51606,7 +52558,7 @@ Transform:
   m_LocalScale: {x: 0.52005726, y: 0.52005726, z: 0.52005726}
   m_Children: []
   m_Father: {fileID: 1942382645}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1750880517
 MeshRenderer:
@@ -51662,7 +52614,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1752443379
 Transform:
@@ -51742,11 +52694,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -51811,11 +52765,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -51880,11 +52836,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52588,11 +53546,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52700,7 +53660,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1787348434
 Transform:
@@ -52725,26 +53685,26 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.52930367, g: 0.56640476, b: 0.6544118, a: 1}
-  m_Intensity: 2
+  m_Intensity: 5.5
   m_Range: 2
-  m_SpotAngle: 55.942146
+  m_SpotAngle: 46
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0
+    m_NormalBias: 0
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_AreaSize: {x: 0.73551804, y: 0.45700073}
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
@@ -52841,7 +53801,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 0
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 208
@@ -52849,6 +53810,7 @@ MonoBehaviour:
     intersection: {fileID: 406047330}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52940,7 +53902,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1792722877
 Transform:
@@ -54774,7 +55736,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1864091776
 Transform:
@@ -54962,17 +55924,84 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 1909558112}
   _betweenTransitionLerpDuration: 0.25
+--- !u!1 &1871214280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1871214282}
+  - component: {fileID: 1871214281}
+  m_Layer: 0
+  m_Name: Spotlight (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &1871214281
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1871214280}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1871214282
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1871214280}
+  m_LocalRotation: {x: 0.6504846, y: -0.27725396, z: 0.27725396, w: 0.6504846}
+  m_LocalPosition: {x: 58.843, y: 52.741, z: 13.922}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 90, y: -46.17, z: 0}
 --- !u!1 &1874355062
 GameObject:
   m_ObjectHideFlags: 0
@@ -55188,11 +56217,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -55949,12 +56980,12 @@ GameObject:
   - component: {fileID: 1918498463}
   - component: {fileID: 1918498465}
   - component: {fileID: 1918498464}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: window_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1918498463
 Transform:
@@ -56597,6 +57628,71 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1929624549}
   m_Mesh: {fileID: 4300008, guid: 23eee5695adfd49a3b755cb0d08f9c45, type: 3}
+--- !u!1 &1941579466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1941579468}
+  - component: {fileID: 1941579467}
+  m_Layer: 0
+  m_Name: Spotlight (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &1941579467
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941579466}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1941579468
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941579466}
+  m_LocalRotation: {x: 0.6504846, y: -0.27725396, z: 0.27725396, w: 0.6504846}
+  m_LocalPosition: {x: 60.313, y: 52.741, z: 13.618}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 29
+  m_LocalEulerAnglesHint: {x: 90, y: -46.17, z: 0}
 --- !u!1 &1942382644
 GameObject:
   m_ObjectHideFlags: 0
@@ -56610,7 +57706,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1942382645
 Transform:
@@ -56622,6 +57718,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 535527105}
+  - {fileID: 328391004}
   - {fileID: 1750880516}
   m_Father: {fileID: 576480474}
   m_RootOrder: 2
@@ -56786,11 +57884,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -57159,7 +58259,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 220
@@ -57167,12 +58268,78 @@ MonoBehaviour:
     intersection: {fileID: 1224984466}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!1 &1964454886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1964454888}
+  - component: {fileID: 1964454887}
+  m_Layer: 0
+  m_Name: Spotlight (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!108 &1964454887
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1964454886}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 0.7941176, b: 0.4852941, a: 1}
+  m_Intensity: 1.2
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1964454888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1964454886}
+  m_LocalRotation: {x: 0.6504846, y: -0.27725396, z: 0.27725396, w: 0.6504846}
+  m_LocalPosition: {x: 59.91, y: 52.741, z: 14.004}
+  m_LocalScale: {x: 1.9797006, y: 2, z: 2.0206554}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 90, y: -46.17, z: 0}
 --- !u!1 &1966395851
 GameObject:
   m_ObjectHideFlags: 0
@@ -57228,11 +58395,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -57657,7 +58826,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9566aad45759c47aa298e173d28736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keepTriggersOn: 0
+  _objectNameToCollide: Dancer
   _bell: {fileID: 1638620197}
+  _sliderScript: {fileID: 0}
+  _correctClip: {fileID: 0}
+  _wrongClip: {fileID: 0}
 --- !u!82 &1973309458
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58116,11 +59290,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -58140,7 +59316,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1986160486
 Transform:
@@ -58253,7 +59429,8 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 1
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes:
   - sendToIdx: 229
@@ -58261,6 +59438,7 @@ MonoBehaviour:
     intersection: {fileID: 1918757209}
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -58481,11 +59659,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -58531,7 +59711,7 @@ Light:
   serializedVersion: 8
   m_Type: 3
   m_Color: {r: 0.8014706, g: 0.4912868, b: 0.3771626, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -58760,11 +59940,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -59102,7 +60284,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.5244918, g: 0.6066303, b: 0.8014706, a: 1}
+  m_Color: {r: 0.25735295, g: 0.3336714, b: 0.5147059, a: 1}
   m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
@@ -59972,11 +61154,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -61054,7 +62238,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2078636182
 Transform:
@@ -62472,11 +63656,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -62496,7 +63682,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2135245352
 Transform:
@@ -62734,11 +63920,13 @@ MonoBehaviour:
   _segCount: 0
   _curSegIdx: 0
   _isInterLocked: 0
-  _isActive: 1
+  _isControlActive: 1
+  _isCheckConnectionActive: 1
   _intersectionPart: {fileID: 0}
   _interlockNodes: []
   _branchNodes: []
   _isSnapEnable: 1
+  _isCheckSameAsControl: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0

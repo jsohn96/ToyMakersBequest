@@ -26,7 +26,7 @@ public class TouchInput : MonoBehaviour {
 			Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
 
 
-				if (Physics.Raycast (ray, out hit, touchInputMask)) {
+				if (Physics.Raycast (ray, out hit, 100f, touchInputMask)) {
 					GameObject recipient = hit.transform.gameObject;
 					touchList.Add (recipient);
 
@@ -58,7 +58,7 @@ public class TouchInput : MonoBehaviour {
 				Ray ray = _camera.ScreenPointToRay (touch.position);
 
 
-				if (Physics.Raycast (ray, out hit, touchInputMask)) {
+				if (Physics.Raycast (ray, out hit, 100f, touchInputMask)) {
 					GameObject recipient = hit.transform.gameObject;
 					touchList.Add (recipient);
 

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TriggeredSoundEffect : MonoBehaviour {
+	[SerializeField] bool _keepTriggersOn = false;
 	AudioSource _audioSource;
-	string _objectNameToCollide = "Dancer";
+	[SerializeField] string _objectNameToCollide = "Dancer";
 	[SerializeField] Transform _bell;
 	Quaternion _leftAngle;
 	Quaternion _rightAngle;
@@ -13,6 +14,9 @@ public class TriggeredSoundEffect : MonoBehaviour {
 	Timer _bellTimer;
 	Vector3 _tempVector3;
 	BoxCollider _boxCollider;
+
+	[SerializeField] SliderScript _sliderScript;
+	[SerializeField] AudioClip _correctClip, _wrongClip;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +30,9 @@ public class TriggeredSoundEffect : MonoBehaviour {
 		_tempVector3.x = 12.0f;
 		_rightAngle = Quaternion.Euler (_tempVector3);
 		_boxCollider = GetComponent<BoxCollider> ();
-		_boxCollider.enabled = false;
+		if (!_keepTriggersOn) {
+			_boxCollider.enabled = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -44,6 +50,11 @@ public class TriggeredSoundEffect : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.name == _objectNameToCollide) {
+			if (_sliderScript._discreteToggleOn) {
+				_audioSource.clip = _correctClip;
+			} else {
+				_audioSource.clip = _wrongClip;
+			}
 			_audioSource.Play ();
 			_bellTimer.Reset ();
 		}
