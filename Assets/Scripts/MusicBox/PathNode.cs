@@ -212,7 +212,7 @@ public class PathNode : MonoBehaviour {
 		_myNetWork = GetComponentInParent<PathNetwork> ();
 		_nodeTransform = gameObject.transform;
 		if (_ControlColor != ButtonColor.None) {
-			if (_cylinderRenderer!= null && !_cylinderRenderer.GetComponent<Renderer> () ) {
+			if (_cylinderRenderer!= null && _cylinderRenderer.GetComponent<Renderer> () ) {
 				_originMat = _cylinderRenderer.GetComponent<Renderer> ().material;
 			}
 		
