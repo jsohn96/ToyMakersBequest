@@ -94,11 +94,7 @@ public class Dancer : MonoBehaviour {
 			}
 				
 
-			} else if (isPathFinished) {
-//				if (_myAudio.isPlaying) {
-//					_myAudio.Pause ();
-//				}
-			}
+		}
 		 
 
 		CheckShiftedNodeIdx ();
@@ -117,17 +113,17 @@ public class Dancer : MonoBehaviour {
 		Ray FootRay = new Ray (gameObject.transform.position, -gameObject.transform.up);
 		RaycastHit hit;
 		int layerMask = 1 << 19;
-		if (Physics.Raycast (FootRay, out hit, 10f, layerMask) ) {
+		if (Physics.Raycast (FootRay, out hit, 10f, layerMask)) {
 			if (hit.collider.tag == "intersect") {
 				//Debug.Log ("under dance : " + hit.collider.gameObject.name);
 				_underFootIntersection = hit.collider.gameObject;
 				gameObject.transform.parent = _underFootIntersection.transform;
 				isOnIntersection = true;
 
-			} else {
-				isOnIntersection = false;			
-			}
+			} 
 
+		} else {
+			isOnIntersection = false;
 		}
 		
 	}
@@ -175,13 +171,7 @@ public class Dancer : MonoBehaviour {
 
 		_curStartPos = transform.position;
 		_myTransform.parent = pn.gameObject.transform;
-
-		//_myTransform.parent = null;
-		//_myTransform.parent = pn.transform;
-		//Quaternion tempRot = pn.gameObject.transform.rotation;
-		//_myTransform.rotation = tempRot;
-
-
+	
 		// get the positions info
 		_curPathIndex = pn.readNodeInfo().index;
 		int activePath = pn.readNodeInfo().activeSegIdx;
@@ -228,6 +218,7 @@ public class Dancer : MonoBehaviour {
 	IEnumerator LerpBetweenPaths(float duration){
 		float timer = 0.0f;
 		Vector3 tempOriginPos = transform.position;
+		isMoving = false;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			transform.position = Vector3.Lerp (tempOriginPos, _curStartPos, timer / duration);
@@ -235,6 +226,7 @@ public class Dancer : MonoBehaviour {
 		}
 		transform.position = _curStartPos;
 		isPathFinished = false;
+		isMoving = true;
 		yield return null;
 
 	}
