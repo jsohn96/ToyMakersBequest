@@ -50,11 +50,18 @@ public class TriggeredSoundEffect : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.name == _objectNameToCollide) {
-			if (_sliderScript._discreteToggleOn) {
-				_audioSource.clip = _correctClip;
+			if (_sliderScript != null) {
+				if (_sliderScript != null && _sliderScript._discreteToggleOn) {
+					_audioSource.clip = _correctClip;
+				} else {
+					_audioSource.clip = _wrongClip;
+				}
+			
 			} else {
-				_audioSource.clip = _wrongClip;
-			}
+				
+				_audioSource.clip = _correctClip;
+			
+			}			
 			_audioSource.Play ();
 			_bellTimer.Reset ();
 		}
