@@ -6,6 +6,8 @@ public class MusicBoxSoundEffect : AudioSourceController {
 	[SerializeField] AudioSystem _crankTickAudioSystem;
 	[SerializeField] AudioSystem _connectedAudioSystem;
 	[SerializeField] AudioSystem _frogAudioSystem;
+	[SerializeField] AudioSystem _interlockLockedAudioSystem;
+
 	int curRotateNode = -1;
 	bool _stopForSceneTransition = false;
 	bool _isInitialized = false;
@@ -71,7 +73,8 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		_stopForSceneTransition = true;
 	}
 
-	void PlayNodeStuckSound(){
-		
+	void PlayNodeStuckSound(PathNodeStuckEvent e){
+		AudioManager.instance.RandomizePitchFromRange (_interlockLockedAudioSystem);
+		_interlockLockedAudioSystem.audioSource.Play ();
 	}
 }
