@@ -16,6 +16,7 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		Events.G.AddListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.AddListener<DancerChangeMoveEvent> (Initialize);
 		Events.G.AddListener<FrogIsOnTheMoveEvent> (PlayFrogCroakSound);
+		Events.G.AddListener<PathNodeStuckEvent> (PlayNodeStuckSound);
 	}
 
 	void OnDisable(){
@@ -23,7 +24,7 @@ public class MusicBoxSoundEffect : AudioSourceController {
 		Events.G.RemoveListener<DragRotationEvent> (DragRotationHandle);
 		Events.G.RemoveListener<PathConnectedEvent> (PathConnectedHandler);
 		Events.G.RemoveListener<DancerChangeMoveEvent> (Initialize);
-		Events.G.RemoveListener<FrogIsOnTheMoveEvent> (PlayFrogCroakSound);
+		Events.G.RemoveListener<PathNodeStuckEvent> (PlayNodeStuckSound);
 	}
 
 	void DragRotationHandle(DragRotationEvent e) {
@@ -68,5 +69,9 @@ public class MusicBoxSoundEffect : AudioSourceController {
 
 	public void StopCrankSound(){
 		_stopForSceneTransition = true;
+	}
+
+	void PlayNodeStuckSound(){
+		
 	}
 }

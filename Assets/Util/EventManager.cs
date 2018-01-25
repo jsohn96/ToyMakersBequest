@@ -193,6 +193,10 @@ public class MBNodeConnect:GameEvent{
 public class FrogIsOnTheMoveEvent:GameEvent {
 }
 
+public class PathNodeStuckEvent:GameEvent{
+	
+}
+
 //***********//
 //    UI     //
 //***********//

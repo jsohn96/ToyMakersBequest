@@ -142,8 +142,8 @@ public class PathNetwork : MonoBehaviour {
 		if(_isCheckingNext && _isActive && !_isPathPause){
 			CheckNextIdxUpdate ();
 			PathNode tempNode = FindNodeWithIndex (_curNodeIdx);
-			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
-				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
+//			print ("Check connection for " + _curNode.readNodeInfo().index + ":" + _curNode.readNodeInfo ().isConnected
+//				+ "and " +_curNodeIdx + ":" + tempNode.readNodeInfo ().isConnected);
 
 			if (tempNode.readNodeInfo ().isConnected && _curNode.readNodeInfo().isConnected) {
 				// music manager continues to play music 
@@ -201,7 +201,7 @@ public class PathNetwork : MonoBehaviour {
 	void HandleDancerFinishPath(DancerFinishPath e){
 		//print ("Check next available node " + e.NodeIdx + "current waiting index " + _correctOrder [_orderIdx].index);
 		if (_isActive && _correctOrder [_orderIdx].index==e.NodeIdx) {
-			print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
+			//print(Time.time + " Finish path on : " + e.NodeIdx + ";" + _orderIdx);
 
 			// check if there is anyevent envoked when the path is finished 
 			if (_correctOrder [_orderIdx].nameOfEvent == PathState.none) {
@@ -342,7 +342,7 @@ public class PathNetwork : MonoBehaviour {
 	}
 
 	public void ChangePathnetworkValue(int changeAtIdx, int changeTo){
-		Debug.Log (Time.time + "chnage index: " + _orderIdx);
+		//Debug.Log (Time.time + "chnage index: " + _orderIdx);
 		if (changeAtIdx >= 0 && changeAtIdx < _correctOrder.Length && _orderIdx == changeAtIdx) {
 			_correctOrder [changeAtIdx].index = changeTo;
 			//CheckNextIdx ();

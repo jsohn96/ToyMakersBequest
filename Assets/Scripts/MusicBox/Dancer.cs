@@ -198,7 +198,7 @@ public class Dancer : MonoBehaviour {
 		} else {
 			_isNodeWithPath = false;
 			transform.position = _curStartPos;
-			print ("Enter Node");
+			//print ("Enter Node");
 			_activeSpline = null;
 			isMoving = true;
 			_progress = 1f;

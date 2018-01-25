@@ -142,7 +142,10 @@ public class PathNode : MonoBehaviour {
 	float rotateSpeed = 4f;
 	Quaternion finalAngle;
 	Quaternion originAngle;
+	Quaternion lastRestAngle;   // when the circle was static last time 
 	bool isRotating = false;
+	bool isShaking = false;
+	float shakeDecay = 5f;
 	float errorVal = 0.2f;
 	Vector3 preAxis;
 	Vector3 rotateAxis;
@@ -402,6 +405,17 @@ public class PathNode : MonoBehaviour {
 
 		}
 
+
+	}
+
+	void DoNotRotate(){
+		// rotate aniamtion 
+		if(!isRotating){
+			// 
+
+		}else{
+			Debug.Log ("is currently rotating");
+		}
 
 	}
 		
@@ -704,33 +718,44 @@ public class PathNode : MonoBehaviour {
 			//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					if (_isControlActive) {
-						if (_isInterLocked && _intersectionPart!= null ) {
-							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-							_intersectionPart.transform.parent = gameObject.transform;
-						}
+					if (_isInterLocked && _intersectionPart!= null ) {
+						//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+						_intersectionPart.transform.parent = gameObject.transform;
+					}
 
-						if (_activeIntersections.Count > 0 ) {
-							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-							foreach(GameObject itsc in _activeIntersections){
-								itsc.transform.parent = gameObject.transform;
-							}
+					if (_activeIntersections != null && _activeIntersections.Count > 0) {
+						//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+						foreach(GameObject itsc in _activeIntersections){
+							itsc.transform.parent = gameObject.transform;
 						}
-						isDragStart = true;
+					}
+
+					isDragStart = true;
+					dragStartPos = hit.point;
+					circlePlane = new Plane (Vector3.up, hit.point);
+					preAxis = new Vector3 (0, 0, 0);
+					preChangingTime = -1;
+
+					if (_isControlActive) {
+						//isDragStart = true;
 						if (_shaderGlowCustom != null) {
 							_shaderGlowCustom.lightOn ();
 						}
 						Events.G.Raise (new PathGlowEvent (isDragStart));
-						dragStartPos = hit.point;
-						//print ("hit point :" + hit.point);
-						hitDist = hit.distance;
-						// create a plane ;
-						circlePlane = new Plane (Vector3.up, hit.point);
-						preAxis = new Vector3 (0, 0, 0);
-						preChangingTime = -1;
+//						dragStartPos = hit.point;
+//						//print ("hit point :" + hit.point);
+//						hitDist = hit.distance;
+//						// create a plane ;
+//						circlePlane = new Plane (Vector3.up, hit.point);
+//						preAxis = new Vector3 (0, 0, 0);
+//						preChangingTime = -1;
 					} else {
 						// lock behaviour  + sound
-
+						// TODO: if the node is locked, after dragging larger than 5degrees, go back to the original position 
+						Debug.Log("Not contorl active");
+						lastRestAngle = transform.localRotation;
+						isTempDisable = false;
+						Events.G.Raise (new PathNodeStuckEvent ());
 					}
 
 					//debugPos1 = hit.point;
@@ -743,30 +768,34 @@ public class PathNode : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
 				isDragStart = false;
-				if (_shaderGlowCustom != null) {
-					_shaderGlowCustom.lightOff ();
+				if (_isControlActive) {
+					if (_shaderGlowCustom != null) {
+						_shaderGlowCustom.lightOff ();
+					}
+					Events.G.Raise (new PathGlowEvent (isDragStart));
+					//hitDist = 0;
+					accAngle = 0;
+
+					if (_isSnapEnable) {
+						float tempAngle = transform.localEulerAngles.z;
+						tempAngle = DampAngle (tempAngle);
+						float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
+						//print ("Release drag final angle: " + AngleSnap (tempAngle));
+						isRotating = true;
+						originAngle = transform.localRotation;
+						finalAngle = transform.localRotation;
+						finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+
+					}
+
+
+					Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
+				} else {
+					accAngle = 0;
+					transform.localRotation = lastRestAngle;
+
 				}
-				Events.G.Raise (new PathGlowEvent (isDragStart));
-				//hitDist = 0;
-				accAngle = 0;
 
-				if (_isSnapEnable) {
-					float tempAngle = transform.localEulerAngles.z;
-					tempAngle = DampAngle (tempAngle);
-					float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
-
-					//print ("Release drag final angle: " + AngleSnap (tempAngle));
-
-					isRotating = true;
-					originAngle = transform.localRotation;
-					//transform.Rotate(0,0,-90);
-					finalAngle = transform.localRotation;
-					finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
-				
-				}
-
-
-				Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 
 			}
 		}
@@ -817,39 +846,47 @@ public class PathNode : MonoBehaviour {
 			//
 			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
-			//print ("Angle Check: " + accAngle);
-			if (accAngle >= _dragSensitivity) {
-				accAngle = _dragSensitivity;
-				Quaternion tempRot = Quaternion.Euler (-accAngle * rotateAxis);
-				//print ("Temp rot: " + tempRot);
-				Quaternion curRot = gameObject.transform.rotation;
-				//curRot = curRot + tempRot;
-				if (rotateAxis.y > 0f) {
-					rotateAxis = Vector3.back;
-				} else {
-					rotateAxis = Vector3.forward;
-				}
-
-				gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
-				dragStartPos = curMousePos;
-				accAngle = 0;
-
-				Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
+			print ("Angle Check: " + angle);
+			if (rotateAxis.y > 0f) {
+				rotateAxis = Vector3.back;
 			} else {
-				//Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
+				rotateAxis = Vector3.forward;
+			}
+			if (_isControlActive) {
+				if (accAngle >= _dragSensitivity) {
+					accAngle = _dragSensitivity;
+
+					gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
+					dragStartPos = curMousePos;
+					accAngle = 0;
+
+					Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
+				} 
+				
+			} else {
+				// when contorl is not active 
+				Debug.Log("### not rotate angle check: " + angle * 0.1);
+				gameObject.transform.Rotate (-angle * rotateAxis * 0.05f, Space.Self);
+				dragStartPos = curMousePos;
+				if(accAngle >= 50f){
+					// shake node back to normal 
+					isDragStart = false;
+					gameObject.transform.localRotation = lastRestAngle;
+					accAngle = 0;
+					
+				}
 			}
 
 
 
-		}
+
+		}// end of dragging code 
 
 
 
 	}
 
-	void NodeLocked(){
-		
-	}
+
 
 	void DisableRotate(float stopseconds){
 		if (isTempDisableActive) {
