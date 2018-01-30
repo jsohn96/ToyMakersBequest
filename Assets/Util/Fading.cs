@@ -15,15 +15,14 @@ public class Fading : MonoBehaviour {
 	[SerializeField] bool _EndStateForBuild = false;
 
 	void Awake(){
-		/*if (_fading) {
+		if (_fading) {
 			Destroy (this);
 		}
 		else {
 			_fading = this;
 			DontDestroyOnLoad (gameObject);
 		}
-*/
-		_fading = this;
+
 		if (_noStartFade) {
 			alpha = 0.0f;
 		}

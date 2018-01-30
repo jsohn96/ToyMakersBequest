@@ -11,7 +11,7 @@ public class AmbientSoundController : AudioSourceController {
 	bool _ambienceReduced = false;
 
 	void OnSceneLoaded(Scene Scene, LoadSceneMode mode){
-		if (Scene.name == "notebookScene" || Scene.name == "ZoetropeTest") {
+		if (Scene.name == "notebookScene" || Scene.name == "ZoetropeTest" || Scene.name == "ControlRoom") {
 			if (_ambientAudioSystem1.audioSource.isPlaying) {
 				_ambientAudioSystem2.audioSource.clip = _ambientAudioSystem1.clips [0];
 				AudioManager.instance.CrossFade (_ambientAudioSystem1.audioSource, _ambientAudioSystem2.audioSource, _ambientAudioSystem1.fadeDuration, _ambientAudioSystem1.volume);
