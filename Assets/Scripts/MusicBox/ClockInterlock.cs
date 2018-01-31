@@ -121,7 +121,7 @@ public class ClockInterlock : MonoBehaviour {
 				// compare angle 
 				if (nkey.relativeNodeIdx == -1) {
 					// absolute angle 
-					if (Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.1f) {
+					if (Mathf.Abs(AngleUtil.DampAngle (providerNode.gameObject.transform.localEulerAngles.z) - AngleUtil.DampAngle (nkey.unlockAngle)) <= 0.5f) {
 						if (nkey.key.Length >= 2) {
 							foreach (GameObject k in nkey.key) {
 								if (!_activeKeys.Contains (k)) {
@@ -156,7 +156,7 @@ public class ClockInterlock : MonoBehaviour {
 					float angledifference = Mathf.Abs(Mathf.Abs(AngleUtil.DampAngle(providerNode.gameObject.transform.localEulerAngles.z)-AngleUtil.DampAngle(relativeNode.gameObject.transform.localEulerAngles.z)) - nkey.unlockAngle);
 					angledifference = Mathf.Min (angledifference, 360f - angledifference);
 					//Debug.Log ("$$$ check angle interlock : " + angledifference);
-					if ( angledifference <= 0.1f) {
+					if ( angledifference <= 0.5f) {
 						if (nkey.key.Length >= 2) {
 							foreach (GameObject k in nkey.key) {
 								if (!_activeKeys.Contains (k)) {

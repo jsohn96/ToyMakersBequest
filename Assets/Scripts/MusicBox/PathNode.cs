@@ -718,17 +718,6 @@ public class PathNode : MonoBehaviour {
 			//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					if (_isInterLocked && _intersectionPart!= null ) {
-						//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-						_intersectionPart.transform.parent = gameObject.transform;
-					}
-
-					if (_activeIntersections != null && _activeIntersections.Count > 0) {
-						//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-						foreach(GameObject itsc in _activeIntersections){
-							itsc.transform.parent = gameObject.transform;
-						}
-					}
 
 					isDragStart = true;
 					dragStartPos = hit.point;
@@ -737,6 +726,18 @@ public class PathNode : MonoBehaviour {
 					preChangingTime = -1;
 
 					if (_isControlActive) {
+						if (_isInterLocked && _intersectionPart!= null ) {
+							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+							_intersectionPart.transform.parent = gameObject.transform;
+						}
+
+						if (_activeIntersections != null && _activeIntersections.Count > 0) {
+							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+							foreach(GameObject itsc in _activeIntersections){
+								itsc.transform.parent = gameObject.transform;
+							}
+						}
+
 						//isDragStart = true;
 						if (_shaderGlowCustom != null) {
 							_shaderGlowCustom.lightOn ();
@@ -756,6 +757,7 @@ public class PathNode : MonoBehaviour {
 						lastRestAngle = transform.localRotation;
 						isTempDisable = false;
 						Events.G.Raise (new PathNodeStuckEvent ());
+						isShaking = true;
 					}
 
 					//debugPos1 = hit.point;
@@ -768,7 +770,7 @@ public class PathNode : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
 				isDragStart = false;
-				if (_isControlActive) {
+				if (_isControlActive && !isShaking) {
 					if (_shaderGlowCustom != null) {
 						_shaderGlowCustom.lightOff ();
 					}
@@ -793,7 +795,7 @@ public class PathNode : MonoBehaviour {
 				} else {
 					accAngle = 0;
 					transform.localRotation = lastRestAngle;
-
+					isShaking = false;
 				}
 
 
@@ -852,7 +854,7 @@ public class PathNode : MonoBehaviour {
 			} else {
 				rotateAxis = Vector3.forward;
 			}
-			if (_isControlActive) {
+			if (_isControlActive && !isShaking) {
 				if (accAngle >= _dragSensitivity) {
 					accAngle = _dragSensitivity;
 
@@ -873,6 +875,7 @@ public class PathNode : MonoBehaviour {
 					isDragStart = false;
 					gameObject.transform.localRotation = lastRestAngle;
 					accAngle = 0;
+					isShaking = false;
 					
 				}
 			}
