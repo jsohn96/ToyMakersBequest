@@ -13,8 +13,10 @@ public enum AltStates{
 public class AltCentralControl : MonoBehaviour {
 
 	public static AltCentralControl _instance;
-	public static bool _love = false, _regret = false, _freedom = false, peep0 = false, peep1 = false, peep2 = false, peep3 = false, _loveEnd = false,
-		_regretEnd = false, _freedomEnd = false;
+	public static bool _love = false, _regret = false, _freedom = false, _loveEnd = false, _regretEnd = false, _freedomEnd = false;
+
+	public static bool[] _peepholeViewed = new bool[] {false, false, false, false};
+	public static bool[] _peepAnimated = new bool[]{false, false, false, false};
 	public static AltStates _currentState = AltStates.noCharm;
 
 	void Awake () {

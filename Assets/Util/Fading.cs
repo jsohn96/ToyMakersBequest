@@ -15,13 +15,13 @@ public class Fading : MonoBehaviour {
 	[SerializeField] bool _EndStateForBuild = false;
 
 	void Awake(){
-		if (_fading) {
-			Destroy (this);
-		}
-		else {
-			_fading = this;
-			DontDestroyOnLoad (gameObject);
-		}
+//		if (_fading) {
+//			Destroy (this);
+//		}
+//		else {
+//			_fading = this;
+//			DontDestroyOnLoad (gameObject);
+//		}
 
 		if (_noStartFade) {
 			alpha = 0.0f;
@@ -44,7 +44,8 @@ public class Fading : MonoBehaviour {
 	}
 
 	// sets fadeDir to the direction paramete making the scene fade in if -1 and out if 1
-	public float BeginFade(int direction){
+	public float BeginFade(int direction, float speed = 1f){
+		fadeSpeed = speed;
 		fadeDir = direction;
 		return (fadeSpeed);
 	}

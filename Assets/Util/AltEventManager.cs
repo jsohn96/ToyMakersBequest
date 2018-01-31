@@ -14,3 +14,6 @@ public class PickedUpItem:GameEvent{
 		WhichItem = whichItem;
 	}
 }
+
+public class PeepHoleActivationCheck: GameEvent {
+}

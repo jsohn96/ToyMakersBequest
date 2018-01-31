@@ -11,23 +11,32 @@ public class AltPeephole : MonoBehaviour {
 	public int _peepHoleIndex;
 
 	bool _thisPeepHoleActivated = false;
+	bool _clickedOnce = false;
 
-	void Start(){
-		CheckPeepHoleActivation ();
-	}
+	[SerializeField] Vector3 _cameraZoomPosition;
 
-	void CheckPeepHoleActivation(){
-		if ((int)AltCentralControl._currentState >= _peepHoleIndex) {
+	void CheckPeepHoleActivation(PeepHoleActivationCheck e){
+		if (AltCentralControl._peepAnimated[_peepHoleIndex]) {
 			_thisPeepHoleActivated = true;
 		} else {
 			_thisPeepHoleActivated = false;
 		}
+		_clickedOnce = false;
 	}
 
 	void OnTouchDown(Vector3 touchPoint){
-		CheckPeepHoleActivation ();
-		if (_thisPeepHoleActivated) {
-			_controlRoomManager.LookIntoPeephole (_peepHoleIndex);
+		if (_thisPeepHoleActivated && !_clickedOnce) {
+			_controlRoomManager.LookIntoPeephole (_peepHoleIndex, _cameraZoomPosition);
+			_clickedOnce = true;
 		}
+	}
+
+
+	void OnEnable(){
+		Events.G.AddListener<PeepHoleActivationCheck> (CheckPeepHoleActivation);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<PeepHoleActivationCheck> (CheckPeepHoleActivation);
 	}
 }
