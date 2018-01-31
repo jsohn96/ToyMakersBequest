@@ -19,13 +19,27 @@ public enum TheatreState{
 	theatreEnd
 }
 
-public class AltTheatre : MonoBehaviour {
+public class AltTheatre : LevelManager {
 	TheatreState currentSate = TheatreState.none;
-	[SerializeField] GameObject magician;
+	[SerializeField] TheatreMagician magician;
+	TheatreChest chest;
+	TheatreCabinet cabinet;
+	PathNetwork network;
+
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
+		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
+		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();
+	}
+
+	public override void PickUpCharm(){
+		base.PickUpCharm ();
+		AltCentralControl._freedom = true;
+		AltCentralControl._currentState = (AltStates)((int)AltCentralControl._currentState+1);
+		InventorySystem._instance.AddItem (items.dancerCharm);
+		Events.G.Raise (new PickedUpItem (items.dancerCharm));
 	}
 	
 	// Update is called once per frame
@@ -45,7 +59,16 @@ public class AltTheatre : MonoBehaviour {
 		
 	}
 
-	public void CheckStateUpdate(){
+	public void MoveToNext(){
+		if(currentSate < TheatreState.theatreEnd){
+			currentSate += 1;
+			CheckStateMachine();
+			Debug.Log("Current Theatre State: " + currentSate);
+		}
+
+	}
+
+	void CheckStateUpdate(){
 		if (currentSate == TheatreState.magicianLeft) {
 			Debug.Log ("Waiting for player input to continue");
 		} else if (currentSate == TheatreState.magicianRight) {
@@ -59,23 +82,28 @@ public class AltTheatre : MonoBehaviour {
 	void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
-			// magician.enter();
+			magician.GoToStart();
 			// call back function? 
 			break;
 		case TheatreState.magicianLeft:
 			// magician.pointLeft()
-			// frog.enterScene();
+			chest.Activate();
 			break;
 		case TheatreState.frogJump:
 			// frog.jumpout
+			//magician go back to center position 
+			MoveToNext();
 			break;
 		case TheatreState.magicianRight:
 			// magician.pointRight();
 			// dancer.enterScene();
+			cabinet.Activate ();
+
 			break;
 		case TheatreState.dancerShowUp:
 			// dancer.showUp();
 			// enable network connection 
+			network.SetPathActive(true);
 			break;
 		case TheatreState.dancerKissing:
 			// frog.jumpout

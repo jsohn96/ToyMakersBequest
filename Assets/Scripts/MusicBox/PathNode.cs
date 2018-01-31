@@ -563,7 +563,8 @@ public class PathNode : MonoBehaviour {
 
 							}
 						} else {
-							//print("node angle check: " + _nodeIndex + " " +DampAngle(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)));
+							
+							print("node angle check: " + _nodeIndex + " " + tempRotDegree + " : " +DampAngle(DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)));
 							if (Mathf.Abs (DampAngle(tempRotDegree) - DampAngle(_adjacentNode [curCheckIdx].relativeAngle)) <= errorVal * 20f) {
 								if (!_isCorrectConnection) {
 									Events.G.Raise (new PathConnectedEvent ());
@@ -848,7 +849,7 @@ public class PathNode : MonoBehaviour {
 			//
 			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
 			accAngle += angle;
-			print ("Angle Check: " + angle);
+			//print ("Angle Check: " + angle);
 			if (rotateAxis.y > 0f) {
 				rotateAxis = Vector3.back;
 			} else {

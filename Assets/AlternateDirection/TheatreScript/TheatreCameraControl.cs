@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheatreMagician : MonoBehaviour {
+public class TheatreCameraControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +13,6 @@ public class TheatreMagician : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	// raycast for picking 
 }
