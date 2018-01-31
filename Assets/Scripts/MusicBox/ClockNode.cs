@@ -58,7 +58,7 @@ public class ClockNode : MonoBehaviour {
 
 			//Debug.Log("### " + diffAngle);
 
-			if (diffAngle > 0.05f) {
+			if (diffAngle > 0.5f) {
 				transform.localRotation = Quaternion.Slerp (transform.localRotation, finalAngle, Time.deltaTime * 2f);
 			} else {
 				//Debug.Log ("reset rotation");
