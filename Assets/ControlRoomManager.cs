@@ -13,16 +13,46 @@ public class ControlRoomManager : MonoBehaviour {
 
 	[SerializeField] Camera _mainCamera;
 	[SerializeField] Camera _peepCamera;
+	[SerializeField] Canvas _mainCanvas;
+	[SerializeField] Canvas _peepCanvas;
 
 	[SerializeField] AltPeepText _peepText;
 
-	// Use this for initialization
-	void Start () {
-		
+	void Start(){
+		_peepCamera.enabled = false;
+		_peepCanvas.enabled = false;
+		_mainCamera.enabled = true;
+		_mainCanvas.enabled = true;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void LookIntoPeephole(int peepholeIndex){
+		_tmpInstruction.enabled = false;
+		_controlRoomAudio.PlayZoomAudio ();
+		_fading.BeginFade (1);
+		StartCoroutine (WaitForCameraSwap (1f));
+		_peepText.ChangeText (peepholeIndex);
+	}
+
+	public void ZoomOutOfPeephole(){
+		_controlRoomAudio.PlayZoomAudio ();
+		_fading.BeginFade (1);
+		StartCoroutine (WaitForCameraSwap (-1f));
+	}
+
+	IEnumerator WaitForCameraSwap(float duration){
+		if (duration > 0f) {
+			yield return new WaitForSeconds (duration);
+			_mainCamera.enabled = false;
+			_mainCanvas.enabled = false;
+			_peepCamera.enabled = true;
+			_peepCanvas.enabled = true;
+		} else {
+			yield return new WaitForSeconds (-duration);
+			_mainCamera.enabled = true;
+			_mainCanvas.enabled = true;
+			_peepCamera.enabled = false;
+			_peepCanvas.enabled = false;
+		}
+		_fading.BeginFade (-1);
 	}
 }

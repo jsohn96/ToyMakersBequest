@@ -510,6 +510,71 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 581708934}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &660682771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 660682774}
+  - component: {fileID: 660682773}
+  - component: {fileID: 660682772}
+  m_Layer: 0
+  m_Name: ControlRoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &660682772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660682771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63440dde42ebfe4da9fbbdc57c32ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 961011381}
+  touchInputMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &660682773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660682771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc2a90875e6592499a93be48e4b88e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tmpInstruction: {fileID: 1174614231}
+  _controlRoomAudio: {fileID: 1999812688}
+  _fading: {fileID: 686032525}
+  _mainCamera: {fileID: 961011381}
+  _peepCamera: {fileID: 672058369}
+  _mainCanvas: {fileID: 1488796832}
+  _peepCanvas: {fileID: 1072079466}
+  _peepText: {fileID: 785985525}
+--- !u!4 &660682774
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660682771}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1999812689}
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &672058365
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,12 +1049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e084ed927de474abadbadf385f7ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmpInstruction: {fileID: 1174614231}
-  _controlRoomAudio: {fileID: 1999812688}
-  _fading: {fileID: 686032525}
-  _mainCamera: {fileID: 961011381}
-  _peepCamera: {fileID: 672058369}
-  _peepText: {fileID: 785985525}
+  _controlRoomManager: {fileID: 660682773}
   _peepHoleIndex: 1
 --- !u!65 &869794806
 BoxCollider:
@@ -1991,12 +2051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e084ed927de474abadbadf385f7ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmpInstruction: {fileID: 1174614231}
-  _controlRoomAudio: {fileID: 1999812688}
-  _fading: {fileID: 686032525}
-  _mainCamera: {fileID: 961011381}
-  _peepCamera: {fileID: 672058369}
-  _peepText: {fileID: 785985525}
+  _controlRoomManager: {fileID: 660682773}
   _peepHoleIndex: 3
 --- !u!65 &1183315486
 BoxCollider:
@@ -2026,7 +2081,7 @@ GameObject:
   - component: {fileID: 1209470218}
   - component: {fileID: 1209470217}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2089,8 +2144,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1901460906}
-        m_MethodName: ZoomOut
+      - m_Target: {fileID: 660682773}
+        m_MethodName: ZoomOutOfPeephole
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2221,12 +2276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e084ed927de474abadbadf385f7ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmpInstruction: {fileID: 1174614231}
-  _controlRoomAudio: {fileID: 1999812688}
-  _fading: {fileID: 686032525}
-  _mainCamera: {fileID: 961011381}
-  _peepCamera: {fileID: 672058369}
-  _peepText: {fileID: 785985525}
+  _controlRoomManager: {fileID: 660682773}
   _peepHoleIndex: 2
 --- !u!65 &1364955721
 BoxCollider:
@@ -2244,6 +2294,11 @@ BoxCollider:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
   m_PrefabInternal: {fileID: 57357627}
+--- !u!223 &1488796832 stripped
+Canvas:
+  m_PrefabParentObject: {fileID: 223101630539923166, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+    type: 2}
+  m_PrefabInternal: {fileID: 976376134}
 --- !u!1001 &1537931339
 Prefab:
   m_ObjectHideFlags: 0
@@ -2666,12 +2721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e084ed927de474abadbadf385f7ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmpInstruction: {fileID: 1174614231}
-  _controlRoomAudio: {fileID: 1999812688}
-  _fading: {fileID: 686032525}
-  _mainCamera: {fileID: 961011381}
-  _peepCamera: {fileID: 672058369}
-  _peepText: {fileID: 785985525}
+  _controlRoomManager: {fileID: 660682773}
   _peepHoleIndex: 0
 --- !u!65 &1901460908
 BoxCollider:
@@ -2804,12 +2854,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1999812686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.206614, y: 17.25522, z: 12.391779}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_Father: {fileID: 660682774}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2027619901
 GameObject:

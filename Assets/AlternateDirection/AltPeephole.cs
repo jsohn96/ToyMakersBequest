@@ -4,16 +4,8 @@ using UnityEngine;
 using TMPro;
 
 public class AltPeephole : MonoBehaviour {
-	[SerializeField] TextMeshPro _tmpInstruction;
 
-	[SerializeField] ControlRoomAudio _controlRoomAudio;
-
-	[SerializeField] Fading _fading;
-
-	[SerializeField] Camera _mainCamera;
-	[SerializeField] Camera _peepCamera;
-
-	[SerializeField] AltPeepText _peepText;
+	[SerializeField] ControlRoomManager _controlRoomManager;
 
 	[Header("Which Peephole? 0-3")]
 	public int _peepHoleIndex;
@@ -21,12 +13,6 @@ public class AltPeephole : MonoBehaviour {
 	bool _thisPeepHoleActivated = false;
 
 	void Start(){
-		_peepCamera.enabled = false;
-		CheckPeepHoleActivation ();
-	}
-
-	void Update(){
-		//TODO: Take this out of Update
 		CheckPeepHoleActivation ();
 	}
 
@@ -38,32 +24,10 @@ public class AltPeephole : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown(){
+	void OnTouchDown(Vector3 touchPoint){
+		CheckPeepHoleActivation ();
 		if (_thisPeepHoleActivated) {
-			_tmpInstruction.enabled = false;
-			_controlRoomAudio.PlayZoomAudio ();
-			_fading.BeginFade (1);
-			StartCoroutine (WaitForThisManySeconds (1f));
-			_peepText.ChangeText (_peepHoleIndex);
+			_controlRoomManager.LookIntoPeephole (_peepHoleIndex);
 		}
-	}
-
-	IEnumerator WaitForThisManySeconds(float duration){
-		if (duration > 0f) {
-			yield return new WaitForSeconds (duration);
-			_mainCamera.enabled = false;
-			_peepCamera.enabled = true;
-		} else {
-			yield return new WaitForSeconds (-duration);
-			_mainCamera.enabled = true;
-			_peepCamera.enabled = false;
-		}
-		_fading.BeginFade (-1);
-	}
-
-	public void ZoomOut(){
-		_controlRoomAudio.PlayZoomAudio ();
-		_fading.BeginFade (1);
-		StartCoroutine (WaitForThisManySeconds (-1f));
 	}
 }
