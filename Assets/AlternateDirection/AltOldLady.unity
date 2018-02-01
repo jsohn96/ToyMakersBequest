@@ -514,7 +514,7 @@ Prefab:
     - target: {fileID: 224171384724838220, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224530290967400368, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -534,7 +534,7 @@ Prefab:
     - target: {fileID: 224530290967400368, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224555729883837182, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -554,7 +554,7 @@ Prefab:
     - target: {fileID: 224555729883837182, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224391815901124974, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -574,7 +574,7 @@ Prefab:
     - target: {fileID: 224391815901124974, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 223101630539923166, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -756,6 +756,7 @@ GameObject:
   - component: {fileID: 1545230989}
   - component: {fileID: 1545230988}
   - component: {fileID: 1545230987}
+  - component: {fileID: 1545230992}
   m_Layer: 18
   m_Name: Sphere
   m_TagString: Untagged
@@ -839,6 +840,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1545230992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1545230986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 1545230988}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
 --- !u!1 &2027619901
 GameObject:
   m_ObjectHideFlags: 0

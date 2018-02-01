@@ -22,6 +22,8 @@ public class ControlRoomManager : MonoBehaviour {
 
 	[SerializeField] GameObject[] _peepCovers = new GameObject[4];
 
+	[SerializeField] GameObject _dog;
+
 	Vector3 _tempZoomedPosition;
 	bool _zoomedIn = false;
 
@@ -33,6 +35,10 @@ public class ControlRoomManager : MonoBehaviour {
 		_tempZoomedPosition = _defaultCameraPosition;
 		PreInitializePeepholeCover ();
 		Invoke ("CheckAndRemoveCover", 1f);
+
+		if (AltCentralControl._currentState == AltStates.keyUnlock) {
+			_dog.SetActive (true);
+		}
 	}
 
 	void PreInitializePeepholeCover(){
@@ -79,6 +85,9 @@ public class ControlRoomManager : MonoBehaviour {
 		StartCoroutine (WaitForCameraSwap (2f, _tempZoomedPosition));
 		_peepText.ChangeText (peepholeIndex);
 		AltCentralControl._peepholeViewed [peepholeIndex] = true;
+		if (peepholeIndex == 3) {
+			StartCoroutine (DropDog ());
+		}
 	}
 
 	public void ZoomOutOfPeephole(){
@@ -122,6 +131,16 @@ public class ControlRoomManager : MonoBehaviour {
 			_mainCamera.transform.position = _defaultCameraPosition;
 			yield return new WaitForSeconds(1f);
 			CheckAndRemoveCover ();
+		}
+	}
+
+
+	IEnumerator DropDog(){
+		yield return new WaitForSeconds (5.0f);
+		if (!AltCentralControl._dogDropped) {
+			AltCentralControl._dogDropped = true;
+			_controlRoomAudio.PlayDogThud ();
+			_dog.SetActive (true);
 		}
 	}
 }
