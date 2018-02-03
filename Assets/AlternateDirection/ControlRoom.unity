@@ -377,7 +377,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 124458909}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
@@ -1140,6 +1140,7 @@ GameObject:
   - component: {fileID: 672058368}
   - component: {fileID: 672058367}
   - component: {fileID: 672058366}
+  - component: {fileID: 672058371}
   m_Layer: 0
   m_Name: PeepCamera
   m_TagString: Untagged
@@ -1217,6 +1218,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &672058371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 672058365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quality: 3
+  BloomEnabled: 1
+  BloomParams:
+    Quality: 3
+    BloomTint: {r: 1, g: 1, b: 1, a: 1}
+    BloomThreshold: 0.8
+    BloomIntensity: 1.5
+    BloomSoftness: 0.5
+  VisualizeBloom: 0
+  LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
+  LensDirtIntensity: 1
+  ChromaticAberration: 1
+  ChromaticAberrationPrecise: 1
+  ChromaticAberrationOffset: 1
+  SCurveIntensity: 0.5
+  LensCurvatureEnabled: 1
+  LensCurvaturePower: 1.3
+  LensCurvaturePrecise: 0
+  FilmGrainIntensity: 0
+  FilmGrainTiling: 4
+  VignettingIntensity: 0.5
+  DOFEnabled: 0
+  BlurCOCTexture: 0
+  DOFParams:
+    UseUnityDepthBuffer: 1
+    AutoFocus: 1
+    AutoFocusLayerMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    AutoFocusSpeed: 5
+    FocalLengthMultiplier: 0.33
+    FocalDistMultiplier: 1
+    DOFBlurSize: 1
+    BokehEnabled: 0
+    DepthCompression: 4
+    EffectCamera: {fileID: 124458913}
+    Target: {fileID: 0}
+    BokehThreshold: 0.5
+    BokehGain: 2
+    BokehBias: 0.5
+    DoubleIntensityBlur: 0
+  VisualizeCOC: 0
+  ColorEffectsEnabled: 1
+  CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
+  FarTint: {r: 0, g: 0, b: 1, a: 1}
+  CloseTintStrength: 0.5
+  FarTintStrength: 0.19
+  DesaturateDarksStrength: 0.5
+  DesaturateFarObjsStrength: 0.5
+  FogTint: {r: 1, g: 1, b: 1, a: 1}
+  FogStrength: 0
+  HalfResolution: 0
 --- !u!1 &680896870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,7 +1711,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 122
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_enableKerning: 1
@@ -1674,7 +1738,7 @@ MonoBehaviour:
     spaceCount: 32
     wordCount: 30
     linkCount: 0
-    lineCount: 13
+    lineCount: 7
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -2149,15 +2213,15 @@ MonoBehaviour:
     BloomSoftness: 0.5
   VisualizeBloom: 0
   LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
-  LensDirtIntensity: 1
+  LensDirtIntensity: 0.35
   ChromaticAberration: 0
   ChromaticAberrationPrecise: 0
   ChromaticAberrationOffset: 1
-  SCurveIntensity: 0.5
-  LensCurvatureEnabled: 1
+  SCurveIntensity: 0
+  LensCurvatureEnabled: 0
   LensCurvaturePower: 1.1
   LensCurvaturePrecise: 0
-  FilmGrainIntensity: 0.5
+  FilmGrainIntensity: 0
   FilmGrainTiling: 4
   VignettingIntensity: 0.5
   DOFEnabled: 0
@@ -2186,10 +2250,10 @@ MonoBehaviour:
   FarTint: {r: 0, g: 0, b: 1, a: 1}
   CloseTintStrength: 0.5
   FarTintStrength: 0.5
-  DesaturateDarksStrength: 0.5
-  DesaturateFarObjsStrength: 0.5
+  DesaturateDarksStrength: 0
+  DesaturateFarObjsStrength: 0.6
   FogTint: {r: 1, g: 1, b: 1, a: 1}
-  FogStrength: 0.5
+  FogStrength: 0
   HalfResolution: 0
 --- !u!1 &967697206
 GameObject:
@@ -2623,10 +2687,10 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 800, y: 1280}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2641,7 +2705,7 @@ Canvas:
   m_GameObject: {fileID: 1072079463}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 672058369}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
