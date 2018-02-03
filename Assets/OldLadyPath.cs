@@ -10,6 +10,7 @@ public class OldLadyPath : MonoBehaviour {
 	Timer _movementTimer;
 
 	int _whichLightOn = 4;
+	[SerializeField] OldLadyLevelManager _oldLadyLevelManager;
 
 	void Start () {
 		_movementTimer = new Timer (_durationBetween);
@@ -24,6 +25,9 @@ public class OldLadyPath : MonoBehaviour {
 				_segmentDone = true;
 				_whichSegment++;
 				transform.position = _paths [_whichSegment];
+				if (_whichSegment == 4) {
+					_oldLadyLevelManager.MoveToNextCameraView ();
+				}
 			}
 		}
 	}

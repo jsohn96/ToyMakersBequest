@@ -13,6 +13,7 @@ public class ControlRoomManager : MonoBehaviour {
 
 	[SerializeField] Camera _mainCamera;
 	[SerializeField] Camera _peepCamera;
+	[SerializeField] Camera _peepZoomCamera;
 	[SerializeField] Canvas _mainCanvas;
 	[SerializeField] Canvas _peepCanvas;
 
@@ -29,6 +30,7 @@ public class ControlRoomManager : MonoBehaviour {
 
 	void Start(){
 		_peepCamera.enabled = false;
+		_peepZoomCamera.enabled = false;
 		_peepCanvas.enabled = false;
 		_mainCamera.enabled = true;
 		_mainCanvas.enabled = true;
@@ -112,6 +114,7 @@ public class ControlRoomManager : MonoBehaviour {
 			_mainCamera.enabled = false;
 			_mainCanvas.enabled = false;
 			_peepCamera.enabled = true;
+			_peepZoomCamera.enabled = true;
 			_peepCanvas.enabled = true;
 			yield return null;
 			_fading.BeginFade (-1);
@@ -122,6 +125,7 @@ public class ControlRoomManager : MonoBehaviour {
 			_mainCamera.enabled = true;
 			_mainCanvas.enabled = true;
 			_peepCamera.enabled = false;
+			_peepZoomCamera.enabled = false;
 			_peepCanvas.enabled = false;
 			while (-duration > timer) {
 				timer += Time.deltaTime;
