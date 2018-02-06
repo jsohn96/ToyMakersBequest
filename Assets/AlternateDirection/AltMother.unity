@@ -222,13 +222,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 152330188}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.20355639, y: -0.16381171, z: 0.12792161, w: 0.95674795}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.557001, y: -16.841002, z: 11.385}
 --- !u!1001 &631492132
 Prefab:
   m_ObjectHideFlags: 0
@@ -516,32 +516,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quality: 1
+  Quality: 3
   BloomEnabled: 1
   BloomParams:
-    Quality: 1
+    Quality: 3
     BloomTint: {r: 1, g: 1, b: 1, a: 1}
     BloomThreshold: 0.8
     BloomIntensity: 1.5
     BloomSoftness: 0.5
   VisualizeBloom: 0
-  LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
+  LensDirtTexture: {fileID: 2800000, guid: b1d7fee26e54cc3498f6267f072a45b9, type: 3}
   LensDirtIntensity: 0
   ChromaticAberration: 0
   ChromaticAberrationPrecise: 0
   ChromaticAberrationOffset: 1
   SCurveIntensity: 0.5
   LensCurvatureEnabled: 0
-  LensCurvaturePower: 1.1
+  LensCurvaturePower: 1
   LensCurvaturePrecise: 0
   FilmGrainIntensity: 0
-  FilmGrainTiling: 4
+  FilmGrainTiling: 10
   VignettingIntensity: 0
   DOFEnabled: 0
-  BlurCOCTexture: 1
+  BlurCOCTexture: 0
   DOFParams:
     UseUnityDepthBuffer: 1
-    AutoFocus: 1
+    AutoFocus: 0
     AutoFocusLayerMask:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -559,14 +559,14 @@ MonoBehaviour:
     DoubleIntensityBlur: 0
   VisualizeCOC: 0
   ColorEffectsEnabled: 0
-  CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
+  CloseTint: {r: 1, g: 1, b: 1, a: 1}
   FarTint: {r: 0, g: 0, b: 1, a: 1}
-  CloseTintStrength: 0.5
-  FarTintStrength: 0.5
+  CloseTintStrength: 0
+  FarTintStrength: 0
   DesaturateDarksStrength: 0.5
-  DesaturateFarObjsStrength: 0.5
+  DesaturateFarObjsStrength: 0
   FogTint: {r: 1, g: 1, b: 1, a: 1}
-  FogStrength: 0.5
+  FogStrength: 0
   HalfResolution: 0
 --- !u!1 &1062907491
 GameObject:
@@ -824,6 +824,46 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224661064717922034, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224761292071271684, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224439580741770076, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224901057799148738, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224645855663481246, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224420843636618548, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224010161612718206, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 224728533616271684, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
