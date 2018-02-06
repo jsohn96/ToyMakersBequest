@@ -25,7 +25,12 @@ public class AltTheatre : LevelManager {
 	TheatreChest chest;
 	TheatreCabinet cabinet;
 	PathNetwork network;
-
+	[Header("Water Tank")]
+	[SerializeField] Transform _watertank;
+	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
+	[Header("Starting Platform")]
+	[SerializeField] Transform _startPlatform;
+	[SerializeField] Vector3 _platformBeginPos, _platformEndPos;
 
 	// Use this for initialization
 	void Awake () {
