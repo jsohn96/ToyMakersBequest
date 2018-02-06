@@ -31,7 +31,7 @@ public class UIInventorySlider : MonoBehaviour {
 		float timer = 0f;
 		float duration = 0.8f;
 		while (timer < duration) {
-			if (Time.timeScale == 0f) {
+			if (AltCentralControl.isGameTimePaused) {
 				timer += Time.unscaledDeltaTime;
 			} else {
 				timer += Time.deltaTime;

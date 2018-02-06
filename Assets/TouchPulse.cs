@@ -40,8 +40,7 @@ public class TouchPulse : MonoBehaviour {
 				_particleCnt = 0;
 			}
 			_particle[_particleCnt].transform.position = _worldPos;
-//			_particle.transform.rotation = _tempRotation;
-			_particle[_particleCnt].Play ();
+			_particle [_particleCnt].Play ();
 			_particleCnt++;
 		}
 	}

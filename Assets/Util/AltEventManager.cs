@@ -17,3 +17,10 @@ public class PickedUpItem:GameEvent{
 
 public class PeepHoleActivationCheck: GameEvent {
 }
+
+public class SlidingDoorFinished: GameEvent {
+	public bool IsOpen { get; private set; }
+	public SlidingDoorFinished (bool isOpen){
+		IsOpen = isOpen;	
+	}
+}

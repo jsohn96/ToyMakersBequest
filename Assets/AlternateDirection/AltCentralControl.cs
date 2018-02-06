@@ -19,6 +19,8 @@ public class AltCentralControl : MonoBehaviour {
 	public static bool[] _peepAnimated = new bool[]{false, false, false, false};
 	public static AltStates _currentState = AltStates.noCharm;
 
+	public static bool isGameTimePaused = false;
+
 	void Awake () {
 		//assign an instance of this gameobject if it hasn't been assigned before
 		if (_instance == null) {
@@ -42,6 +44,17 @@ public class AltCentralControl : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.R)) {
 			_currentState = AltStates.keyUnlock;
+		}
+	}
+
+
+	public void PauseGameTime(bool pause){
+		if (pause) {
+			Time.timeScale = 0.0f;
+			isGameTimePaused = true;
+		} else {
+			Time.timeScale = 1.0f;
+			isGameTimePaused = false;
 		}
 	}
 }

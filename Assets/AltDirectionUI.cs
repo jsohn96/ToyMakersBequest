@@ -53,7 +53,7 @@ public class AltDirectionUI : MonoBehaviour {
 	void Update(){
 		if (_windowIsScrolling) {
 			if (_timer < _duration) {
-				if (Time.timeScale == 0f) {
+				if (AltCentralControl.isGameTimePaused) {
 					_timer += Time.unscaledDeltaTime;
 				} else {
 					_timer += Time.deltaTime;
@@ -76,6 +76,7 @@ public class AltDirectionUI : MonoBehaviour {
 					_windowOpen = false;
 				}
 				_windowIsScrolling = false;
+				Events.G.Raise (new SlidingDoorFinished (_windowOpen));
 			}
 		}
 	}
