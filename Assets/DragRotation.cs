@@ -252,6 +252,11 @@ public class DragRotation : MonoBehaviour {
 				}
 				dragStartPos = curMousePos;
 				accAngle = 0;
+				if (_oneDirectional == 1) {
+					positiveDirection = !positiveDirection;
+				} else if (_oneDirectional == 0) {
+					positiveDirection = true;
+				}
 				Events.G.Raise (new DragRotationEvent (true, positiveDirection));
 			} else {
 				isRotating = false;
