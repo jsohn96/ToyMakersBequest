@@ -9,7 +9,11 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] Camera _thisCamera;
 	[SerializeField] MinMax _cameraMovementRange;
 	[SerializeField] MinMax _cameraAngleRange;
+	[SerializeField] MinMax _cameraFOVRange = new MinMax (28f, 60f);
 	[SerializeField] AnimationCurve _cameraAngleCurve;
+	[SerializeField] AnimationCurve _cameraFOVCurve1;
+	[SerializeField] AnimationCurve _cameraFOVCurve2;
+	bool _usingFOV1 = true;
 
 	float _currentCameraYPos;
 	Vector3 _clickStartPosition;
@@ -78,13 +82,24 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	void CameraAngleCalculation(){
 		_cameraTempRot = _thisCamera.transform.eulerAngles;
-		float linMapCurvedAngle = _cameraAngleCurve.Evaluate( MathHelpers.LinMapTo01 (
-			_cameraMovementRange.Min, 
-			_cameraMovementRange.Max, 
-			_currentCameraYPos));
+		float nonCurvedLinMapValue = MathHelpers.LinMapTo01 (
+			                             _cameraMovementRange.Min, 
+			                             _cameraMovementRange.Max, 
+			                             _currentCameraYPos);
+		float linMapCurvedAngle = _cameraAngleCurve.Evaluate(nonCurvedLinMapValue);
 		_cameraTempRot.x = MathHelpers.LinMapFrom01 (_cameraAngleRange.Min, _cameraAngleRange.Max, linMapCurvedAngle);
 		_thisCamera.transform.rotation = Quaternion.Euler(_cameraTempRot);
+
+		//Use the camera lin map calculation for FOV calculations as well
+		float linMapCurvedFOV;
+		if (_usingFOV1) {
+			linMapCurvedFOV = _cameraFOVCurve1.Evaluate (nonCurvedLinMapValue);
+		} else {
+			linMapCurvedFOV = _cameraFOVCurve2.Evaluate (nonCurvedLinMapValue);
+		}
+		_thisCamera.fieldOfView = MathHelpers.LinMapFrom01(_cameraFOVRange.Min, _cameraFOVRange.Max, linMapCurvedFOV);
 	}
+		
 
 	public void InitializeScroll(){
 		_clickStartPosition = Input.mousePosition;
