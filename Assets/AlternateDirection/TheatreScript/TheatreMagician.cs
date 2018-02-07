@@ -9,6 +9,10 @@ public class TheatreMagician : MonoBehaviour {
 	Vector3 _finalPosition;
 	[SerializeField] Vector3 _startPosition;
 	[SerializeField] Transform _startPlatform;
+	[SerializeField] Transform _waterTank;
+	[SerializeField] Vector3 _onWaterTank;
+
+	Vector3 _tempPos;
 
 	//Vector3 _endPosition;
 	bool _isMoving;
@@ -43,6 +47,23 @@ public class TheatreMagician : MonoBehaviour {
 				_isWaitingForLeft = false;
 			}
 		}
+	}
+
+	public void StepOnTank(){
+		_magicianTransform.parent = _waterTank;
+		StartCoroutine (MoveMagician (_magicianTransform.position, _onWaterTank, 2f));
+	}
+
+	IEnumerator MoveMagician(Vector3 start, Vector3 end, float duration){
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_magicianTransform.position = Vector3.Slerp (start, end, timer / duration);
+			yield return null;
+		}
+		_magicianTransform.position = end;
+		yield return null;
+		_myTheatre.MoveToNext ();
 	}
 
 	public void GoToStart(){

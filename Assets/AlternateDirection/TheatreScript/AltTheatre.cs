@@ -8,6 +8,9 @@ using UnityEngine;
 public enum TheatreState{
 	waitingToStart = -1,
 	startShow = 0,
+	dancerInTank = 1,
+	magicianBoardTank = 2,
+	waterTankDescend = 3,
 	magicianLeft,
 	frogJump,
 	magicianRight,
@@ -22,12 +25,13 @@ public enum TheatreState{
 public class AltTheatre : LevelManager {
 	public static TheatreState currentSate = TheatreState.waitingToStart;
 	[SerializeField] TheatreMagician magician;
+	[SerializeField] TheatreDancer _dancer;
 	TheatreChest chest;
 	TheatreCabinet cabinet;
 	PathNetwork network;
 	[Header("Water Tank")]
 	[SerializeField] Transform _watertank;
-	float _waterTankDuration = 3f;
+	float _waterTankDuration = 6f;
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
 	[SerializeField] Transform _startPlatform;
@@ -91,12 +95,25 @@ public class AltTheatre : LevelManager {
 	
 	}
 
-	void CheckStateMachine(){
+	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
 			magician.GoToStart ();
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 1f));
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
+				MoveToNext();
+			}));
 			// call back function? 
+			break;
+		case TheatreState.dancerInTank:
+			_dancer.FirstDancerEnterTank ();
+			break;
+		case TheatreState.magicianBoardTank:
+			magician.StepOnTank ();
+			break;
+		case TheatreState.waterTankDescend:
+			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 0f, ()=>{
+				MoveToNext();
+			}));
 			break;
 		case TheatreState.magicianLeft:
 			// magician.pointLeft()
@@ -148,22 +165,5 @@ public class AltTheatre : LevelManager {
 		if (action != null) {
 			action ();
 		}
-	}
-
-	void SlidingDoorHandle(SlidingDoorFinished e){
-		if (e.IsOpen) {
-			if (currentSate == TheatreState.waitingToStart) {
-				currentSate++;
-				CheckStateMachine ();
-			}
-		}
-	}
-
-	void OnEnable(){
-		Events.G.AddListener<SlidingDoorFinished> (SlidingDoorHandle);
-	}
-
-	void OnDisable(){
-		Events.G.RemoveListener<SlidingDoorFinished> (SlidingDoorHandle);
 	}
 }

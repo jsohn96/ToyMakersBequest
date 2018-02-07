@@ -2827,7 +2827,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 246094452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 23.53168, z: 4.183761}
+  m_LocalPosition: {x: 0, y: 26.03196, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 961011382}
@@ -2880,6 +2880,8 @@ MonoBehaviour:
   _magicianTransform: {fileID: 1716881202}
   _startPosition: {x: -0.05428345, y: 21.91585, z: 22.3}
   _startPlatform: {fileID: 1248810650}
+  _waterTank: {fileID: 2104662672}
+  _onWaterTank: {x: 0, y: 21.91585, z: 18.50599}
 --- !u!1 &259800225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6681,6 +6683,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 578697400}
   m_Mesh: {fileID: 4300002, guid: 64a5ebb08b31943f6983cc04a466d95d, type: 3}
+--- !u!1001 &584361353
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139416556056372, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &585102801
 GameObject:
   m_ObjectHideFlags: 0
@@ -10905,6 +10949,8 @@ GameObject:
   - component: {fileID: 961011379}
   - component: {fileID: 961011378}
   - component: {fileID: 961011383}
+  - component: {fileID: 961011385}
+  - component: {fileID: 961011384}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10951,7 +10997,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 28
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -10993,6 +11039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590814e09a2194a7eb1d4eba7f755aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _altTheatre: {fileID: 1924021101}
   _thisCameraHeighttContainer: {fileID: 246094453}
   _thisCamera: {fileID: 961011381}
   _cameraMovementRange:
@@ -11037,7 +11084,85 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  _startYPos: 26.47922
+  _cameraZoomedOutViewPos: {x: 0, y: 24.5, z: -19}
+  _cameraZoomedOutFOV: 60
+  _cameraStartPos: {x: 0, y: 26.03196, z: 4}
+  _cameraStartRot: {x: 13.073, y: 0, z: 0}
+  _cameraStartFOV: 28
+--- !u!114 &961011384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 961011377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quality: 3
+  BloomEnabled: 1
+  BloomParams:
+    Quality: 3
+    BloomTint: {r: 1, g: 1, b: 1, a: 1}
+    BloomThreshold: 0.25
+    BloomIntensity: 2.08
+    BloomSoftness: 1.06
+  VisualizeBloom: 0
+  LensDirtTexture: {fileID: 2800000, guid: a4fed32d8ef3a744a9fb4ea31840e8e3, type: 3}
+  LensDirtIntensity: 0
+  ChromaticAberration: 0
+  ChromaticAberrationPrecise: 0
+  ChromaticAberrationOffset: 1
+  SCurveIntensity: 0
+  LensCurvatureEnabled: 0
+  LensCurvaturePower: 1.1
+  LensCurvaturePrecise: 0
+  FilmGrainIntensity: 0
+  FilmGrainTiling: 4
+  VignettingIntensity: 0
+  DOFEnabled: 1
+  BlurCOCTexture: 0
+  DOFParams:
+    UseUnityDepthBuffer: 1
+    AutoFocus: 1
+    AutoFocusLayerMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    AutoFocusSpeed: 5
+    FocalLengthMultiplier: 0.33
+    FocalDistMultiplier: 1
+    DOFBlurSize: 1
+    BokehEnabled: 0
+    DepthCompression: 4
+    EffectCamera: {fileID: 961011381}
+    Target: {fileID: 0}
+    BokehThreshold: 0.5
+    BokehGain: 2
+    BokehBias: 0.5
+    DoubleIntensityBlur: 0
+  VisualizeCOC: 0
+  ColorEffectsEnabled: 1
+  CloseTint: {r: 1, g: 0.5, b: 0, a: 1}
+  FarTint: {r: 0, g: 0, b: 1, a: 1}
+  CloseTintStrength: 0.5
+  FarTintStrength: 0.46
+  DesaturateDarksStrength: 0
+  DesaturateFarObjsStrength: 0
+  FogTint: {r: 1, g: 1, b: 1, a: 1}
+  FogStrength: 0
+  HalfResolution: 0
+--- !u!114 &961011385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 961011377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301eca71255100647bb9bad1d5641921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &976885980
 GameObject:
   m_ObjectHideFlags: 0
@@ -15778,8 +15903,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dancerTransform: {fileID: 1315806399}
-  _startPosition: {x: 0.68, y: 21.91, z: 19.23}
+  _startPosition: {x: 0.1316374, y: 21.91, z: 19.75979}
   _waterTankTransformForCenterAxis: {fileID: 847607669}
+  _waterTankTransform: {fileID: 2104662672}
+  _firstWaterTankStart: {x: -0.42, y: 20.34445, z: -23.4}
+  _firstWaterTankEnd: {x: -0.42, y: -5.299996, z: -23.4}
 --- !u!54 &1315806402
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22559,6 +22687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magician: {fileID: 258194874}
+  _dancer: {fileID: 1315806400}
   _watertank: {fileID: 2104662672}
   _tankTopPos: {x: 0.000000003917295, y: 0.0562, z: -0.001557696}
   _tankBottomPos: {x: 0.000000003917295, y: 0.0228976, z: -0.001557696}
