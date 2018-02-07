@@ -35,6 +35,20 @@ public class TheatreWaterTank : MonoBehaviour {
 		//frogScript.FrogJump ();
 	}
 
+	public void OpenLid(bool open){
+		if (open) {
+			if (!_isOpen) {
+				WaterTankAnim.SetBool ("Open", true);
+				_isOpen = true;
+			}
+		} else {
+			if (_isOpen) {
+				WaterTankAnim.SetBool ("Open", false);
+				_isOpen = false;
+			}
+		}
+	}
+
 	public void Activate(bool activate){
 		isActivated = activate;
 		_boxCollider.enabled = activate;

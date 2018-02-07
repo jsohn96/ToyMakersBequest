@@ -11,9 +11,12 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] Transform _waterTankTransformForCenterAxis;
 
 	[Header("First Water Tank Descend Values")]
-	[SerializeField] Transform _waterTankTransform;
+	[SerializeField] Transform _waterTankPlatformTransform;
 	[SerializeField] Vector3 _firstWaterTankStart;
 	[SerializeField] Vector3 _firstWaterTankEnd;
+
+	Vector3 _waterTankPlatformUpLocalPos = new Vector3 (0.00019f, 0.03096f, 0.00026f);
+	Vector3 _waterTankPlatformDownLocalPos = new Vector3 (0.00019f, -0.0254f, 0.00026f);
 
 	Vector3 _dancerTempPos;
 
@@ -27,7 +30,7 @@ public class TheatreDancer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (AltTheatre.currentSate == TheatreState.startShow) {
+		if (AltTheatre.currentSate == TheatreState.startShow || AltTheatre.currentSate == TheatreState.readyForDancerTank) {
 			RotateInPlace ();
 			RotateAroundCenter ();
 		} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
@@ -42,11 +45,11 @@ public class TheatreDancer : MonoBehaviour {
 	IEnumerator FirstDancerTankCoroutine(){
 		float timer = 0f;
 		float duration = 5f;
-		while (timer < duration) {
-			timer += Time.deltaTime;
-			RotateAroundCenter ();
-			yield return null;
-		}
+//		while (timer < duration) {
+//			timer += Time.deltaTime;
+//			RotateAroundCenter ();
+//			yield return null;
+//		}
 		timer = 0f;
 		duration = 1.5f;
 		while (timer < duration) {
@@ -63,15 +66,17 @@ public class TheatreDancer : MonoBehaviour {
 		}
 
 		_dancerTransform.localPosition = _firstWaterTankStart;
+		_dancerTransform.parent = _waterTankPlatformTransform;
+		yield return new WaitForSeconds (0.7f);
 		timer = 0f;
 		duration = 4f;
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_dancerTransform.localPosition = Vector3.Lerp (_firstWaterTankStart, _firstWaterTankEnd, timer / duration);
+			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
 			yield return null;
 		}
-		_dancerTransform.localPosition = _firstWaterTankEnd;
-		_dancerTransform.parent = _waterTankTransform;
+		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
+
 		_myTheatre.MoveToNext ();
 		yield return null;
 	}

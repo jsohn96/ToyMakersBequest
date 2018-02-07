@@ -118,6 +118,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator AdjustToScrollFOV(){
+		ScrollCamera ();
 		float timer = 0f;
 		float duration = 2f;
 		float currentFOV = _thisCamera.fieldOfView;

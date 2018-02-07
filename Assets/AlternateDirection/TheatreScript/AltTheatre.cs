@@ -130,6 +130,8 @@ public class AltTheatre : LevelManager {
 			_dancer.FirstDancerEnterTank ();
 			break;
 		case TheatreState.magicianBoardTank:
+			_theatreWaterTank.Activate (false);
+			_theatreWaterTank.OpenLid (false);
 			magician.StepOnTank ();
 			_theatreCameraControl.EnableScrollFOV();
 			break;
