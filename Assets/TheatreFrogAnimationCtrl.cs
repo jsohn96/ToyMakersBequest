@@ -12,9 +12,11 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 	bool _isControlActive = false;
 	bool _isClickActive = false;
 
+	BoxCollider bCol;
 	// Use this for initialization
 	void Awake(){
 		_frogAnim = GetComponent<Animator> ();
+		bCol = GetComponent<BoxCollider> ();
 
 	}
 
@@ -51,16 +53,19 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		print ("activate frog: " + _frogIdx);
 		_isFrogUp = true;
 		_isClickActive = true;
+		bCol.enabled = true;
 	}
 
 	public void HideFrog(){
 		_isFrogUp = false;
 		_isClickActive = false;
+		bCol.enabled = false;
 	}
 
 	void hideFrogInScene(){
 		_frog.SetActive (false);
 		_isClickActive = false;
+		bCol.enabled = false;
 	}
 
 	void OnTouchDown(){

@@ -10,6 +10,7 @@ public class TheatreFrog : MonoBehaviour {
 	[SerializeField] PathNode _FirstJumpNode;
 	TheatreFrogAnimationCtrl[] _FrogAnimCtrl;
 
+
 	int DancerOnNodeIdx = -1;
 	int curFrogIdx = -1;
 	int _curNodeOrderIdx = -1;
@@ -28,18 +29,21 @@ public class TheatreFrog : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (_curNodeOrderIdx >= 0 && isContorlAcivate) {
+			FrogDetectDancer ();
+		}
+
 	}
 
 	void OnEnable(){
 		//Events.G.AddListener<PathStateManagerEvent> (PathStateManageHandle);
-		//Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
+		Events.G.AddListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.AddListener<TheatreFrogClickEvent> (FrogClickHandle);
 	}
 
 	void OnDisable(){
 		//Events.G.RemoveListener<PathStateManagerEvent> (PathStateManageHandle);
-		//Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
+		Events.G.RemoveListener<DancerOnBoard> (DancerOnBoardHandle);
 		Events.G.RemoveListener<TheatreFrogClickEvent> (FrogClickHandle);
 	}
 
@@ -75,6 +79,20 @@ public class TheatreFrog : MonoBehaviour {
 			JumpToRandomNode();
 		}
 	}
+
+	void DancerOnBoardHandle(DancerOnBoard e){
+		DancerOnNodeIdx = e.NodeIdx;
+		Debug.Log ("Frog Dancer on node index: " + e.NodeIdx);
+	}
+
+	void FrogDetectDancer(){
+		// if the current node that the player is step on is the one that's behind then check for the next position 
+		//int tempIdx = -1;
+		if(DancerOnNodeIdx == _curNodeOrderIdx + 1){
+			JumpToNextNode(_curNodeOrderIdx + 1);
+		}
+
+	}
 		
 
 	void ActivateFrog(int index){
@@ -92,8 +110,12 @@ public class TheatreFrog : MonoBehaviour {
 		// hide the frog in the current node 
 		if(jumptoIndex > _JumpNode.Length){
 			jumptoIndex = 0;
+
 		}
+
+
 		TheatreFrogAnimationCtrl _curBehaviour = _JumpNode[_curNodeOrderIdx].gameObject.GetComponentInChildren<TheatreFrogAnimationCtrl>();
+		_curNodeOrderIdx = jumptoIndex;
 		if (_curBehaviour != null) {
 			_curBehaviour.HideFrog ();
 		}
