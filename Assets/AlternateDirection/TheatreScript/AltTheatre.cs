@@ -26,10 +26,11 @@ public enum TheatreState{
 public class AltTheatre : LevelManager {
 	public static TheatreState currentSate = TheatreState.waitingToStart;
 	[SerializeField] TheatreMagician magician;
-	[SerializeField] TheatreDancer _dancer;
+	[SerializeField] TheatreDancer _dancer;	
 	TheatreChest chest;
 	TheatreCabinet cabinet;
 	PathNetwork network;
+
 	[Header("Water Tank")]
 	[SerializeField] Transform _watertank;
 	float _waterTankDuration = 6f;
@@ -43,16 +44,12 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreCabinet _theatreCabinet;
 	[SerializeField] TheatreChest _theatreChest;
 
+
 	// Use this for initialization
 	void Awake () {
 		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
 		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
 		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();
-	}
-
-	void Start(){
-		_watertank.localPosition = _tankTopPos;
-		_startPlatform.localPosition = _platformBeginPos;
 	}
 
 	public override void PickUpCharm(){
@@ -62,6 +59,12 @@ public class AltTheatre : LevelManager {
 		InventorySystem._instance.AddItem (items.dancerCharm);
 		Events.G.Raise (new PickedUpItem (items.dancerCharm));
 	}
+
+	void Start(){
+		_watertank.localPosition = _tankTopPos;
+		_startPlatform.localPosition = _platformBeginPos;
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -72,6 +75,7 @@ public class AltTheatre : LevelManager {
 				CheckStateMachine();
 				Debug.Log("Current Theatre State: " + currentSate);
 			}
+
 		}
 
 		if (Input.GetKeyDown (KeyCode.LeftControl)) {
@@ -112,6 +116,7 @@ public class AltTheatre : LevelManager {
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
 				MoveToNext();
 			}));
+			magician.GoToStart();
 			// call back function? 
 			break;
 		case TheatreState.dancerInTank:
@@ -130,6 +135,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.magicianLeft:
 			// magician.pointLeft()
+
 			chest.Activate(true);
 			break;
 		case TheatreState.frogJump:

@@ -24,3 +24,11 @@ public class SlidingDoorFinished: GameEvent {
 		IsOpen = isOpen;	
 	}
 }
+
+
+public class TheatreFrogClickEvent:GameEvent{
+	public int frogIdx { get; private set; }
+	public TheatreFrogClickEvent (int index){
+		frogIdx = index;	
+	}
+}

@@ -240,14 +240,14 @@ public class PathNode : MonoBehaviour {
 			_isControlActive = true;
 		}
 
-
+		initNodePathInfo ();
 
 	}
 
 
 
 	void Start(){
-		initNodePathInfo ();
+		
 		snapToAngle = new List<float> (10);
 		disableRotateTimer = new Timer (1);
 		if (_isCheckSameAsControl) {

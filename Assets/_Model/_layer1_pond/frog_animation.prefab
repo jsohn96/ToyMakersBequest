@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4429346747263452}
   - component: {fileID: 95208411069864976}
-  - component: {fileID: 114436775634243978}
-  m_Layer: 0
+  - component: {fileID: 65079047711672742}
+  - component: {fileID: 114251500443071078}
+  m_Layer: 18
   m_Name: frog_animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4280401474951268}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4397402080303592}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +69,8 @@ GameObject:
   - component: {fileID: 4076911239009778}
   - component: {fileID: 33474597219364962}
   - component: {fileID: 23494051858732914}
-  m_Layer: 0
+  - component: {fileID: 65296691519810252}
+  m_Layer: 18
   m_Name: frog_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +87,7 @@ GameObject:
   - component: {fileID: 4061868385656546}
   - component: {fileID: 33884319715815112}
   - component: {fileID: 23496674889263924}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: key_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +104,7 @@ GameObject:
   - component: {fileID: 4320330755229560}
   - component: {fileID: 33876495362636366}
   - component: {fileID: 23134525001636872}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: frog_plat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,8 +130,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1652750575215044}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.024527367, z: 0.0006759095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.0249, z: 0.0006759095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4061868385656546}
@@ -143,7 +145,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397940628956562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.015, y: -0.141, z: -1.043}
+  m_LocalPosition: {x: 0.015, y: -0.141, z: -0.02}
   m_LocalScale: {x: 21.75853, y: 21.758482, z: 21.758541}
   m_Children:
   - {fileID: 4076911239009778}
@@ -183,15 +185,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1394575325493556}
-  m_LocalRotation: {x: -0.61473876, y: -0.3494228, z: 0.3494228, w: 0.61473876}
-  m_LocalPosition: {x: 0.008129098, y: 0.012448527, z: -0.13064072}
-  m_LocalScale: {x: 1.6935889, y: 1.6938131, z: 1.6935897}
+  m_LocalRotation: {x: 0.61497563, y: 0.34900567, z: -0.3490057, w: -0.6149757}
+  m_LocalPosition: {x: 0.038189657, y: -0.07614728, z: -0.20303352}
+  m_LocalScale: {x: 3.0434022, y: 1.9779128, z: 3.0477695}
   m_Children:
   - {fileID: 4280401474951268}
   - {fileID: 4397402080303592}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 210.849, z: 0}
 --- !u!23 &23134525001636872
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -309,6 +311,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674016011854460}
   m_Mesh: {fileID: 4300002, guid: 2a680bf7943dd40c5bdf76f2a82a3c65, type: 3}
+--- !u!65 &65079047711672742
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394575325493556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.13, y: 1.55, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65296691519810252
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652750575215044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.033827417, y: 0.036941234, z: 0.041734274}
+  m_Center: {x: 0.000000059604645, y: -0.00000011920929, z: -0.00000011920929}
 --- !u!95 &95208411069864976
 Animator:
   serializedVersion: 3
@@ -326,7 +352,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114436775634243978
+--- !u!114 &114251500443071078
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -334,7 +360,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1394575325493556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dab0fbca9cbe4816b8be2a0506085b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e8a741e475f14e3984ae312c33b802a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _frog: {fileID: 0}
+  _frog: {fileID: 1397940628956562}
+  _frogIdx: -1
