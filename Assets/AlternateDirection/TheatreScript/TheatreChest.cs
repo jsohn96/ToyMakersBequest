@@ -29,8 +29,10 @@ public class TheatreChest : MonoBehaviour {
 		if (isActivated) {
 			Debug.Log ("Empty chest open");
 			if (!_isOpen) {
+				chestAnim.SetBool ("Open", true);
 				_isOpen = true;
 			} else {
+				chestAnim.SetBool ("Open", false);
 				_isOpen = false;
 			}
 		} 
