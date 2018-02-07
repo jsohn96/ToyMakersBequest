@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreDancer : MonoBehaviour {
-	Vector3 finalPosition;
 	AltTheatre _myTheatre;
 	[SerializeField] Transform _dancerTransform;
 
@@ -20,7 +19,6 @@ public class TheatreDancer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		finalPosition = gameObject.transform.position;
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_dancerTransform.position = _startPosition;
@@ -35,12 +33,6 @@ public class TheatreDancer : MonoBehaviour {
 		} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
 			RotateInPlace ();
 		}
-	}
-
-	public void DancerEnterScene(){
-		Debug.Log ("Dancer enter the scene");
-		gameObject.transform.position = finalPosition;
-		_myTheatre.MoveToNext ();
 	}
 
 	public void FirstDancerEnterTank(){

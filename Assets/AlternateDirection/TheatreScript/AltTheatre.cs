@@ -11,7 +11,8 @@ public enum TheatreState{
 	dancerInTank = 1,
 	magicianBoardTank = 2,
 	waterTankDescend = 3,
-	magicianLeft,
+	magicianPrepareFrog = 4,
+	magicianLeft = 5,
 	frogJump,
 	magicianRight,
 	dancerShowUp,
@@ -37,6 +38,10 @@ public class AltTheatre : LevelManager {
 	[SerializeField] Transform _startPlatform;
 	float _platformDuration = 3f;
 	[SerializeField] Vector3 _platformBeginPos, _platformEndPos;
+
+	[Header("Interactive Scene Objects")]
+	[SerializeField] TheatreCabinet _theatreCabinet;
+	[SerializeField] TheatreChest _theatreChest;
 
 	// Use this for initialization
 	void Awake () {
@@ -115,9 +120,12 @@ public class AltTheatre : LevelManager {
 				MoveToNext();
 			}));
 			break;
+		case TheatreState.magicianPrepareFrog:
+			magician.StepOffTank ();
+			break;
 		case TheatreState.magicianLeft:
 			// magician.pointLeft()
-			chest.Activate();
+			chest.Activate(true);
 			break;
 		case TheatreState.frogJump:
 			// frog.jumpout
@@ -127,7 +135,7 @@ public class AltTheatre : LevelManager {
 		case TheatreState.magicianRight:
 			// magician.pointRight();
 			// dancer.enterScene();
-			cabinet.Activate ();
+			cabinet.Activate (true);
 
 			break;
 		case TheatreState.dancerShowUp:
