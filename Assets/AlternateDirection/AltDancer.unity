@@ -697,6 +697,11 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!95 &44824416 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 9500000, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
+    type: 3}
+  m_PrefabInternal: {fileID: 418028909}
 --- !u!4 &47722037 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400108, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
@@ -5405,6 +5410,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c1d999472bb324beb994dc2ae01d479a, type: 2}
+    - target: {fileID: 100072, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
   m_IsPrefabParent: 0
@@ -5448,6 +5457,19 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
+--- !u!114 &418028913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 418028910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d976bb8d4b8b34d9683f20d1ef2608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaterTankAnim: {fileID: 44824416}
+  _myTheatre: {fileID: 1924021101}
 --- !u!1 &428650461
 GameObject:
   m_ObjectHideFlags: 0
@@ -17111,10 +17133,6 @@ Prefab:
     - {fileID: 65296691519810252, guid: a119e96c351054d05a4c3c4c13b44fd2, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a119e96c351054d05a4c3c4c13b44fd2, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1282477103 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400092, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
-  m_PrefabInternal: {fileID: 418028909}
 --- !u!23 &1283197868 stripped
 MeshRenderer:
   m_PrefabParentObject: {fileID: 2300088, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
@@ -24707,7 +24725,7 @@ MonoBehaviour:
   magician: {fileID: 258194874}
   _dancer: {fileID: 1315806400}
   _watertank: {fileID: 2104662672}
-  _waterTankHolder: {fileID: 1282477103}
+  _theatreWaterTank: {fileID: 418028913}
   _tankTopPos: {x: 0.000000003917295, y: 0.0562, z: -0.001557696}
   _tankBottomPos: {x: 0.000000003917295, y: 0.0228976, z: -0.001557696}
   _startPlatform: {fileID: 1248810650}

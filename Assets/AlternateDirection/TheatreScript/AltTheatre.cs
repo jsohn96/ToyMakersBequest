@@ -8,11 +8,12 @@ using UnityEngine;
 public enum TheatreState{
 	waitingToStart = -1,
 	startShow = 0,
-	dancerInTank = 1,
-	magicianBoardTank = 2,
-	waterTankDescend = 3,
-	magicianPrepareFrog = 4,
-	magicianLeft = 5,
+	readyForDancerTank = 1,
+	dancerInTank = 2,
+	magicianBoardTank = 3,
+	waterTankDescend = 4,
+	magicianPrepareFrog = 5,
+	magicianLeft = 6,
 	frogJump,
 	magicianRight,
 	dancerShowUp,
@@ -35,7 +36,7 @@ public class AltTheatre : LevelManager {
 
 	[Header("Water Tank")]
 	[SerializeField] Transform _watertank;
-	[SerializeField] Transform _waterTankHolder;
+	[SerializeField] TheatreWaterTank _theatreWaterTank;
 	float _waterTankDuration = 6f;
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
@@ -121,6 +122,9 @@ public class AltTheatre : LevelManager {
 			}));
 			magician.GoToStart();
 			// call back function? 
+			break;
+		case TheatreState.readyForDancerTank:
+			_theatreWaterTank.Activate (true);
 			break;
 		case TheatreState.dancerInTank:
 			_dancer.FirstDancerEnterTank ();
