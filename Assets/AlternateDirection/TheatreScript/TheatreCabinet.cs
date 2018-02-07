@@ -8,6 +8,7 @@ public class TheatreCabinet : MonoBehaviour {
 	bool isDancerOut;
 	[SerializeField] Animator _cabinetAnimator;
 	BoxCollider _boxCollider;
+	bool _isOpen = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -30,13 +31,20 @@ public class TheatreCabinet : MonoBehaviour {
 	}
 
 	void OnTouchDown(){
-		// 
-		if (!isActivated ) {
-			Debug.Log ("Empty cabinet open");
-		} else if(isActivated && !isDancerOut) {
-			Debug.Log ("cabinet open with dancer");
-			isDancerOut = true;
+		if (isActivated) {
+			if (!_isOpen) {
+				_isOpen = true;
+			} else {
+				_isOpen = false;
+			}
 		}
+
+//		if (!isActivated ) {
+//			Debug.Log ("Empty cabinet open");
+//		} else if(isActivated && !isDancerOut) {
+//			Debug.Log ("cabinet open with dancer");
+//			isDancerOut = true;
+//		}
 	}
 
 	public void Activate(bool activate){

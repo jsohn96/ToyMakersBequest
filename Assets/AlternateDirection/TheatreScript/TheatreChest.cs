@@ -8,6 +8,7 @@ public class TheatreChest : MonoBehaviour {
 	BoxCollider _boxCollider;
 
 	bool isActivated = false;
+	bool _isOpen = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,12 +26,15 @@ public class TheatreChest : MonoBehaviour {
 
 	void OnTouchDown(){
 		// 
-		if (!isActivated) {
+		if (isActivated) {
 			Debug.Log ("Empty chest open");
-		} else {
-			Debug.Log ("Chest open with frog");
+			if (!_isOpen) {
+				_isOpen = true;
+			} else {
+				_isOpen = false;
+			}
+		} 
 			//frogScript.FrogJump ();
-		}
 	}
 
 	public void Activate(bool activate){
