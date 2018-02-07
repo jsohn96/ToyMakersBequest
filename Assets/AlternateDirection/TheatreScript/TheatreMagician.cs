@@ -7,6 +7,9 @@ public class TheatreMagician : MonoBehaviour {
 	Animator _magicianAnim;
 	AltTheatre _myTheatre;
 	Vector3 _finalPosition;
+	[SerializeField] Vector3 _startPosition;
+	[SerializeField] Transform _startPlatform;
+
 	//Vector3 _endPosition;
 	bool _isMoving;
 	bool _isWaitingForLeft;
@@ -15,9 +18,16 @@ public class TheatreMagician : MonoBehaviour {
 	void Awake () {
 		_isMoving = false;
 		_isWaitingForLeft = false;
-		_finalPosition = _magicianTransform.localPosition;
+		//_finalPosition = _magicianTransform.localPosition;
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
 		//_magicianTransform = gameObject.transform;
+	}
+
+	void Start(){
+		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
+			_magicianTransform.position = _startPosition;
+			_magicianTransform.parent = _startPlatform;
+		}
 	}
 
 	// Update is called once per frame
@@ -26,7 +36,7 @@ public class TheatreMagician : MonoBehaviour {
 			_magicianTransform.localPosition = Vector3.Lerp (_magicianTransform.localPosition, _finalPosition, Time.deltaTime * 2f);
 		} else {
 			_isMoving = false;
-			_magicianTransform.localPosition = _finalPosition;
+			//_magicianTransform.localPosition = _finalPosition;
 			if (_isWaitingForLeft) {
 				// play left point animation
 				_myTheatre.MoveToNext();
@@ -36,9 +46,9 @@ public class TheatreMagician : MonoBehaviour {
 	}
 
 	public void GoToStart(){
-		_isWaitingForLeft = true;
-		_finalPosition = _magicianTransform.localPosition;
-		_finalPosition.z = -3f;
-		_isMoving = true;
+//		_isWaitingForLeft = true;
+//		_finalPosition = _magicianTransform.localPosition;
+//		_finalPosition.z = -3f;
+//		_isMoving = true;
 	}
 }

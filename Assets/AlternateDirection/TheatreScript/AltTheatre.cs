@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 public enum TheatreState{
-	none = -1,
+	waitingToStart = -1,
 	startShow = 0,
 	magicianLeft,
 	frogJump,
@@ -20,16 +20,18 @@ public enum TheatreState{
 }
 
 public class AltTheatre : LevelManager {
-	TheatreState currentSate = TheatreState.none;
+	public static TheatreState currentSate = TheatreState.waitingToStart;
 	[SerializeField] TheatreMagician magician;
 	TheatreChest chest;
 	TheatreCabinet cabinet;
 	PathNetwork network;
 	[Header("Water Tank")]
 	[SerializeField] Transform _watertank;
+	float _waterTankDuration = 3f;
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
 	[SerializeField] Transform _startPlatform;
+	float _platformDuration = 3f;
 	[SerializeField] Vector3 _platformBeginPos, _platformEndPos;
 
 	// Use this for initialization
@@ -37,6 +39,11 @@ public class AltTheatre : LevelManager {
 		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
 		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
 		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();
+	}
+
+	void Start(){
+		_watertank.localPosition = _tankTopPos;
+		_startPlatform.localPosition = _platformBeginPos;
 	}
 
 	public override void PickUpCharm(){
@@ -87,7 +94,8 @@ public class AltTheatre : LevelManager {
 	void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
-			magician.GoToStart();
+			magician.GoToStart ();
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 1f));
 			// call back function? 
 			break;
 		case TheatreState.magicianLeft:
@@ -125,5 +133,37 @@ public class AltTheatre : LevelManager {
 
 
 		}
+	}
+
+	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, System.Action action = null){
+		yield return new WaitForSeconds (initialDelay);
+		float timer = 0f;
+		while (duration > timer) {
+			timer += Time.deltaTime; 
+			transform.localPosition = Vector3.Slerp (origin, goal, timer / duration);
+			yield return null;
+		}
+		transform.localPosition = goal;
+		yield return null;
+		if (action != null) {
+			action ();
+		}
+	}
+
+	void SlidingDoorHandle(SlidingDoorFinished e){
+		if (e.IsOpen) {
+			if (currentSate == TheatreState.waitingToStart) {
+				currentSate++;
+				CheckStateMachine ();
+			}
+		}
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<SlidingDoorFinished> (SlidingDoorHandle);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<SlidingDoorFinished> (SlidingDoorHandle);
 	}
 }
