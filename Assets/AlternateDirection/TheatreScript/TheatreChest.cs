@@ -18,11 +18,6 @@ public class TheatreChest : MonoBehaviour {
 			isActivated = false;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void OnTouchDown(){
 		// 

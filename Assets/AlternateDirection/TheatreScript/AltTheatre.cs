@@ -72,7 +72,12 @@ public class AltTheatre : LevelManager {
 				CheckStateMachine();
 				Debug.Log("Current Theatre State: " + currentSate);
 			}
+		}
 
+		if (Input.GetKeyDown (KeyCode.LeftControl)) {
+			Time.timeScale = 5.0f;
+		} else if (Input.GetKeyUp (KeyCode.LeftControl)) {
+			Time.timeScale = 1.0f;
 		}
 		#endif
 
