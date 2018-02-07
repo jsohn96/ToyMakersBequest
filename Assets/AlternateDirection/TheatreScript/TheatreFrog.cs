@@ -8,6 +8,7 @@ public class TheatreFrog : MonoBehaviour {
 	Vector3 _finalPosition;
 	[SerializeField] PathNode[] _JumpNode;
 	[SerializeField] PathNode _FirstJumpNode;
+	List<int> alreadyGoneIndex; 
 	TheatreFrogAnimationCtrl[] _FrogAnimCtrl;
 
 
@@ -25,6 +26,7 @@ public class TheatreFrog : MonoBehaviour {
 		for (int i = 0; i < _JumpNode.Length; i++){
 			_FrogAnimCtrl [i] = _JumpNode [i].gameObject.GetComponentInChildren<TheatreFrogAnimationCtrl> ();
 		}
+		alreadyGoneIndex = new List<int> ();
 	}
 	
 	// Update is called once per frame
@@ -60,6 +62,7 @@ public class TheatreFrog : MonoBehaviour {
 			SetFrogControl(true);
 			//jump to the first node
 			_curNodeOrderIdx = 5;
+			alreadyGoneIndex.Add (_curNodeOrderIdx);
 		}
 	}
 
@@ -76,7 +79,12 @@ public class TheatreFrog : MonoBehaviour {
 		Debug.Log ("Theatre Frog REcv : " + e.frogIdx + " current : " +_curNodeOrderIdx);
 		if ((e.frogIdx-1) == _curNodeOrderIdx) {
 			// frog jump to random pos
-			JumpToRandomNode();
+			if (alreadyGoneIndex.Count <= 6) {
+				JumpToRandomNode ();
+			} else {
+				Debug.Log ("Frog should jump to center and drop");
+			}
+
 		}
 	}
 
@@ -128,11 +136,12 @@ public class TheatreFrog : MonoBehaviour {
 		
 		int randomNode = Random.Range (0, 6);
 		Debug.Log ("Jump To Random : " + randomNode);
-		if (randomNode == _curNodeOrderIdx || randomNode == DancerOnNodeIdx) {
+		if (randomNode == _curNodeOrderIdx || randomNode == DancerOnNodeIdx || alreadyGoneIndex.Contains(randomNode)) {
 			JumpToRandomNode ();
 		} else {
 			ActivateFrog (randomNode);
 			_curNodeOrderIdx = randomNode;
+			alreadyGoneIndex.Add (randomNode);
 		}
 	}
 
