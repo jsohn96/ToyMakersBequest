@@ -33,6 +33,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	bool _initZoom = false;
 	bool _initClick = false;
+	bool _disableScrollFOV = true;
 
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
@@ -91,13 +92,15 @@ public class TheatreCameraControl : MonoBehaviour {
 		_thisCamera.transform.rotation = Quaternion.Euler(_cameraTempRot);
 
 		//Use the camera lin map calculation for FOV calculations as well
-		float linMapCurvedFOV;
-		if (_usingFOV1) {
-			linMapCurvedFOV = _cameraFOVCurve1.Evaluate (nonCurvedLinMapValue);
-		} else {
-			linMapCurvedFOV = _cameraFOVCurve2.Evaluate (nonCurvedLinMapValue);
+		if (!_disableScrollFOV) {
+			float linMapCurvedFOV;
+			if (_usingFOV1) {
+				linMapCurvedFOV = _cameraFOVCurve1.Evaluate (nonCurvedLinMapValue);
+			} else {
+				linMapCurvedFOV = _cameraFOVCurve2.Evaluate (nonCurvedLinMapValue);
+			}
+			_thisCamera.fieldOfView = MathHelpers.LinMapFrom01 (_cameraFOVRange.Min, _cameraFOVRange.Max, linMapCurvedFOV);
 		}
-		_thisCamera.fieldOfView = MathHelpers.LinMapFrom01(_cameraFOVRange.Min, _cameraFOVRange.Max, linMapCurvedFOV);
 	}
 		
 
@@ -108,6 +111,36 @@ public class TheatreCameraControl : MonoBehaviour {
 		
 	public void EndScroll(){
 		_isScrolling = false;
+	}
+
+	public void EnableScrollFOV(){
+		StartCoroutine (AdjustToScrollFOV());
+	}
+
+	IEnumerator AdjustToScrollFOV(){
+		float timer = 0f;
+		float duration = 2f;
+		float currentFOV = _thisCamera.fieldOfView;
+		float nonCurvedLinMapValue;
+		float linMapCurvedFOV;
+		float goalFOV;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			nonCurvedLinMapValue = MathHelpers.LinMapTo01 (
+				_cameraMovementRange.Min, 
+				_cameraMovementRange.Max, 
+				_currentCameraYPos);
+			if (_usingFOV1) {
+				linMapCurvedFOV = _cameraFOVCurve1.Evaluate (nonCurvedLinMapValue);
+			} else {
+				linMapCurvedFOV = _cameraFOVCurve2.Evaluate (nonCurvedLinMapValue);
+			}
+			goalFOV = MathHelpers.LinMapFrom01 (_cameraFOVRange.Min, _cameraFOVRange.Max, linMapCurvedFOV);
+			_thisCamera.fieldOfView = Mathf.Lerp (currentFOV, goalFOV, timer / duration);
+			yield return null;
+		}
+		_disableScrollFOV = false;
+		yield return null;
 	}
 
 	IEnumerator ZoomInCamera(){

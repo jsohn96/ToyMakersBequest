@@ -24,6 +24,8 @@ public enum TheatreState{
 }
 
 public class AltTheatre : LevelManager {
+	[SerializeField] TheatreCameraControl _theatreCameraControl;
+
 	public static TheatreState currentSate = TheatreState.waitingToStart;
 	[SerializeField] TheatreMagician magician;
 	[SerializeField] TheatreDancer _dancer;	
@@ -33,6 +35,7 @@ public class AltTheatre : LevelManager {
 
 	[Header("Water Tank")]
 	[SerializeField] Transform _watertank;
+	[SerializeField] Transform _waterTankHolder;
 	float _waterTankDuration = 6f;
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
@@ -124,6 +127,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.magicianBoardTank:
 			magician.StepOnTank ();
+			_theatreCameraControl.EnableScrollFOV();
 			break;
 		case TheatreState.waterTankDescend:
 			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 0f, ()=>{
