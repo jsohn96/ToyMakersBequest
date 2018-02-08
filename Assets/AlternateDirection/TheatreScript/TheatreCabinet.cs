@@ -9,6 +9,7 @@ public class TheatreCabinet : MonoBehaviour {
 	[SerializeField] Animator _cabinetAnimator;
 	BoxCollider _boxCollider;
 	bool _isOpen = false;
+	[SerializeField] AltTheatre _myTheatre;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,6 +36,10 @@ public class TheatreCabinet : MonoBehaviour {
 			if (!_isOpen) {
 				_cabinetAnimator.SetBool ("Open", true);
 				_isOpen = true;
+				if (!isDancerOut) {
+					_myTheatre.MoveToNext ();
+					isDancerOut = true;
+				}
 			} else {
 				_cabinetAnimator.SetBool ("Open", false);
 				_isOpen = false;

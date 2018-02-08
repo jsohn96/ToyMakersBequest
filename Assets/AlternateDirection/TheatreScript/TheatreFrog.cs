@@ -83,6 +83,7 @@ public class TheatreFrog : MonoBehaviour {
 				JumpToRandomNode ();
 			} else {
 				Debug.Log ("Frog should jump to center and drop");
+				_myTheatre.MoveToNext ();
 			}
 
 		}

@@ -26,6 +26,7 @@ public class TheatreChest : MonoBehaviour {
 			Debug.Log ("Empty chest open");
 			if (!isFrogOut) {
 				frogScript.FrogJump ();
+				isFrogOut = true;
 			} else {
 			
 			}

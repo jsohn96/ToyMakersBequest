@@ -16,8 +16,9 @@ public enum TheatreState{
 	magicianLeft = 6,
 	frogJump = 7,
 	lookDownIntoTank = 8,
-	CloseTank = 9,
-	magicianRight = 10,
+	CloseTank1 = 9,
+	CloseTank2 = 10,
+	magicianRight = 11,
 	dancerShowUp,
 	dancerKissing,
 	audienceLeave,
@@ -155,15 +156,16 @@ public class AltTheatre : LevelManager {
 			magician.PointToLeft (false);
 			// frog.jumpout
 			//magician go back to center position 
-			MoveToNext();
+			//MoveToNext();
 			break;
 		case TheatreState.lookDownIntoTank:
-			// frog.jumpout
-			//magician go back to center position 
 			_theatreCameraControl.MoveCameraToLookAtTank();
 			//MoveToNext();
 			break;
+//		case TheatreState.CloseTank:
+//			break;
 		case TheatreState.magicianRight:
+			_theatreCameraControl.EnableScrollFOV();
 			magician.PointToRight (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);

@@ -2304,6 +2304,11 @@ MonoBehaviour:
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!23 &174079039 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2300046, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
+    type: 3}
+  m_PrefabInternal: {fileID: 418028909}
 --- !u!1 &189895744
 GameObject:
   m_ObjectHideFlags: 0
@@ -5693,6 +5698,22 @@ Prefab:
     - target: {fileID: 400138, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100060, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 100062, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 100066, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 100068, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
@@ -10427,6 +10448,60 @@ MonoBehaviour:
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!1 &776544071 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100068, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+  m_PrefabInternal: {fileID: 418028909}
+--- !u!114 &776544073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 776544071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a618df89dcdbe42a6a4febf11ef564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _closeRot: {x: 0, y: 0, z: 0, w: 1}
+  _myTheatre: {fileID: 1924021101}
+--- !u!65 &776544075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 776544071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.028902005, y: 0.044103585, z: 0.007882329}
+  m_Center: {x: -0.014451029, y: 0.00000003056151, z: 0.036381368}
+--- !u!23 &776544076 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2300054, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
+    type: 3}
+  m_PrefabInternal: {fileID: 418028909}
+--- !u!114 &776544077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 776544071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 776544076}
+  - {fileID: 1732420798}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
 --- !u!1 &782019953
 GameObject:
   m_ObjectHideFlags: 0
@@ -12711,6 +12786,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _bottomCameraPos: {x: 0, y: 15.8, z: 4}
   _cameraZoomedOutViewPos: {x: 0, y: 24.5, z: -19}
   _cameraZoomedOutFOV: 60
   _cameraStartPos: {x: 0, y: 26.03196, z: 4}
@@ -15805,6 +15881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cabinetAnimator: {fileID: 542678025}
+  _myTheatre: {fileID: 1924021101}
 --- !u!114 &1153882479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15979,6 +16056,60 @@ MonoBehaviour:
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 1718668590}
   _betweenTransitionLerpDuration: 0.25
+--- !u!1 &1165554334 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100066, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+  m_PrefabInternal: {fileID: 418028909}
+--- !u!114 &1165554336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165554334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a618df89dcdbe42a6a4febf11ef564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _closeRot: {x: 0, y: 0, z: 0, w: 1}
+  _myTheatre: {fileID: 1924021101}
+--- !u!65 &1165554338
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165554334}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.021456769, y: 0.044103585, z: 0.0073924907}
+  m_Center: {x: 0.010728184, y: 0.00000003056151, z: 0.036626063}
+--- !u!23 &1165554339 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2300052, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
+    type: 3}
+  m_PrefabInternal: {fileID: 418028909}
+--- !u!114 &1165554340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165554334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 1165554339}
+  - {fileID: 174079039}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
 --- !u!23 &1169591608 stripped
 MeshRenderer:
   m_PrefabParentObject: {fileID: 2300002, guid: 5778151ab42d64fc39b2b215600116bf,
@@ -22618,6 +22749,11 @@ MonoBehaviour:
   - {x: 3.6353874, y: -2.9512844, z: -0.0000034760963}
   modes: 0000000000000000
   loop: 0
+--- !u!23 &1732420798 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2300048, guid: 24aa158c9b80c4ffbbdafbedaefd1522,
+    type: 3}
+  m_PrefabInternal: {fileID: 418028909}
 --- !u!1 &1750628968
 GameObject:
   m_ObjectHideFlags: 0

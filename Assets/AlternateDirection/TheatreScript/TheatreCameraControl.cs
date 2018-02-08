@@ -20,7 +20,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _isScrolling = false;
 	Vector3 _cameraTempPos;
 	Vector3 _cameraTempRot;
-	Vector3 _bottomCameraPos;
+	[SerializeField] Vector3 _bottomCameraPos;
 	Vector3 _scrollDirectionMultiplier = new Vector3(0f, -10f, 0f);
 
 	[Header("Camera Init Values")]
@@ -86,6 +86,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	void CameraAngleCalculation(){
+		_currentCameraYPos = _thisCamera.transform.position.y;
 		_cameraTempRot = _thisCamera.transform.eulerAngles;
 		float nonCurvedLinMapValue = MathHelpers.LinMapTo01 (
 			                             _cameraMovementRange.Min, 
@@ -135,14 +136,17 @@ public class TheatreCameraControl : MonoBehaviour {
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_thisCamera.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
+			CameraAngleCalculation ();
 			yield return null;
 		}
 		_thisCamera.transform.position = _bottomCameraPos;
+		CameraAngleCalculation ();
 		yield return null;
 		_altTheatre.MoveToNext ();
 	}
 
 	IEnumerator AdjustToScrollFOV(){
+		_disableAllScroll = false;
 		ScrollCamera ();
 		float timer = 0f;
 		float duration = 2f;
