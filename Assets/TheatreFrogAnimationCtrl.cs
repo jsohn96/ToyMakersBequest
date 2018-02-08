@@ -17,6 +17,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 	void Awake(){
 		_frogAnim = GetComponent<Animator> ();
 		bCol = GetComponent<BoxCollider> ();
+		bCol.enabled = false;
 
 	}
 

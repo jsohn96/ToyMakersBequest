@@ -79,7 +79,7 @@ public class TheatreFrog : MonoBehaviour {
 		Debug.Log ("Theatre Frog REcv : " + e.frogIdx + " current : " +_curNodeOrderIdx);
 		if ((e.frogIdx-1) == _curNodeOrderIdx) {
 			// frog jump to random pos
-			if (alreadyGoneIndex.Count <= 6) {
+			if (alreadyGoneIndex.Count <= 5) {
 				JumpToRandomNode ();
 			} else {
 				Debug.Log ("Frog should jump to center and drop");
