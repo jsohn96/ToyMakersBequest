@@ -3057,6 +3057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magicianTransform: {fileID: 1716881202}
+  _magicianAnim: {fileID: 1450897749}
   _startPosition: {x: -0.05428345, y: 21.91585, z: 22.3}
   _startPlatform: {fileID: 1248810650}
   _waterTank: {fileID: 2104662672}
@@ -8772,6 +8773,10 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 961011381}
+    - target: {fileID: 4034339597736710, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
   m_IsPrefabParent: 0
@@ -19700,6 +19705,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1447059725}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1450897749 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 9500000, guid: b6674a3616dfd45968fb08e9f6166acb,
+    type: 3}
+  m_PrefabInternal: {fileID: 1985797881}
 --- !u!1 &1452801728
 GameObject:
   m_ObjectHideFlags: 0
@@ -26431,6 +26441,30 @@ Prefab:
     - target: {fileID: 400034, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400068, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400068, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400068, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400068, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400068, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6674a3616dfd45968fb08e9f6166acb, type: 3}
