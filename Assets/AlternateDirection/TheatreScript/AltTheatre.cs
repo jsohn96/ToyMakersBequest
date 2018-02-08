@@ -51,12 +51,24 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreCabinet _theatreCabinet;
 	[SerializeField] TheatreChest _theatreChest;
 
+	[Header("Temp Kissing Image")]
+	[SerializeField] GameObject _tempKiss;
+
 
 	// Use this for initialization
 	void Awake () {
 		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
 		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
 		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();
+		_tempKiss.SetActive (false);
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<PathStateManagerEvent> (HandlePathEvent);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<PathStateManagerEvent> (HandlePathEvent);
 	}
 
 	public override void PickUpCharm(){
@@ -179,6 +191,8 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.dancerKissing:
 			// frog.jumpout
+			// show temp image
+			_tempKiss.SetActive(true);
 			break;
 		case TheatreState.audienceLeave:
 			
@@ -206,6 +220,12 @@ public class AltTheatre : LevelManager {
 		yield return null;
 		if (action != null) {
 			action ();
+		}
+	}
+
+	void HandlePathEvent(PathStateManagerEvent e){
+		if (e.activeEvent == PathState.ReachPathEnd) {
+			MoveToNext ();
 		}
 	}
 }

@@ -35,7 +35,8 @@ public enum PathState{
 	MB_Stage_ExitPondScene,
 	MB_Stage_ExitPlayScene,
 	MB_Descend_to_layer_three,
-	pathPause
+	pathPause,
+	ReachPathEnd
 }
 
 
