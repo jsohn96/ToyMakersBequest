@@ -98,6 +98,7 @@ public class InterClockNode{
 
 
 public class PathNode : MonoBehaviour {
+	[SerializeField] Camera _mainCamera;
 	[SerializeField] ButtonColor _ControlColor;      // the color of the button that controls the node 
 	float _rotateAngle;
 	[SerializeField] int _nodeIndex;
@@ -673,14 +674,14 @@ public class PathNode : MonoBehaviour {
 
 	void ClickWithMouse(){
 		
-		//Vector3 forward = Camera.main.transform.TransformDirection (Vector3.forward);
+		//Vector3 forward = _mainCamera.transform.TransformDirection (Vector3.forward);
 //		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform.parent) {
 //			Debug.Log ("change parent");
 //			_intersectionPart.transform.parent = transform.parent;
 //		}
 		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
 			Ray mousePositionRay;
-			mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+			mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			//dragPreviousMousePos = Input.mousePosition;
 			bool isHit = Physics.Raycast (mousePositionRay, out hit);
@@ -704,7 +705,7 @@ public class PathNode : MonoBehaviour {
 			
 			Ray mousePositionRay;
 			if (!_isNotebook) {
-				mousePositionRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
 			} else {
 				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
 			}
@@ -716,8 +717,9 @@ public class PathNode : MonoBehaviour {
 			} else {
 				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
 			}
-			//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
+
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+				Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 
 					isDragStart = true;
@@ -806,7 +808,7 @@ public class PathNode : MonoBehaviour {
 		if (isDragStart && !isTempDisable) {
 
 			Vector3 curMousePos = Vector3.zero;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 			float rayDistance;
 			if (circlePlane.Raycast (ray, out rayDistance)) {
 				curMousePos = ray.GetPoint(rayDistance);
