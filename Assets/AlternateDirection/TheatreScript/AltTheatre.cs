@@ -118,8 +118,9 @@ public class AltTheatre : LevelManager {
 	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
-			magician.GoToStart ();
+			//magician.GoToStart ();
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
+				magician.PointToCenter(true);
 				MoveToNext();
 			}));
 			magician.GoToStart();
@@ -135,6 +136,7 @@ public class AltTheatre : LevelManager {
 			_theatreWaterTank.Activate (false);
 			_theatreWaterTank.OpenLid (false);
 			magician.StepOnTank ();
+			magician.PointToCenter (false);
 			_theatreCameraControl.EnableScrollFOV();
 			break;
 		case TheatreState.waterTankDescend:
@@ -146,11 +148,11 @@ public class AltTheatre : LevelManager {
 			magician.StepOffTank ();
 			break;
 		case TheatreState.magicianLeft:
-			// magician.pointLeft()
-
+			magician.PointToLeft (true);
 			chest.Activate(true);
 			break;
 		case TheatreState.frogJump:
+			magician.PointToLeft (false);
 			// frog.jumpout
 			//magician go back to center position 
 			MoveToNext();
@@ -162,12 +164,13 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 			break;
 		case TheatreState.magicianRight:
-			// magician.pointRight();
+			magician.PointToRight (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);
 
 			break;
 		case TheatreState.dancerShowUp:
+			magician.PointToRight (false);
 			// dancer.showUp();
 			// enable network connection 
 			network.SetPathActive(true);

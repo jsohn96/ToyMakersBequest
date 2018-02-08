@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TheatreMagician : MonoBehaviour {
 	[SerializeField] Transform _magicianTransform;
-	Animator _magicianAnim;
+	[SerializeField] Animator _magicianAnim;
 	AltTheatre _myTheatre;
 	[SerializeField] Vector3 _startPosition;
 	[SerializeField] Transform _startPlatform;
@@ -23,6 +23,7 @@ public class TheatreMagician : MonoBehaviour {
 		_isMoving = false;
 		_isWaitingForLeft = false;
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
+
 		//_magicianTransform = gameObject.transform;
 	}
 
@@ -32,14 +33,17 @@ public class TheatreMagician : MonoBehaviour {
 			_magicianTransform.parent = _startPlatform;
 		}
 	}
+
 		
 	public void StepOnTank(){
 		_magicianTransform.parent = _waterTank;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _onWaterTank, 2f));
+
 	}
 
 	public void StepOffTank(){
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
+		//PointToCenter (false);
 	}
 
 	IEnumerator MoveMagician(Vector3 start, Vector3 end, float duration){
@@ -60,4 +64,32 @@ public class TheatreMagician : MonoBehaviour {
 //		_finalPosition.z = -3f;
 //		_isMoving = true;
 	}
+
+	public void PointToCenter(bool isPointing){
+		if (isPointing) {
+			_magicianAnim.Play ("mg_greet");
+		} else {
+			_magicianAnim.Play ("mg_pointCenter_back_center");
+		}
+	}
+
+	public void PointToLeft(bool isPointing){
+		if (isPointing) {
+			_magicianAnim.Play ("mg_pointLeft");
+		} else {
+			_magicianAnim.Play ("mg_pointLeft_to_center");
+		}
+	}
+
+	public void PointToRight(bool isPointing){
+		if (isPointing) {
+			_magicianAnim.Play ("mg_pointRight");
+		} else {
+			_magicianAnim.Play ("mg_pointRight_to_center");
+		}
+	}
+
+
+
+
 }
