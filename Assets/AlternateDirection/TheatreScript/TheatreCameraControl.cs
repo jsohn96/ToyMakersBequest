@@ -129,17 +129,17 @@ public class TheatreCameraControl : MonoBehaviour {
 	IEnumerator MoveToTank(){
 		float timer = 0f;
 		float duration = 4f;
-		_cameraTempPos = _thisCamera.transform.position;
+		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
 		_bottomCameraPos = _cameraTempPos;
 		_bottomCameraPos.y = _cameraMovementRange.Min;
 		_disableAllScroll = true;
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_thisCamera.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
 			CameraAngleCalculation ();
 			yield return null;
 		}
-		_thisCamera.transform.position = _bottomCameraPos;
+		_thisCameraHeighttContainer.transform.position = _bottomCameraPos;
 		CameraAngleCalculation ();
 		yield return null;
 		_altTheatre.MoveToNext ();
