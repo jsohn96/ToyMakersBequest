@@ -14,8 +14,10 @@ public enum TheatreState{
 	waterTankDescend = 4,
 	magicianPrepareFrog = 5,
 	magicianLeft = 6,
-	frogJump,
-	magicianRight,
+	frogJump = 7,
+	lookDownIntoTank = 8,
+	CloseTank = 9,
+	magicianRight = 10,
 	dancerShowUp,
 	dancerKissing,
 	audienceLeave,
@@ -152,6 +154,12 @@ public class AltTheatre : LevelManager {
 			// frog.jumpout
 			//magician go back to center position 
 			MoveToNext();
+			break;
+		case TheatreState.lookDownIntoTank:
+			// frog.jumpout
+			//magician go back to center position 
+			_theatreCameraControl.MoveCameraToLookAtTank();
+			//MoveToNext();
 			break;
 		case TheatreState.magicianRight:
 			// magician.pointRight();

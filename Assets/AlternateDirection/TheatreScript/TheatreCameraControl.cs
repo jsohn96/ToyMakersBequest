@@ -20,6 +20,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _isScrolling = false;
 	Vector3 _cameraTempPos;
 	Vector3 _cameraTempRot;
+	Vector3 _bottomCameraPos;
 	Vector3 _scrollDirectionMultiplier = new Vector3(0f, -10f, 0f);
 
 	[Header("Camera Init Values")]
@@ -34,6 +35,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _initZoom = false;
 	bool _initClick = false;
 	bool _disableScrollFOV = true;
+	bool _disableAllScroll = false;
 
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
@@ -64,21 +66,23 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	void ScrollCamera(){
-		float acceleration = Input.mousePosition.y - _clickStartPosition.y;
-		_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (acceleration /Screen.height) * Time.deltaTime);
-		_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
-		if (_currentCameraYPos > _cameraMovementRange.Max) {
-			_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-			_cameraTempPos.y = _cameraMovementRange.Max;
-			_currentCameraYPos = _cameraTempPos.y;
-			_thisCameraHeighttContainer.transform.position = _cameraTempPos;
-		} else if (_currentCameraYPos < _cameraMovementRange.Min) {
-			_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-			_cameraTempPos.y = _cameraMovementRange.Min;
-			_currentCameraYPos = _cameraTempPos.y;
-			_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+		if (!_disableAllScroll) {
+			float acceleration = Input.mousePosition.y - _clickStartPosition.y;
+			_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (acceleration / Screen.height) * Time.deltaTime);
+			_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
+			if (_currentCameraYPos > _cameraMovementRange.Max) {
+				_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+				_cameraTempPos.y = _cameraMovementRange.Max;
+				_currentCameraYPos = _cameraTempPos.y;
+				_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+			} else if (_currentCameraYPos < _cameraMovementRange.Min) {
+				_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+				_cameraTempPos.y = _cameraMovementRange.Min;
+				_currentCameraYPos = _cameraTempPos.y;
+				_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+			}
+			CameraAngleCalculation ();
 		}
-		CameraAngleCalculation ();
 	}
 
 	void CameraAngleCalculation(){
@@ -115,6 +119,27 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	public void EnableScrollFOV(){
 		StartCoroutine (AdjustToScrollFOV());
+	}
+
+	public void MoveCameraToLookAtTank(){
+		StartCoroutine (MoveToTank ());
+	}
+
+	IEnumerator MoveToTank(){
+		float timer = 0f;
+		float duration = 4f;
+		_cameraTempPos = _thisCamera.transform.position;
+		_bottomCameraPos = _cameraTempPos;
+		_bottomCameraPos.y = _cameraMovementRange.Min;
+		_disableAllScroll = true;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCamera.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
+			yield return null;
+		}
+		_thisCamera.transform.position = _bottomCameraPos;
+		yield return null;
+		_altTheatre.MoveToNext ();
 	}
 
 	IEnumerator AdjustToScrollFOV(){
