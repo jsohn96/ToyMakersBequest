@@ -8,7 +8,7 @@ public class shaderGlowCustom : MonoBehaviour
 {
 	[SerializeField] Renderer[] _renderers;
 	int _rendererCnt;
-    public enum allowedModes { onMouseEnter, alwaysOn, pathNodeMode, FadeWhileHold};
+    public enum allowedModes { onMouseEnter, alwaysOn, pathNodeMode, FadeWhileHold, TriggeredFadeIn};
     public allowedModes glowMode;
     public bool flashing = false; //Object will flash glow
     [Range(0.1f, 4.0f)]
@@ -52,6 +52,10 @@ public class shaderGlowCustom : MonoBehaviour
 	bool _isConnected = false;
 	Timer _reduceGlowTimerForFadeWhileHold;
 
+	bool _hasBeenTriggered = false;
+	bool _triggeringDone = false;
+	Timer _triggeredTimer;
+
     void Awake()
     {
         //Grab the glow shader
@@ -76,8 +80,17 @@ public class shaderGlowCustom : MonoBehaviour
 		_outlineShaderString = Shader.PropertyToID ("_Outline");
 		if (glowMode == allowedModes.FadeWhileHold) {
 			_reduceGlowTimerForFadeWhileHold = new Timer (1.8f);
+		} else if (glowMode == allowedModes.TriggeredFadeIn) {
+			_triggeredTimer = new Timer (0.8f);
+			glowOpacity = 0.0f;
 		}
     }
+
+	public void TriggerForFadeIn(){
+		_hasBeenTriggered = true;
+		_triggeredTimer.Reset ();
+		lightOn ();
+	}
 
 	public void DisablePointerEnter(bool disabled){
 		_disablePointerEnter = disabled;
@@ -98,6 +111,10 @@ public class shaderGlowCustom : MonoBehaviour
 			} 
 			if (glowMode == allowedModes.onMouseEnter) {
 				lightOn ();
+			} else if (glowMode == allowedModes.TriggeredFadeIn) {
+				if (_triggeringDone) {
+					lightOn ();
+				}
 			}
 		}
     }
@@ -106,6 +123,8 @@ public class shaderGlowCustom : MonoBehaviour
 		if (glowMode == allowedModes.FadeWhileHold) {
 			lightOn ();
 			_reduceGlowTimerForFadeWhileHold.Reset ();
+		} else if (glowMode == allowedModes.TriggeredFadeIn) {
+			_triggeringDone = true;
 		}
 	}
 
@@ -130,6 +149,9 @@ public class shaderGlowCustom : MonoBehaviour
 			if (!highlighted)
 				return;
 			if (glowMode == allowedModes.onMouseEnter) {
+				lightOff ();
+				glowOpacity = 1.0f;
+			} else if (glowMode == allowedModes.TriggeredFadeIn && _triggeringDone) {
 				lightOff ();
 				glowOpacity = 1.0f;
 			}
@@ -205,11 +227,22 @@ public class shaderGlowCustom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (Input.GetKeyDown (KeyCode.A)) {
+			if (glowMode == allowedModes.TriggeredFadeIn) {
+				TriggerForFadeIn ();
+			}
+		}
+
 		if (glowMode == allowedModes.alwaysOn && !highlighted) {
 			lightOn ();
 		}
 		else if (glowMode == allowedModes.FadeWhileHold) {
 			glowOpacity = _reduceGlowTimerForFadeWhileHold.PercentTimeLeft;
+		} 
+		else if (glowMode == allowedModes.TriggeredFadeIn) {
+			if (_hasBeenTriggered && !_triggeringDone) {
+				glowOpacity = _triggeredTimer.PercentTimePassed;
+			}
 		}
 
         if (highlighted)
