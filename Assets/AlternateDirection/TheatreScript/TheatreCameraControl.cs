@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreCameraControl : MonoBehaviour {
+	[SerializeField] bool _discreteMode = false;
+	float _acceleration = 0f;
+
 	[SerializeField] AltTheatre _altTheatre;
 
 	[SerializeField] Transform _thisCameraHeighttContainer;
@@ -37,6 +40,8 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _disableScrollFOV = true;
 	bool _disableAllScroll = false;
 
+	bool _scrollEasingToHalt = false;
+
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
@@ -63,12 +68,43 @@ public class TheatreCameraControl : MonoBehaviour {
 				ScrollCamera ();
 			}
 		}
+
+		if (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
+			_acceleration = 0.3f;	
+			_isScrolling = true;
+			_scrollEasingToHalt = false;
+			_scrollDirectionMultiplier.y = 10f;
+		} else if (Input.GetKeyDown (KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
+			_acceleration = 0.3f;
+			_isScrolling = true;
+			_scrollEasingToHalt = false;
+			_scrollDirectionMultiplier.y = -10f;
+		}
+
+		if (Input.GetKeyUp (KeyCode.UpArrow) || Input.GetKeyUp (KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) {
+			_scrollEasingToHalt = true;
+		}
+
+		if (_scrollEasingToHalt) {
+			if (_acceleration < 0.0f) {
+				_scrollEasingToHalt = false;
+				_isScrolling = false;
+				_acceleration = 0.0f;
+			}
+			_acceleration -= Time.deltaTime;
+		}
 	}
 
 	void ScrollCamera(){
 		if (!_disableAllScroll) {
-			float acceleration = Input.mousePosition.y - _clickStartPosition.y;
-			_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (acceleration / Screen.height) * Time.deltaTime);
+			if (!_discreteMode) {
+				_acceleration = Input.mousePosition.y - _clickStartPosition.y;
+				_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (_acceleration / Screen.height) * Time.deltaTime);
+			} else {
+				_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (_acceleration) * Time.deltaTime);
+			}
+
+
 			_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
 			if (_currentCameraYPos > _cameraMovementRange.Max) {
 				_cameraTempPos = _thisCameraHeighttContainer.transform.position;

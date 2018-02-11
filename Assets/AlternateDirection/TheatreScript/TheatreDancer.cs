@@ -20,6 +20,8 @@ public class TheatreDancer : MonoBehaviour {
 
 	Vector3 _dancerTempPos;
 
+	[SerializeField] GameObject _dancerVisibilityGameObject;
+
 	// Use this for initialization
 	void Start () {
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
@@ -87,5 +89,9 @@ public class TheatreDancer : MonoBehaviour {
 
 	void RotateAroundCenter(){
 		_dancerTransform.RotateAround (_waterTankTransformForCenterAxis.position, _stillRotateAxis, 20f * Time.deltaTime);
+	}
+
+	public void HideDancer(bool hide){
+		_dancerVisibilityGameObject.SetActive (!hide);
 	}
 }

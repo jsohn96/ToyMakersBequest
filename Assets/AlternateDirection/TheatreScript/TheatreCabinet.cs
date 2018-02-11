@@ -10,6 +10,7 @@ public class TheatreCabinet : MonoBehaviour {
 	BoxCollider _boxCollider;
 	bool _isOpen = false;
 	[SerializeField] AltTheatre _myTheatre;
+	[SerializeField] shaderGlowCustom _shaderGlowCustom;
 
 	// Use this for initialization
 	void Awake () {
@@ -21,8 +22,7 @@ public class TheatreCabinet : MonoBehaviour {
 	void Start(){
 		_boxCollider = GetComponent<BoxCollider> ();
 		if (AltTheatre.currentSate < TheatreState.magicianRight) {
-			_boxCollider.enabled = false;
-			isActivated = false;
+//			_boxCollider.enabled = false;
 		}
 	}
 	
@@ -32,18 +32,19 @@ public class TheatreCabinet : MonoBehaviour {
 	}
 
 	void OnTouchDown(){
-		if (isActivated) {
-			if (!_isOpen) {
-				_cabinetAnimator.SetBool ("Open", true);
-				_isOpen = true;
+		
+		if (!_isOpen) {
+			_cabinetAnimator.SetBool ("Open", true);
+			_isOpen = true;
+			if (isActivated) {
 				if (!isDancerOut) {
 					_myTheatre.MoveToNext ();
 					isDancerOut = true;
 				}
-			} else {
-				_cabinetAnimator.SetBool ("Open", false);
-				_isOpen = false;
 			}
+		} else {
+			_cabinetAnimator.SetBool ("Open", false);
+			_isOpen = false;
 		}
 
 //		if (!isActivated ) {
@@ -56,6 +57,8 @@ public class TheatreCabinet : MonoBehaviour {
 
 	public void Activate(bool activate){
 		isActivated = activate;
-		_boxCollider.enabled = activate;
+		if (activate) {
+			_shaderGlowCustom.TriggerFadeIn ();
+		}
 	}
 }

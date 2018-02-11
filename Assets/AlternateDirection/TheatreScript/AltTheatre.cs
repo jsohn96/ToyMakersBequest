@@ -51,8 +51,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreCabinet _theatreCabinet;
 	[SerializeField] TheatreChest _theatreChest;
 
-	[Header("Temp Kissing Image")]
-	[SerializeField] GameObject _tempKiss;
+	[SerializeField] TheatreWaterTankDoors _tankDoor1, _tankDoor2;
 
 
 	// Use this for initialization
@@ -60,15 +59,6 @@ public class AltTheatre : LevelManager {
 		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
 		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
 		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();
-		_tempKiss.SetActive (false);
-	}
-
-	void OnEnable(){
-		Events.G.AddListener<PathStateManagerEvent> (HandlePathEvent);
-	}
-
-	void OnDisable(){
-		Events.G.RemoveListener<PathStateManagerEvent> (HandlePathEvent);
 	}
 
 	public override void PickUpCharm(){
@@ -171,14 +161,17 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 			break;
 		case TheatreState.lookDownIntoTank:
-			_theatreCameraControl.MoveCameraToLookAtTank();
+			_theatreCameraControl.MoveCameraToLookAtTank ();
+			_tankDoor1.Activate (true);
+			_tankDoor2.Activate (true);
 			//MoveToNext();
 			break;
-//		case TheatreState.CloseTank:
-//			break;
 		case TheatreState.magicianRight:
 			_theatreCameraControl.EnableScrollFOV();
+			_tankDoor1.Activate (false);
+			_tankDoor2.Activate (false);
 			magician.PointToRight (true);
+			_dancer.HideDancer (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);
 
@@ -186,13 +179,12 @@ public class AltTheatre : LevelManager {
 		case TheatreState.dancerShowUp:
 			magician.PointToRight (false);
 			// dancer.showUp();
+			_dancer.HideDancer (false);
 			// enable network connection 
 			network.SetPathActive(true);
 			break;
 		case TheatreState.dancerKissing:
 			// frog.jumpout
-			// show temp image
-			_tempKiss.SetActive(true);
 			break;
 		case TheatreState.audienceLeave:
 			
@@ -220,12 +212,6 @@ public class AltTheatre : LevelManager {
 		yield return null;
 		if (action != null) {
 			action ();
-		}
-	}
-
-	void HandlePathEvent(PathStateManagerEvent e){
-		if (e.activeEvent == PathState.ReachPathEnd) {
-			MoveToNext ();
 		}
 	}
 }

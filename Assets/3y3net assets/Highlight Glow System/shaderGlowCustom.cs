@@ -18,7 +18,7 @@ public class shaderGlowCustom : MonoBehaviour
     public float glowIntensity = 0.08f; //Glow intensity on screen of the object
     [Range(0.5f, 2.0f)]
     public float glowOpacity = 1f; //Glow opacity on screen of the object
-	Color glowColor = new Color(0.53f, 0.48f, 0.21f); //Glow color of the object
+	[SerializeField] Color glowColor = new Color(0.53f, 0.48f, 0.21f); //Glow color of the object
 
 	Color _connectedColor = new Color(0.95f, 0.94f, 0.61f);
 
@@ -64,10 +64,7 @@ public class shaderGlowCustom : MonoBehaviour
        // highightShaderVisible = Shader.Find("3y3net/GlowVisible");
         highightShaderHidden = Shader.Find("3y3net/GlowHidden");
     }
-
-  
-
-    // Use this for initialization
+		
     void Start()
     {
         lastColor = glowColor;
@@ -87,6 +84,7 @@ public class shaderGlowCustom : MonoBehaviour
     }
 
 	public void TriggerForFadeIn(){
+		_triggeringDone = false;
 		_hasBeenTriggered = true;
 		_triggeredTimer.Reset ();
 		lightOn ();
@@ -114,6 +112,8 @@ public class shaderGlowCustom : MonoBehaviour
 			} else if (glowMode == allowedModes.TriggeredFadeIn) {
 				if (_triggeringDone) {
 					lightOn ();
+				} else if (!_hasBeenTriggered) {
+					lightOn ();
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public class shaderGlowCustom : MonoBehaviour
 		if (glowMode == allowedModes.FadeWhileHold) {
 			lightOn ();
 			_reduceGlowTimerForFadeWhileHold.Reset ();
-		} else if (glowMode == allowedModes.TriggeredFadeIn) {
+		} else if (glowMode == allowedModes.TriggeredFadeIn && _hasBeenTriggered) {
 			_triggeringDone = true;
 		}
 	}
@@ -152,6 +152,9 @@ public class shaderGlowCustom : MonoBehaviour
 				lightOff ();
 				glowOpacity = 1.0f;
 			} else if (glowMode == allowedModes.TriggeredFadeIn && _triggeringDone) {
+				lightOff ();
+				glowOpacity = 1.0f;
+			} else if (glowMode == allowedModes.TriggeredFadeIn && !_hasBeenTriggered) {
 				lightOff ();
 				glowOpacity = 1.0f;
 			}
@@ -224,15 +227,15 @@ public class shaderGlowCustom : MonoBehaviour
 		_isConnected = isTrue;
 	}
 
+	public void TriggerFadeIn(){
+		if (glowMode == allowedModes.TriggeredFadeIn) {
+			TriggerForFadeIn ();
+		}
+	}
+
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetKeyDown (KeyCode.A)) {
-			if (glowMode == allowedModes.TriggeredFadeIn) {
-				TriggerForFadeIn ();
-			}
-		}
-
 		if (glowMode == allowedModes.alwaysOn && !highlighted) {
 			lightOn ();
 		}

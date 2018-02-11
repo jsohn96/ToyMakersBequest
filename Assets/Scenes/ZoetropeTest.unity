@@ -960,15 +960,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 20615490985984816, guid: 0ccf340f17e913845b0fe519db4c9b03,
-        type: 2}
-      propertyPath: field of view
-      value: 67.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253154377954442, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ccf340f17e913845b0fe519db4c9b03, type: 2}
   m_IsPrefabParent: 0
@@ -987,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &600392006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,6 +2005,7 @@ GameObject:
   - component: {fileID: 1354247302}
   - component: {fileID: 1354247305}
   - component: {fileID: 1354247304}
+  - component: {fileID: 1354247298}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2028,6 +2020,18 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1354247296}
   m_Enabled: 1
+--- !u!114 &1354247298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1354247296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d9f5f269b87034eb17dc12d4f102cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wantedAspectRatio: 0.5625
 --- !u!92 &1354247299
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2107,10 +2111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e038005619490fe408d8e989d164e2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quality: 3
+  Quality: 0
   BloomEnabled: 1
   BloomParams:
-    Quality: 3
+    Quality: 0
     BloomTint: {r: 1, g: 1, b: 1, a: 1}
     BloomThreshold: 0
     BloomIntensity: 1.45
@@ -2129,7 +2133,7 @@ MonoBehaviour:
   FilmGrainTiling: 4
   VignettingIntensity: 0.5
   DOFEnabled: 1
-  BlurCOCTexture: 0
+  BlurCOCTexture: 1
   DOFParams:
     UseUnityDepthBuffer: 1
     AutoFocus: 0
@@ -2158,7 +2162,7 @@ MonoBehaviour:
   DesaturateFarObjsStrength: 0.5
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0
-  HalfResolution: 1
+  HalfResolution: 0
 --- !u!114 &1354247305
 MonoBehaviour:
   m_ObjectHideFlags: 0

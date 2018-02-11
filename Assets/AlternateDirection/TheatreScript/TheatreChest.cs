@@ -11,39 +11,43 @@ public class TheatreChest : MonoBehaviour {
 	bool _isOpen = false;
 	bool isFrogOut = false;
 
+	[SerializeField] shaderGlowCustom _shaderGlowCustom;
+
 	// Use this for initialization
-	void Start () {
-		_boxCollider = GetComponent<BoxCollider> ();
-		if (AltTheatre.currentSate < TheatreState.magicianLeft) {
-			_boxCollider.enabled = false;
-			isActivated = false;
-		}
-	}
+//	void Start () {
+//		_boxCollider = GetComponent<BoxCollider> ();
+//		if (AltTheatre.currentSate < TheatreState.magicianLeft) {
+//			_boxCollider.enabled = false;
+//			isActivated = false;
+//		}
+//	}
 
 	void OnTouchDown(){
 		// 
-		if (isActivated) {
-			Debug.Log ("Empty chest open");
-			if (!isFrogOut) {
-				frogScript.FrogJump ();
-				isFrogOut = true;
-			} else {
-			
-			}
-			if (!_isOpen) {
-				chestAnim.SetBool ("Open", true);
-				_isOpen = true;
-			} else {
-				chestAnim.SetBool ("Open", false);
-				_isOpen = false;
-			}
-		} 
+		if (!_isOpen) {
+			chestAnim.SetBool ("Open", true);
+			_isOpen = true;
+			if (isActivated) {
+				Debug.Log ("Empty chest open");
+				if (!isFrogOut) {
+					frogScript.FrogJump ();
+					isFrogOut = true;
+				} else {
+
+				}
+
+			} 
+		} else {
+			chestAnim.SetBool ("Open", false);
+			_isOpen = false;
+		}
 			//frogScript.FrogJump ();
 	}
 
 	public void Activate(bool activate){
 		isActivated = activate;
-		_boxCollider.enabled = activate;
-
+		if (activate) {
+			_shaderGlowCustom.TriggerFadeIn ();
+		}
 	}
 }
