@@ -14,7 +14,7 @@ public class UIInventorySlider : MonoBehaviour {
 	void Start () {
 		_originPos = _uiSliderRectTransform.anchoredPosition;
 		_zeroPos = _originPos;
-		_zeroPos.x = 0.0f;
+		_zeroPos.y = 0.0f;
 	}
 	
 	public void SlideInOrOut(bool slidingIn){

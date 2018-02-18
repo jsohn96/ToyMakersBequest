@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AltDirectionUI : MonoBehaviour {
+	[SerializeField] RectTransform _canvasRectTransform;
+
 	[SerializeField] RectTransform _windowLeft, _windowRight;
-	[SerializeField] Vector2 _leftWindowOpen, _rightWindowOpen;
-	[SerializeField] Vector2 _leftWindowClose, _rightWindowClose;
+	Vector2 _leftWindowOpen = new Vector2(0f, 0f), _rightWindowOpen = new Vector2(0f, 0f);
+	Vector2 _leftWindowClose, _rightWindowClose;
 	Vector2 _leftTemp, _rightTemp;
 	bool _windowOpen = false;
 	bool _windowIsScrolling = false;
@@ -17,10 +19,24 @@ public class AltDirectionUI : MonoBehaviour {
 	float _timer = 0f;
 	float _duration = 1.2f;
 
+	[SerializeField] float _rightUIWidth = 160f;
+	float _screenWidth = 1920f;
+
+	float _referenceHeight = 1080f;
+
 	void Awake(){
+		_screenWidth = (_referenceHeight/_canvasRectTransform.sizeDelta.y)* _canvasRectTransform.sizeDelta.x;
+		Vector2 windowWidth = new Vector2((_screenWidth - _rightUIWidth)/2f, 0f);
+		_windowLeft.sizeDelta = windowWidth;
+		_windowRight.sizeDelta = windowWidth;
+
+		_leftWindowOpen = -windowWidth;
+		_rightWindowOpen = windowWidth;
+
 		if (!_windowOpen) {
 			_windowLeft.anchoredPosition = _leftWindowClose;
 			_windowRight.anchoredPosition = _rightWindowClose;
+
 		} else {
 			_windowLeft.anchoredPosition = _leftWindowOpen;
 			_windowRight.anchoredPosition = _rightWindowOpen;

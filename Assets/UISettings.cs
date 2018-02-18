@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UISettings : MonoBehaviour {
-	bool _settingsOpen = false;
+	bool _settingsOpen = true;
 	[SerializeField] RectTransform _settingsGear;
 	[SerializeField] AltDirectionUI _UIManager;
 
@@ -19,12 +19,11 @@ public class UISettings : MonoBehaviour {
 			_scrollingDoorMoving = true;
 			if (!_settingsOpen) {
 				_settingsOpen = true;
-				_UIManager.WindowScroll (false);
-				AltCentralControl._instance.PauseGameTime (true);
-			} else {
-				_settingsOpen = false;
 				_UIManager.WindowScroll (true);
 				AltCentralControl._instance.PauseGameTime (false);
+			} else {
+				_settingsOpen = false;
+				_UIManager.WindowScroll (false);
 			}
 		}
 	}
@@ -32,12 +31,15 @@ public class UISettings : MonoBehaviour {
 	void Update(){
 		if (_scrollingDoorMoving) {
 			float directionalMultiplier = _settingsOpen ? 1f : -1f;
-			_settingsGear.Rotate (_rotateAxis *100f * Time.unscaledDeltaTime * directionalMultiplier);
+			_settingsGear.Rotate (_rotateAxis * 100f * Time.unscaledDeltaTime * directionalMultiplier);
 		}
 	}
 
 
 	void DoorSlidingDone(SlidingDoorFinished e){
+		if (!_settingsOpen) {
+			AltCentralControl._instance.PauseGameTime (true);
+		}
 		_scrollingDoorMoving = false;
 	}
 
