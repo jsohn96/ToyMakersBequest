@@ -719,7 +719,7 @@ public class PathNode : MonoBehaviour {
 			}
 
 			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				Debug.Log (hit.collider.gameObject.name + ": this is the tag");
+				//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
 				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
 
 					isDragStart = true;

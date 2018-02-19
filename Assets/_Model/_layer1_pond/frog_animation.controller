@@ -21,13 +21,13 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &1102333392341373052
+--- !u!1102 &1102055385864731594
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: frog_keyturn
+  m_Name: frog_lilipad_flipDown
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -39,7 +39,30 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 56c4c5889f49043d585394473499c9c7, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8ca7fa7826b6b41d1aabfdb067e21621, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+--- !u!1102 &1102356337578259112
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: frog_lilipad_flipBack
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: d484ea352c7694d609d2f2ec1d1561e6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -90,29 +113,6 @@ AnimatorState:
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
---- !u!1102 &1102641428721928954
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: frog_hide
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2759dbbb1da8243fd9b6664164d9996e, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
 --- !u!1102 &1102845693972831536
 AnimatorState:
   serializedVersion: 5
@@ -154,11 +154,11 @@ AnimatorStateMachine:
     m_State: {fileID: 1102368182650450336}
     m_Position: {x: 468, y: 144, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102641428721928954}
-    m_Position: {x: 432, y: 216, z: 0}
+    m_State: {fileID: 1102055385864731594}
+    m_Position: {x: 228, y: 204, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102333392341373052}
-    m_Position: {x: 467, y: 281, z: 0}
+    m_State: {fileID: 1102356337578259112}
+    m_Position: {x: 468, y: 204, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -28,7 +28,9 @@ public class SlidingDoorFinished: GameEvent {
 
 public class TheatreFrogClickEvent:GameEvent{
 	public int frogIdx { get; private set; }
-	public TheatreFrogClickEvent (int index){
-		frogIdx = index;	
+	public int iconIdx { get; private set; }
+	public TheatreFrogClickEvent (int f_idx, int ic_idx){
+		frogIdx = f_idx;	
+		iconIdx = ic_idx;
 	}
 }
