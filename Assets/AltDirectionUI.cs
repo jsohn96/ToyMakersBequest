@@ -8,6 +8,7 @@ public class AltDirectionUI : MonoBehaviour {
 
 	[SerializeField] RectTransform _windowLeft, _windowRight;
 	[SerializeField] AnimationCurve _windowScrollCurve;
+	[SerializeField] WindowScrollSound _windowScrollSound;
 	Vector2 _leftWindowOpen = new Vector2(0f, 0f), _rightWindowOpen = new Vector2(0f, 0f);
 	Vector2 _leftWindowClose, _rightWindowClose;
 	Vector2 _leftTemp, _rightTemp;
@@ -48,9 +49,20 @@ public class AltDirectionUI : MonoBehaviour {
 			_windowLeft.anchoredPosition = _leftWindowOpen;
 			_windowRight.anchoredPosition = _rightWindowOpen;
 		}
+	}
 
+	void OnSceneLoaded(Scene scene,LoadSceneMode mode){
 		WindowScroll (true);
 	}
+
+	void OnEnable(){
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+
+	void OnDisable(){
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
+
 
 	public void TriggerNextScene(int pointerGoalIndex){
 		if (!_triggeredNextScene && !_windowIsScrolling) {
@@ -109,44 +121,54 @@ public class AltDirectionUI : MonoBehaviour {
 
 
 	public void WindowScroll(bool open){
+		
+		StartCoroutine (MoveWindow (open));
+	}
+
+	IEnumerator MoveWindow(bool open){
+		if (open) {
+			_windowScrollSound.OpenWindowSound ();
+		} else {
+			_windowScrollSound.CloseWindowSound ();
+		}
 		_timer = 0f;
 		_leftTemp = _windowLeft.anchoredPosition;
 		_rightTemp = _windowRight.anchoredPosition;
 		_windowOpening = open;
 		_windowIsScrolling = true;
-	}
 
-	void Update(){
 		if (_windowIsScrolling) {
-			if (_timer < _duration) {
+			while (_timer < _duration) {
 				if (AltCentralControl.isGameTimePaused) {
 					_timer += Time.unscaledDeltaTime;
 				} else {
 					_timer += Time.deltaTime;
 				}
 				if (_windowOpening) {
-					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowOpen, _windowScrollCurve.Evaluate(_timer / _duration));
-					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowOpen, _windowScrollCurve.Evaluate(_timer / _duration));
+					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowOpen, _windowScrollCurve.Evaluate (_timer / _duration));
+					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowOpen, _windowScrollCurve.Evaluate (_timer / _duration));
 				} else {
-					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowClose, _windowScrollCurve.Evaluate(_timer / _duration));
-					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowClose, _windowScrollCurve.Evaluate(_timer / _duration));
+					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowClose, _windowScrollCurve.Evaluate (_timer / _duration));
+					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowClose, _windowScrollCurve.Evaluate (_timer / _duration));
 				}
-			} else {
-				if (_windowOpening) {
-					_windowLeft.anchoredPosition = _leftWindowOpen;
-					_windowRight.anchoredPosition = _rightWindowOpen;
-					_windowOpen = true;
-				} else {
-					_windowLeft.anchoredPosition = _leftWindowClose;
-					_windowRight.anchoredPosition = _rightWindowClose;
-					_windowOpen = false;
-				}
-				_windowIsScrolling = false;
-				Events.G.Raise (new SlidingDoorFinished (_windowOpen));
-				if (_triggeredNextScene) {
-					LoadScene ();
-				}
+				yield return null;
 			}
+			if (_windowOpening) {
+				_windowLeft.anchoredPosition = _leftWindowOpen;
+				_windowRight.anchoredPosition = _rightWindowOpen;
+				_windowOpen = true;
+			} else {
+				_windowLeft.anchoredPosition = _leftWindowClose;
+				_windowRight.anchoredPosition = _rightWindowClose;
+				_windowOpen = false;
+			}
+			_windowIsScrolling = false;
+			yield return null;
+			Events.G.Raise (new SlidingDoorFinished (_windowOpen));
+			if (_triggeredNextScene) {
+				LoadScene ();
+			}
+
 		}
 	}
 }

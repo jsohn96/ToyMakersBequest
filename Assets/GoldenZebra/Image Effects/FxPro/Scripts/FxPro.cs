@@ -154,6 +154,7 @@ public class DOFPro : MonoBehaviour
     public float FogStrength = .5f;
 
     public bool HalfResolution = false;
+static bool _halfResolutionApplied = false;
 
     public void Start() 
 	{
@@ -183,8 +184,12 @@ public class DOFPro : MonoBehaviour
 	}
 
 	public void Init(bool searchForNonDepthmapAlphaObjects = false) {
-		if (HalfResolution)
-			Screen.SetResolution( Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, Screen.fullScreen, Screen.currentResolution.refreshRate);
+		if (!_halfResolutionApplied) {
+			if (HalfResolution) {
+				_halfResolutionApplied = true;
+				Screen.SetResolution (Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, Screen.fullScreen, Screen.currentResolution.refreshRate);
+			}
+		}
 	
         Mat.SetFloat( "_DirtIntensity", Mathf.Exp( LensDirtIntensity ) - 1f );
 

@@ -56,6 +56,7 @@ public class AltTheatre : LevelManager {
 
 	// Use this for initialization
 	void Awake () {
+		currentSate = TheatreState.waitingToStart;
 		chest = FindObjectOfType<TheatreChest> ().GetComponent<TheatreChest> ();
 		cabinet = FindObjectOfType<TheatreCabinet> ().GetComponent<TheatreCabinet> ();
 		network = FindObjectOfType<PathNetwork> ().GetComponent<PathNetwork> ();

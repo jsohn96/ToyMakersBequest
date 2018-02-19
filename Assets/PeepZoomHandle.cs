@@ -58,6 +58,22 @@ public class PeepZoomHandle : MonoBehaviour {
 			_coroutine = FlipLensIn (false);
 			StartCoroutine (_coroutine);
 		}
+
+		if (Input.GetMouseButtonDown (0)) {
+			if (_coroutine != null) {
+				StopCoroutine (_coroutine);
+			}
+			_coroutine = FlipLensIn (true);
+			StartCoroutine (_coroutine);
+		}
+
+		if (Input.GetMouseButtonUp (0)) {
+			if (_coroutine != null) {
+				StopCoroutine (_coroutine);
+			}
+			_coroutine = FlipLensIn (false);
+			StartCoroutine (_coroutine);
+		}
 	}
 
 	void KeepRenderTextureStaticByOffset(){

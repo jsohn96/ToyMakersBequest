@@ -928,7 +928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeOutTexture: {fileID: 2800000, guid: 333222d40d8c48b44952dd7ee106089d, type: 3}
   fadeSpeed: 1
-  _noStartFade: 0
+  _noStartFade: 1
   _EndStateForBuild: 0
 --- !u!4 &686032526
 Transform:
@@ -1174,16 +1174,6 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224927078804382652, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -175.19922
-      objectReference: {fileID: 0}
-    - target: {fileID: 224901057799148738, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -96.10156
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
@@ -1444,6 +1434,7 @@ GameObject:
   - component: {fileID: 961011379}
   - component: {fileID: 961011378}
   - component: {fileID: 961011383}
+  - component: {fileID: 961011384}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1583,7 +1574,18 @@ MonoBehaviour:
   DesaturateFarObjsStrength: 0.6
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0
-  HalfResolution: 0
+  HalfResolution: 1
+--- !u!114 &961011384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 961011377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301eca71255100647bb9bad1d5641921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &967697206
 GameObject:
   m_ObjectHideFlags: 0
