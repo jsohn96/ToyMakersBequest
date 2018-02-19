@@ -5,7 +5,7 @@ using TMPro;
 
 public class AltPeephole : MonoBehaviour {
 
-	[SerializeField] ControlRoomManager _controlRoomManager;
+	[SerializeField] ControlRoom _controlRoomScript;
 
 	[Header("Which Peephole? 0-3")]
 	public int _peepHoleIndex;
@@ -26,7 +26,7 @@ public class AltPeephole : MonoBehaviour {
 
 	void OnTouchDown(Vector3 touchPoint){
 		if (_thisPeepHoleActivated && !_clickedOnce) {
-			_controlRoomManager.LookIntoPeephole (_peepHoleIndex, _cameraZoomPosition);
+			_controlRoomScript.LookIntoPeephole (_peepHoleIndex, _cameraZoomPosition);
 			_clickedOnce = true;
 		}
 	}

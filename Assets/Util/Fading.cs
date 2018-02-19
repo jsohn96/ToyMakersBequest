@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Fading : MonoBehaviour {
-	public static Fading _fading;
-
 	public Texture2D fadeOutTexture; //the texture that will overlay the screen. Black image or loading graphic
 	public float fadeSpeed= 1f; // the fading speed
 
@@ -45,6 +43,7 @@ public class Fading : MonoBehaviour {
 
 	// sets fadeDir to the direction paramete making the scene fade in if -1 and out if 1
 	public float BeginFade(int direction, float speed = 1f){
+		
 		fadeSpeed = speed;
 		fadeDir = direction;
 		return (fadeSpeed);

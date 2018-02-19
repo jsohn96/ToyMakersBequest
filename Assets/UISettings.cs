@@ -9,13 +9,14 @@ public class UISettings : MonoBehaviour {
 
 	Vector3 _rotateAxis;
 	bool _scrollingDoorMoving = true;
+	bool _closingForSceneTransition = false;
 
 	void Start(){
 		_rotateAxis = Vector3.back;
 	}
 
 	public void OpenSettings(){
-		if (!_scrollingDoorMoving) {
+		if (!_scrollingDoorMoving && !_closingForSceneTransition) {
 			_scrollingDoorMoving = true;
 			if (!_settingsOpen) {
 				_settingsOpen = true;
@@ -30,7 +31,12 @@ public class UISettings : MonoBehaviour {
 
 	void Update(){
 		if (_scrollingDoorMoving) {
-			float directionalMultiplier = _settingsOpen ? 1f : -1f;
+			float directionalMultiplier;
+			if (_closingForSceneTransition) {
+				directionalMultiplier = -1f;
+			} else {
+				directionalMultiplier = _settingsOpen ? 1f : -1f;
+			}
 			_settingsGear.Rotate (_rotateAxis * 100f * Time.unscaledDeltaTime * directionalMultiplier);
 		}
 	}
@@ -43,11 +49,18 @@ public class UISettings : MonoBehaviour {
 		_scrollingDoorMoving = false;
 	}
 
+	void HandleClosingDoors(ClosingDoorsForSceneTransition e){
+		_closingForSceneTransition = true;
+		_scrollingDoorMoving = true;
+	}
+
 	void OnEnable(){
 		Events.G.AddListener<SlidingDoorFinished> (DoorSlidingDone);
+		Events.G.AddListener<ClosingDoorsForSceneTransition> (HandleClosingDoors);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<SlidingDoorFinished> (DoorSlidingDone);
+		Events.G.RemoveListener<ClosingDoorsForSceneTransition> (HandleClosingDoors);
 	}
 }

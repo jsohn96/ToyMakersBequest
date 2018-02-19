@@ -25,6 +25,8 @@ public class SlidingDoorFinished: GameEvent {
 	}
 }
 
+public class ClosingDoorsForSceneTransition: GameEvent {
+}
 
 public class TheatreFrogClickEvent:GameEvent{
 	public int frogIdx { get; private set; }
