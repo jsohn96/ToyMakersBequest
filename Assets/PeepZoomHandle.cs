@@ -75,14 +75,16 @@ public class PeepZoomHandle : MonoBehaviour {
 	IEnumerator FlipLensIn(bool flipIn){
 		float timer = 0f;
 		float duration = 0.5f;
+		Vector3 tempOffsetMax = _rectTransform.offsetMax;
+		Vector3 tempOffsetMin = _rectTransform.offsetMin;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			if (flipIn) {
-				_rectTransform.offsetMax = Vector2.Lerp (_originPosMax, -_zeroVector2, _gearZoomCurve.Evaluate (timer / duration));
-				_rectTransform.offsetMin = Vector2.Lerp (_originPosMin, _zeroVector2, _gearZoomCurve.Evaluate (timer / duration));
+				_rectTransform.offsetMax = Vector2.Lerp (tempOffsetMax, -_zeroVector2, _gearZoomCurve.Evaluate (timer / duration));
+				_rectTransform.offsetMin = Vector2.Lerp (tempOffsetMin, _zeroVector2, _gearZoomCurve.Evaluate (timer / duration));
 			} else {
-				_rectTransform.offsetMax = Vector2.Lerp (-_zeroVector2, _originPosMax, (timer / duration));
-				_rectTransform.offsetMin = Vector2.Lerp (_zeroVector2, _originPosMin, (timer / duration));
+				_rectTransform.offsetMax = Vector2.Lerp (tempOffsetMax, _originPosMax, (timer / duration));
+				_rectTransform.offsetMin = Vector2.Lerp (tempOffsetMin, _originPosMin, (timer / duration));
 			}
 			_outerGearImageTransform.Rotate (Vector3.forward * Time.deltaTime * 1000f);
 			KeepRenderTextureStaticByOffset ();

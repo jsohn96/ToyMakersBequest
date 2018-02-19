@@ -85,7 +85,7 @@ public class ControlRoomManager : MonoBehaviour {
 		_fading.BeginFade (1, 2f);
 		_tempZoomedPosition = zoomCameraPosition;
 		StartCoroutine (WaitForCameraSwap (2f, _tempZoomedPosition));
-		_peepText.ChangeText (peepholeIndex);
+//		_peepText.ChangeText (peepholeIndex);
 		AltCentralControl._peepholeViewed [peepholeIndex] = true;
 		if (peepholeIndex == 3) {
 			StartCoroutine (DropDog ());
