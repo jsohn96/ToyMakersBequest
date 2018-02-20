@@ -8,7 +8,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	[SerializeField] AltTheatre _myTheatre;
 
-	BoxCollider _boxCollider;
+//	MeshCollider _meshCollider;
 	IEnumerator _tankDoorCoroutine;
 
 	bool _isOpen = true;
@@ -17,7 +17,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	void Start(){
 		_openRot = transform.localRotation;
-		_boxCollider = GetComponent<BoxCollider> ();
+//		_meshCollider = GetComponent<MeshCollider> ();
 		//		if (!_isActivated) {
 //			_boxCollider.enabled = false;
 //		}
@@ -47,7 +47,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	IEnumerator CloseTank(){
 		float timer = 0f;
-		float duration = 1.5f;
+		float duration = 1.2f;
 		Quaternion _currentRot = transform.localRotation;
 		while (timer < duration) {
 			timer += Time.deltaTime;
@@ -63,18 +63,16 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	}
 
 	IEnumerator OpenTank(){
-		if (!_isActivated) {
-			float timer = 0f;
-			float duration = 1.5f;
-			Quaternion _currentRot = transform.localRotation;
-			while (timer < duration) {
-				timer += Time.deltaTime;
-				transform.localRotation = Quaternion.Slerp (_currentRot, _openRot, timer / duration);
-				yield return null;
-			}
-			transform.localRotation = _openRot;
+		float timer = 0f;
+		float duration = 1.2f;
+		Quaternion _currentRot = transform.localRotation;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			transform.localRotation = Quaternion.Slerp (_currentRot, _openRot, timer / duration);
 			yield return null;
 		}
+		transform.localRotation = _openRot;
+		yield return null;
 	}
 
 
@@ -82,6 +80,11 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	public void Activate(bool activate){
 		_isActivated = activate;
 		if (activate) {
+			if (!_isOpen) {
+				_isOpen = true;
+				_tankDoorCoroutine = OpenTank ();
+				StartCoroutine (_tankDoorCoroutine);
+			}
 			_shaderGlowCustom.TriggerFadeIn ();
 		}
 	}

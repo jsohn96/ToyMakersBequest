@@ -70,12 +70,12 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
-			_acceleration = 0.3f;	
+			_acceleration = _acceleration < 0.1f ? _acceleration + 0.01f : 0.1f;
 			_isScrolling = true;
 			_scrollEasingToHalt = false;
 			_scrollDirectionMultiplier.y = 10f;
 		} else if (Input.GetKeyDown (KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
-			_acceleration = 0.3f;
+			_acceleration = _acceleration < 0.1f ? _acceleration + 0.01f : 0.1f;
 			_isScrolling = true;
 			_scrollEasingToHalt = false;
 			_scrollDirectionMultiplier.y = -10f;
@@ -90,8 +90,9 @@ public class TheatreCameraControl : MonoBehaviour {
 				_scrollEasingToHalt = false;
 				_isScrolling = false;
 				_acceleration = 0.0f;
+			} else {
+				_acceleration -= Time.deltaTime;
 			}
-			_acceleration -= Time.deltaTime;
 		}
 	}
 
@@ -166,8 +167,8 @@ public class TheatreCameraControl : MonoBehaviour {
 		float timer = 0f;
 		float duration = 4f;
 		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-		_bottomCameraPos = _cameraTempPos;
-		_bottomCameraPos.y = _cameraMovementRange.Min;
+//		_bottomCameraPos = _cameraTempPos;
+//		_bottomCameraPos.y = _cameraMovementRange.Min;
 		_disableAllScroll = true;
 		while (timer < duration) {
 			timer += Time.deltaTime;

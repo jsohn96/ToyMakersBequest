@@ -105,7 +105,7 @@ public class TheatreFrog : MonoBehaviour {
 			if (alreadyGoneIndex.Count < 5) {
 				JumpToRandomNode ();
 			} else {
-				//Debug.Log ("Jump to water");
+				Debug.Log ("Jump to water");
 			}
 		}
 
