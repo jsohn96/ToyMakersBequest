@@ -14,6 +14,7 @@ public class ControlRoom : MonoBehaviour {
 
 	static bool _zoomedIn = false;
 	static Vector3 _lastZoomPosition;
+	bool _preventNewInput = false;
 
 
 	[SerializeField] GameObject[] _peepCovers = new GameObject[4];
@@ -24,17 +25,25 @@ public class ControlRoom : MonoBehaviour {
 		}
 	}
 
-	public void LookIntoPeephole(int peepholeIndex, Vector3 zoomCameraPosition){
-		// Play Zoom Sound
-		_controlRoomAudio.PlayZoomAudio ();
-		// Begin Fading the Scene
-		_fading.BeginFade (1, 2f);
+	void DisableSceneInput(DisableSceneTransitionInput e){
+		_preventNewInput = true;
+	}
 
-		// Set Camera Zoom In Position
-		_lastZoomPosition = zoomCameraPosition;
-		AltCentralControl._peepholeViewed [peepholeIndex] = true;
-		_zoomedIn = true;
-		StartCoroutine (ZoomCamera (2f, true, peepholeIndex));
+	public void LookIntoPeephole(int peepholeIndex, Vector3 zoomCameraPosition){
+		if (!_preventNewInput) {
+			Events.G.Raise (new DisableSceneTransitionInput ());
+			// Play Zoom Sound
+			_controlRoomAudio.PlayZoomAudio ();
+			// Begin Fading the Scene
+			_fading.BeginFade (1, 2f);
+
+			// Set Camera Zoom In Position
+			_lastZoomPosition = zoomCameraPosition;
+			AltCentralControl._peepholeViewed [peepholeIndex] = true;
+			_zoomedIn = true;
+			AltDirectionUI._enteredPeephole = true;
+			StartCoroutine (ZoomCamera (2f, true, peepholeIndex));
+		}
 	}
 
 	public void ZoomOutOfPeephole(){
@@ -90,10 +99,12 @@ public class ControlRoom : MonoBehaviour {
 
 	void OnEnable(){
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		Events.G.AddListener<DisableSceneTransitionInput> (DisableSceneInput);
 	}
 
 	void OnDisable(){
 		SceneManager.sceneLoaded -= OnSceneLoaded;
+		Events.G.RemoveListener<DisableSceneTransitionInput> (DisableSceneInput);
 	}
 
 

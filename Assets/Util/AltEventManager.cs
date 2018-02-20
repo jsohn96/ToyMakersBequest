@@ -28,6 +28,9 @@ public class SlidingDoorFinished: GameEvent {
 public class ClosingDoorsForSceneTransition: GameEvent {
 }
 
+public class DisableSceneTransitionInput:GameEvent {
+}
+
 public class TheatreFrogClickEvent:GameEvent{
 	public int frogIdx { get; private set; }
 	public int iconIdx { get; private set; }

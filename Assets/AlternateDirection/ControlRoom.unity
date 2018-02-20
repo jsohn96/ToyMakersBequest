@@ -1175,6 +1175,36 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224927078804382652, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 267
+      objectReference: {fileID: 0}
+    - target: {fileID: 114260309214053370, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114334951221651078, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114088668001477076, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114811765772759912, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: _currentlyOffButton
+      value: 
+      objectReference: {fileID: 1989365262}
+    - target: {fileID: 114804128041598492, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
   m_IsPrefabParent: 0
@@ -1574,7 +1604,7 @@ MonoBehaviour:
   DesaturateFarObjsStrength: 0.6
   FogTint: {r: 1, g: 1, b: 1, a: 1}
   FogStrength: 0
-  HalfResolution: 1
+  HalfResolution: 0
 --- !u!114 &961011384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,6 +2951,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1989365262 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114334951221651078, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
+    type: 2}
+  m_PrefabInternal: {fileID: 809708306}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1999812686
 GameObject:
   m_ObjectHideFlags: 0

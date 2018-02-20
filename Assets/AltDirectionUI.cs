@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AltDirectionUI : MonoBehaviour {
 	[SerializeField] RectTransform _canvasRectTransform;
@@ -18,9 +19,6 @@ public class AltDirectionUI : MonoBehaviour {
 
 	IEnumerator _windowCoroutine;
 
-	float _timer = 0f;
-	float _duration = 1.2f;
-
 	[SerializeField] float _rightUIWidth = 160f;
 	float _screenWidth = 1920f;
 
@@ -29,8 +27,12 @@ public class AltDirectionUI : MonoBehaviour {
 	[Header("Scene Arrow References")]
 	[SerializeField] RectTransform _sceneArrow;
 	[SerializeField] Vector2[] _arrowPositions = new Vector2[4];
+	[SerializeField] Image[] _sceneOptionImages = new Image[4];
+	[SerializeField] Button _currentlyOffButton;
 	bool _triggeredNextScene = false;
 	int _pointerGoalIndex = 0;
+
+	public static bool _enteredPeephole = false;
 
 	void Awake(){
 		_screenWidth = (_referenceHeight/_canvasRectTransform.sizeDelta.y)* _canvasRectTransform.sizeDelta.x;
@@ -52,15 +54,31 @@ public class AltDirectionUI : MonoBehaviour {
 	}
 
 	void OnSceneLoaded(Scene scene,LoadSceneMode mode){
-		WindowScroll (true);
+		if (!_enteredPeephole) {
+			WindowScroll (true);
+		} else {
+			_enteredPeephole = false;
+			_windowLeft.anchoredPosition = _leftWindowOpen;
+			_windowRight.anchoredPosition = _rightWindowOpen;
+			_windowOpen = true;
+			Events.G.Raise (new SlidingDoorFinished (_windowOpen));
+		}
+	}
+
+	void DisableSceneInputs(DisableSceneTransitionInput e){
+		for (int i = 0; i < 4; i++) {
+			_sceneOptionImages [i].raycastTarget = false;
+		}
 	}
 
 	void OnEnable(){
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		Events.G.AddListener<DisableSceneTransitionInput> (DisableSceneInputs);
 	}
 
 	void OnDisable(){
 		SceneManager.sceneLoaded -= OnSceneLoaded;
+		Events.G.RemoveListener<DisableSceneTransitionInput> (DisableSceneInputs);
 	}
 
 
@@ -68,6 +86,12 @@ public class AltDirectionUI : MonoBehaviour {
 		if (!_triggeredNextScene && !_windowIsScrolling) {
 			_pointerGoalIndex = pointerGoalIndex;
 			_triggeredNextScene = true;
+
+			// Color changiing of the icon buttons
+			Events.G.Raise(new DisableSceneTransitionInput());
+			_currentlyOffButton.interactable = true;
+			_sceneOptionImages [pointerGoalIndex].GetComponent<Button> ().interactable = false;
+
 			StartCoroutine (MovePointer ());
 		}
 	}
@@ -122,34 +146,34 @@ public class AltDirectionUI : MonoBehaviour {
 
 	public void WindowScroll(bool open){
 		
-		StartCoroutine (MoveWindow (open));
+		StartCoroutine (MoveWindow (open, 1.2f));
 	}
 
-	IEnumerator MoveWindow(bool open){
+	IEnumerator MoveWindow(bool open, float duration){
 		if (open) {
 			_windowScrollSound.OpenWindowSound ();
 		} else {
 			_windowScrollSound.CloseWindowSound ();
 		}
-		_timer = 0f;
+		float timer = 0f;
 		_leftTemp = _windowLeft.anchoredPosition;
 		_rightTemp = _windowRight.anchoredPosition;
 		_windowOpening = open;
 		_windowIsScrolling = true;
 
 		if (_windowIsScrolling) {
-			while (_timer < _duration) {
+			while (timer < duration) {
 				if (AltCentralControl.isGameTimePaused) {
-					_timer += Time.unscaledDeltaTime;
+					timer += Time.unscaledDeltaTime;
 				} else {
-					_timer += Time.deltaTime;
+					timer += Time.deltaTime;
 				}
 				if (_windowOpening) {
-					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowOpen, _windowScrollCurve.Evaluate (_timer / _duration));
-					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowOpen, _windowScrollCurve.Evaluate (_timer / _duration));
+					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowOpen, _windowScrollCurve.Evaluate (timer / duration));
+					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowOpen, _windowScrollCurve.Evaluate (timer / duration));
 				} else {
-					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowClose, _windowScrollCurve.Evaluate (_timer / _duration));
-					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowClose, _windowScrollCurve.Evaluate (_timer / _duration));
+					_windowLeft.anchoredPosition = Vector2.Lerp (_leftTemp, _leftWindowClose, _windowScrollCurve.Evaluate (timer / duration));
+					_windowRight.anchoredPosition = Vector2.Lerp (_rightTemp, _rightWindowClose, _windowScrollCurve.Evaluate (timer / duration));
 				}
 				yield return null;
 			}
