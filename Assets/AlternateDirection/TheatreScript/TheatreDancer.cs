@@ -43,6 +43,14 @@ public class TheatreDancer : MonoBehaviour {
 		StartCoroutine (FirstDancerTankCoroutine ());
 	}
 
+	public void SecondDancerEnterTank(){
+		StartCoroutine (SecondDancerTankCoroutine ());
+	}
+
+	public void ElevateTankPlatform(){
+		StartCoroutine (ElevateWaterTankPlatform ());
+	}
+
 	IEnumerator FirstDancerTankCoroutine(){
 		float timer = 0f;
 		float duration = 5f;
@@ -79,6 +87,34 @@ public class TheatreDancer : MonoBehaviour {
 		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
 
 		_myTheatre.MoveToNext ();
+		yield return null;
+	}
+
+	IEnumerator ElevateWaterTankPlatform(){
+		float timer = 0f;
+		float duration = 3f;
+
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformDownLocalPos, _waterTankPlatformUpLocalPos, timer / duration);
+			yield return null;
+		}
+		_waterTankPlatformTransform.localPosition = _waterTankPlatformUpLocalPos;
+		yield return null;
+	}
+
+	IEnumerator SecondDancerTankCoroutine(){
+		yield return new WaitForSeconds (1.5f);
+		_dancerTransform.parent = _waterTankPlatformTransform;
+		float timer = 0f;
+		float duration = 4f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
+			yield return null;
+		}
+		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
+
 		yield return null;
 	}
 

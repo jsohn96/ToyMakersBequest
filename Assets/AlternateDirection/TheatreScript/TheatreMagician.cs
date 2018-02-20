@@ -11,6 +11,7 @@ public class TheatreMagician : MonoBehaviour {
 	[SerializeField] Transform _waterTank;
 	[SerializeField] Vector3 _onWaterTank;
 	[SerializeField] Vector3 _stepOffWaterTank;
+	[SerializeField] Vector3 _kissPosition;
 
 	Vector3 _tempPos;
 
@@ -44,6 +45,14 @@ public class TheatreMagician : MonoBehaviour {
 	public void StepOffTank(){
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 		//PointToCenter (false);
+	}
+
+	public void EnterKissPosition(){
+		StartCoroutine (MoveMagician (_magicianTransform.position, _kissPosition, 2f));
+	}
+
+	public void ExitKissPosition(){
+		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 	}
 
 	IEnumerator MoveMagician(Vector3 start, Vector3 end, float duration){

@@ -19,12 +19,13 @@ public enum TheatreState{
 	CloseTank1 = 9,
 	CloseTank2 = 10,
 	magicianRight = 11,
-	dancerShowUp,
-	dancerKissing,
-	audienceLeave,
-	dancerDescend,
-	dancerLocked,
-	theatreEnd
+	dancerShowUp = 12,
+	dancerKissing = 13,
+	audienceLeave = 14,
+	magicianReturnToPosition = 15,
+	dancerDescend = 16,
+	dancerLocked = 17,
+	theatreEnd = 18
 }
 
 public class AltTheatre : LevelManager {
@@ -52,6 +53,8 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreChest _theatreChest;
 
 	[SerializeField] TheatreWaterTankDoors _tankDoor1, _tankDoor2;
+
+	[SerializeField] AudioSource _theatreMusic;
 
 
 	// Use this for initialization
@@ -88,9 +91,9 @@ public class AltTheatre : LevelManager {
 
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftControl)) {
+		if (Input.GetKeyDown (KeyCode.Z)) {
 			Time.timeScale = 5.0f;
-		} else if (Input.GetKeyUp (KeyCode.LeftControl)) {
+		} else if (Input.GetKeyUp (KeyCode.Z)) {
 			Time.timeScale = 1.0f;
 		}
 		#endif
@@ -122,6 +125,7 @@ public class AltTheatre : LevelManager {
 	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
+			_theatreMusic.Play ();
 			//magician.GoToStart ();
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
 				magician.PointToCenter(true);
@@ -185,19 +189,32 @@ public class AltTheatre : LevelManager {
 			network.SetPathActive(true);
 			break;
 		case TheatreState.dancerKissing:
-			// frog.jumpout
+			magician.EnterKissPosition ();
 			break;
 		case TheatreState.audienceLeave:
+			_dancer.ElevateTankPlatform ();
+			MoveToNext ();
+			break;
+		case TheatreState.magicianReturnToPosition:
 			
+			magician.ExitKissPosition ();
 			break;
 		case TheatreState.dancerDescend:
-			
+			_theatreWaterTank.OpenLid (true);
+			_dancer.SecondDancerEnterTank ();
+			_theatreCameraControl.MoveCameraToLookAtTank ();
 			break;
 		case TheatreState.dancerLocked:
-			
+			_theatreWaterTank.OpenLid (false);
+			_tankDoor1.FinalActivation (true);
+			_tankDoor2.FinalActivation (true);
 			break;
-
-
+		case TheatreState.theatreEnd:
+			_dancer.HideDancer (true);
+			_tankDoor1.OpenTankCall ();
+			_tankDoor2.OpenTankCall ();
+			_theatreMusic.Stop ();
+			break;
 		}
 	}
 
@@ -214,5 +231,23 @@ public class AltTheatre : LevelManager {
 		if (action != null) {
 			action ();
 		}
+	}
+
+	void TriggerKiss(PathStateManagerEvent e){
+		if (e.activeEvent == PathState.ReachPathEnd) {
+			if (currentSate == TheatreState.dancerKissing - 1) {
+				currentSate += 1;
+				CheckStateMachine ();
+				Debug.Log ("Current Theatre State: " + currentSate);
+			}
+		}
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<PathStateManagerEvent> (TriggerKiss);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<PathStateManagerEvent> (TriggerKiss);
 	}
 }

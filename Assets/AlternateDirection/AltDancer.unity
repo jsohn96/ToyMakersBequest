@@ -3142,6 +3142,7 @@ MonoBehaviour:
   _waterTank: {fileID: 2104662672}
   _onWaterTank: {x: -0.002342992, y: 13.09172, z: 18.204}
   _stepOffWaterTank: {x: -0.004259986, y: 12.738, z: 18.36389}
+  _kissPosition: {x: -0.004259986, y: 12.738, z: 18.28065}
 --- !u!1 &259800225
 GameObject:
   m_ObjectHideFlags: 0
@@ -8876,7 +8877,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1317702250344910, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 92538544074599512, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -17888,6 +17889,133 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1249134433}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1252236952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1252236953}
+  - component: {fileID: 1252236955}
+  - component: {fileID: 1252236954}
+  m_Layer: 0
+  m_Name: TheatreSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1252236953
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252236952}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1924021102}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1252236954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252236952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ffbfbbb24c7764d8edab79d309a787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clappingSound: {fileID: 1252236955}
+  _clapClips:
+  - {fileID: 8300000, guid: cf079429f61efbd499a779a3724ef7c6, type: 3}
+  - {fileID: 8300000, guid: 18b8f413938c45948bf50ed55f645511, type: 3}
+  - {fileID: 8300000, guid: 3220fb5353d72ba41893079a16452932, type: 3}
+  - {fileID: 8300000, guid: fad3bc92b15952b429251a28ac5a0953, type: 3}
+--- !u!82 &1252236955
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252236952}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9c148c87ecc38bb44b0e4c2d579ffbf3, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.47
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1254005425
 GameObject:
   m_ObjectHideFlags: 0
@@ -26606,6 +26734,8 @@ MonoBehaviour:
   _theatreChest: {fileID: 261065208}
   _tankDoor1: {fileID: 1165554336}
   _tankDoor2: {fileID: 776544073}
+  _theatreSound: {fileID: 1252236954}
+  _theatreMusic: {fileID: 1541424001}
 --- !u!4 &1924021102
 Transform:
   m_ObjectHideFlags: 0
@@ -26617,6 +26747,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1541424000}
+  - {fileID: 1252236953}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
