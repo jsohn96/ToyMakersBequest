@@ -12,6 +12,7 @@ public class TheatreMagician : MonoBehaviour {
 	[SerializeField] Vector3 _onWaterTank;
 	[SerializeField] Vector3 _stepOffWaterTank;
 	[SerializeField] Vector3 _kissPosition;
+	[SerializeField] GameObject _kissImage;
 
 	Vector3 _tempPos;
 
@@ -26,6 +27,7 @@ public class TheatreMagician : MonoBehaviour {
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
 
 		//_magicianTransform = gameObject.transform;
+		_kissImage.SetActive(false);
 	}
 
 	void Start(){
@@ -49,6 +51,7 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void EnterKissPosition(){
 		StartCoroutine (MoveMagician (_magicianTransform.position, _kissPosition, 2f));
+		StartCoroutine (Kissing ());
 	}
 
 	public void ExitKissPosition(){
@@ -65,6 +68,12 @@ public class TheatreMagician : MonoBehaviour {
 		_magicianTransform.position = end;
 		yield return null;
 		_myTheatre.MoveToNext ();
+	}
+
+	IEnumerator Kissing(){
+		_kissImage.SetActive (true);
+		yield return new WaitForSeconds (2);
+		_kissImage.SetActive (false);
 	}
 
 	public void GoToStart(){
