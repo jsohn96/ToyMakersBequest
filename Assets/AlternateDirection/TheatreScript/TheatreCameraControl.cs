@@ -13,6 +13,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] MinMax _cameraMovementRange;
 	[SerializeField] MinMax _cameraAngleRange;
 	[SerializeField] MinMax _cameraFOVRange = new MinMax (28f, 60f);
+	[SerializeField] MinMax _cameraRotation = new MinMax(-26f, 26f);
 	[SerializeField] AnimationCurve _cameraAngleCurve;
 	[SerializeField] AnimationCurve _cameraFOVCurve1;
 	[SerializeField] AnimationCurve _cameraFOVCurve2;
@@ -25,6 +26,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	Vector3 _cameraTempRot;
 	[SerializeField] Vector3 _bottomCameraPos;
 	Vector3 _scrollDirectionMultiplier = new Vector3(0f, -10f, 0f);
+	float _angleDirectionMultiplier = 1f;
 
 	[Header("Camera Init Values")]
 	[SerializeField] Vector3 _cameraZoomedOutViewPos;
@@ -41,6 +43,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _disableAllScroll = false;
 
 	bool _scrollEasingToHalt = false;
+	bool _angleMode = false;
 
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
@@ -69,24 +72,14 @@ public class TheatreCameraControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
-			_acceleration = 0.03f;
-			_isScrolling = true;
-			_scrollEasingToHalt = false;
-			_scrollDirectionMultiplier.y = 10f;
-		} else if (Input.GetKeyDown (KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
-			_acceleration = 0.03f;
-			_isScrolling = true;
-			_scrollEasingToHalt = false;
-			_scrollDirectionMultiplier.y = -10f;
-		}
 
-		if (Input.GetKeyUp (KeyCode.UpArrow) || Input.GetKeyUp (KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) {
-			_scrollEasingToHalt = true;
-		}
 
 		if (_scrollEasingToHalt) {
-			_acceleration -= 0.002f;
+			if (!_angleMode) {
+				_acceleration -= 0.02f * Time.deltaTime;
+			} else {
+				_acceleration -= 20f * Time.deltaTime;
+			}
 			if (_acceleration < 0.0f) {
 				_scrollEasingToHalt = false;
 				_isScrolling = false;
@@ -95,27 +88,80 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 	}
 
+	public void OnPointerDown(Direction whichDirection){
+		_isScrolling = true;
+		_scrollEasingToHalt = false;
+		switch (whichDirection) {
+		case Direction.up:
+			_acceleration = 0.01f;
+			_scrollDirectionMultiplier.y = 10f;
+			_angleMode = false;
+			break;
+		case Direction.down:
+			_acceleration = 0.01f;
+			_scrollDirectionMultiplier.y = -10f;
+			_angleMode = false;
+			break;
+		case Direction.left:
+			_acceleration = 10f;
+			_scrollDirectionMultiplier.y = -1f;
+			_angleMode = true;
+			break;
+		case Direction.right:
+			_acceleration = 10f;
+			_scrollDirectionMultiplier.y = 1f;
+			_angleMode = true;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void OnPointerUp(Direction whichDirection){
+		_scrollEasingToHalt = true;
+	}
+
 	void ScrollCamera(){
 		if (!_disableAllScroll) {
 			if (!_discreteMode) {
 				_acceleration = Input.mousePosition.y - _clickStartPosition.y;
 				_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (_acceleration / Screen.height) * Time.deltaTime);
 			} else {
-				_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (_acceleration) * Time.deltaTime);
+				if (!_angleMode) {
+					_thisCameraHeighttContainer.transform.Translate (_scrollDirectionMultiplier * (_acceleration) * Time.deltaTime);
+				} else {
+					_thisCamera.transform.Rotate (_acceleration * _scrollDirectionMultiplier * Time.deltaTime, Space.World);
+				}
 			}
 
-
-			_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
-			if (_currentCameraYPos > _cameraMovementRange.Max) {
-				_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-				_cameraTempPos.y = _cameraMovementRange.Max;
-				_currentCameraYPos = _cameraTempPos.y;
-				_thisCameraHeighttContainer.transform.position = _cameraTempPos;
-			} else if (_currentCameraYPos < _cameraMovementRange.Min) {
-				_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-				_cameraTempPos.y = _cameraMovementRange.Min;
-				_currentCameraYPos = _cameraTempPos.y;
-				_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+			if (!_angleMode) {
+				_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
+				if (_currentCameraYPos > _cameraMovementRange.Max) {
+					_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+					_cameraTempPos.y = _cameraMovementRange.Max;
+					_currentCameraYPos = _cameraTempPos.y;
+					_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+				} else if (_currentCameraYPos < _cameraMovementRange.Min) {
+					_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+					_cameraTempPos.y = _cameraMovementRange.Min;
+					_currentCameraYPos = _cameraTempPos.y;
+					_thisCameraHeighttContainer.transform.position = _cameraTempPos;
+				}
+			} else {
+				Vector3 tempAngle = _thisCamera.transform.localEulerAngles;
+				float tempAngleY = tempAngle.y;
+				if (tempAngleY < 180f) {
+					if (tempAngleY > _cameraRotation.Max) {
+						tempAngle.y = _cameraRotation.Max;
+						_thisCamera.transform.localEulerAngles = tempAngle;
+					} 
+				} else {
+					tempAngleY = tempAngleY - 360f;
+					if (tempAngleY < _cameraRotation.Min) {
+						tempAngle.y = _cameraRotation.Min;
+						_thisCamera.transform.localEulerAngles = tempAngle;
+					}
+				}
 			}
 			CameraAngleCalculation ();
 		}
@@ -166,13 +212,19 @@ public class TheatreCameraControl : MonoBehaviour {
 		float timer = 0f;
 		float duration = 4f;
 		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+		Vector3 originEuler = _thisCamera.transform.eulerAngles;
+		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
 //		_bottomCameraPos = _cameraTempPos;
 //		_bottomCameraPos.y = _cameraMovementRange.Min;
 		_disableAllScroll = true;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
+
 			CameraAngleCalculation ();
+			originEuler.x = _thisCamera.transform.eulerAngles.x;
+			goalEuler.x = originEuler.x;
+			_thisCamera.transform.eulerAngles = Vector3.Slerp (originEuler, goalEuler, timer / duration);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _bottomCameraPos;
