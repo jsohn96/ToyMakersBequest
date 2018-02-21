@@ -14,8 +14,8 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] Transform _waterTankPlatformTransform;
 	[SerializeField] Vector3 _firstWaterTankStart;
 
-	Vector3 _waterTankPlatformUpLocalPos = new Vector3 (0.00019f, 0.03096f, 0.00026f);
-	Vector3 _waterTankPlatformDownLocalPos = new Vector3 (0.00019f, -0.0254f, 0.00026f);
+	Vector3 _waterTankPlatformUpLocalPos = new Vector3 (0f, 0.01476911f, -0.001706005f);
+	Vector3 _waterTankPlatformDownLocalPos = new Vector3 (0f, -0.0102f, -0.001706005f);
 
 	Vector3 _dancerTempPos;
 
