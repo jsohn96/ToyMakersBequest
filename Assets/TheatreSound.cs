@@ -6,8 +6,14 @@ public class TheatreSound : MonoBehaviour {
 	[SerializeField] AudioSource _clappingSound;
 	[SerializeField] AudioClip[] _clapClips = new AudioClip[4];
 
+	[SerializeField] AudioSource _lightSwitch;
+
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
 		_clappingSound.Play ();
+	}
+
+	public void PlayLightSwitch(){
+		_lightSwitch.Play ();
 	}
 }

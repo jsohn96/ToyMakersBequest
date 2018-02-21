@@ -60,7 +60,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	void Update(){
 		if (!_initZoom) {
-			if (Input.GetMouseButtonDown (0) && !_initClick) {
+			if (Input.GetMouseButtonUp (0) && !_initClick) {
 				_initClick = true;
 				AltTheatre.currentSate++;
 				_altTheatre.CheckStateMachine ();
@@ -76,7 +76,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 		if (_scrollEasingToHalt) {
 			if (!_angleMode) {
-				_acceleration -= 0.02f * Time.deltaTime;
+				_acceleration -= 0.05f * Time.deltaTime;
 			} else {
 				_acceleration -= 20f * Time.deltaTime;
 			}
@@ -93,12 +93,12 @@ public class TheatreCameraControl : MonoBehaviour {
 		_scrollEasingToHalt = false;
 		switch (whichDirection) {
 		case Direction.up:
-			_acceleration = 0.01f;
+			_acceleration = 0.025f;
 			_scrollDirectionMultiplier.y = 10f;
 			_angleMode = false;
 			break;
 		case Direction.down:
-			_acceleration = 0.01f;
+			_acceleration = 0.025f;
 			_scrollDirectionMultiplier.y = -10f;
 			_angleMode = false;
 			break;

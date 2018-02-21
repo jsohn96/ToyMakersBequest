@@ -56,6 +56,10 @@ public class AltTheatre : LevelManager {
 
 	[SerializeField] AudioSource _theatreMusic;
 
+	[SerializeField] TraversalUI _traversalUI;
+	[SerializeField] TheatreLighting _theatreLighting;
+	[SerializeField] TheatreSound _theatreSound;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -125,7 +129,9 @@ public class AltTheatre : LevelManager {
 	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
+			_theatreLighting.MoveToNextLights ();
 			_theatreMusic.Play ();
+			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
 				magician.PointToCenter(true);
@@ -141,6 +147,7 @@ public class AltTheatre : LevelManager {
 			_dancer.FirstDancerEnterTank ();
 			break;
 		case TheatreState.magicianBoardTank:
+			_traversalUI.FadeIn ();
 			_theatreWaterTank.Activate (false);
 			_theatreWaterTank.OpenLid (false);
 			magician.StepOnTank ();
@@ -166,12 +173,14 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 			break;
 		case TheatreState.lookDownIntoTank:
+			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			_tankDoor1.Activate (true);
 			_tankDoor2.Activate (true);
 			//MoveToNext();
 			break;
 		case TheatreState.magicianRight:
+			_traversalUI.FadeIn ();
 			_theatreCameraControl.EnableScrollFOV();
 			_tankDoor1.Activate (false);
 			_tankDoor2.Activate (false);
@@ -200,6 +209,7 @@ public class AltTheatre : LevelManager {
 			magician.ExitKissPosition ();
 			break;
 		case TheatreState.dancerDescend:
+			_traversalUI.FadeOut ();
 			_theatreWaterTank.OpenLid (true);
 			_dancer.SecondDancerEnterTank ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
@@ -210,6 +220,7 @@ public class AltTheatre : LevelManager {
 			_tankDoor2.FinalActivation (true);
 			break;
 		case TheatreState.theatreEnd:
+			_traversalUI.FadeIn ();
 			_dancer.HideDancer (true);
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();
