@@ -54,7 +54,7 @@ public class AltTheatre : LevelManager {
 
 	[SerializeField] TheatreWaterTankDoors _tankDoor1, _tankDoor2;
 
-	[SerializeField] AudioSource _theatreMusic;
+	[SerializeField] TheatreMusic _theatreMusic;
 
 	[SerializeField] TraversalUI _traversalUI;
 	[SerializeField] TheatreLighting _theatreLighting;
@@ -130,7 +130,7 @@ public class AltTheatre : LevelManager {
 		switch (currentSate) {
 		case TheatreState.startShow:
 			_theatreLighting.MoveToNextLights ();
-			_theatreMusic.Play ();
+			_theatreMusic.BeginMusic ();
 			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
@@ -224,7 +224,7 @@ public class AltTheatre : LevelManager {
 			_dancer.HideDancer (true);
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();
-			_theatreMusic.Stop ();
+			_theatreMusic.EndMusic ();
 			break;
 		}
 	}

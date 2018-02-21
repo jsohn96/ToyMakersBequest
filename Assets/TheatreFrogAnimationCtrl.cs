@@ -59,6 +59,10 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 
 	}
 
+	public void PlayFrogSound(){
+		TheatreSound._instance.PlayFrogSound ();
+	}
+
 
 	public void ShowFrog(){
 		print ("activate frog: " + _frogIdx);

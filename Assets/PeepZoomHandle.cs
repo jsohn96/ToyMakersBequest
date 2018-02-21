@@ -23,6 +23,9 @@ public class PeepZoomHandle : MonoBehaviour {
 	float _expandedRadius;
 	IEnumerator _coroutine;
 
+	[SerializeField] AudioSource _slideAudioSource;
+	[SerializeField] AudioClip[] _slideClips = new AudioClip[2];
+
 	void Start(){
 		_expandedRadius = Screen.height / 2f;
 		_zeroVector2 = new Vector2 (-_expandedRadius, -_expandedRadius);
@@ -91,6 +94,14 @@ public class PeepZoomHandle : MonoBehaviour {
 	IEnumerator FlipLensIn(bool flipIn){
 		float timer = 0f;
 		float duration = 0.5f;
+
+		if (flipIn) {
+			_slideAudioSource.clip = _slideClips [0];
+		} else {
+			_slideAudioSource.clip = _slideClips [1];
+		}
+		_slideAudioSource.Play ();
+
 		Vector3 tempOffsetMax = _rectTransform.offsetMax;
 		Vector3 tempOffsetMin = _rectTransform.offsetMin;
 		while (timer < duration) {

@@ -150,6 +150,7 @@ public class TheatreFrog : MonoBehaviour {
 	}
 
 	void FoundIconMatch(){
+		TheatreSound._instance.PlayBellFeedback ();
 		tempGoneIndex.Clear ();
 		_currentIcon = -1;
 		if (_matchedCouple + 1 < 3) {
@@ -181,6 +182,7 @@ public class TheatreFrog : MonoBehaviour {
 			Events.G.Raise(new FrogIsOnTheMoveEvent());
 			_curBehaviour.SetFrogOn (true);
 			_curBehaviour.ShowFrog ();
+			Debug.Log ("DROG DRGO");
 		}
 	}
 
