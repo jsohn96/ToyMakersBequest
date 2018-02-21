@@ -45,6 +45,8 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _scrollEasingToHalt = false;
 	bool _angleMode = false;
 
+	[SerializeField] BoxCollider _surfaceBoxCollider;
+
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
@@ -58,15 +60,17 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	}
 
+	public void Activate(){
+		if (!_initClick) {
+			_initClick = true;
+			AltTheatre.currentSate++;
+			_altTheatre.CheckStateMachine ();
+			StartCoroutine (ZoomInCamera ());
+		}
+	}
+
 	void Update(){
-		if (!_initZoom) {
-			if (Input.GetMouseButtonUp (0) && !_initClick) {
-				_initClick = true;
-				AltTheatre.currentSate++;
-				_altTheatre.CheckStateMachine ();
-				StartCoroutine (ZoomInCamera ());
-			}
-		} else {
+		if (_initZoom) {
 			if (_isScrolling) {
 				ScrollCamera ();
 			}

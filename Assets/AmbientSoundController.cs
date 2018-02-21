@@ -19,6 +19,12 @@ public class AmbientSoundController : AudioSourceController {
 				_ambientAudioSystem1.audioSource.clip = _ambientAudioSystem1.clips [0];
 				AudioManager.instance.CrossFade (_ambientAudioSystem2.audioSource, _ambientAudioSystem1.audioSource, _ambientAudioSystem1.fadeDuration, _ambientAudioSystem1.volume);
 			}
+		} else {
+			if (_ambientAudioSystem1.audioSource.isPlaying) {
+				Stop (_ambientAudioSystem1);
+			} else {
+				Stop (_ambientAudioSystem2);
+			}
 		}
 	}
 
