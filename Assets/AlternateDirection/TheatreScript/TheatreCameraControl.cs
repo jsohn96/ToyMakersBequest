@@ -13,7 +13,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] MinMax _cameraMovementRange;
 	[SerializeField] MinMax _cameraAngleRange;
 	[SerializeField] MinMax _cameraFOVRange = new MinMax (28f, 60f);
-	[SerializeField] MinMax _cameraRotation = new MinMax(-26f, 26f);
+	[SerializeField] MinMax _cameraRotation = new MinMax(-20f, 20f);
 	[SerializeField] AnimationCurve _cameraAngleCurve;
 	[SerializeField] AnimationCurve _cameraFOVCurve1;
 	[SerializeField] AnimationCurve _cameraFOVCurve2;
@@ -80,7 +80,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 		if (_scrollEasingToHalt) {
 			if (!_angleMode) {
-				_acceleration -= 0.05f * Time.deltaTime;
+				_acceleration -= 0.03f * Time.deltaTime;
 			} else {
 				_acceleration -= 20f * Time.deltaTime;
 			}
@@ -97,12 +97,12 @@ public class TheatreCameraControl : MonoBehaviour {
 		_scrollEasingToHalt = false;
 		switch (whichDirection) {
 		case Direction.up:
-			_acceleration = 0.025f;
+			_acceleration = 0.015f;
 			_scrollDirectionMultiplier.y = 10f;
 			_angleMode = false;
 			break;
 		case Direction.down:
-			_acceleration = 0.025f;
+			_acceleration = 0.015f;
 			_scrollDirectionMultiplier.y = -10f;
 			_angleMode = false;
 			break;
@@ -228,7 +228,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			CameraAngleCalculation ();
 			originEuler.x = _thisCamera.transform.eulerAngles.x;
 			goalEuler.x = originEuler.x;
-			_thisCamera.transform.eulerAngles = Vector3.Slerp (originEuler, goalEuler, timer / duration);
+			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _bottomCameraPos;
