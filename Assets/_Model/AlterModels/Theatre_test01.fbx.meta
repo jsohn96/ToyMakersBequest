@@ -3,7 +3,7 @@ guid: 24aa158c9b80c4ffbbdafbedaefd1522
 timeCreated: 1517629064
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: inside_dome
     100002: outside_dome
@@ -171,6 +171,12 @@ ModelImporter:
     100326: water_tank
     100328: tank
     100330: up_down_moving_parts
+    100332: coin_key
+    100334: keyhole
+    100336: pCylinder114
+    100338: pCylinder115
+    100340: pPipe12
+    100342: pully1
     400000: inside_dome
     400002: outside_dome
     400004: pCylinder3
@@ -337,6 +343,12 @@ ModelImporter:
     400326: water_tank
     400328: tank
     400330: up_down_moving_parts
+    400332: coin_key
+    400334: keyhole
+    400336: pCylinder114
+    400338: pCylinder115
+    400340: pPipe12
+    400342: pully1
     2300000: inside_dome
     2300002: outside_dome
     2300004: pCylinder3
@@ -468,6 +480,11 @@ ModelImporter:
     2300256: view_stand_GEO
     2300258: view_stand_GEO 1
     2300260: viewStand
+    2300262: keyhole
+    2300264: pCylinder114
+    2300266: pCylinder115
+    2300268: pPipe12
+    2300270: pully1
     3300000: inside_dome
     3300002: outside_dome
     3300004: pCylinder3
@@ -599,6 +616,11 @@ ModelImporter:
     3300256: view_stand_GEO
     3300258: view_stand_GEO 1
     3300260: viewStand
+    3300262: keyhole
+    3300264: pCylinder114
+    3300266: pCylinder115
+    3300268: pPipe12
+    3300270: pully1
     4300000: pCylinder5
     4300002: pCylinder3
     4300004: inside_dome
@@ -729,12 +751,54 @@ ModelImporter:
     4300254: arch_GEO
     4300256: view_stand_GEO
     4300258: stand_floor_GEO
+    4300260: pully1
+    4300262: pCylinder115
+    4300264: pPipe12
+    4300266: pCylinder114
+    4300268: keyhole
     7400000: Theatre_tanktop_open
     9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Outside_Mat
+    second: {fileID: 2100000, guid: 20096e672884d44499237e496ad98389, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tank_Mat
+    second: {fileID: 2100000, guid: ac2b6b51ce6d4427bb8a5f9f809208ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blueMat
+    second: {fileID: 2100000, guid: ce6af081d22944b709142503b6fc4e1d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: coin_mat
+    second: {fileID: 2100000, guid: db7c723eed1e745d89923ee94a45a532, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: e5bf6dae3ca1f4d889dd3ff44c68c869, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: phong2
+    second: {fileID: 2100000, guid: 0285accf3f1004600a91cef7f43cc342, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: phong7
+    second: {fileID: 2100000, guid: f978bf030e652430394cccfac0b00bb4, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -747,6 +811,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -799,6 +864,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
