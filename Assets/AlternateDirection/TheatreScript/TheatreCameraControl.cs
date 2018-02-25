@@ -31,6 +31,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[Header("Camera Init Values")]
 	[SerializeField] Vector3 _cameraZoomedOutViewPos;
 	[SerializeField] float _cameraZoomedOutFOV = 60f;
+	Quaternion _cameraZoomedOutRot;
 
 
 	[SerializeField] Vector3 _cameraStartPos;
@@ -39,6 +40,8 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	bool _initZoom = false;
 	bool _initClick = false;
+	bool _zoomedOut = false;
+	bool _isZooming = false;
 	bool _disableScrollFOV = true;
 	bool _disableAllScroll = false;
 
@@ -51,6 +54,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
 			_thisCamera.fieldOfView = _cameraZoomedOutFOV;
+			_cameraZoomedOutRot = _thisCamera.transform.rotation;
 		} else {
 			_initZoom = true;
 			_thisCameraHeighttContainer.transform.position = _cameraStartPos;
@@ -70,9 +74,22 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	void Update(){
-		if (_initZoom) {
+		if (_initZoom && !_isZooming) {
 			if (_isScrolling) {
 				ScrollCamera ();
+			} else {
+				if (Input.GetMouseButtonDown (1)) {
+					if (!_zoomedOut) {
+						_isZooming = true;
+						_zoomedOut = true;
+						StartCoroutine (ZoomOutCamera ());
+					}
+				} else if (Input.GetMouseButtonDown (0)) {
+					if (_zoomedOut) {
+						_isZooming = true;
+						StartCoroutine (ZoomInCamera ());
+					}
+				}
 			}
 		}
 
@@ -238,6 +255,9 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator AdjustToScrollFOV(){
+		while (_zoomedOut) {
+			yield return null;
+		}
 		_disableAllScroll = false;
 		ScrollCamera ();
 		float timer = 0f;
@@ -269,11 +289,13 @@ public class TheatreCameraControl : MonoBehaviour {
 		float timer = 0f;
 		float duration = 5f;
 		_cameraTempRot = _thisCamera.transform.eulerAngles;
+		float cameraTempFOV = _thisCamera.fieldOfView;
+		Vector3 cameraTempPos = _thisCamera.transform.position;
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_thisCameraHeighttContainer.position = Vector3.Lerp (_cameraZoomedOutViewPos, _cameraStartPos, timer / duration);
+			_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _cameraStartPos, timer / duration);
 			_thisCamera.transform.eulerAngles = Vector3.Lerp (_cameraTempRot, _cameraStartRot, timer / duration);
-			_thisCamera.fieldOfView = Mathf.Lerp (_cameraZoomedOutFOV, _cameraStartFOV, timer / duration);
+			_thisCamera.fieldOfView = Mathf.Lerp (cameraTempFOV, _cameraStartFOV, timer / duration);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.position = _cameraStartPos;
@@ -282,5 +304,30 @@ public class TheatreCameraControl : MonoBehaviour {
 		yield return null;
 		_isScrolling = false;
 		_initZoom = true;
+		_isZooming = false;
+		_zoomedOut = false;
+	}
+
+	IEnumerator ZoomOutCamera(){
+		float timer = 0f;
+		float duration = 5f;
+		_cameraStartPos = _thisCameraHeighttContainer.position;
+		_cameraStartFOV = _thisCamera.fieldOfView;
+		_cameraStartRot = _thisCamera.transform.eulerAngles;
+		Quaternion startRot = Quaternion.Euler (_cameraStartRot);
+
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.position = Vector3.Lerp (_cameraStartPos, _cameraZoomedOutViewPos, timer / duration);
+			_thisCamera.transform.rotation = Quaternion.Lerp (startRot, _cameraZoomedOutRot, timer / duration);
+			_thisCamera.fieldOfView = Mathf.Lerp (_cameraStartFOV, _cameraZoomedOutFOV, timer / duration);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
+		_thisCamera.transform.rotation = _cameraZoomedOutRot;
+		_thisCamera.fieldOfView = _cameraZoomedOutFOV;
+		yield return null;
+		_isScrolling = false;
+		_isZooming = false;
 	}
 }
