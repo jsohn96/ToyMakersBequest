@@ -43,14 +43,15 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 					_tankDoorCoroutine = CloseTank ();
 					StartCoroutine (_tankDoorCoroutine);
 				} else {
-				}
-				if (!_isActivated) {
-					_isOpen = true;
-					if (_tankDoorCoroutine != null) {
-						StopCoroutine (_tankDoorCoroutine);
+
+					if (!_isActivated) {
+						_isOpen = true;
+						if (_tankDoorCoroutine != null) {
+							StopCoroutine (_tankDoorCoroutine);
+						}
+						_tankDoorCoroutine = OpenTank ();
+						StartCoroutine (_tankDoorCoroutine);
 					}
-					_tankDoorCoroutine = OpenTank ();
-					StartCoroutine (_tankDoorCoroutine);
 				}
 			}
 		}

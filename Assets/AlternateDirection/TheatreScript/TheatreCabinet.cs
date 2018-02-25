@@ -59,6 +59,10 @@ public class TheatreCabinet : MonoBehaviour {
 		isActivated = activate;
 		if (activate) {
 			_shaderGlowCustom.TriggerFadeIn ();
+			if (_isOpen) {
+				_cabinetAnimator.SetBool ("Open", false);
+				_isOpen = false;
+			}
 		}
 	}
 }
