@@ -288,13 +288,14 @@ public class TheatreCameraControl : MonoBehaviour {
 	IEnumerator ZoomInCamera(){
 		float timer = 0f;
 		float duration = 5f;
-		_cameraTempRot = _thisCamera.transform.eulerAngles;
+		Quaternion tempRot = _thisCamera.transform.rotation;
 		float cameraTempFOV = _thisCamera.fieldOfView;
+		Quaternion startRot = Quaternion.Euler (_cameraStartRot);
 		Vector3 cameraTempPos = _thisCamera.transform.position;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _cameraStartPos, timer / duration);
-			_thisCamera.transform.eulerAngles = Vector3.Lerp (_cameraTempRot, _cameraStartRot, timer / duration);
+			_thisCamera.transform.rotation = Quaternion.Lerp (tempRot, startRot, timer / duration);
 			_thisCamera.fieldOfView = Mathf.Lerp (cameraTempFOV, _cameraStartFOV, timer / duration);
 			yield return null;
 		}

@@ -13,6 +13,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	bool _isOpen = true;
 	bool _isActivated = false;
+	bool _waitForClose = false;
 	[SerializeField] shaderGlowCustom _shaderGlowCustom;
 
 	bool _finalWaterTankClose = false;
@@ -35,16 +36,16 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 				_myTheatre.MoveToNext ();
 			} else {
 				if (_isOpen) {
-			
-					_isOpen = false;
-					if (_tankDoorCoroutine != null) {
-						StopCoroutine (_tankDoorCoroutine);
-					}
-					_tankDoorCoroutine = CloseTank ();
-					StartCoroutine (_tankDoorCoroutine);
-				} else {
-
 					if (!_isActivated) {
+						_isOpen = false;
+						if (_tankDoorCoroutine != null) {
+							StopCoroutine (_tankDoorCoroutine);
+						}
+						_tankDoorCoroutine = CloseTank ();
+						StartCoroutine (_tankDoorCoroutine);
+					}
+				} else {
+					if (!_waitForClose) {
 						_isOpen = true;
 						if (_tankDoorCoroutine != null) {
 							StopCoroutine (_tankDoorCoroutine);
@@ -70,13 +71,13 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		yield return null;
 
 		//TODO: Need to prevent player from repeatedly calling this by only clicknig on one side over again
-		if (_isActivated && !_callOnce) {
-			_callOnce = true;
-			_myTheatre.MoveToNext ();
-		}
 		if (_finalWaterTankClose) {
 			_finalWaterTankClose = false;
 			_openBoth = true;
+		}
+		if (_isActivated && !_callOnce) {
+			_myTheatre.HideDancer ();
+			_waitForClose = false;
 		}
 	}
 
@@ -91,6 +92,10 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		}
 		transform.localRotation = _openRot;
 		yield return null;
+		if (_isActivated && !_callOnce) {
+			_callOnce = true;
+			_myTheatre.MoveToNext ();
+		}
 	}
 
 
@@ -104,11 +109,12 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	public void Activate(bool activate){
 		_isActivated = activate;
 		if (activate) {
-			if (!_isOpen) {
-				_isOpen = true;
-				_tankDoorCoroutine = OpenTank ();
+//			if (_isOpen) {
+				_isOpen = false;
+				_waitForClose = true;
+				_tankDoorCoroutine = CloseTank ();
 				StartCoroutine (_tankDoorCoroutine);
-			}
+//			}
 			_shaderGlowCustom.TriggerFadeIn ();
 		} 
 	}

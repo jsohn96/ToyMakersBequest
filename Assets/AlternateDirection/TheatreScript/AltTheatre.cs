@@ -16,8 +16,8 @@ public enum TheatreState{
 	magicianLeft = 6,
 	frogJump = 7,
 	lookDownIntoTank = 8,
-	CloseTank1 = 9,
-	CloseTank2 = 10,
+	CloseTankDoors = 9,
+	OpenTank = 10,
 	magicianRight = 11,
 	dancerShowUp = 12,
 	dancerKissing = 13,
@@ -60,6 +60,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreLighting _theatreLighting;
 	[SerializeField] TheatreSound _theatreSound;
 
+	int _doorCloseCnt = 0;
 
 	// Use this for initialization
 	void Awake () {
@@ -102,7 +103,7 @@ public class AltTheatre : LevelManager {
 		}
 		#endif
 
-		CheckStateUpdate ();
+		//CheckStateUpdate ();
 		
 	}
 
@@ -144,6 +145,8 @@ public class AltTheatre : LevelManager {
 			_theatreWaterTank.Activate (true);
 			break;
 		case TheatreState.dancerInTank:
+			//prevent the lid from closing
+			_theatreWaterTank.DisableLid (true);
 			_dancer.FirstDancerEnterTank ();
 			break;
 		case TheatreState.magicianBoardTank:
@@ -168,6 +171,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.frogJump:
 			magician.PointToLeft (false);
+			_theatreWaterTank.OpenLid (true);
 			// frog.jumpout
 			//magician go back to center position 
 			//MoveToNext();
@@ -175,6 +179,10 @@ public class AltTheatre : LevelManager {
 		case TheatreState.lookDownIntoTank:
 			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
+			//MoveToNext();
+			break;
+		case TheatreState.CloseTankDoors:
+			_theatreWaterTank.OpenLid (false);
 			_tankDoor1.Activate (true);
 			_tankDoor2.Activate (true);
 			//MoveToNext();
@@ -185,7 +193,6 @@ public class AltTheatre : LevelManager {
 			_tankDoor1.Activate (false);
 			_tankDoor2.Activate (false);
 			magician.PointToRight (true);
-			_dancer.HideDancer (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);
 
@@ -226,6 +233,13 @@ public class AltTheatre : LevelManager {
 			_tankDoor2.OpenTankCall ();
 			_theatreMusic.EndMusic ();
 			break;
+		}
+	}
+
+	public void HideDancer(){
+		_doorCloseCnt++;
+		if (_doorCloseCnt >= 2) {
+			_dancer.HideDancer (true);
 		}
 	}
 

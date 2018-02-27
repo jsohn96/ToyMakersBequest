@@ -50,6 +50,10 @@ public class TheatreWaterTank : MonoBehaviour {
 		}
 	}
 
+	public void DisableLid(bool disable){
+		isActivated = !disable;
+	}
+
 	public void Activate(bool activate){
 		isActivated = activate;
 		_boxCollider.enabled = activate;
