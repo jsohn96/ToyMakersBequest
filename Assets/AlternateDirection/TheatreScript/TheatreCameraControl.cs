@@ -50,6 +50,8 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	[SerializeField] BoxCollider _surfaceBoxCollider;
 
+	[SerializeField] TraversalUI _traversalUI;
+
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
@@ -92,8 +94,6 @@ public class TheatreCameraControl : MonoBehaviour {
 				}
 			}
 		}
-
-
 
 		if (_scrollEasingToHalt) {
 			if (!_angleMode) {
@@ -307,9 +307,11 @@ public class TheatreCameraControl : MonoBehaviour {
 		_initZoom = true;
 		_isZooming = false;
 		_zoomedOut = false;
+		_traversalUI.FadeIn (true);
 	}
 
 	IEnumerator ZoomOutCamera(){
+		_traversalUI.FadeOut (true);
 		float timer = 0f;
 		float duration = 5f;
 		_cameraStartPos = _thisCameraHeighttContainer.position;

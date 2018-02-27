@@ -10,6 +10,8 @@ public class TraversalUI : MonoBehaviour {
 	Color _fullColor = new Color(1.0f, 1f, 1f, 1f);
 	Color _emptyColor = new Color(1f,1f,1f,0f);
 
+	bool _isOn = false;
+
 	void Start(){
 		_buttonImagesLength = _buttonImages.Length;
 		for (int i = 0; i < _buttonImagesLength; i++) {
@@ -17,20 +19,28 @@ public class TraversalUI : MonoBehaviour {
 		}
 	}
 
-	public void FadeIn(){
+	public void FadeIn(bool isLowerPriority = false){
+		if (isLowerPriority) {
+			if (!_isOn) {
+				return;
+			}
+		} else {
+			_isOn = true;
+		}
 		StartCoroutine (FadeButtons (true));
 	}
 
 	IEnumerator FadeButtons(bool fadeIn){
 		float timer = 0f;
 		float duration = 0.8f;
+		Color tempColor = _buttonImages [0].color;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			for (int i = 0; i < _buttonImagesLength; i++) {
 				if (fadeIn) {
-					_buttonImages [i].color = Color.Lerp (_emptyColor, _fullColor, timer / duration);
+					_buttonImages [i].color = Color.Lerp (tempColor, _fullColor, timer / duration);
 				} else {
-					_buttonImages [i].color = Color.Lerp (_fullColor, _emptyColor, timer / duration);
+					_buttonImages [i].color = Color.Lerp (tempColor, _emptyColor, timer / duration);
 				}
 			}
 			yield return null;
@@ -45,7 +55,10 @@ public class TraversalUI : MonoBehaviour {
 		}
 	}
 
-	public void FadeOut(){
+	public void FadeOut(bool isLowerPriority = false){
+		if (!isLowerPriority) {
+			_isOn = false;
+		}
 		for (int i = 0; i < _buttonImagesLength; i++) {
 			_buttonImages [i].raycastTarget = false;
 		}
