@@ -208,6 +208,7 @@ public class AltTheatre : LevelManager {
 			magician.EnterKissPosition ();
 			break;
 		case TheatreState.audienceLeave:
+			_theatreLighting.Set3 ();
 			_dancer.ElevateTankPlatform ();
 			MoveToNext ();
 			break;
