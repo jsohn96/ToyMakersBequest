@@ -11,21 +11,22 @@ public enum TheatreState{
 	readyForDancerTank = 1,
 	dancerInTank = 2,
 	magicianBoardTank = 3,
-	waterTankDescend = 4,
-	magicianPrepareFrog = 5,
-	magicianLeft = 6,
-	frogJump = 7,
-	lookDownIntoTank = 8,
-	CloseTankDoors = 9,
-	OpenTank = 10,
-	magicianRight = 11,
-	dancerShowUp = 12,
-	dancerKissing = 13,
-	audienceLeave = 14,
-	magicianReturnToPosition = 15,
-	dancerDescend = 16,
-	dancerLocked = 17,
-	theatreEnd = 18
+	magicianBeginShow = 4,
+	waterTankDescend = 5,
+	magicianPrepareFrog = 6,
+	magicianLeft = 7,
+	frogJump = 8,
+	lookDownIntoTank = 9,
+	CloseTankDoors = 10,
+	OpenTank = 11,
+	magicianRight = 12,
+	dancerShowUp = 13,
+	dancerKissing = 14,
+	audienceLeave = 15,
+	magicianReturnToPosition = 16,
+	dancerDescend = 17,
+	dancerLocked = 18,
+	theatreEnd = 19
 }
 
 public class AltTheatre : LevelManager {
@@ -59,6 +60,8 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TraversalUI _traversalUI;
 	[SerializeField] TheatreLighting _theatreLighting;
 	[SerializeField] TheatreSound _theatreSound;
+
+	[SerializeField] TheatreCoin _theatreCoin;
 
 	int _doorCloseCnt = 0;
 
@@ -157,8 +160,14 @@ public class AltTheatre : LevelManager {
 			magician.PointToCenter (false);
 			_theatreCameraControl.EnableScrollFOV();
 			break;
+		case TheatreState.magicianBeginShow:
+			magician.BeginShow (true);
+			break;
 		case TheatreState.waterTankDescend:
-			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 0f, ()=>{
+			_theatreSound.PlayLightSwitch ();
+			_theatreLighting.Set3 ();
+			magician.BeginShow (false);
+			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, ()=>{
 				MoveToNext();
 			}));
 			break;
@@ -208,7 +217,8 @@ public class AltTheatre : LevelManager {
 			magician.EnterKissPosition ();
 			break;
 		case TheatreState.audienceLeave:
-			_theatreLighting.Set3 ();
+			_theatreLighting.Set4 ();
+			_theatreSound.PlayLightSwitch ();
 			_dancer.ElevateTankPlatform ();
 			MoveToNext ();
 			break;
@@ -228,7 +238,9 @@ public class AltTheatre : LevelManager {
 			_tankDoor2.FinalActivation (true);
 			break;
 		case TheatreState.theatreEnd:
+			_theatreCoin.BeginGlow ();
 			_traversalUI.FadeIn ();
+			_theatreCameraControl.EnableScrollFOV();
 			_dancer.HideDancer (true);
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();

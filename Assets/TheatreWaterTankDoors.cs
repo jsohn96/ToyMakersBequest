@@ -97,6 +97,9 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			_callOnce = true;
 			_myTheatre.MoveToNext ();
 		}
+		if (_openBoth) {
+			_shaderGlowCustom.enabled = false;
+		}
 	}
 
 
@@ -112,6 +115,9 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		if (activate) {
 //			if (_isOpen) {
 				_isOpen = false;
+			if (_tankDoorCoroutine != null) {
+				StopCoroutine (_tankDoorCoroutine);
+			}
 				_waitForClose = true;
 				_tankDoorCoroutine = CloseTank ();
 				StartCoroutine (_tankDoorCoroutine);
@@ -125,6 +131,9 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			_finalWaterTankClose = true;
 			if (_isOpen) {
 				_isOpen = false;
+				if (_tankDoorCoroutine != null) {
+					StopCoroutine (_tankDoorCoroutine);
+				}
 				_tankDoorCoroutine = CloseTank ();
 				StartCoroutine (_tankDoorCoroutine);
 			}

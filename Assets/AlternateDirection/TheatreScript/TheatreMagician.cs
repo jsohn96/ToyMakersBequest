@@ -107,7 +107,17 @@ public class TheatreMagician : MonoBehaviour {
 		}
 	}
 
+	public void BeginShow(bool isPointing){
+		if (isPointing) {
+			_magicianAnim.Play ("mg_greet");
+			StartCoroutine (DelayLightsOn());
+		} else {
+			_magicianAnim.Play ("mg_pointCenter_back_center");
+		}
+	}
 
-
-
+	IEnumerator DelayLightsOn() {
+		yield return new WaitForSeconds (2.0f);
+		_myTheatre.MoveToNext ();
+	}
 }

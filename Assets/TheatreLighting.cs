@@ -7,6 +7,8 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light[] _nextLights;
 	[SerializeField] Light[] _nextLights2;
 	[SerializeField] Light[] _nextLights3;
+	[SerializeField] Light[] _nextLights4;
+	[SerializeField] Light[] _nextLights5;
 	// Use this for initialization
 	public void MoveToNextLights(){
 		for (int i = 0; i < _initialLights.Length; i++) {
@@ -18,25 +20,31 @@ public class TheatreLighting : MonoBehaviour {
 	}
 
 	void DisableAll(){
-		if (_initialLights != null) {
+//		if (_initialLights != null) {
 			for (int i = 0; i < _initialLights.Length; i++) {
 				_initialLights [i].enabled = false;
 			}
-		}
-		if (_nextLights != null) {
+//		}
+//		if (_nextLights != null) {
 			for (int i = 0; i < _nextLights.Length; i++) {
 				_nextLights [i].enabled = false;
 			}
-		}
-		if (_nextLights2 != null) {
+//		}
+//		if (_nextLights2 != null) {
 			for (int i = 0; i < _nextLights2.Length; i++) {
 				_nextLights2 [i].enabled = false;
 			}
-		}
-		if (_nextLights3 != null) {
+//		}
+//		if (_nextLights3 != null) {
 			for (int i = 0; i < _nextLights3.Length; i++) {
 				_nextLights3 [i].enabled = false;
 			}
+//		}
+		for (int i = 0; i < _nextLights4.Length; i++) {
+			_nextLights4 [i].enabled = false;
+		}
+		for (int i = 0; i < _nextLights5.Length; i++) {
+			_nextLights5 [i].enabled = false;
 		}
 	}
 
@@ -53,6 +61,12 @@ public class TheatreLighting : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			Set4 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha5)) {
+			Set5 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha6)) {
+			Set6 ();
 		}
 	}
 
@@ -88,6 +102,22 @@ public class TheatreLighting : MonoBehaviour {
 		}
 	}
 
+	public void Set5()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights4.Length; i++) {
+			_nextLights4 [i].enabled = true;
+		}
+	}
+
+	public void Set6()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights5.Length; i++) {
+			_nextLights5 [i].enabled = true;
+		}
+	}
+
 	#region Debug
 	[ContextMenu ("Set to Initial")]
 	void Debug00()
@@ -111,6 +141,18 @@ public class TheatreLighting : MonoBehaviour {
 	void Debug03()
 	{
 		Set4();
+	}
+
+	[ContextMenu ("Set to Next Light 4")]
+	void Debug04()
+	{
+		Set5();
+	}
+
+	[ContextMenu ("Set to Next Light 5")]
+	void Debug05()
+	{
+		Set6();
 	}
 	#endregion
 }
