@@ -133,7 +133,8 @@ public class AltTheatre : LevelManager {
 	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.startShow:
-			_theatreLighting.MoveToNextLights ();
+			_theatreSound.PlayLightSwitch ();
+			_theatreLighting.Set2 ();
 			_theatreMusic.BeginMusic ();
 			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
@@ -179,6 +180,8 @@ public class AltTheatre : LevelManager {
 			chest.Activate(true);
 			break;
 		case TheatreState.frogJump:
+			_theatreSound.PlayLightSwitch ();
+			_theatreLighting.Set4 ();
 			magician.PointToLeft (false);
 			_theatreWaterTank.OpenLid (true);
 			// frog.jumpout
@@ -207,6 +210,8 @@ public class AltTheatre : LevelManager {
 
 			break;
 		case TheatreState.dancerShowUp:
+			_theatreSound.PlayLightSwitch ();
+			_theatreLighting.Set5 ();
 			magician.PointToRight (false);
 			// dancer.showUp();
 			_dancer.HideDancer (false);
@@ -217,7 +222,7 @@ public class AltTheatre : LevelManager {
 			magician.EnterKissPosition ();
 			break;
 		case TheatreState.audienceLeave:
-			_theatreLighting.Set4 ();
+			_theatreLighting.Set6 ();
 			_theatreSound.PlayLightSwitch ();
 			_dancer.ElevateTankPlatform ();
 			MoveToNext ();
