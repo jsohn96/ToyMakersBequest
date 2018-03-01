@@ -63,6 +63,9 @@ public class AltTheatre : LevelManager {
 
 	[SerializeField] TheatreCoin _theatreCoin;
 
+	//there should be 0-2
+	[SerializeField] TheatreAudience[] _theaterAudiences = new TheatreAudience[3];
+
 	int _doorCloseCnt = 0;
 
 	// Use this for initialization
@@ -167,6 +170,8 @@ public class AltTheatre : LevelManager {
 		case TheatreState.waterTankDescend:
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set3 ();
+			_theaterAudiences [0].AudienceEnter ();
+
 			magician.BeginShow (false);
 			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, ()=>{
 				MoveToNext();
@@ -182,6 +187,8 @@ public class AltTheatre : LevelManager {
 		case TheatreState.frogJump:
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set4 ();
+			_theaterAudiences [1].AudienceEnter ();
+
 			magician.PointToLeft (false);
 			_theatreWaterTank.OpenLid (true);
 			// frog.jumpout
@@ -212,6 +219,8 @@ public class AltTheatre : LevelManager {
 		case TheatreState.dancerShowUp:
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set5 ();
+			_theaterAudiences [2].AudienceEnter ();
+
 			magician.PointToRight (false);
 			// dancer.showUp();
 			_dancer.HideDancer (false);

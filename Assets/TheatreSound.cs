@@ -19,6 +19,8 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _starSound;
 
+	[SerializeField] AudioSource _crowCawSound;
+
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
 		_clappingSound.Play ();
@@ -38,5 +40,11 @@ public class TheatreSound : MonoBehaviour {
 
 	public void PlayStarSound(){
 		_starSound.Play ();
+	}
+
+	public void PlayCrowCawSound(){
+		if (!_crowCawSound.isPlaying) {
+			_crowCawSound.Play ();
+		}
 	}
 }
