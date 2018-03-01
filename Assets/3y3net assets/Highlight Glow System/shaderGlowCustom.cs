@@ -20,7 +20,8 @@ public class shaderGlowCustom : MonoBehaviour
     public float glowOpacity = 1f; //Glow opacity on screen of the object
 	[SerializeField] Color glowColor = new Color(0.53f, 0.48f, 0.21f); //Glow color of the object
 
-	Color _connectedColor = new Color(0.95f, 0.94f, 0.61f);
+	[SerializeField] Color _connectedColor = new Color(0.95f, 0.94f, 0.61f);
+	Color _tempGlowColor;
 
     private float clipGlow = 0.04f; //Min real allowed glow
     private float maxGlow = 0.25f; //Max real allowed glow
@@ -80,6 +81,9 @@ public class shaderGlowCustom : MonoBehaviour
 		} else if (glowMode == allowedModes.TriggeredFadeIn) {
 			_triggeredTimer = new Timer (0.8f);
 			glowOpacity = 0.0f;
+			glowIntensity = glowIntensity / 2f;
+			_tempGlowColor = glowColor;
+			glowColor = _connectedColor;
 		}
     }
 
@@ -88,6 +92,8 @@ public class shaderGlowCustom : MonoBehaviour
 		_hasBeenTriggered = true;
 		_triggeredTimer.Reset ();
 		lightOn ();
+		glowIntensity = glowIntensity * 2f;
+		glowColor = _tempGlowColor;
 	}
 
 	public void DisablePointerEnter(bool disabled){
@@ -125,6 +131,8 @@ public class shaderGlowCustom : MonoBehaviour
 			_reduceGlowTimerForFadeWhileHold.Reset ();
 		} else if (glowMode == allowedModes.TriggeredFadeIn && _hasBeenTriggered) {
 			_triggeringDone = true;
+			glowIntensity = glowIntensity / 2f;
+			glowColor = _connectedColor;
 		}
 	}
 

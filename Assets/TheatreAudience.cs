@@ -24,22 +24,24 @@ public class TheatreAudience : MonoBehaviour {
 	}
 
 	public void AudienceEnter(){
+		_isEntered = true;
 		StartCoroutine (TurnAround ());
 	}
 
 	IEnumerator TurnAround(){
 		float timer = 0f;
-		float duration = 1f;
+		float duration = 1.5f;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			transform.rotation = Quaternion.Lerp (_originAngle, _goalAngle, timer / duration);
 			yield return null;
 		}
 		transform.rotation = _goalAngle;
+		Clap ();
 		yield return null;
 	}
 
 	public void Clap(){
-	
+		_theatreSound.PlayCrowCawSound();
 	}
 }
