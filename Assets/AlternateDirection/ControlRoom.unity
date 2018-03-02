@@ -309,8 +309,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 22ec80a5e36f429428256afe919fa999, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4a27dd08fc5664063b3375ec48254012, type: 3}
+  m_Color: {r: 0.5344828, g: 0.5344828, b: 0.5344828, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -326,8 +326,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 130246787}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 2.8, z: 18.5}
-  m_LocalScale: {x: 1.5607249, y: 1.5619521, z: 1}
+  m_LocalPosition: {x: 0.7, y: 1.5, z: 18.5}
+  m_LocalScale: {x: 20, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1337,6 +1337,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.03, z: 0.15}
   m_Center: {x: 0.0000000055879354, y: 8.326673e-17, z: -0.000000009313226}
+--- !u!23 &869794807 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2300000, guid: 5cfc3896c96954ae7b73339fcc9f96ea,
+    type: 3}
+  m_PrefabInternal: {fileID: 1719381268}
+--- !u!114 &869794809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869794804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 869794807}
+  - {fileID: 1042048612}
+  - {fileID: 994518624}
+  glowMode: 0
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.08
+  glowOpacity: 1
+  glowColor: {r: 0.53, g: 0.48, b: 0.21, a: 1}
+  _connectedColor: {r: 0.95, g: 0.94, b: 0.61, a: 1}
 --- !u!4 &869794811 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
@@ -1893,6 +1921,7 @@ MonoBehaviour:
   glowIntensity: 0.08
   glowOpacity: 1
   glowColor: {r: 0.53, g: 0.48, b: 0.21, a: 1}
+  _connectedColor: {r: 0.95, g: 0.94, b: 0.61, a: 1}
 --- !u!23 &1125022909
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2086,7 +2115,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.36
+      value: -5.8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2118,15 +2147,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.x
-      value: 29.314169
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.y
-      value: 56.07182
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.z
-      value: 31.11789
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2308,15 +2337,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.21
+      value: 5.7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.9800005
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.7
+      value: 16.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2340,15 +2369,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.x
-      value: 12.974251
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.y
-      value: 24.817015
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalScale.z
-      value: 13.772571
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2368,7 +2397,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}
@@ -2723,6 +2752,7 @@ MonoBehaviour:
   glowIntensity: 0.08
   glowOpacity: 1
   glowColor: {r: 0.53, g: 0.48, b: 0.21, a: 1}
+  _connectedColor: {r: 0.95, g: 0.94, b: 0.61, a: 1}
 --- !u!4 &1901460912 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5cfc3896c96954ae7b73339fcc9f96ea, type: 3}

@@ -16,7 +16,8 @@ public class AltCentralControl : MonoBehaviour {
 	public static bool _love = false, _regret = false, _freedom = false, _loveEnd = false, _regretEnd = false, _freedomEnd = false, _dogDropped = false;
 
 	public static bool[] _peepholeViewed = new bool[] {false, false, false, false};
-	public static bool[] _peepAnimated = new bool[]{false, false, false, false};
+	//TODO: Set These back to false later
+	public static bool[] _peepAnimated = new bool[]{true, true, true, true};
 	public static AltStates _currentState = AltStates.noCharm;
 
 	public static bool isGameTimePaused = false;

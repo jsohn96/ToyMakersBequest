@@ -26,6 +26,9 @@ public class PeepZoomHandle : MonoBehaviour {
 	[SerializeField] AudioSource _slideAudioSource;
 	[SerializeField] AudioClip[] _slideClips = new AudioClip[2];
 
+	//Getting a reference to enable it on Play
+	[SerializeField] GameObject _uiMaskObject;
+
 	void Start(){
 		_expandedRadius = Screen.height / 2f;
 		_zeroVector2 = new Vector2 (-_expandedRadius, -_expandedRadius);
@@ -44,6 +47,8 @@ public class PeepZoomHandle : MonoBehaviour {
 		_rectTransform.offsetMax = _originPosMax;
 		_rectTransform.offsetMin = _originPosMin;
 		KeepRenderTextureStaticByOffset ();
+
+		_uiMaskObject.SetActive (true);
 	}
 
 	void Update(){
