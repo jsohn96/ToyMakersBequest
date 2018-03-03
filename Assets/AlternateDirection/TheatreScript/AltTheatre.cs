@@ -66,6 +66,9 @@ public class AltTheatre : LevelManager {
 	//there should be 0-2
 	[SerializeField] TheatreAudience[] _theaterAudiences = new TheatreAudience[3];
 
+
+	[SerializeField] TheatreText _theatreText;
+
 	int _doorCloseCnt = 0;
 
 	// Use this for initialization
@@ -141,11 +144,13 @@ public class AltTheatre : LevelManager {
 			_theatreMusic.BeginMusic ();
 			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, ()=>{
-				magician.PointToCenter(true);
-				MoveToNext();
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, () => {
+				magician.PointToCenter (true);
+				MoveToNext ();
 			}));
-			magician.GoToStart();
+			magician.GoToStart ();
+
+			_theatreText.TriggerText ();
 			// call back function? 
 			break;
 		case TheatreState.readyForDancerTank:
@@ -155,6 +160,8 @@ public class AltTheatre : LevelManager {
 			//prevent the lid from closing
 			_theatreWaterTank.DisableLid (true);
 			_dancer.FirstDancerEnterTank ();
+
+			_theatreText.TriggerText ();
 			break;
 		case TheatreState.magicianBoardTank:
 			_traversalUI.FadeIn ();
@@ -199,12 +206,17 @@ public class AltTheatre : LevelManager {
 			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
+			_theatreText.TriggerText ();
 			break;
 		case TheatreState.CloseTankDoors:
 			_theatreWaterTank.OpenLid (false);
 			_tankDoor1.Activate (true);
 			_tankDoor2.Activate (true);
 			//MoveToNext();
+
+			break;
+		case TheatreState.OpenTank:
+			_theatreText.TriggerText ();
 			break;
 		case TheatreState.magicianRight:
 			_traversalUI.FadeIn ();
@@ -226,9 +238,13 @@ public class AltTheatre : LevelManager {
 			_dancer.HideDancer (false);
 			// enable network connection 
 			network.SetPathActive(true);
+
+			_theatreText.TriggerText ();
 			break;
 		case TheatreState.dancerKissing:
 			magician.EnterKissPosition ();
+
+			_theatreText.TriggerText ();
 			break;
 		case TheatreState.audienceLeave:
 			_theatreLighting.Set6 ();

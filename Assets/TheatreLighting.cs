@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreLighting : MonoBehaviour {
+	[SerializeField] Light _viewingLightToBeTurnedOff;
+
 	[SerializeField] Light[] _initialLights;
 	[SerializeField] Light[] _nextLights;
 	[SerializeField] Light[] _nextLights2;
 	[SerializeField] Light[] _nextLights3;
 	[SerializeField] Light[] _nextLights4;
 	[SerializeField] Light[] _nextLights5;
-	// Use this for initialization
+
+	void Start(){
+		_viewingLightToBeTurnedOff.enabled = false;
+	}
+
 	public void MoveToNextLights(){
 		for (int i = 0; i < _initialLights.Length; i++) {
 			_initialLights [i].enabled = false;
