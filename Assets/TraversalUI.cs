@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class TraversalUI : MonoBehaviour {
 
 	[SerializeField] Image[] _buttonImages;
+	[SerializeField] ButtonSystem[] _buttonSystem;
+
 	int _buttonImagesLength;
 	Color _fullColor = new Color(1.0f, 1f, 1f, 1f);
 	Color _emptyColor = new Color(1f,1f,1f,0f);
@@ -16,6 +18,14 @@ public class TraversalUI : MonoBehaviour {
 		_buttonImagesLength = _buttonImages.Length;
 		for (int i = 0; i < _buttonImagesLength; i++) {
 			_buttonImages [i].raycastTarget = false;
+		}
+	}
+
+	void Update(){
+		if (_isOn) {
+			for (int i = 0; i < _buttonImagesLength; i++) {
+				_buttonSystem [i].AnimateArrow ();
+			}
 		}
 	}
 

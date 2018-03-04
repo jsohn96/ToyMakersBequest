@@ -18,4 +18,9 @@ public class ButtonSystem: MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 	public void OnPointerUp(PointerEventData pointerEventData){
 		_messageReceiver.SendMessage ("OnPointerUp", _whichDirection);
 	}
+		
+
+	public void AnimateArrow(){
+	
+	}
 }
