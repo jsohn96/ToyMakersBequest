@@ -25,7 +25,7 @@ public class TheatreLighting : MonoBehaviour {
 		}
 	}
 
-	void DisableAll(){
+	public void DisableAll(){
 //		if (_initialLights != null) {
 			for (int i = 0; i < _initialLights.Length; i++) {
 				_initialLights [i].enabled = false;
@@ -159,6 +159,13 @@ public class TheatreLighting : MonoBehaviour {
 	void Debug05()
 	{
 		Set6();
+	}
+
+
+	[ContextMenu ("Turn All Lights Off")]
+	void Debug06()
+	{
+		DisableAll();
 	}
 	#endregion
 }

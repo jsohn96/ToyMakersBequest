@@ -22,11 +22,13 @@ public enum TheatreState{
 	magicianRight = 12,
 	dancerShowUp = 13,
 	dancerKissing = 14,
-	audienceLeave = 15,
-	magicianReturnToPosition = 16,
-	dancerDescend = 17,
-	dancerLocked = 18,
-	theatreEnd = 19
+	audienceLeave1 = 15,
+	audienceLeave2 = 16,
+	audienceLeave3 = 17,
+	magicianReturnToPosition = 18,
+	dancerDescend = 19,
+	dancerLocked = 20,
+	theatreEnd = 21
 }
 
 public class AltTheatre : LevelManager {
@@ -212,6 +214,8 @@ public class AltTheatre : LevelManager {
 			_theatreWaterTank.OpenLid (false);
 			_tankDoor1.Activate (true);
 			_tankDoor2.Activate (true);
+			_tankDoor1.DisableTouchInput (true);
+			_tankDoor2.DisableTouchInput (true);
 			//MoveToNext();
 
 			break;
@@ -219,10 +223,11 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText ();
 			break;
 		case TheatreState.magicianRight:
-			_traversalUI.FadeIn ();
-			_theatreCameraControl.EnableScrollFOV();
 			_tankDoor1.Activate (false);
 			_tankDoor2.Activate (false);
+
+			_traversalUI.FadeIn ();
+			_theatreCameraControl.EnableScrollFOV();
 			magician.PointToRight (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);
@@ -243,20 +248,42 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.dancerKissing:
 			magician.EnterKissPosition ();
-
+			_theatreSound.PlayKissSound ();
 			_theatreText.TriggerText ();
 			break;
-		case TheatreState.audienceLeave:
-			_theatreLighting.Set6 ();
+		case TheatreState.audienceLeave1:
+			
+			_theaterAudiences [2].AudienceLeave ();
+
+//			StartCoroutine(DelayedSelfCall(2f));
+			break;
+		case TheatreState.audienceLeave2:
+			_theatreLighting.Set5 ();
 			_theatreSound.PlayLightSwitch ();
+			_theaterAudiences [1].AudienceLeave ();
+
+//			StartCoroutine(DelayedSelfCall(2f));
+			break;
+		case TheatreState.audienceLeave3:
+			_theatreLighting.Set4 ();
+			_theatreSound.PlayLightSwitch ();
+			_theaterAudiences [0].AudienceLeave ();
+
 			_dancer.ElevateTankPlatform ();
-			MoveToNext ();
+
+//			StartCoroutine(DelayedSelfCall(2));
 			break;
 		case TheatreState.magicianReturnToPosition:
+			_theatreSound.PlayLightSwitch ();
+			_theatreLighting.DisableAll ();
 			
 			magician.ExitKissPosition ();
+
+			StartCoroutine(DelayedSelfCall(5));
 			break;
 		case TheatreState.dancerDescend:
+			_theatreLighting.Set6 ();
+			_theatreSound.PlayLightSwitch ();
 			_traversalUI.FadeOut ();
 			_theatreWaterTank.OpenLid (true);
 			_dancer.SecondDancerEnterTank ();
@@ -277,6 +304,16 @@ public class AltTheatre : LevelManager {
 			_theatreMusic.EndMusic ();
 			break;
 		}
+	}
+
+	IEnumerator DelayedSelfCall(float duration){
+		yield return new WaitForSeconds (duration);
+		MoveToNext ();
+	}
+
+	public void ActivateBothTankDoors(){
+		_tankDoor1.DisableTouchInput (false);
+		_tankDoor2.DisableTouchInput (false);
 	}
 
 	public void HideDancer(){

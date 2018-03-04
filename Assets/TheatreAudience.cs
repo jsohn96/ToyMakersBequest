@@ -9,6 +9,7 @@ public class TheatreAudience : MonoBehaviour {
 	bool _isEntered = false;
 
 	[SerializeField] TheatreSound _theatreSound;
+	[SerializeField] AltTheatre _myTheatre;
 
 	void Start(){
 		_goalAngle = transform.rotation;
@@ -25,19 +26,35 @@ public class TheatreAudience : MonoBehaviour {
 
 	public void AudienceEnter(){
 		_isEntered = true;
-		StartCoroutine (TurnAround ());
+		StartCoroutine (TurnAround (true));
 	}
 
-	IEnumerator TurnAround(){
+	public void AudienceLeave(){
+		_isEntered = false;
+		StartCoroutine (TurnAround (false));
+	}
+
+	IEnumerator TurnAround(bool enter){
 		float timer = 0f;
 		float duration = 1.5f;
-		while (timer < duration) {
-			timer += Time.deltaTime;
-			transform.rotation = Quaternion.Lerp (_originAngle, _goalAngle, timer / duration);
-			yield return null;
+		if (enter) {
+			while (timer < duration) {
+				timer += Time.deltaTime;
+				transform.rotation = Quaternion.Lerp (_originAngle, _goalAngle, timer / duration);
+				yield return null;
+			}
+			transform.rotation = _goalAngle;
+			Clap ();
+		} else {
+			Clap ();
+			while (timer < duration) {
+				timer += Time.deltaTime;
+				transform.rotation = Quaternion.Lerp (_goalAngle, _originAngle, timer / duration);
+				yield return null;
+			}
+			transform.rotation = _originAngle;
+			_myTheatre.MoveToNext ();
 		}
-		transform.rotation = _goalAngle;
-		Clap ();
 		yield return null;
 	}
 

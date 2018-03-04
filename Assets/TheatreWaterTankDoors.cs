@@ -20,6 +20,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	bool _openBoth = false;
 	bool _callOnce = false;
 
+	bool _disableTouchInput = false;
+
 	void Start(){
 		_openRot = transform.localRotation;
 //		_meshCollider = GetComponent<MeshCollider> ();
@@ -31,27 +33,29 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 
 	void OnTouchDown(){
-		if (!_finalWaterTankClose) {
-			if (_openBoth) {
-				_myTheatre.MoveToNext ();
-			} else {
-				if (_isOpen) {
-					if (!_isActivated && !_waitForClose) {
-						_isOpen = false;
-						if (_tankDoorCoroutine != null) {
-							StopCoroutine (_tankDoorCoroutine);
-						}
-						_tankDoorCoroutine = CloseTank ();
-						StartCoroutine (_tankDoorCoroutine);
-					}
+		if (!_disableTouchInput) {
+			if (!_finalWaterTankClose) {
+				if (_openBoth) {
+					_myTheatre.MoveToNext ();
 				} else {
-					if (!_waitForClose) {
-						_isOpen = true;
-						if (_tankDoorCoroutine != null) {
-							StopCoroutine (_tankDoorCoroutine);
+					if (_isOpen) {
+						if (!_isActivated && !_waitForClose) {
+							_isOpen = false;
+							if (_tankDoorCoroutine != null) {
+								StopCoroutine (_tankDoorCoroutine);
+							}
+							_tankDoorCoroutine = CloseTank ();
+							StartCoroutine (_tankDoorCoroutine);
 						}
-						_tankDoorCoroutine = OpenTank ();
-						StartCoroutine (_tankDoorCoroutine);
+					} else {
+						if (!_waitForClose) {
+							_isOpen = true;
+							if (_tankDoorCoroutine != null) {
+								StopCoroutine (_tankDoorCoroutine);
+							}
+							_tankDoorCoroutine = OpenTank ();
+							StartCoroutine (_tankDoorCoroutine);
+						}
 					}
 				}
 			}
@@ -109,6 +113,13 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		StartCoroutine (_tankDoorCoroutine);
 	}
 
+	public void DisableTouchInput(bool disable){
+		_disableTouchInput = disable;
+		if (!disable) {
+			_shaderGlowCustom.TriggerFadeIn ();
+		}
+	}
+
 
 	public void Activate(bool activate){
 		_isActivated = activate;
@@ -122,7 +133,6 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 				_tankDoorCoroutine = CloseTank ();
 				StartCoroutine (_tankDoorCoroutine);
 //			}
-			_shaderGlowCustom.TriggerFadeIn ();
 		} 
 	}
 

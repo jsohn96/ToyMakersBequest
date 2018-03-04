@@ -73,6 +73,7 @@ public class TheatreText : MonoBehaviour {
 			break;
 		case 10:
 			_disappearCoroutine = DisappearAfterDuration (1f, cnt);
+			_myTheatre.ActivateBothTankDoors ();
 			StartCoroutine (_disappearCoroutine);
 			break;
 		case 12:

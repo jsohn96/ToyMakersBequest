@@ -20,6 +20,8 @@ public class TheatreMagician : MonoBehaviour {
 	bool _isMoving;
 	bool _isWaitingForLeft;
 
+	bool _dontTriggerNextScene = false;
+
 	// Use this for initialization
 	void Awake () {
 		_isMoving = false;
@@ -55,6 +57,7 @@ public class TheatreMagician : MonoBehaviour {
 	}
 
 	public void ExitKissPosition(){
+		_dontTriggerNextScene = true;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 	}
 
@@ -67,7 +70,9 @@ public class TheatreMagician : MonoBehaviour {
 		}
 		_magicianTransform.position = end;
 		yield return null;
-		_myTheatre.MoveToNext ();
+		if (!_dontTriggerNextScene) {
+			_myTheatre.MoveToNext ();
+		}
 	}
 
 	IEnumerator Kissing(){

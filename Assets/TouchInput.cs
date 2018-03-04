@@ -9,10 +9,6 @@ public class TouchInput : MonoBehaviour {
 	List<GameObject> touchList = new List<GameObject> ();
 	GameObject[] touchesOld;
 	RaycastHit hit;
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
