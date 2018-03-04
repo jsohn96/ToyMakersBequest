@@ -7,6 +7,8 @@ public class TheatreText : MonoBehaviour {
 	[SerializeField] AltTheatre _myTheatre;
 
 	TextMeshProUGUI _textMeshPro;
+	[SerializeField] TextMeshProUGUI _markBackgroundTMP;
+
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker",
 		"Come witness the daring escape",
@@ -51,6 +53,7 @@ public class TheatreText : MonoBehaviour {
 		}
 		Debug.Log (cnt);
 		_textMeshPro.text = _strings [cnt];
+		_markBackgroundTMP.text = "<mark=#000000A0><color=#000000A0>"+_strings [cnt]+"</color></mark>";
 		switch (cnt) {
 		case 1:
 			StartCoroutine (CallNextAfterDuration (3f));
@@ -118,6 +121,7 @@ public class TheatreText : MonoBehaviour {
 		yield return new WaitForSeconds (duration);
 		if (cntWhenCalled == cnt) {
 			_textMeshPro.text = "";
+			_markBackgroundTMP.text = "";
 		}
 	}
 }

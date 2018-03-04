@@ -21,6 +21,8 @@ public class TheatreDancer : MonoBehaviour {
 
 	[SerializeField] GameObject _dancerVisibilityGameObject;
 
+	bool _stopMovement = false;
+
 	// Use this for initialization
 	void Start () {
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
@@ -31,11 +33,13 @@ public class TheatreDancer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (AltTheatre.currentSate == TheatreState.startShow || AltTheatre.currentSate == TheatreState.readyForDancerTank) {
-			RotateInPlace ();
-			RotateAroundCenter ();
-		} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
-			RotateInPlace ();
+		if (!_stopMovement) {
+			if (AltTheatre.currentSate == TheatreState.startShow || AltTheatre.currentSate == TheatreState.readyForDancerTank) {
+				RotateInPlace ();
+				RotateAroundCenter ();
+			} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
+				RotateInPlace ();
+			}
 		}
 	}
 
@@ -49,6 +53,10 @@ public class TheatreDancer : MonoBehaviour {
 
 	public void ElevateTankPlatform(){
 		StartCoroutine (ElevateWaterTankPlatform ());
+	}
+
+	public void StopMovement(){
+		_stopMovement = true;
 	}
 
 	IEnumerator FirstDancerTankCoroutine(){

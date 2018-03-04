@@ -319,7 +319,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.dancerLocked:
 			_theatreText.TriggerText ();
-
+			_dancer.StopMovement ();
 			break;
 		case TheatreState.theatreEnd:
 			_theatreCoin.BeginGlow ();
