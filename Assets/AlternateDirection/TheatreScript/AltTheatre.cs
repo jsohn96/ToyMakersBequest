@@ -26,9 +26,13 @@ public enum TheatreState{
 	audienceLeave2 = 16,
 	audienceLeave3 = 17,
 	magicianReturnToPosition = 18,
-	dancerDescend = 19,
-	dancerLocked = 20,
-	theatreEnd = 21
+	restartPerformanceNextDay = 19,
+	readyForDancerTank2 = 20,
+	dancerDescend = 21,
+	lookDownIntoTank2 = 22,
+	CloseTankDoors2 = 23,
+	dancerLocked = 24,
+	theatreEnd = 25
 }
 
 public class AltTheatre : LevelManager {
@@ -252,20 +256,21 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText ();
 			break;
 		case TheatreState.audienceLeave1:
-			
+			_theatreLighting.Set4 ();
+			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [2].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave2:
-			_theatreLighting.Set5 ();
+			_theatreLighting.Set3 ();
 			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [1].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave3:
-			_theatreLighting.Set4 ();
+			_theatreLighting.Set6 ();
 			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [0].AudienceLeave ();
 
@@ -281,27 +286,50 @@ public class AltTheatre : LevelManager {
 
 			StartCoroutine(DelayedSelfCall(5));
 			break;
-		case TheatreState.dancerDescend:
-			_theatreLighting.Set6 ();
+		case TheatreState.restartPerformanceNextDay:
 			_theatreSound.PlayLightSwitch ();
-			_traversalUI.FadeOut ();
-			_theatreWaterTank.OpenLid (true);
+			_theatreLighting.Set6 ();
+			_theatreText.TriggerText ();
+			magician.BeginShow (true);
+			break;
+		case TheatreState.readyForDancerTank2:
+			_theatreWaterTank.Activate (true);
+			break;
+		case TheatreState.dancerDescend:
+//			_theatreLighting.Set6 ();
+//			_theatreSound.PlayLightSwitch ();
+//			_theatreWaterTank.OpenLid (true);
+			magician.BeginShow (false);
+			_theatreText.TriggerText ();
 			_dancer.SecondDancerEnterTank ();
+
+			break;
+		case TheatreState.lookDownIntoTank2:
+			_theatreWaterTank.OpenLid (false);
+			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			break;
-		case TheatreState.dancerLocked:
-			_theatreWaterTank.OpenLid (false);
+		case TheatreState.CloseTankDoors2:
 			_tankDoor1.FinalActivation (true);
 			_tankDoor2.FinalActivation (true);
+			_tankDoor1.DisableTouchInput (true);
+			_tankDoor2.DisableTouchInput (true);
+
+			StartCoroutine (DelayedSelfCall (1.5f));
+			break;
+		case TheatreState.dancerLocked:
+			_theatreText.TriggerText ();
+
 			break;
 		case TheatreState.theatreEnd:
 			_theatreCoin.BeginGlow ();
 			_traversalUI.FadeIn ();
-			_theatreCameraControl.EnableScrollFOV();
+			_theatreCameraControl.EnableScrollFOV ();
 			_dancer.HideDancer (true);
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();
 			_theatreMusic.EndMusic ();
+			_theatreText.TriggerText ();
 			break;
 		}
 	}

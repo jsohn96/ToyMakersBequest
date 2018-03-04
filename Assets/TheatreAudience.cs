@@ -46,6 +46,7 @@ public class TheatreAudience : MonoBehaviour {
 			transform.rotation = _goalAngle;
 			Clap ();
 		} else {
+			yield return new WaitForSeconds (1.0f);
 			Clap ();
 			while (timer < duration) {
 				timer += Time.deltaTime;

@@ -114,7 +114,7 @@ public class TheatreDancer : MonoBehaviour {
 			yield return null;
 		}
 		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
-
+		_myTheatre.MoveToNext ();
 		yield return null;
 	}
 

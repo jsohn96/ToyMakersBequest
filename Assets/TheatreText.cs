@@ -23,14 +23,15 @@ public class TheatreText : MonoBehaviour {
 		"she always did",
 		"The crowd would always cheer",
 		"and for a moment, everything would feel perfect",
-		"until the kiss",
+		"until the kiss", //15
 		"The next day, everything went back to normal",
 		"The performance began with Dora entering the water",
 		"and I would count",
 		"1",
 		"2",
 		"3",
-		"But something was not right"
+		"But this time",
+		"Things were different"
 	};
 	int cnt = 0;
 
@@ -48,6 +49,7 @@ public class TheatreText : MonoBehaviour {
 		if (_disappearCoroutine != null) {
 			StopCoroutine (_disappearCoroutine);
 		}
+		Debug.Log (cnt);
 		_textMeshPro.text = _strings [cnt];
 		switch (cnt) {
 		case 1:
@@ -84,27 +86,21 @@ public class TheatreText : MonoBehaviour {
 		case 13:
 			StartCoroutine (CallNextAfterDuration (3f));
 			break;
-		case 16:
-			break;
-		case 17:
-			break;
 		case 18:
+			StartCoroutine (CallNextAfterDuration (2f));
 			break;
 		case 19:
+			StartCoroutine (CallNextAfterDuration (1.2f));
 			break;
 		case 20:
+			StartCoroutine (CallNextAfterDuration (1.2f));
 			break;
 		case 21:
+			StartCoroutine (CallNextAfterDuration (1.2f));
 			break;
 		case 22:
-			break;
-		case 23:
-			break;
-		case 24:
-			break;
-		case 25:
-			break;
-		case 26:
+			StartCoroutine (_disappearCoroutine);
+			_myTheatre.ActivateBothTankDoors ();
 			break;
 		default:
 			_disappearCoroutine = DisappearAfterDuration (3f, cnt);

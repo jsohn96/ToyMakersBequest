@@ -78,7 +78,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		if (_finalWaterTankClose) {
 			_finalWaterTankClose = false;
 			_openBoth = true;
-			_shaderGlowCustom.TriggerFadeIn ();
+//			_shaderGlowCustom.TriggerFadeIn ();
 		}
 		if (_isActivated && !_callOnce) {
 			_myTheatre.HideDancer ();

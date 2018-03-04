@@ -25,7 +25,7 @@ public class TheatreWaterTank : MonoBehaviour {
 			if (!_isOpen) {
 				WaterTankAnim.SetBool ("Open", true);
 				_isOpen = true;
-				if (AltTheatre.currentSate == TheatreState.readyForDancerTank) {
+				if (AltTheatre.currentSate == TheatreState.readyForDancerTank || AltTheatre.currentSate == TheatreState.readyForDancerTank2) {
 					_myTheatre.MoveToNext ();
 				}
 			} else {
