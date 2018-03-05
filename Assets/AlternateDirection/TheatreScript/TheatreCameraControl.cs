@@ -48,6 +48,8 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _scrollEasingToHalt = false;
 	bool _angleMode = false;
 
+	bool _up = true, _down = true, _left = true, _right = true;
+
 	[SerializeField] BoxCollider _surfaceBoxCollider;
 
 	[SerializeField] TraversalUI _traversalUI;
@@ -117,21 +119,38 @@ public class TheatreCameraControl : MonoBehaviour {
 			_acceleration = 0.015f;
 			_scrollDirectionMultiplier.y = 10f;
 			_angleMode = false;
+			if(!_down){
+				_down = true;
+				_traversalUI.FadeIn(false, 1);
+			}
 			break;
 		case Direction.down:
 			_acceleration = 0.015f;
 			_scrollDirectionMultiplier.y = -10f;
 			_angleMode = false;
+			if(!_up){
+				_up = true;
+				_traversalUI.FadeIn(false, 0);
+			}
 			break;
 		case Direction.left:
+		Debug.Log("left is being called th");
 			_acceleration = 10f;
 			_scrollDirectionMultiplier.y = -1f;
 			_angleMode = true;
+			if(!_right){
+				_right = true;
+				_traversalUI.FadeIn(false, 3);
+			}
 			break;
 		case Direction.right:
 			_acceleration = 10f;
 			_scrollDirectionMultiplier.y = 1f;
 			_angleMode = true;
+			if(!_left){
+				_left = true;
+				_traversalUI.FadeIn(false, 2);
+			}
 			break;
 		default:
 			break;
@@ -158,11 +177,19 @@ public class TheatreCameraControl : MonoBehaviour {
 			if (!_angleMode) {
 				_currentCameraYPos = _thisCameraHeighttContainer.transform.position.y;
 				if (_currentCameraYPos > _cameraMovementRange.Max) {
+					if(_up){
+						_up = false;
+						_traversalUI.FadeOut(false, 0);
+					}
 					_cameraTempPos = _thisCameraHeighttContainer.transform.position;
 					_cameraTempPos.y = _cameraMovementRange.Max;
 					_currentCameraYPos = _cameraTempPos.y;
 					_thisCameraHeighttContainer.transform.position = _cameraTempPos;
 				} else if (_currentCameraYPos < _cameraMovementRange.Min) {
+					if(_down){
+						_down = false;
+						_traversalUI.FadeOut(false, 1);
+					}
 					_cameraTempPos = _thisCameraHeighttContainer.transform.position;
 					_cameraTempPos.y = _cameraMovementRange.Min;
 					_currentCameraYPos = _cameraTempPos.y;
@@ -173,12 +200,20 @@ public class TheatreCameraControl : MonoBehaviour {
 				float tempAngleY = tempAngle.y;
 				if (tempAngleY < 180f) {
 					if (tempAngleY > _cameraRotation.Max) {
+						if(_right){
+							_right = false;
+							_traversalUI.FadeOut(false, 3);
+						}
 						tempAngle.y = _cameraRotation.Max;
 						_thisCamera.transform.localEulerAngles = tempAngle;
 					} 
 				} else {
 					tempAngleY = tempAngleY - 360f;
 					if (tempAngleY < _cameraRotation.Min) {
+						if(_left){
+							_left = false;
+							_traversalUI.FadeOut(false, 2);
+						}
 						tempAngle.y = _cameraRotation.Min;
 						_thisCamera.transform.localEulerAngles = tempAngle;
 					}

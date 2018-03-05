@@ -29,7 +29,7 @@ public class TraversalUI : MonoBehaviour {
 		}
 	}
 
-	public void FadeIn(bool isLowerPriority = false){
+	public void FadeIn(bool isLowerPriority = false, int buttonIndex = 4){
 		if (isLowerPriority) {
 			if (!_isOn) {
 				return;
@@ -37,42 +37,63 @@ public class TraversalUI : MonoBehaviour {
 		} else {
 			_isOn = true;
 		}
-		StartCoroutine (FadeButtons (true));
+		StartCoroutine (FadeButtons (true, buttonIndex));
 	}
 
-	IEnumerator FadeButtons(bool fadeIn){
+	IEnumerator FadeButtons(bool fadeIn, int buttonIndex){
 		float timer = 0f;
 		float duration = 0.8f;
 		Color tempColor = _buttonImages [0].color;
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			for (int i = 0; i < _buttonImagesLength; i++) {
-				if (fadeIn) {
-					_buttonImages [i].color = Color.Lerp (tempColor, _fullColor, timer / duration);
+			if(buttonIndex == 4){
+				for (int i = 0; i < _buttonImagesLength; i++) {
+					if (fadeIn) {
+						_buttonImages [i].color = Color.Lerp (tempColor, _fullColor, timer / duration);
+					} else {
+						_buttonImages [i].color = Color.Lerp (tempColor, _emptyColor, timer / duration);
+					}
+				}
+			} else {
+				if(fadeIn){
+					_buttonImages [buttonIndex].color = Color.Lerp (tempColor, _fullColor, timer / duration);
 				} else {
-					_buttonImages [i].color = Color.Lerp (tempColor, _emptyColor, timer / duration);
+					_buttonImages [buttonIndex].color = Color.Lerp (tempColor, _emptyColor, timer / duration);
 				}
 			}
 			yield return null;
 		}
-		for (int i = 0; i < _buttonImagesLength; i++) {
+		if(buttonIndex == 4){
+			for (int i = 0; i < _buttonImagesLength; i++) {
+				if (fadeIn) {
+					_buttonImages [i].raycastTarget = true;
+					_buttonImages [i].color = _fullColor;
+				} else {
+					_buttonImages [i].color = _emptyColor;
+				}
+			}
+		} else {
 			if (fadeIn) {
-				_buttonImages [i].raycastTarget = true;
-				_buttonImages [i].color = _fullColor;
+				_buttonImages [buttonIndex].raycastTarget = true;
+				_buttonImages [buttonIndex].color = _fullColor;
 			} else {
-				_buttonImages [i].color = _emptyColor;
+				_buttonImages [buttonIndex].color = _emptyColor;
 			}
 		}
 	}
 
-	public void FadeOut(bool isLowerPriority = false){
+	public void FadeOut(bool isLowerPriority = false, int buttonIndex = 4){
 		if (!isLowerPriority) {
 			_isOn = false;
 		}
-		for (int i = 0; i < _buttonImagesLength; i++) {
-			_buttonImages [i].raycastTarget = false;
+		if(buttonIndex == 4){
+			for (int i = 0; i < _buttonImagesLength; i++) {
+				_buttonImages [i].raycastTarget = false;
+			}
+		} else {
+			_buttonImages[buttonIndex].raycastTarget = false;
 		}
-		StartCoroutine (FadeButtons (false));
+		StartCoroutine (FadeButtons (false, buttonIndex));
 
 	}
 }
