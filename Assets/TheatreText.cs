@@ -11,29 +11,39 @@ public class TheatreText : MonoBehaviour {
 
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker",
-		"Come witness the daring escape",
-		"Performed by Agnes and Dora",
-		"in, The Secrets Under Water",
-		"The performance would always begin with Dora entering the water",
-		"I would always hold my breathe as the doors closed", //5
-		"wondering if she would make it out",
-		"I would always count",
+		"Come witness Agnes and Dora",
+		"the greatest escapologists of our time in",
+		"The Secrets Under Water",
+		"The performance always began with Dora entering the water",
+		"As the doors close, I would begin holding my breathe", //5
+		"wishing for her safe escape",
+		"I would count",
 		"1",
 		"2",
 		"3", //10
 		"and to my relief",
-		"she always did",
+		"she always made it out unscathed",
 		"The crowd would always cheer",
-		"and for a moment, everything would feel perfect",
-		"until the kiss", //15
-		"The next day, everything went back to normal",
+		"and on one especially grand performance",
+		"we shared a kiss", //15 
+		// what a mistake that was...
+		//The crowd quickly turned on us with gasps and disdain
+		//They're Queer!
+		// That's just wrong
+		// They should be ashamed.
+		// Dora and I were noticeably shaken
+		// but we brushed it off because we had each other
+		"and the next day, we performed again",
+		//just like every other day
 		"The performance began with Dora entering the water",
+		// just like every other day
+		//"As the doors closed, I began holding my breathe
 		"and I would count",
 		"1",
 		"2",
 		"3",
-		"But this time",
-		"Things were different"
+		"But this was not like every other day",
+		"Today, things were different"
 	};
 	int cnt = 0;
 

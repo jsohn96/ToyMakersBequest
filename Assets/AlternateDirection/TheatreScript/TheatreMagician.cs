@@ -114,15 +114,15 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void BeginShow(bool isPointing){
 		if (isPointing) {
-			_magicianAnim.Play ("mg_greet");
+			_magicianAnim.Play ("StartShow");
 			StartCoroutine (DelayLightsOn());
 		} else {
-			_magicianAnim.Play ("mg_pointCenter_back_center");
+			_magicianAnim.Play ("ReturnShow");
 		}
 	}
 
 	IEnumerator DelayLightsOn() {
-		yield return new WaitForSeconds (2.0f);
+		yield return new WaitForSeconds (1.9f);
 		_myTheatre.MoveToNext ();
 	}
 }
