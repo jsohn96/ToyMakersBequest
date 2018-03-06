@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreFrogAnimationCtrl : MonoBehaviour {
-
 	Animator _frogAnim;
 	[SerializeField] GameObject _frog;
 	[SerializeField] int _frogIdx = -1;
@@ -120,7 +119,6 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 //		}
 		if(_isControlActive && !_isClicked){
 			//HideFrog ();
-			//Debug.Log ("Click on Frog : " + _frogIdx);
 			if (_isFrogUp) {
 				HideFrog ();
 			} else {

@@ -9,6 +9,11 @@ public class TheatreText : MonoBehaviour {
 	TextMeshProUGUI _textMeshPro;
 	[SerializeField] TextMeshProUGUI _markBackgroundTMP;
 
+	[SerializeField] AudioSource _audioSource;
+
+	[SerializeField] AudioClip[] _voClips;
+	float [] _voClipLengths;
+
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker",
 		"Come witness Agnes and Dora",
@@ -53,6 +58,12 @@ public class TheatreText : MonoBehaviour {
 	void Start(){
 		_textMeshPro = GetComponent<TextMeshProUGUI> ();
 		_textMeshPro.text = _strings [0];
+
+		int voClipsLength = _voClips.Length;
+		_voClipLengths = new float[voClipsLength];
+		for (int i = 0; i < voClipsLength; i++) {
+			_voClipLengths[i] = _voClips[i].length + 0.5f;
+		}
 	}
 
 

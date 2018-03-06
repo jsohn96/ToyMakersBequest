@@ -13,7 +13,6 @@ public class TheatreFrog : MonoBehaviour {
 	List<int> tempGoneIndex;
 	TheatreFrogAnimationCtrl[] _FrogAnimCtrl;
 
-
 	int DancerOnNodeIdx = -1;
 	int curFrogIdx = -1;
 	int _curNodeOrderIdx = -1;
@@ -39,9 +38,9 @@ public class TheatreFrog : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (_curNodeOrderIdx >= 0 && isContorlAcivate) {
-			FrogDetectDancer ();
-		}
+//		if (_curNodeOrderIdx >= 0 && isContorlAcivate) {
+//			FrogDetectDancer ();
+//		}
 
 	}
 
@@ -105,7 +104,7 @@ public class TheatreFrog : MonoBehaviour {
 			if (alreadyGoneIndex.Count < 5) {
 				JumpToRandomNode ();
 			} else {
-				Debug.Log ("Jump to water");
+				_frogAnim.Play ("frog_jumpIntoWater");
 			}
 		}
 
@@ -224,8 +223,11 @@ public class TheatreFrog : MonoBehaviour {
 		}
 	}
 
+	public int GetNumberOfMatches(){
+		return _matchedCouple;
+	}
+
 	// fog behaviour 1 - when clicked jump to a random node 
 	// fog behaviour 2 - when dancer is about to enter the same node, frog jump to a random node
 
-	
 }
