@@ -69,8 +69,8 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	public void Activate(){
-		if (!_initClick) {
-			_initClick = true;
+		if (!_initZoom) {
+			_initZoom = true;
 			AltTheatre.currentSate++;
 			_altTheatre.CheckStateMachine ();
 			StartCoroutine (ZoomInCamera ());
