@@ -6,14 +6,14 @@ public class frogSwirlTest : MonoBehaviour {
 	[SerializeField] Transform _frogTransform;
 	[SerializeField] Transform _centerPoint;
 	float _counter = 0.0f;
-	float _counterDuration = 5.0f;
+	float _counterDuration = 20.0f;
 
 	[SerializeField] MinMax _frogSwimRange = new MinMax(12.402f, 12.612f);
 	[SerializeField] AnimationCurve _swimHeightCurve;
 
 	Vector3 _tempPosition;
 
-	float _maxSpeed = 150.0f;
+	float _maxSpeed = 60.0f;
 
 	bool _activateSwirl = false;
 	[SerializeField] Animator _frogAnimator;
