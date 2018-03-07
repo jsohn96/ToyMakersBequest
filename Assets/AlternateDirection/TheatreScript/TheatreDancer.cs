@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TheatreDancer : MonoBehaviour {
 	AltTheatre _myTheatre;
+	[SerializeField] Animator _dancerAnim;
 	[SerializeField] Transform _dancerTransform;
 
 	[SerializeField] Vector3 _startPosition;
@@ -22,6 +23,7 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] GameObject _dancerVisibilityGameObject;
 
 	bool _stopMovement = false;
+	bool _isFirstStart = false;
 
 	// Use this for initialization
 	void Start () {
@@ -37,18 +39,40 @@ public class TheatreDancer : MonoBehaviour {
 			if (AltTheatre.currentSate == TheatreState.startShow || AltTheatre.currentSate == TheatreState.readyForDancerTank) {
 				RotateInPlace ();
 				RotateAroundCenter ();
+				PlayStartDancing ();
 			} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
 				RotateInPlace ();
 			}
 		}
 	}
 
+	void PlayEnterWater(){
+		_dancerAnim.Play ("dancer_enter_water");
+	}
+
+
+	void PlayGoInTank(){
+		_dancerAnim.SetBool("isReadyToEnter", true);
+	}
+
+	void PlayStartDancing(){
+		if (!_isFirstStart) {
+			_isFirstStart = true;
+			_dancerAnim.Play ("dancer_start");
+		}
+
+	}
+
+
+
 	public void FirstDancerEnterTank(){
 		StartCoroutine (FirstDancerTankCoroutine ());
+
 	}
 
 	public void SecondDancerEnterTank(){
 		StartCoroutine (SecondDancerTankCoroutine ());
+
 	}
 
 	public void ElevateTankPlatform(){
@@ -73,6 +97,7 @@ public class TheatreDancer : MonoBehaviour {
 			timer += Time.deltaTime;
 			yield return null;
 		}
+		PlayGoInTank ();
 		timer = 0f;
 		duration = 3f;
 		_dancerTempPos = _dancerTransform.localPosition;
@@ -84,6 +109,7 @@ public class TheatreDancer : MonoBehaviour {
 
 		_dancerTransform.localPosition = _firstWaterTankStart;
 		_dancerTransform.parent = _waterTankPlatformTransform;
+
 		yield return new WaitForSeconds (0.7f);
 		timer = 0f;
 		duration = 4f;
@@ -94,8 +120,12 @@ public class TheatreDancer : MonoBehaviour {
 		}
 		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
 
+		yield return new WaitForSeconds (0.7f);
+		PlayEnterWater ();
+
 		_myTheatre.MoveToNext ();
-		yield return null;
+		yield return new WaitForSeconds (1f);
+		PlayEnterWater ();
 	}
 
 	IEnumerator ElevateWaterTankPlatform(){
@@ -122,7 +152,7 @@ public class TheatreDancer : MonoBehaviour {
 			yield return null;
 		}
 		_waterTankPlatformTransform.localPosition = _waterTankPlatformDownLocalPos;
-//		_myTheatre.MoveToNext ();
+		_myTheatre.MoveToNext ();
 		yield return null;
 	}
 
