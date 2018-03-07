@@ -4246,6 +4246,7 @@ MonoBehaviour:
   frogScript: {fileID: 681455856}
   chestAnim: {fileID: 1762856586}
   _shaderGlowCustom: {fileID: 261065209}
+  _myTheatre: {fileID: 1924021101}
 --- !u!114 &261065209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12423,6 +12424,7 @@ MonoBehaviour:
   - {fileID: 1987651118}
   - {fileID: 944413314}
   _FirstJumpNode: {fileID: 944413314}
+  _chestFrog: {fileID: 1383337291}
   isContorlAcivate: 0
 --- !u!95 &681455857 stripped
 Animator:
@@ -22058,6 +22060,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8cb91194371354064be04178e7da8382, type: 2}
+    - target: {fileID: 100020, guid: 1e8fd578b64064416abc69eef83e85dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e8fd578b64064416abc69eef83e85dd, type: 3}
   m_IsPrefabParent: 0
@@ -23312,6 +23318,10 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!1 &1253581702 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100020, guid: 1e8fd578b64064416abc69eef83e85dd, type: 3}
+  m_PrefabInternal: {fileID: 1192528894}
 --- !u!1 &1254005425
 GameObject:
   m_ObjectHideFlags: 0
@@ -24491,7 +24501,7 @@ MonoBehaviour:
   _waterTankTransformForCenterAxis: {fileID: 47722037}
   _waterTankPlatformTransform: {fileID: 418028914}
   _firstWaterTankStart: {x: 0.0027, y: 13.0992, z: 18.2141}
-  _dancerVisibilityGameObject: {fileID: 0}
+  _dancerVisibilityGameObject: {fileID: 1253581702}
 --- !u!54 &1315806402
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -36274,6 +36284,7 @@ MonoBehaviour:
   - {fileID: 1348342442}
   _theatreText: {fileID: 1019285349}
   _frogSwirl: {fileID: 681455858}
+  _theatreFrog: {fileID: 681455856}
 --- !u!4 &1924021102
 Transform:
   m_ObjectHideFlags: 0

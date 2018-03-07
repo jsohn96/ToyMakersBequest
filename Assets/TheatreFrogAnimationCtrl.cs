@@ -62,7 +62,12 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		TheatreSound._instance.PlayFrogSound ();
 	}
 
-
+	public void FrogFromChest(){
+		_isFrogUp = true;
+		_frogAnim.Play ("frog_jumpOutOfChest");
+		_frog.SetActive (true);
+	}
+		
 	public void ShowFrog(){
 		print ("activate frog: " + _frogIdx);
 		_isFrogUp = true;

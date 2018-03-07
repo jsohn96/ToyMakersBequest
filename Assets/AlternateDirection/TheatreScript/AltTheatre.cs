@@ -75,6 +75,7 @@ public class AltTheatre : LevelManager {
 
 	[SerializeField] TheatreText _theatreText;
 	[SerializeField] frogSwirlTest _frogSwirl;
+	[SerializeField] TheatreFrog _theatreFrog;
 
 	int _doorCloseCnt = 0;
 
@@ -373,6 +374,14 @@ public class AltTheatre : LevelManager {
 		if (_doorCloseCnt >= 2) {
 			_dancer.HideDancer (true);
 		}
+	}
+
+	public void PrepForFrog(){
+		_theatreChest.FrogPrep ();
+	}
+
+	public void CallFrog(){
+		_theatreFrog.FrogJumpIntoWater ();
 	}
 
 	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, System.Action action = null){

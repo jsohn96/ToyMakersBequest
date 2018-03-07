@@ -55,15 +55,15 @@ public class TheatreText : MonoBehaviour {
 	int cnt = 0;
 
 	IEnumerator _disappearCoroutine;
-
+	int _textLength;
 
 	void Start(){
 		_textMeshPro = GetComponent<TextMeshProUGUI> ();
 //		_textMeshPro.text = _strings [0];
 
-		int voClipsLength = _voClips.Length;
-		_voClipLengths = new float[voClipsLength];
-		for (int i = 0; i < voClipsLength; i++) {
+		_textLength = _voClips.Length;
+		_voClipLengths = new float[_textLength];
+		for (int i = 0; i < _textLength; i++) {
 			_voClipLengths[i] = _voClips[i].length + 0.5f;
 		}
 	}
@@ -77,6 +77,9 @@ public class TheatreText : MonoBehaviour {
 		}
 		if (_disappearCoroutine != null) {
 			StopCoroutine (_disappearCoroutine);
+		}
+		if (cnt >= _textLength) {
+			return;
 		}
 		_textMeshPro.text = _strings [cnt];
 		_markBackgroundTMP.text = "<mark=#000000A0><color=#000000A0>"+_strings [cnt]+"</color></mark>";

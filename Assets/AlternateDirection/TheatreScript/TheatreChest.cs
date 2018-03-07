@@ -11,7 +11,10 @@ public class TheatreChest : MonoBehaviour {
 	bool _isOpen = false;
 	bool isFrogOut = false;
 
+	bool _takeAwayControl = false;
+
 	[SerializeField] shaderGlowCustom _shaderGlowCustom;
+	[SerializeField] AltTheatre _myTheatre;
 
 	// Use this for initialization
 //	void Start () {
@@ -24,22 +27,21 @@ public class TheatreChest : MonoBehaviour {
 
 	void OnTouchDown(){
 		// 
-		if (!_isOpen) {
-			chestAnim.SetBool ("Open", true);
-			_isOpen = true;
-			if (isActivated) {
-				Debug.Log ("Empty chest open");
-				if (!isFrogOut) {
-					frogScript.FrogJump ();
-					isFrogOut = true;
-				} else {
-
-				}
-
-			} 
-		} else {
-			chestAnim.SetBool ("Open", false);
-			_isOpen = false;
+		if (!_takeAwayControl) {
+			if (!_isOpen) {
+				chestAnim.SetBool ("Open", true);
+				_isOpen = true;
+				if (isActivated) {
+					Debug.Log ("Empty chest open");
+					if (!isFrogOut) {
+						frogScript.FrogJump ();
+						isFrogOut = true;
+					}
+				} 
+			} else {
+				chestAnim.SetBool ("Open", false);
+				_isOpen = false;
+			}
 		}
 			//frogScript.FrogJump ();
 	}
@@ -53,5 +55,21 @@ public class TheatreChest : MonoBehaviour {
 				_isOpen = false;
 			}
 		}
+	}
+
+	public void FrogPrep(){
+		_takeAwayControl = true;
+		if (_isOpen) {
+			chestAnim.Play ("frogClose");
+			StartCoroutine (DelayBeforeFrogJumpOut (0.9f));
+		} else {
+			StartCoroutine (DelayBeforeFrogJumpOut (0.1f));
+		}
+		chestAnim.SetBool ("Open", true);
+	}
+
+	IEnumerator DelayBeforeFrogJumpOut(float duration){
+		yield return new WaitForSeconds (duration);
+		_myTheatre.CallFrog ();
 	}
 }

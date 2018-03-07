@@ -13,6 +13,8 @@ public class TheatreFrog : MonoBehaviour {
 	List<int> tempGoneIndex;
 	TheatreFrogAnimationCtrl[] _FrogAnimCtrl;
 
+	[SerializeField] GameObject _chestFrog;
+
 	int DancerOnNodeIdx = -1;
 	int curFrogIdx = -1;
 	int _curNodeOrderIdx = -1;
@@ -25,6 +27,7 @@ public class TheatreFrog : MonoBehaviour {
 
 	//Vector3 _endPosition;
 	bool _isMoving;
+	bool _isFirstFrog = true;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +37,8 @@ public class TheatreFrog : MonoBehaviour {
 		}
 		alreadyGoneIndex = new List<int> ();
 		tempGoneIndex = new List<int> ();
+
+		_chestFrog.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -58,8 +63,15 @@ public class TheatreFrog : MonoBehaviour {
 
 	public void FrogJump(){
 		ActivateFrogControl ();
-		ActivateFrog(_curNodeOrderIdx);
+
+		ActivateFrog (_curNodeOrderIdx);
 		_myTheatre.MoveToNext ();
+	}
+
+	public void FrogJumpIntoWater(){
+		_myTheatre.MoveToNext ();
+		_chestFrog.SetActive (true);
+		_frogAnim.Play ("frog_jumpIntoWater");
 	}
 
 	void ActivateFrogControl(){
@@ -104,7 +116,7 @@ public class TheatreFrog : MonoBehaviour {
 			if (alreadyGoneIndex.Count < 5) {
 				JumpToRandomNode ();
 			} else {
-				_frogAnim.Play ("frog_jumpIntoWater");
+				_myTheatre.PrepForFrog ();
 			}
 		}
 
@@ -154,10 +166,11 @@ public class TheatreFrog : MonoBehaviour {
 		_currentIcon = -1;
 		if (_matchedCouple + 1 < 3) {
 			_matchedCouple += 1;
-		} else {
-			Debug.Log ("All matches found !! Frog in water");
-			_myTheatre.MoveToNext ();
-		}
+		} 
+//		else {
+//			Debug.Log ("All matches found !! Frog in water");
+//			_myTheatre.MoveToNext ();
+//		}
 	}
 
 	void DancerOnBoardHandle(DancerOnBoard e){
@@ -180,7 +193,12 @@ public class TheatreFrog : MonoBehaviour {
 		if (_curBehaviour != null) {
 			Events.G.Raise(new FrogIsOnTheMoveEvent());
 			_curBehaviour.SetFrogOn (true);
-			_curBehaviour.ShowFrog ();
+			if (_isFirstFrog) {
+				_curBehaviour.FrogFromChest ();
+				_isFirstFrog = false;
+			} else {
+				_curBehaviour.ShowFrog ();
+			}
 			Debug.Log ("DROG DRGO");
 		}
 	}
