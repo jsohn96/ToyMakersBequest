@@ -350,7 +350,8 @@ public class AltTheatre : LevelManager {
 			_theatreCoin.BeginGlow ();
 			_traversalUI.FadeIn ();
 			_theatreCameraControl.EnableScrollFOV ();
-			_dancer.HideDancer (true);
+			//Stop Dancer Here
+//			_dancer.HideDancer (true);
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();
 			_theatreMusic.EndMusic ();

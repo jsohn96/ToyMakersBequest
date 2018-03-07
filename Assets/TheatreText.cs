@@ -241,7 +241,7 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_myTheatre.MoveToNext ();
+//			_myTheatre.MoveToNext ();
 			break;
 		case 29:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
