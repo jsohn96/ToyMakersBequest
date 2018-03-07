@@ -17,39 +17,40 @@ public class TheatreText : MonoBehaviour {
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
 		"Echoing throughout the stage", //1
-		"Come witness Agnes and Dora", //2
-		"the greatest escapologists of our time in", //3
-		"The Secrets Under Water", //4
-		"The show always began with Dora entering the water", //5
-		"As the doors close, I would begin holding my breathe", //6
-		"wishing for her safe escape", //7
-		"I would count", //8
-		"1", //9
-		"2", //10
-		"3", //11
-		"and to my relief", //12
-		"she always made it out unscathed", //13
-		"The crowd would always cheer", //14
-		"and on one especially grand performance", //15
-		"we shared a kiss", //16
-		"what a mistake that was", //17
-		"The crowd quickly turned on us with gasps and disdain", //18
-		"They're Queer!", //19
-		"That's just wrong", //20
-		"They should be ashamed", //21
-		"Dora and I were noticeably shaken", //22
-		"but we brushed it off because we had each other", //23
-		"and the next day, we performed again", //24
-		"just like every other day", //25
-		"The performance began with Dora entering the water", //26
-		"just like every other day", //27
-		"the doors would close as I held my breathe", //28
-		"I would count", //29
-		"1", //30
-		"2", //31
-		"3", //32
-		"But this was not like every other day", //33
-		"Today, things were different" //34
+		"Ladies and gentlemen, welcome to the show",//2
+		"You are about to witness Agnes and Dora", //3
+		"the greatest escapologists of our time in", //4
+		"The Secrets Under Water", //5
+		"The show always began with Dora entering the water", //6
+		"As the doors close, I would begin holding my breathe", //7
+		"wishing for her safe escape", //8
+		"I would count", //9
+		"1", //10
+		"2", //11
+		"3", //12
+		"and to my relief", //13
+		"she always made it out unscathed", //14
+		"The crowd would always cheer", //15
+		"and on one especially grand performance", //16
+		"we shared a kiss", //17
+		"what a mistake that was", //18
+		"The crowd quickly turned on us with gasps and disdain", //19
+		"They're Queer!", //20
+		"That's just wrong", //21
+		"They should be ashamed", //22
+		"Dora and I were noticeably shaken", //23
+		"but we brushed it off because we had each other", //24
+		"and the next day, we performed again", //25
+		"just like every other day", //26
+		"The performance began with Dora entering the water", //27
+		"just like every other day", //28
+		"the doors would close as I held my breathe", //29
+		"I would count", //30
+		"1", //31
+		"2", //32
+		"3", //33
+		"But this was not like every other day", //34
+		"Today, things were different" //35
 	};
 	int cnt = 0;
 
@@ -58,7 +59,7 @@ public class TheatreText : MonoBehaviour {
 
 	void Start(){
 		_textMeshPro = GetComponent<TextMeshProUGUI> ();
-		_textMeshPro.text = _strings [0];
+//		_textMeshPro.text = _strings [0];
 
 		int voClipsLength = _voClips.Length;
 		_voClipLengths = new float[voClipsLength];
@@ -77,65 +78,212 @@ public class TheatreText : MonoBehaviour {
 		if (_disappearCoroutine != null) {
 			StopCoroutine (_disappearCoroutine);
 		}
-		Debug.Log (cnt);
 		_textMeshPro.text = _strings [cnt];
 		_markBackgroundTMP.text = "<mark=#000000A0><color=#000000A0>"+_strings [cnt]+"</color></mark>";
 		switch (cnt) {
+		case 0:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
 		case 1:
-			StartCoroutine (CallNextAfterDuration (3f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 2:
-			StartCoroutine (CallNextAfterDuration (3f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.BringInMusic ();
+			break;
+		case 3:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.SetLight (2);
+			_myTheatre.CheckStateMachine ();
+			break;
+		case 4:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+
 			break;
 		case 5:
-			StartCoroutine (CallNextAfterDuration (4f));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 6:
-			StartCoroutine (CallNextAfterDuration (3f));
+			// dancer enters water
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 7:
-			StartCoroutine (CallNextAfterDuration (2f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 8:
-			StartCoroutine (CallNextAfterDuration (1f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 9:
-			StartCoroutine (CallNextAfterDuration (1f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 10:
-			_disappearCoroutine = DisappearAfterDuration (1f, cnt);
-			_myTheatre.ActivateBothTankDoors ();
-			StartCoroutine (_disappearCoroutine);
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 11:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 12:
-			_disappearCoroutine = DisappearAfterDuration (3f, cnt);
-			StartCoroutine (_disappearCoroutine);
-			StartCoroutine (CallNextAfterDuration (8f));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.ActivateBothTankDoors ();
 			break;
 		case 13:
-			StartCoroutine (CallNextAfterDuration (3f));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 14:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 15:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 16:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 17:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]+ 2.0f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 18:
-			StartCoroutine (CallNextAfterDuration (2f));
+			_myTheatre.SetLight (6);
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]+1f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 19:
-			StartCoroutine (CallNextAfterDuration (1.2f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1.0f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 20:
-			StartCoroutine (CallNextAfterDuration (1.2f));
+			_myTheatre.MoveToNext ();
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 21:
-			StartCoroutine (CallNextAfterDuration (1.2f));
+			_myTheatre.MoveToNext ();
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		case 22:
-			StartCoroutine (_disappearCoroutine);
-			_myTheatre.ActivateBothTankDoors ();
+			_myTheatre.MoveToNext ();
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 23:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 24:
+			_myTheatre.MoveToNext ();
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 25:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 26:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.MoveToNext ();
+			break;
+		case 27:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.MoveToNext ();
+			break;
+		case 28:
+			TriggerText ();
+			break;
+		case 29:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+
+			break;
+		case 30:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 31:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 32:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 33:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 34:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			StartCoroutine (DelayedTankActivation (_voClipLengths [cnt]));
+			break;
+		case 35:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
 			break;
 		default:
 			_disappearCoroutine = DisappearAfterDuration (3f, cnt);
 			StartCoroutine (_disappearCoroutine);
 			break;
 		}
+	}
+
+	IEnumerator DelayedTankActivation(float duration){
+		yield return new WaitForSeconds (duration);
+		_myTheatre.ActivateBothTankDoors ();
 	}
 
 	IEnumerator CallNextAfterDuration(float duration){

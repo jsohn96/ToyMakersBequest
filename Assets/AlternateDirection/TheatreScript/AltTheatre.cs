@@ -102,18 +102,24 @@ public class AltTheatre : LevelManager {
 	// Update is called once per frame
 	void Update () {
 		#if UNITY_EDITOR
-		if(Input.GetKeyDown(KeyCode.Space)){
-			if(currentSate < TheatreState.theatreEnd){
-				currentSate += 1;
-				CheckStateMachine();
-				Debug.Log("Current Theatre State: " + currentSate);
-			}
-
-		}
+//		if(Input.GetKeyDown(KeyCode.Space)){
+//			if(currentSate < TheatreState.theatreEnd){
+//				currentSate += 1;
+//				CheckStateMachine();
+//				Debug.Log("Current Theatre State: " + currentSate);
+//			}
+//
+//		}
 
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			Time.timeScale = 5.0f;
 		} else if (Input.GetKeyUp (KeyCode.Z)) {
+			Time.timeScale = 1.0f;
+		}
+
+		if(Input.GetKeyDown(KeyCode.X)){
+			Time.timeScale = 20.0f;
+		} else if (Input.GetKeyUp(KeyCode.X)){
 			Time.timeScale = 1.0f;
 		}
 		#endif
@@ -122,13 +128,18 @@ public class AltTheatre : LevelManager {
 		
 	}
 
+	public void Initialize(){
+		_theatreLighting.Set1 ();
+		_theatreSound.PlayLightSwitch ();
+		_theatreText.TriggerText (0);
+	}
+
 	public void MoveToNext(){
 		if(currentSate < TheatreState.theatreEnd){
 			currentSate += 1;
 			CheckStateMachine();
 			Debug.Log("Current Theatre State: " + currentSate);
 		}
-
 	}
 
 	void CheckStateUpdate(){
@@ -139,24 +150,37 @@ public class AltTheatre : LevelManager {
 		} else if (currentSate == TheatreState.dancerShowUp) {
 			Debug.Log ("Waiting for player to connect nodes");
 		}
-	
+	}
+
+	public void BringInMusic(){
+		_theatreMusic.BeginMusic ();
+	}
+
+	public void SetLight(int index){
+		if (index == 2) {
+			_theatreLighting.Set2 ();
+		} else {
+			_theatreLighting.Set4 ();
+			_theatreSound.PlayLightSwitch ();
+		}
 	}
 
 	public void CheckStateMachine(){
 		switch (currentSate) {
+		case TheatreState.waitingToStart:
+			_theatreCameraControl.Activate ();
+			break;
 		case TheatreState.startShow:
 			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set2 ();
-			_theatreMusic.BeginMusic ();
-			_theatreSound.PlayLightSwitch ();
+
+
+//			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, () => {
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 5f, () => {
 				magician.PointToCenter (true);
-				MoveToNext ();
 			}));
 			magician.GoToStart ();
-
-			_theatreText.TriggerText ();
+			StartCoroutine (DelayedSelfCall (13f));
 			// call back function? 
 			break;
 		case TheatreState.readyForDancerTank:
@@ -167,7 +191,7 @@ public class AltTheatre : LevelManager {
 			_theatreWaterTank.DisableLid (true);
 			_dancer.FirstDancerEnterTank ();
 
-			_theatreText.TriggerText ();
+			_theatreText.TriggerText (6);
 			break;
 		case TheatreState.magicianBoardTank:
 			_traversalUI.FadeIn ();
@@ -212,7 +236,7 @@ public class AltTheatre : LevelManager {
 			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
-			_theatreText.TriggerText ();
+			_theatreText.TriggerText (7);
 			break;
 		case TheatreState.CloseTankDoors:
 			_theatreWaterTank.OpenLid (false);
@@ -224,7 +248,7 @@ public class AltTheatre : LevelManager {
 
 			break;
 		case TheatreState.OpenTank:
-			_theatreText.TriggerText ();
+			_theatreText.TriggerText (13);
 			break;
 		case TheatreState.magicianRight:
 			_tankDoor1.Activate (false);
@@ -238,6 +262,7 @@ public class AltTheatre : LevelManager {
 
 			break;
 		case TheatreState.dancerShowUp:
+			_theatreText.TriggerText (14);
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set5 ();
 			_theaterAudiences [2].AudienceEnter ();
@@ -248,49 +273,45 @@ public class AltTheatre : LevelManager {
 			// enable network connection 
 			network.SetPathActive(true);
 
-			_theatreText.TriggerText ();
 			break;
 		case TheatreState.dancerKissing:
 			magician.EnterKissPosition ();
 			_theatreSound.PlayKissSound ();
-			_theatreText.TriggerText ();
+
+			_theatreText.TriggerText (17);
 			break;
 		case TheatreState.audienceLeave1:
 			_theatreLighting.Set4 ();
-			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [2].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave2:
 			_theatreLighting.Set3 ();
-			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [1].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave3:
 			_theatreLighting.Set6 ();
-			_theatreSound.PlayLightSwitch ();
 			_theaterAudiences [0].AudienceLeave ();
 
 			_dancer.ElevateTankPlatform ();
-
+			_theatreLighting.DisableAll ();
 //			StartCoroutine(DelayedSelfCall(2));
 			break;
 		case TheatreState.magicianReturnToPosition:
 			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.DisableAll ();
-			
+
 			magician.ExitKissPosition ();
 
 			StartCoroutine(DelayedSelfCall(5));
 			break;
 		case TheatreState.restartPerformanceNextDay:
 			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set6 ();
-			_theatreText.TriggerText ();
-			magician.BeginShow (true);
+			_theatreLighting.Set2 ();
+			_theatreText.TriggerText (25);
+			magician.BeginShow (true, true);
 			break;
 		case TheatreState.readyForDancerTank2:
 			_theatreWaterTank.Activate (true);
@@ -300,7 +321,7 @@ public class AltTheatre : LevelManager {
 //			_theatreSound.PlayLightSwitch ();
 //			_theatreWaterTank.OpenLid (true);
 			magician.BeginShow (false);
-			_theatreText.TriggerText ();
+			_theatreText.TriggerText (27);
 			_dancer.SecondDancerEnterTank ();
 
 			break;
@@ -318,7 +339,6 @@ public class AltTheatre : LevelManager {
 			StartCoroutine (DelayedSelfCall (1.5f));
 			break;
 		case TheatreState.dancerLocked:
-			_theatreText.TriggerText ();
 			_dancer.StopMovement ();
 			break;
 		case TheatreState.theatreEnd:
@@ -329,7 +349,7 @@ public class AltTheatre : LevelManager {
 			_tankDoor1.OpenTankCall ();
 			_tankDoor2.OpenTankCall ();
 			_theatreMusic.EndMusic ();
-			_theatreText.TriggerText ();
+			_theatreText.TriggerText (35);
 			break;
 		}
 	}

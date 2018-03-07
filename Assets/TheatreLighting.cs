@@ -14,6 +14,7 @@ public class TheatreLighting : MonoBehaviour {
 
 	void Start(){
 		_viewingLightToBeTurnedOff.enabled = false;
+		DisableAll ();
 	}
 
 	public void MoveToNextLights(){

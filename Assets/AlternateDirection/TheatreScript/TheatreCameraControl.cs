@@ -53,6 +53,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] BoxCollider _surfaceBoxCollider;
 
 	[SerializeField] TraversalUI _traversalUI;
+	[SerializeField] TheatreText _theatreText;
 
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
@@ -69,13 +70,12 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	public void Activate(){
-		if (!_initZoom) {
-			_initZoom = true;
-			AltTheatre.currentSate++;
-			_altTheatre.CheckStateMachine ();
-			StartCoroutine (ZoomInCamera ());
-		}
+		_initZoom = true;
+		AltTheatre.currentSate++;
+		_altTheatre.CheckStateMachine ();
+		StartCoroutine (ZoomInCamera ());
 	}
+
 
 	void Update(){
 		if (_initZoom && !_isZooming) {
@@ -266,7 +266,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	IEnumerator MoveToTank(){
 		float timer = 0f;
-		float duration = 4f;
+		float duration = 8f;
 		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
 		Vector3 originEuler = _thisCamera.transform.eulerAngles;
 		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
@@ -339,7 +339,6 @@ public class TheatreCameraControl : MonoBehaviour {
 		_thisCamera.fieldOfView = _cameraStartFOV;
 		yield return null;
 		_isScrolling = false;
-		_initZoom = true;
 		_isZooming = false;
 		_zoomedOut = false;
 		_traversalUI.FadeIn (true);

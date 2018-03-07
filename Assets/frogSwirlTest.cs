@@ -21,12 +21,10 @@ public class frogSwirlTest : MonoBehaviour {
 	public void ActivateSwirl(){
 		_frogAnimator.enabled = false;
 		_activateSwirl = true;
-		Debug.Log("function Called");
 	}
 
 	void Update () {
 		if (_activateSwirl) {
-			Debug.Log("function Called related event thing is scalled");
 			_counter += Time.deltaTime;
 			_frogTransform.RotateAround (_centerPoint.position, _centerPoint.up, _maxSpeed * Time.deltaTime);
 			_tempPosition = _frogTransform.position;

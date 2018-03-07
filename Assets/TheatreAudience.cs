@@ -46,15 +46,15 @@ public class TheatreAudience : MonoBehaviour {
 			transform.rotation = _goalAngle;
 			Clap ();
 		} else {
-			yield return new WaitForSeconds (1.0f);
 			Clap ();
+			yield return new WaitForSeconds (0.3f);
 			while (timer < duration) {
 				timer += Time.deltaTime;
 				transform.rotation = Quaternion.Lerp (_goalAngle, _originAngle, timer / duration);
 				yield return null;
 			}
 			transform.rotation = _originAngle;
-			_myTheatre.MoveToNext ();
+//			_myTheatre.MoveToNext ();
 		}
 		yield return null;
 	}

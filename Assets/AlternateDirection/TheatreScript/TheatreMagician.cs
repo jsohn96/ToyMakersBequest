@@ -52,6 +52,7 @@ public class TheatreMagician : MonoBehaviour {
 	}
 
 	public void EnterKissPosition(){
+		_dontTriggerNextScene = true;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _kissPosition, 2f));
 		StartCoroutine (Kissing ());
 	}
@@ -112,10 +113,12 @@ public class TheatreMagician : MonoBehaviour {
 		}
 	}
 
-	public void BeginShow(bool isPointing){
+	public void BeginShow(bool isPointing, bool noLightsOn = false){
 		if (isPointing) {
 			_magicianAnim.Play ("StartShow");
-			StartCoroutine (DelayLightsOn());
+			if (!noLightsOn) {
+				StartCoroutine (DelayLightsOn ());
+			}
 		} else {
 			_magicianAnim.Play ("ReturnShow");
 		}
