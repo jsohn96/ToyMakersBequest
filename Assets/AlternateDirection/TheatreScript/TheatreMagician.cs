@@ -89,6 +89,10 @@ public class TheatreMagician : MonoBehaviour {
 //		_isMoving = true;
 	}
 
+	public void BowDown(){
+		_magicianAnim.Play ("bowDown");
+	}
+
 	public void PointToCenter(bool isPointing){
 		if (isPointing) {
 			_magicianAnim.Play ("mg_greet");

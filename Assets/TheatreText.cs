@@ -115,6 +115,7 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			StartCoroutine (FinishGreet(_voClipLengths[cnt]- 1f));
 			break;
 		case 6:
 			// dancer enters water
@@ -281,6 +282,11 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (_disappearCoroutine);
 			break;
 		}
+	}
+
+	IEnumerator FinishGreet(float duration){
+		yield return new WaitForSeconds (duration);
+		_myTheatre.MagicianFinishGreet ();
 	}
 
 	IEnumerator DelayedTankActivation(float duration){

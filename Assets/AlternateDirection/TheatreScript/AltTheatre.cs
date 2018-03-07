@@ -168,6 +168,10 @@ public class AltTheatre : LevelManager {
 		}
 	}
 
+	public void MagicianFinishGreet(){
+		magician.PointToCenter (true);
+	}
+
 	public void CheckStateMachine(){
 		switch (currentSate) {
 		case TheatreState.waitingToStart:
@@ -179,10 +183,10 @@ public class AltTheatre : LevelManager {
 //			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
 			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 8f, () => {
-				magician.PointToCenter (true);
+				magician.BowDown ();
 			}));
 			magician.GoToStart ();
-			StartCoroutine (DelayedSelfCall (16f));
+			StartCoroutine (DelayedSelfCall (18f));
 			// call back function? 
 			break;
 		case TheatreState.readyForDancerTank:
