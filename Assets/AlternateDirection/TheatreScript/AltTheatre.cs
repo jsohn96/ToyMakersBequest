@@ -74,6 +74,7 @@ public class AltTheatre : LevelManager {
 
 
 	[SerializeField] TheatreText _theatreText;
+	[SerializeField] frogSwirlTest _frogSwirl;
 
 	int _doorCloseCnt = 0;
 
@@ -307,7 +308,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.magicianReturnToPosition:
 			magician.ExitKissPosition ();
-
+			_frogSwirl.ShrinkFrog ();
 			StartCoroutine(DelayedSelfCall(5));
 			break;
 		case TheatreState.restartPerformanceNextDay:

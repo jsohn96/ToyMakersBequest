@@ -36,4 +36,22 @@ public class frogSwirlTest : MonoBehaviour {
 			}
 		}
 	}
+
+	public void ShrinkFrog(){
+		StartCoroutine (ShrinkFrogCoroutine ());
+	}
+
+	IEnumerator ShrinkFrogCoroutine(){
+		float timer = 0f;
+		float duration = 1.5f;
+		Vector3 zeroVector3 = new Vector3 (0f, 0f, 0f);
+		Vector3 frogScale = _frogTransform.localScale;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_frogTransform.localScale = Vector3.Lerp (frogScale, zeroVector3, timer / duration);
+			yield return null;
+		}
+		_frogTransform.gameObject.SetActive (false);
+		yield return null;
+	}
 }
