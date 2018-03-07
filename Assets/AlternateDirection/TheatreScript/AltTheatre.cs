@@ -157,11 +157,14 @@ public class AltTheatre : LevelManager {
 	}
 
 	public void SetLight(int index){
-		if (index == 2) {
+		_theatreSound.PlayLightSwitch ();
+		if (index == 0) {
+			_theatreLighting.DisableAll ();
+		}
+		else if (index == 2) {
 			_theatreLighting.Set2 ();
 		} else {
 			_theatreLighting.Set4 ();
-			_theatreSound.PlayLightSwitch ();
 		}
 	}
 
@@ -171,7 +174,6 @@ public class AltTheatre : LevelManager {
 			_theatreCameraControl.Activate ();
 			break;
 		case TheatreState.startShow:
-			_theatreSound.PlayLightSwitch ();
 
 
 //			_theatreSound.PlayLightSwitch ();
@@ -281,28 +283,25 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText (17);
 			break;
 		case TheatreState.audienceLeave1:
-			_theatreLighting.Set4 ();
+//			_theatreLighting.Set4 ();
 			_theaterAudiences [2].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave2:
-			_theatreLighting.Set3 ();
+//			_theatreLighting.Set3 ();
 			_theaterAudiences [1].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave3:
-			_theatreLighting.Set6 ();
+//			_theatreLighting.Set6 ();
 			_theaterAudiences [0].AudienceLeave ();
 
 			_dancer.ElevateTankPlatform ();
-			_theatreLighting.DisableAll ();
 //			StartCoroutine(DelayedSelfCall(2));
 			break;
 		case TheatreState.magicianReturnToPosition:
-			_theatreSound.PlayLightSwitch ();
-
 			magician.ExitKissPosition ();
 
 			StartCoroutine(DelayedSelfCall(5));

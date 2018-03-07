@@ -41,7 +41,7 @@ public class TheatreText : MonoBehaviour {
 		"Dora and I were noticeably shaken", //23
 		"but we brushed it off because we had each other", //24
 		"and the next day, we performed again", //25
-		"just like every other day", //26
+		"", //26
 		"The performance began with Dora entering the water", //27
 		"just like every other day", //28
 		"the doors would close as I held my breathe", //29
@@ -95,13 +95,14 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_myTheatre.SetLight (2);
 			_myTheatre.BringInMusic ();
 			break;
 		case 3:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_myTheatre.SetLight (2);
+
 			_myTheatre.CheckStateMachine ();
 			break;
 		case 4:
@@ -207,6 +208,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 			break;
 		case 23:
+			_myTheatre.SetLight (0);
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
@@ -223,19 +225,19 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 			break;
 		case 26:
-			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
-			_audioSource.clip = _voClips [cnt];
-			_audioSource.Play ();
 			_myTheatre.MoveToNext ();
+//			TriggerText (27);
 			break;
 		case 27:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_myTheatre.MoveToNext ();
 			break;
 		case 28:
-			TriggerText ();
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			_myTheatre.MoveToNext ();
 			break;
 		case 29:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
