@@ -52,7 +52,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
 	[SerializeField] Transform _startPlatform;
-	float _platformDuration = 3f;
+	float _platformDuration = 5f;
 	[SerializeField] Vector3 _platformBeginPos, _platformEndPos;
 
 	[Header("Interactive Scene Objects")]
@@ -178,11 +178,11 @@ public class AltTheatre : LevelManager {
 
 //			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 5f, () => {
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 8f, () => {
 				magician.PointToCenter (true);
 			}));
 			magician.GoToStart ();
-			StartCoroutine (DelayedSelfCall (13f));
+			StartCoroutine (DelayedSelfCall (16f));
 			// call back function? 
 			break;
 		case TheatreState.readyForDancerTank:

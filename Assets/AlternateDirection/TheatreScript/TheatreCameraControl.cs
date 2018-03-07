@@ -322,7 +322,13 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	IEnumerator ZoomInCamera(){
 		float timer = 0f;
-		float duration = 5f;
+		float duration;
+		if (!_initClick) {
+			_initClick = true;
+			duration = 12f;
+		} else {
+			duration = 5f;
+		}
 		Quaternion tempRot = _thisCamera.transform.rotation;
 		float cameraTempFOV = _thisCamera.fieldOfView;
 		Quaternion startRot = Quaternion.Euler (_cameraStartRot);
@@ -341,6 +347,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		_isScrolling = false;
 		_isZooming = false;
 		_zoomedOut = false;
+		_initClick = true;
 		_traversalUI.FadeIn (true);
 	}
 
