@@ -289,11 +289,7 @@ public class AltTheatre : LevelManager {
 			network.SetPathActive (true);
 			break;
 		case TheatreState.dancerKissing:
-			magician.Kiss ();
-			_dancer.Kiss ();
-			_theatreSound.PlayKissSound ();
-			//_dancer.PlayKiss ();
-			_theatreText.TriggerText (17);
+			StartCoroutine (KissSepuence ());
 			break;
 		case TheatreState.audienceLeave1:
 //			_theatreLighting.Set4 ();
@@ -365,6 +361,16 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText (35);
 			break;
 		}
+	}
+
+	IEnumerator KissSepuence(){
+		magician.Kiss ();
+		_dancer.Kiss ();
+		yield return new WaitForSeconds (5f);
+		_theatreSound.PlayKissSound ();
+		//_dancer.PlayKiss ();
+		_theatreText.TriggerText (17);
+		yield return 0;
 	}
 
 	void DancerMoveOnPathHandle(DancerMoveOnPathEvent e){
