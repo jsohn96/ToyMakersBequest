@@ -8,31 +8,32 @@ using UnityEngine;
 public enum TheatreState{
 	waitingToStart = -1,
 	startShow = 0,
-	readyForDancerTank = 1,
-	dancerInTank = 2,
-	magicianBoardTank = 3,
-	magicianBeginShow = 4,
-	waterTankDescend = 5,
-	magicianPrepareFrog = 6,
-	magicianLeft = 7,
-	frogJump = 8,
-	lookDownIntoTank = 9,
-	CloseTankDoors = 10,
-	OpenTank = 11,
-	magicianRight = 12,
-	dancerShowUp = 13,
-	dancerKissing = 14,
-	audienceLeave1 = 15,
-	audienceLeave2 = 16,
-	audienceLeave3 = 17,
-	magicianReturnToPosition = 18,
-	restartPerformanceNextDay = 19,
-	readyForDancerTank2 = 20,
-	dancerDescend = 21,
-	lookDownIntoTank2 = 22,
-	CloseTankDoors2 = 23,
-	dancerLocked = 24,
-	theatreEnd = 25
+	readyForDancerTank,
+	dancerInTank,
+	magicianBoardTank,
+	magicianBeginShow,
+	waterTankDescend,
+	magicianPrepareFrog,
+	magicianLeft,
+	frogJump,
+	lookDownIntoTank,
+	CloseTankDoors,
+	OpenTank,
+	magicianRight,
+	dancerShowUp,
+	dancerStartPath,
+	dancerKissing,
+	audienceLeave1,
+	audienceLeave2,
+	audienceLeave3,
+	magicianReturnToPosition,
+	restartPerformanceNextDay,
+	readyForDancerTank2,
+	dancerDescend,
+	lookDownIntoTank2,
+	CloseTankDoors2,
+	dancerLocked,
+	theatreEnd 
 }
 
 public class AltTheatre : LevelManager {
@@ -100,7 +101,7 @@ public class AltTheatre : LevelManager {
 		_startPlatform.localPosition = _platformBeginPos;
 	}
 
-	
+
 	// Update is called once per frame
 	void Update () {
 		#if UNITY_EDITOR
@@ -270,22 +271,28 @@ public class AltTheatre : LevelManager {
 
 			break;
 		case TheatreState.dancerShowUp:
+			// dancer shows up play dancer aniamtion
 			_theatreText.TriggerText (14);
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set5 ();
 			_theaterAudiences [2].AudienceEnter ();
 
 			magician.PointToRight (false);
+			_dancer.ExitCloset ();
 			// dancer.showUp();
-			_dancer.HideDancer (false);
+			//_dancer.HideDancer (false);
 			// enable network connection 
-			network.SetPathActive(true);
-
+			break;
+		case TheatreState.dancerStartPath:
+			// after animation ends, activate path
+			magician.EnterKissPosition ();
+			network.SetPathActive (true);
 			break;
 		case TheatreState.dancerKissing:
-			magician.EnterKissPosition ();
+			magician.Kiss ();
+			_dancer.Kiss ();
 			_theatreSound.PlayKissSound ();
-
+			//_dancer.PlayKiss ();
 			_theatreText.TriggerText (17);
 			break;
 		case TheatreState.audienceLeave1:
@@ -360,6 +367,12 @@ public class AltTheatre : LevelManager {
 		}
 	}
 
+	void DancerMoveOnPathHandle(DancerMoveOnPathEvent e){
+		if (currentSate == TheatreState.dancerShowUp) {
+			MoveToNext ();
+		}
+	}
+
 	IEnumerator DelayedSelfCall(float duration){
 		yield return new WaitForSeconds (duration);
 		MoveToNext ();
@@ -412,9 +425,15 @@ public class AltTheatre : LevelManager {
 
 	void OnEnable(){
 		Events.G.AddListener<PathStateManagerEvent> (TriggerKiss);
+		Events.G.AddListener<DancerMoveOnPathEvent> (DancerMoveOnPathHandle);
 	}
 
 	void OnDisable(){
 		Events.G.RemoveListener<PathStateManagerEvent> (TriggerKiss);
+		Events.G.RemoveListener<DancerMoveOnPathEvent> (DancerMoveOnPathHandle);
 	}
 }
+
+
+
+

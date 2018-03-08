@@ -11,6 +11,7 @@ public class TheatreMagician : MonoBehaviour {
 	[SerializeField] Transform _waterTank;
 	[SerializeField] Vector3 _onWaterTank;
 	[SerializeField] Vector3 _stepOffWaterTank;
+	[SerializeField] Transform _kissLocator;
 	[SerializeField] Vector3 _kissPosition;
 	[SerializeField] GameObject _kissImage;
 
@@ -30,6 +31,7 @@ public class TheatreMagician : MonoBehaviour {
 
 		//_magicianTransform = gameObject.transform;
 		_kissImage.SetActive(false);
+		_kissPosition = _kissLocator.position;
 	}
 
 	void Start(){
@@ -54,7 +56,19 @@ public class TheatreMagician : MonoBehaviour {
 	public void EnterKissPosition(){
 		_dontTriggerNextScene = true;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _kissPosition, 2f));
-		StartCoroutine (Kissing ());
+		//\StartCoroutine (Kissing ());
+
+
+	}
+
+	public void Kiss(){
+		PlayKiss ();
+	}
+
+
+
+	void PlayKiss(){
+		_magicianAnim.Play ("Kiss");
 	}
 
 	public void ExitKissPosition(){
@@ -76,11 +90,11 @@ public class TheatreMagician : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Kissing(){
-		_kissImage.SetActive (true);
-		yield return new WaitForSeconds (2);
-		_kissImage.SetActive (false);
-	}
+//	IEnumerator Kissing(){
+//		//_kissImage.SetActive (true);
+//		//yield return new WaitForSeconds (2);
+//		//_kissImage.SetActive (false);
+//	}
 
 	public void GoToStart(){
 //		_isWaitingForLeft = true;

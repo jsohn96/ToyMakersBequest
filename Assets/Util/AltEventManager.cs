@@ -39,3 +39,7 @@ public class TheatreFrogClickEvent:GameEvent{
 		iconIdx = ic_idx;
 	}
 }
+
+public class DancerMoveOnPathEvent:GameEvent{
+	
+}
