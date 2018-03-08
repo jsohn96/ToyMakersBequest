@@ -31,7 +31,7 @@ public class TheatreMagician : MonoBehaviour {
 
 		//_magicianTransform = gameObject.transform;
 		_kissImage.SetActive(false);
-		_kissPosition = _kissLocator.position;
+		_kissPosition = _kissLocator.position;	
 	}
 
 	void Start(){
@@ -72,6 +72,7 @@ public class TheatreMagician : MonoBehaviour {
 	}
 
 	public void ExitKissPosition(){
+		_magicianAnim.SetBool ("isBackToIdle", true);
 		_dontTriggerNextScene = true;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 	}

@@ -292,6 +292,11 @@ public class AltTheatre : LevelManager {
 			StartCoroutine (KissSepuence ());
 			break;
 		case TheatreState.audienceLeave1:
+			// dancer|magician return to idle 
+			magician.ExitKissPosition ();
+			_dancer.EndKiss ();
+			// dancer go to center 
+			// magician back to original 
 //			_theatreLighting.Set4 ();
 			_theaterAudiences [2].AudienceLeave ();
 
@@ -311,7 +316,7 @@ public class AltTheatre : LevelManager {
 //			StartCoroutine(DelayedSelfCall(2));
 			break;
 		case TheatreState.magicianReturnToPosition:
-			magician.ExitKissPosition ();
+			//magician.ExitKissPosition ();
 			_frogSwirl.ShrinkFrog ();
 			StartCoroutine(DelayedSelfCall(5));
 			break;

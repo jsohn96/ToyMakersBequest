@@ -7,6 +7,7 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] Animator _dancerAnim;
 	[SerializeField] Transform _dancerTransform;
 	[SerializeField] Transform _closetLocator;
+	[SerializeField] Transform _centerLocator;
 
 	[SerializeField] Vector3 _startPosition;
 	Vector3 _stillRotateAxis = new Vector3 (0f,1f,0f);
@@ -74,6 +75,12 @@ public class TheatreDancer : MonoBehaviour {
 		_dancerAnim.Play ("Kiss");
 	}
 
+	public void EndKiss(){
+		_dancerAnim.SetBool ("isBack", true);
+		StartCoroutine (DancerToCenter ());
+	}
+
+
 
 
 	public void FirstDancerEnterTank(){
@@ -103,7 +110,20 @@ public class TheatreDancer : MonoBehaviour {
 		_dancerAnim.Play ("dancer_exit_closet");
 	}
 
-
+	IEnumerator DancerToCenter(){
+		yield return new WaitForSeconds (1.5f);
+		//_dancerTransform.parent = _waterTankPlatformTransform;
+		float timer = 0f;
+		float duration = 2f;
+		Vector3 centerPos = _centerLocator.position;
+		//duration = 3f;
+		_dancerTempPos = _dancerTransform.position;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_dancerTransform.position = Vector3.Lerp (_dancerTempPos, centerPos, timer / duration);
+			yield return null;
+		}
+	}
 
 	IEnumerator FirstDancerTankCoroutine(){
 		float timer = 0f;
@@ -177,6 +197,9 @@ public class TheatreDancer : MonoBehaviour {
 		_myTheatre.MoveToNext ();
 		yield return null;
 	}
+
+
+
 
 	void RotateInPlace(){
 		_dancerTransform.Rotate (_stillRotateAxis * 53f * Time.deltaTime);
