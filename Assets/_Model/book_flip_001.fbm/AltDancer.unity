@@ -2890,8 +2890,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.005
   glowOpacity: 1
-  glowColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
-  _connectedColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &182793242
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,11 +3135,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077482006
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.0077488264
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z
@@ -4278,8 +4278,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.36764705, b: 0.36764705, a: 1}
-  _connectedColor: {r: 0.5344828, g: 0.47847998, b: 0.3104716, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &262102072
 GameObject:
   m_ObjectHideFlags: 0
@@ -4741,11 +4741,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077482006
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.0077488264
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z
@@ -5082,8 +5082,8 @@ GameObject:
   - component: {fileID: 309829208}
   - component: {fileID: 309829209}
   m_Layer: 18
-  m_Name: pCylinder115
-  m_TagString: Untagged
+  m_Name: Coin
+  m_TagString: DragRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5137,12 +5137,12 @@ Transform:
   m_PrefabParentObject: {fileID: 400338, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 309829204}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.000039436836, y: 0, z: 0.0016638278}
-  m_LocalScale: {x: 0.43329963, y: 0.2649953, z: 0.4332995}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1982961424}
-  m_RootOrder: 2
+  m_Father: {fileID: 1522095182}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &309829208
 MonoBehaviour:
@@ -5163,8 +5163,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.3
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.972549, b: 0.6117647, a: 1}
-  _connectedColor: {r: 0.95, g: 0.94, b: 0.61, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &309829209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,6 +5176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781c3235aed251d4b8ec5fdcc1996d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coinBoxCollider: {fileID: 309829210}
+  _parentBoxCollider: {fileID: 1522095184}
+  _parentShaderGlowCustom: {fileID: 1522095183}
 --- !u!65 &309829210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5184,7 +5187,7 @@ BoxCollider:
   m_GameObject: {fileID: 309829204}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.03821416, y: 0.0045531713, z: 0.038004834}
   m_Center: {x: 0.0000000041327444, y: -7.940934e-23, z: -0.000000005587937}
@@ -7406,8 +7409,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.005
   glowOpacity: 1
-  glowColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
-  _connectedColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &418028910
 GameObject:
   m_ObjectHideFlags: 0
@@ -7462,10 +7465,10 @@ MonoBehaviour:
   flashing: 1
   flashSpeed: 1
   noOcclusion: 0
-  glowIntensity: 0.1
+  glowIntensity: 0.15
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.972549, b: 0.6117647, a: 1}
-  _connectedColor: {r: 1, g: 0.9725491, b: 0.6117647, a: 1}
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &418028913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14181,8 +14184,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.972549, b: 0.6117647, a: 1}
-  _connectedColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &782019953
 GameObject:
   m_ObjectHideFlags: 0
@@ -21145,8 +21148,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.02
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.36764705, b: 0.36764705, a: 1}
-  _connectedColor: {r: 0.5344828, g: 0.47847998, b: 0.3104716, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1153898596
 GameObject:
   m_ObjectHideFlags: 0
@@ -21587,8 +21590,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 1, g: 0.972549, b: 0.6117647, a: 1}
-  _connectedColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!23 &1169591608 stripped
 MeshRenderer:
   m_PrefabParentObject: {fileID: 2300002, guid: 5778151ab42d64fc39b2b215600116bf,
@@ -25489,8 +25492,8 @@ MonoBehaviour:
   noOcclusion: 0
   glowIntensity: 0.08
   glowOpacity: 1
-  glowColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
-  _connectedColor: {r: 0.53333336, g: 0.47843137, b: 0.30980393, a: 1}
+  glowColor: {r: 0.7411765, g: 0.6627451, b: 0.42745098, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1358347558
 GameObject:
   m_ObjectHideFlags: 0
@@ -27340,11 +27343,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077482006
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.0077488264
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z
@@ -28513,6 +28516,93 @@ MonoBehaviour:
   _nonMainCameraForRayCast: {fileID: 0}
   _shaderGlowCustom: {fileID: 0}
   _betweenTransitionLerpDuration: 0.25
+--- !u!1 &1522095181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1522095182}
+  - component: {fileID: 1522095185}
+  - component: {fileID: 1522095184}
+  - component: {fileID: 1522095183}
+  m_Layer: 18
+  m_Name: CoinContainer
+  m_TagString: DragRotation
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522095182
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1522095181}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.000039436825, y: 0, z: 0.0016638534}
+  m_LocalScale: {x: 0.4332998, y: 0.2649954, z: 0.43329978}
+  m_Children:
+  - {fileID: 309829207}
+  m_Father: {fileID: 1982961424}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522095183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1522095181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f56af8e44ece248b93169dcd6f0983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderers:
+  - {fileID: 309829206}
+  glowMode: 3
+  flashing: 0
+  flashSpeed: 1
+  noOcclusion: 0
+  glowIntensity: 0.35
+  glowOpacity: 1
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  _connectedColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!65 &1522095184
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1522095181}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04, y: 0.02, z: 0.04}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1522095185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1522095181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea19f4c792bec66448cfae220ebd023d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _oneDirectional: 0
+  isDragStart: 0
+  _dragSensitivity: 10
+  _isNotebook: 1
+  _nonMainCameraForRayCast: {fileID: 961011381}
+  _mainAxis: 1
+  _reverseRotation: []
+  _reverseRelativeSpeed: []
+  _reverseAxisToRotate: 
+  _flipDirection: 0
+  _textContentTracker: {fileID: 0}
 --- !u!1 &1525413823
 GameObject:
   m_ObjectHideFlags: 0
@@ -33392,11 +33482,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077482006
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.0077488264
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z
@@ -34006,11 +34096,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077483826
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.007748383
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z
@@ -37710,7 +37800,7 @@ Transform:
   m_Children:
   - {fileID: 573592720}
   - {fileID: 1965427792}
-  - {fileID: 309829207}
+  - {fileID: 1522095182}
   - {fileID: 1457509868}
   m_Father: {fileID: 2080680198}
   m_RootOrder: 2
@@ -40092,11 +40182,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.0077482006
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.0077488264
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalScale.z

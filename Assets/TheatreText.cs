@@ -16,41 +16,41 @@ public class TheatreText : MonoBehaviour {
 
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
-		"Echoing throughout the stage", //1
-		"Ladies and gentlemen, welcome to the show",//2
-		"You are about to witness Agnes and Dora", //3
-		"the greatest escapologists of our time in", //4
-		"The Secrets Under Water", //5
-		"The show always began with Dora entering the water", //6
-		"As the doors close, I would begin holding my breathe", //7
-		"wishing for her safe escape", //8
-		"I would count", //9
-		"1", //10
-		"2", //11
-		"3", //12
-		"and to my relief", //13
-		"she always made it out unscathed", //14
-		"The crowd would always cheer", //15
-		"and on one especially grand performance", //16
-		"we shared a kiss", //17
-		"what a mistake that was", //18
-		"The crowd quickly turned on us with gasps and disdain", //19
-		"They're Queer!", //20
-		"That's just wrong", //21
-		"They should be ashamed", //22
-		"Dora and I were noticeably shaken", //23
-		"but we brushed it off because we had each other", //24
-		"and the next day, we performed again", //25
+		"echoing throughout the stage.", //1
+		"Ladies and gentlemen, welcome to the show.",//2
+		"You are about to witness Agnes and Dora,", //3
+		"the greatest escapologists of our time, in", //4
+		"\"The Secrets Under Water\".", //5
+		"The show always began with Dora entering the water.", //6
+		"As the doors close, I would begin holding my breath,", //7
+		"wishing for her safe escape.", //8
+		"I would count.", //9
+		"One.", //10
+		"Two.", //11
+		"Three.", //12
+		"And to my relief,", //13
+		"she always made it out unscathed.", //14
+		"The crowd would always cheer,", //15
+		"and on one especially grand performance,", //16
+		"we shared a kiss.", //17
+		"What a mistake that was.", //18
+		"The crowd quickly turned on us with gasps and disdain.", //19
+		"They're queer!", //20
+		"That's just wrong!", //21
+		"They should be ashamed!", //22
+		"Dora and I were noticeably shaken,", //23
+		"but we brushed it off because we had each other.", //24
+		"And the next day, we performed again.", //25
 		"", //26
-		"The performance began with Dora entering the water", //27
-		"just like every other day", //28
-		"the doors would close as I held my breathe", //29
-		"I would count", //30
-		"1", //31
-		"2", //32
-		"3", //33
-		"But this was not like every other day", //34
-		"Today, things were different" //35
+		"The performance began with Dora entering the water.", //27
+		"Just like every other day.", //28
+		"The doors would close as I held my breath.", //29
+		"I would count.", //30
+		"One.", //31
+		"Two.", //32
+		"Three.", //33
+		"But this was not like every other day.", //34
+		"Today, things were different." //35
 	};
 	int cnt = 0;
 
