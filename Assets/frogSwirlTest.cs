@@ -18,6 +18,9 @@ public class frogSwirlTest : MonoBehaviour {
 	bool _activateSwirl = false;
 	[SerializeField] Animator _frogAnimator;
 
+	[SerializeField] Transform _frogKey;
+	Vector3 _keyRotateAmount = new Vector3 (0f, 10f, 0f);
+
 	public void ActivateSwirl(){
 		_frogAnimator.enabled = false;
 		_activateSwirl = true;
@@ -34,6 +37,7 @@ public class frogSwirlTest : MonoBehaviour {
 			if(_counter/_counterDuration>=1f){
 				_counter = 0f;
 			}
+			_frogKey.RotateAround (_frogKey.position, _frogKey.right, Time.deltaTime * 180f);
 		}
 	}
 

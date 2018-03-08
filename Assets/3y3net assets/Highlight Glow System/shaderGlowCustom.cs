@@ -55,6 +55,7 @@ public class shaderGlowCustom : MonoBehaviour
 
 	bool _hasBeenTriggered = false;
 	bool _triggeringDone = false;
+	bool _colorReturned = false;
 	Timer _triggeredTimer;
 
     void Awake()
@@ -88,12 +89,14 @@ public class shaderGlowCustom : MonoBehaviour
     }
 
 	public void TriggerForFadeIn(){
+		_colorReturned = false;
+		glowColor = _tempGlowColor;
 		_triggeringDone = false;
 		_hasBeenTriggered = true;
 		_triggeredTimer.Reset ();
 		lightOn ();
 		glowIntensity = glowIntensity * 2f;
-		glowColor = _tempGlowColor;
+
 	}
 
 	public void DisablePointerEnter(bool disabled){
@@ -117,6 +120,11 @@ public class shaderGlowCustom : MonoBehaviour
 				lightOn ();
 			} else if (glowMode == allowedModes.TriggeredFadeIn) {
 				if (_triggeringDone) {
+					if (!_colorReturned) {
+						glowIntensity = glowIntensity / 2f;
+						_colorReturned = true;
+						glowColor = _connectedColor;
+					}
 					lightOn ();
 				} else if (!_hasBeenTriggered) {
 					lightOn ();
@@ -131,8 +139,6 @@ public class shaderGlowCustom : MonoBehaviour
 			_reduceGlowTimerForFadeWhileHold.Reset ();
 		} else if (glowMode == allowedModes.TriggeredFadeIn && _hasBeenTriggered) {
 			_triggeringDone = true;
-			glowIntensity = glowIntensity / 2f;
-			glowColor = _connectedColor;
 		}
 	}
 

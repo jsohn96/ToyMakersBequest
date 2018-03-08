@@ -15,7 +15,12 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 	[SerializeField] bool _isFrogOn = false;
 	bool _isClicked = false;
 
+	[SerializeField] Transform _frogKey;
+	bool _frogRotateKey = false;
+
 	BoxCollider bCol;
+
+
 	// Use this for initialization
 	void Awake(){
 		_frogAnim = GetComponent<Animator> ();
@@ -27,6 +32,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 	void Start () {
 		if (!_isFrogUp) {
 			_frog.SetActive (false);
+			_frogRotateKey = false;
 		}
 		_frogIdx = GetComponentInParent<PathNode> ().readNodeInfo ().index;
 
@@ -44,7 +50,9 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 //			_isPreviousUp = _isFrogUp;
 //		
 //		}
-
+		if (_frogRotateKey) {
+			_frogKey.RotateAround (_frogKey.position, _frogKey.right, Time.deltaTime * 90f);
+		}
 	}
 
 	public void SetControl(bool isactive){
@@ -66,6 +74,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		_isFrogUp = true;
 		_frogAnim.Play ("frog_jumpOutOfChest");
 		_frog.SetActive (true);
+		_frogRotateKey = true;
 	}
 		
 	public void ShowFrog(){
@@ -73,6 +82,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		_isFrogUp = true;
 		if (_isFrogOn) {
 			_frog.SetActive (true);
+			_frogRotateKey = true;
 			_frogAnim.Play ("frog_getup");
 		} else {
 			_frogAnim.Play ("frog_lilipad_flipDown");
@@ -110,6 +120,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 
 	void hideFrogInScene(){
 		_frog.SetActive (false);
+		_frogRotateKey = false;
 		//_isClickActive = false;
 		//bCol.enabled = false;
 	}
