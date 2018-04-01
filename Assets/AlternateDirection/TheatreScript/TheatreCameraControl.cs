@@ -54,6 +54,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	[SerializeField] TraversalUI _traversalUI;
 	[SerializeField] TheatreText _theatreText;
+	[SerializeField] TapSoundPlayer _tapSoundPlayer;
 
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
@@ -347,11 +348,13 @@ public class TheatreCameraControl : MonoBehaviour {
 		_isScrolling = false;
 		_isZooming = false;
 		_zoomedOut = false;
+		_tapSoundPlayer._activateSounds = true;
 		_initClick = true;
 		_traversalUI.FadeIn (true);
 	}
 
 	IEnumerator ZoomOutCamera(){
+		_tapSoundPlayer._activateSounds = false;
 		_traversalUI.FadeOut (true);
 		float timer = 0f;
 		float duration = 5f;
