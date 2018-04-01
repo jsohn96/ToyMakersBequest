@@ -17,8 +17,6 @@ public class TheatreSound : MonoBehaviour {
 	[SerializeField] AudioSource _bellFeedback;
 	[SerializeField] AudioSource _frogSound;
 
-	[SerializeField] AudioSource _starSound;
-
 	[SerializeField] AudioSource _crowCawSound;
 
 	[SerializeField] AudioSource _kissSound;
@@ -40,9 +38,6 @@ public class TheatreSound : MonoBehaviour {
 		_frogSound.Play ();
 	}
 
-	public void PlayStarSound(){
-		_starSound.Play ();
-	}
 
 	public void PlayCrowCawSound(){
 		if (!_crowCawSound.isPlaying) {

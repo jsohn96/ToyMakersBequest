@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreStar : MonoBehaviour {
-	[SerializeField] TheatreSound _theatreSound;
 	[SerializeField] SpriteRenderer _spriteRenderer;
 	[SerializeField] AnimationCurve _starGlowCurve;
 	bool _isGlowing = false;
@@ -26,7 +25,6 @@ public class TheatreStar : MonoBehaviour {
 				_theatreStarLine.AddStarToLine (transform.position);
 			}
 		}
-		_theatreSound.PlayStarSound ();
 		_isGlowing = true;
 		_spriteRenderer.color = _fullColor;
 		_timer = 0f;

@@ -506,6 +506,61 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 19956033}
   m_Mesh: {fileID: 4300034, guid: 0a7fb206e0f3c4795a42a73e80b0d9ca, type: 3}
+--- !u!1 &23771172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 23771173}
+  - component: {fileID: 23771175}
+  - component: {fileID: 23771174}
+  m_Layer: 21
+  m_Name: audienceTapSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &23771173
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23771172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 176244950}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23771174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23771172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 19
+--- !u!65 &23771175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23771172}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008549821, y: 0.017346464, z: 0.007582967}
+  m_Center: {x: -0.0007250875, y: 0.004155727, z: -0.00048336998}
 --- !u!1 &24142016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,6 +1215,61 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 2300004, guid: 5778151ab42d64fc39b2b215600116bf,
     type: 3}
   m_PrefabInternal: {fileID: 1762856585}
+--- !u!1 &52961344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 52961345}
+  - component: {fileID: 52961347}
+  - component: {fileID: 52961346}
+  m_Layer: 21
+  m_Name: audienceTapSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52961345
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 52961344}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00181, y: 0, z: 0.00011}
+  m_LocalScale: {x: -1.0000019, y: 1, z: 1.0000014}
+  m_Children: []
+  m_Father: {fileID: 505897806}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &52961346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 52961344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 19
+--- !u!65 &52961347
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 52961344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.00700153, y: 0.016203957, z: 0.0072585014}
+  m_Center: {x: -0.0008995428, y: 0.0031019757, z: -0.0010278953}
 --- !u!1 &55100890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,7 +2417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tapSoundPlayer: {fileID: 676692538}
-  _thisSoundTag: 15
+  _thisSoundTag: 16
 --- !u!64 &121198342
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3079,6 +3189,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 768828279}
+  - {fileID: 23771173}
   m_Father: {fileID: 1344357465}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3105,8 +3216,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.02, z: 0.01}
-  m_Center: {x: 0, y: 0.005, z: 0}
+  m_Size: {x: 0.008549821, y: 0.017346464, z: 0.007582967}
+  m_Center: {x: -0.0007250875, y: 0.004155727, z: -0.00048336998}
 --- !u!114 &176244953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3252,11 +3363,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.002
@@ -3289,109 +3395,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreSound
-      value: 
-      objectReference: {fileID: 1252236954}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_Name
       value: starSprite (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreStarLine
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 2117309055}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: _thisSoundTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
@@ -5040,11 +5056,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.0093
@@ -5077,113 +5088,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreSound
-      value: 
-      objectReference: {fileID: 1252236954}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_Name
       value: starSprite (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreStarLine
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 2117309055}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 9.342
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: _thisSoundTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
@@ -7641,6 +7558,62 @@ MeshFilter:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 744b26047d4b847edb1e4d5ee4843ae3, type: 3}
   m_PrefabInternal: {fileID: 1713467894}
+--- !u!1 &414667279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 414667280}
+  - component: {fileID: 414667282}
+  - component: {fileID: 414667281}
+  m_Layer: 21
+  m_Name: magicianTapSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &414667280
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 414667279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.003, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1272274110}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &414667281
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 414667279}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.01
+  m_Height: 0.07
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.03, z: 0}
+--- !u!114 &414667282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 414667279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 19
 --- !u!1 &414676824
 GameObject:
   m_ObjectHideFlags: 0
@@ -7788,8 +7761,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.02, z: 0.01}
-  m_Center: {x: 0, y: 0.005, z: 0}
+  m_Size: {x: 0.00700153, y: 0.016203957, z: 0.0072585014}
+  m_Center: {x: -0.0008995428, y: 0.0031019757, z: -0.0010278953}
 --- !u!114 &415114480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9385,6 +9358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 415114477}
+  - {fileID: 52961345}
   m_Father: {fileID: 2080680198}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12938,21 +12912,34 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9f257fe372408da46a86bdd2d946c813, type: 3}
   - {fileID: 8300000, guid: b8524b89f5eef834fb08c30b163b99bb, type: 3}
   _heavyWoodClips:
-  - {fileID: 8300000, guid: 570829e1dba4eed449db50b7940cf772, type: 3}
-  - {fileID: 8300000, guid: fc1b0b1d08a13a64880971ea7b6a9c0f, type: 3}
-  - {fileID: 8300000, guid: 638eab9d789278b43b6ea555c57666db, type: 3}
-  - {fileID: 8300000, guid: 408f60ee281ead44e8a11b4fd04733b7, type: 3}
-  _floorWoodClips:
   - {fileID: 8300000, guid: 3e2d13cb251983643b13e7a1188e4061, type: 3}
   - {fileID: 8300000, guid: f894a38c468be794cb86feb2178b1ab6, type: 3}
   - {fileID: 8300000, guid: 5f0ed10f95512754da29bd6929572982, type: 3}
-  _metalCreakMessageBoardClips:
-  - {fileID: 8300000, guid: c99fe7bc41611fb43aa21b13b9a423b6, type: 3}
-  - {fileID: 8300000, guid: 82fc67fa4c324814cbf4fca53fd7921c, type: 3}
-  - {fileID: 8300000, guid: 845fecc746958e544aeb5cca12cd2efd, type: 3}
+  _floorWoodClips:
+  - {fileID: 8300000, guid: d0a371be61c726d458df8fa1aa03c929, type: 3}
+  - {fileID: 8300000, guid: 7c94466ce0df2294e89d7d6e65e8e9c5, type: 3}
+  - {fileID: 8300000, guid: 65e6d82346bdbdb42bd6475ab1f53f68, type: 3}
+  _lightAluminumClips:
+  - {fileID: 8300000, guid: b76acf90b48c2d140a0edb835663fc0b, type: 3}
+  - {fileID: 8300000, guid: c0d5e222be6f4ef47b891f5d5fa055cb, type: 3}
+  - {fileID: 8300000, guid: 0ef2fe260d7096841867c7903f0346d9, type: 3}
   _gemSparkleClip: {fileID: 8300000, guid: 81a85bb97f07f0645a95ccf78617fbf0, type: 3}
   _heavyMetalClip: {fileID: 8300000, guid: 3ad7c51b16db4b0479af1437e32dc103, type: 3}
   _mediumMetalClips: {fileID: 8300000, guid: c44d1c56784cde44da9aa4553e93c65e, type: 3}
+  _mediumAluminumClips:
+  - {fileID: 8300000, guid: 0249c94e8bdbb064fab2ab18ebe8f5c5, type: 3}
+  - {fileID: 8300000, guid: 5afbc2637652a4140a4de2e5a7d17b16, type: 3}
+  _lightWoodClips:
+  - {fileID: 8300000, guid: 656870c86f96c8b41a0175f87d08a9d3, type: 3}
+  - {fileID: 8300000, guid: fc6bc6a11501c30469c320cb81a57f53, type: 3}
+  - {fileID: 8300000, guid: 425fe04acd8999b49a8df300e1005058, type: 3}
+  _starClip: {fileID: 8300000, guid: 9c62c23e126411b49bf5f58f0afa863a, type: 3}
+  _metalCoinClips:
+  - {fileID: 8300000, guid: d6eebd764352c734e90e90427ef74df9, type: 3}
+  - {fileID: 8300000, guid: 730ae3585702b154396fc4eedc569776, type: 3}
+  - {fileID: 8300000, guid: 49d6046089c073049b283139dfd4dbb6, type: 3}
+  _smallCharacterWoodClip: {fileID: 8300000, guid: 89460498b28ee5940b23f403fb2ecdd2,
+    type: 3}
   _activateSounds: 0
 --- !u!82 &676692539
 AudioSource:
@@ -19207,6 +19194,61 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 102d6dd37fc3f884ca42c51f96d2f7f2, type: 3}
   - {fileID: 8300000, guid: 1b7a69a95ef3675408cd8fc2c68d09f3, type: 3}
   - {fileID: 8300000, guid: 24a09e2aebdba5f4ebb80ead5841dc3b, type: 3}
+--- !u!1 &1019936676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100338, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1019936677}
+  - component: {fileID: 1019936679}
+  - component: {fileID: 1019936678}
+  m_Layer: 21
+  m_Name: CoinTapSound
+  m_TagString: DragRotation
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1019936677
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400338, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019936676}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5187952e-11, y: 3.3516749e-15, z: 0.000000024246607}
+  m_LocalScale: {x: 1.0000023, y: 1.0000017, z: 1.0000006}
+  m_Children: []
+  m_Father: {fileID: 1522095182}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1019936678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019936676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 18
+--- !u!65 &1019936679
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019936676}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.03821416, y: 0.0045531713, z: 0.038004834}
+  m_Center: {x: 0.0000000041327444, y: -7.940934e-23, z: -0.000000005587937}
 --- !u!1 &1024783917
 GameObject:
   m_ObjectHideFlags: 0
@@ -23015,7 +23057,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: 1e8fd578b64064416abc69eef83e85dd, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: 1e8fd578b64064416abc69eef83e85dd, type: 3}
       propertyPath: m_LocalScale.x
@@ -24916,7 +24958,6 @@ MonoBehaviour:
   _lightSwitch: {fileID: 585050314}
   _bellFeedback: {fileID: 1408180000}
   _frogSound: {fileID: 1341093635}
-  _starSound: {fileID: 1586160418}
   _crowCawSound: {fileID: 1192954985}
   _kissSound: {fileID: 91987005}
 --- !u!82 &1252236955
@@ -25151,6 +25192,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1269946047}
   m_Mesh: {fileID: 4300012, guid: 94d30b984741543eca849e022e5259d9, type: 3}
+--- !u!4 &1272274110 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400040, guid: 326014350cd9c4896b875d40bd1cc06f, type: 3}
+  m_PrefabInternal: {fileID: 2047177593}
 --- !u!1 &1272593821
 GameObject:
   m_ObjectHideFlags: 0
@@ -26161,9 +26206,8 @@ GameObject:
   - component: {fileID: 1315806399}
   - component: {fileID: 1315806404}
   - component: {fileID: 1315806403}
-  - component: {fileID: 1315806402}
   - component: {fileID: 1315806400}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Dancer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26180,6 +26224,7 @@ Transform:
   m_LocalPosition: {x: -0.058680393, y: 12.749659, z: 18.159449}
   m_LocalScale: {x: 0.9271187, y: 0.9271187, z: 0.9271187}
   m_Children:
+  - {fileID: 1547226497}
   - {fileID: 1192528895}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -26205,21 +26250,6 @@ MonoBehaviour:
   _firstWaterTankStart: {x: 0.0027, y: 13.0867, z: 18.2141}
   _kissLocator: {fileID: 0}
   _dancerVisibilityGameObject: {fileID: 1253581702}
---- !u!54 &1315806402
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1315806398}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!82 &1315806403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -28978,11 +29008,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.0135
@@ -29015,113 +29040,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreSound
-      value: 
-      objectReference: {fileID: 1252236954}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_Name
       value: starSprite (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreStarLine
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 2117309055}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -19.542002
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: _thisSoundTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
@@ -29225,7 +29156,9 @@ GameObject:
   - component: {fileID: 1455850972}
   - component: {fileID: 1455850974}
   - component: {fileID: 1455850973}
-  m_Layer: 0
+  - component: {fileID: 1455850976}
+  - component: {fileID: 1455850975}
+  m_Layer: 21
   m_Name: theatre_frame 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29287,6 +29220,33 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1455850971}
+  m_Mesh: {fileID: 4300236, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+--- !u!114 &1455850975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1455850971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 4
+--- !u!64 &1455850976
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1455850971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300236, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
 --- !u!1 &1457004438 stripped
 GameObject:
@@ -30372,6 +30332,7 @@ Transform:
   m_LocalScale: {x: 0.4332998, y: 0.2649954, z: 0.43329978}
   m_Children:
   - {fileID: 309829207}
+  - {fileID: 1019936677}
   m_Father: {fileID: 1982961424}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30866,6 +30827,62 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1546702247}
   m_Mesh: {fileID: 4300176, guid: 1d7a0e34a14144e22b68cff6fd58b315, type: 3}
+--- !u!1 &1547226496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1547226497}
+  - component: {fileID: 1547226499}
+  - component: {fileID: 1547226498}
+  m_Layer: 21
+  m_Name: DancerTapSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1547226497
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547226496}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1315806399}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1547226498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547226496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0ed2d756743b849baebff7c31d0d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tapSoundPlayer: {fileID: 676692538}
+  _thisSoundTag: 19
+--- !u!136 &1547226499
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547226496}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.02
+  m_Height: 0.18
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!1 &1564914393
 GameObject:
   m_ObjectHideFlags: 0
@@ -33422,7 +33439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tapSoundPlayer: {fileID: 676692538}
-  _thisSoundTag: 15
+  _thisSoundTag: 16
 --- !u!64 &1708497461
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -35470,11 +35487,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.0259
@@ -35507,113 +35519,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreSound
-      value: 
-      objectReference: {fileID: 1252236954}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_Name
       value: starSprite (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreStarLine
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 2117309055}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 26.004002
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: _thisSoundTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
@@ -36084,11 +36002,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.025
@@ -36121,117 +36034,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _theatreSound
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 1252236954}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_Name
-      value: starSprite (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 676692538}
     - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
       propertyPath: _theatreStarLine
       value: 
       objectReference: {fileID: 2117309055}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -43.878002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 19.758001
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: m_Name
+      value: starSprite (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
@@ -42566,11 +42381,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2117309053}
     m_Modifications:
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.0029
@@ -42603,109 +42413,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreSound
-      value: 
-      objectReference: {fileID: 1252236954}
     - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
       propertyPath: m_Name
       value: starSprite (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.015496176
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].time
-      value: 0.18999727
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].value
-      value: 0.8409638
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].inSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[1].outSlope
-      value: 2.770424
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].time
-      value: 0.4933777
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[2].value
-      value: 1.0062943
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].time
-      value: 0.77352315
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].value
-      value: 0.8346553
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].inSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[3].outSlope
-      value: -2.8535724
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].time
-      value: 0.99336654
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _starGlowCurve.m_Curve.Array.data[4].value
-      value: 0.005209861
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: _theatreStarLine
+      propertyPath: _tapSoundPlayer
       value: 
-      objectReference: {fileID: 2117309055}
-    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
         type: 2}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65913563040195956, guid: be1b33221fdd66b44ab7ded003d158b9,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1
+      propertyPath: _thisSoundTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}

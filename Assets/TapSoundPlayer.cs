@@ -17,8 +17,12 @@ public enum TapSoundTags {
 	wire,
 	sparkle,
 	chest, // light thud
-	messageBoardMetalCreak,
-	mediumMetal
+	lightAluminum,
+	mediumMetal,
+	mediumAluminum,
+	star,
+	metalCoin,
+	smallCharacterWood
 }
 
 public class TapSoundPlayer : AudioSourceController {
@@ -52,14 +56,27 @@ public class TapSoundPlayer : AudioSourceController {
 	[SerializeField] AudioClip[] _floorWoodClips;
 	int _floorWoodClipLength = 0;
 	//message Board Metal Creak
-	[SerializeField] AudioClip[] _metalCreakMessageBoardClips;
-	int _metalCreakMessageBoardClipLength = 0;
+	[SerializeField] AudioClip[] _lightAluminumClips;
+	int _lightAluminumClipLength = 0;
 	// gem Sparkle
 	[SerializeField] AudioClip _gemSparkleClip;
 	//heavy Metal
 	[SerializeField] AudioClip _heavyMetalClip;
 	// mediumMetal
 	[SerializeField] AudioClip _mediumMetalClips;
+	// medium Aluminum
+	[SerializeField] AudioClip[] _mediumAluminumClips;
+	int _mediumAluminumClipLength = 0;
+	// light wood
+	[SerializeField] AudioClip[] _lightWoodClips;
+	int _lightWoodClipLength = 0;
+	// star
+	[SerializeField] AudioClip _starClip;
+	// metal Coin
+	[SerializeField] AudioClip[] _metalCoinClips;
+	int _metalCoinClipLength = 0;
+	// small character wood
+	[SerializeField] AudioClip _smallCharacterWoodClip;
 
 	public bool _activateSounds = false;
 	bool _needToResetPitch = false;
@@ -133,16 +150,16 @@ public class TapSoundPlayer : AudioSourceController {
 				_audioSources [_audioSourceCnt].clip = _floorWoodClips [ChooseRandomClip (_floorWoodClipLength)];
 				_audioSources [_audioSourceCnt].Play ();
 				break;
-			case TapSoundTags.messageBoardMetalCreak:
-				if (_metalCreakMessageBoardClipLength == 0) {
-					_metalCreakMessageBoardClipLength = _metalCreakMessageBoardClips.Length;
+			case TapSoundTags.lightAluminum:
+				if (_lightAluminumClipLength == 0) {
+					_lightAluminumClipLength = _lightAluminumClips.Length;
 				}
-				_audioSources [_audioSourceCnt].clip = _metalCreakMessageBoardClips [ChooseRandomClip (_metalCreakMessageBoardClipLength)];
+				_audioSources [_audioSourceCnt].clip = _lightAluminumClips [ChooseRandomClip (_lightAluminumClipLength)];
 				_audioSources [_audioSourceCnt].Play ();
 				break;
 			case TapSoundTags.sparkle:
 				_audioSources [_audioSourceCnt].clip = _gemSparkleClip;
-				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.95f, 1.05f);
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.97f, 1.03f);
 				_needToResetPitch = true;
 				_audioSources [_audioSourceCnt].Play ();
 				break;
@@ -155,6 +172,43 @@ public class TapSoundPlayer : AudioSourceController {
 			case TapSoundTags.mediumMetal:
 				_audioSources [_audioSourceCnt].clip = _mediumMetalClips;
 				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.97f, 1.03f);
+				_needToResetPitch = true;
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.mediumAluminum:
+				if (_mediumAluminumClipLength == 0) {
+					_mediumAluminumClipLength = _mediumAluminumClips.Length;
+				}
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.98f, 1.02f);
+				_needToResetPitch = true;
+				_audioSources [_audioSourceCnt].clip = _mediumAluminumClips [ChooseRandomClip (_mediumAluminumClipLength)];
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.lightWood:
+				if (_lightWoodClipLength == 0) {
+					_lightWoodClipLength = _lightWoodClips.Length;
+				}
+				_audioSources [_audioSourceCnt].clip = _lightWoodClips [ChooseRandomClip (_lightWoodClipLength)];
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.star:
+				_audioSources [_audioSourceCnt].clip = _starClip;
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.95f, 1.05f);
+				_needToResetPitch = true;
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.metalCoin:
+				if (_metalCoinClipLength == 0) {
+					_metalCoinClipLength = _metalCoinClips.Length;
+				}
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.97f, 1.03f);
+				_needToResetPitch = true;
+				_audioSources [_audioSourceCnt].clip = _metalCoinClips [ChooseRandomClip (_metalCoinClipLength)];
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.smallCharacterWood:
+				_audioSources [_audioSourceCnt].clip = _smallCharacterWoodClip;
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.98f, 1.02f);
 				_needToResetPitch = true;
 				_audioSources [_audioSourceCnt].Play ();
 				break;
