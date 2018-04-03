@@ -82,4 +82,8 @@ public class TheatreChest : MonoBehaviour {
 	public void ChestOpenSound(){
 		_theatreSound.PlayChestOpenSound ();
 	}
+
+	public void ChestCloseSound(){
+		_theatreSound.PlayChestCloseSound ();
+	}
 }

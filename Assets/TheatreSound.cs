@@ -27,6 +27,7 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _chestOpenSound;
 	[SerializeField] AudioSource _chestCloseShutSound;
+	[SerializeField] AudioSource _chestCloseSound;
 
 	[SerializeField] AudioSource[] _waterTankDoorSounds;
 	// 0: open, 1: close
@@ -88,6 +89,12 @@ public class TheatreSound : MonoBehaviour {
 	public void PlayChestCloseEndSound(){
 		if (!_chestCloseShutSound.isPlaying) {
 			_chestCloseShutSound.Play ();
+		}
+	}
+
+	public void PlayChestCloseSound(){
+		if (!_chestCloseSound.isPlaying) {
+			_chestCloseSound.Play ();
 		}
 	}
 
