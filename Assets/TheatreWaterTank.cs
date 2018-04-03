@@ -23,12 +23,14 @@ public class TheatreWaterTank : MonoBehaviour {
 		// 
 		if (isActivated) {
 			if (!_isOpen) {
+				TheatreSound._instance.PlayWaterTankLidSound (true);
 				WaterTankAnim.SetBool ("Open", true);
 				_isOpen = true;
 				if (AltTheatre.currentSate == TheatreState.readyForDancerTank || AltTheatre.currentSate == TheatreState.readyForDancerTank2) {
 					_myTheatre.MoveToNext ();
 				}
 			} else {
+				TheatreSound._instance.PlayWaterTankLidSound (false);
 				WaterTankAnim.SetBool ("Open", false);
 				_isOpen = false;
 			}
@@ -39,13 +41,13 @@ public class TheatreWaterTank : MonoBehaviour {
 	public void OpenLid(bool open){
 		if (open) {
 			if (!_isOpen) {
-				//PlaySound HERE
+				TheatreSound._instance.PlayWaterTankLidSound (true);
 				WaterTankAnim.SetBool ("Open", true);
 				_isOpen = true;
 			}
 		} else {
 			if (_isOpen) {
-				//PLAY SOUND HERR
+				TheatreSound._instance.PlayWaterTankLidSound (false);
 				WaterTankAnim.SetBool ("Open", false);
 				_isOpen = false;
 			}

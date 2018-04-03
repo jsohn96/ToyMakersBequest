@@ -12,11 +12,11 @@ public class TheatreAudience : MonoBehaviour {
 	[SerializeField] AltTheatre _myTheatre;
 
 	void Start(){
-		_goalAngle = transform.rotation;
-		Vector3 tempAngle = _goalAngle.eulerAngles;
-		tempAngle.y += 180.0f;
-		_originAngle = Quaternion.Euler (tempAngle);
-		transform.rotation = _originAngle;
+//		_goalAngle = transform.rotation;
+//		Vector3 tempAngle = _goalAngle.eulerAngles;
+//		tempAngle.y += 180.0f;
+//		_originAngle = Quaternion.Euler (tempAngle);
+//		transform.rotation = _originAngle;
 	}
 
 	void OnTouchDown(){
@@ -25,13 +25,13 @@ public class TheatreAudience : MonoBehaviour {
 	}
 
 	public void AudienceEnter(){
-		_isEntered = true;
-		StartCoroutine (TurnAround (true));
+//		_isEntered = true;
+//		StartCoroutine (TurnAround (true));
 	}
 
 	public void AudienceLeave(){
-		_isEntered = false;
-		StartCoroutine (TurnAround (false));
+//		_isEntered = false;
+//		StartCoroutine (TurnAround (false));
 	}
 
 	IEnumerator TurnAround(bool enter){

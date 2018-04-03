@@ -41,4 +41,8 @@ public static class MathHelpers {
 		tempRotation.z = 0.0f;
 		return Quaternion.Euler (tempRotation);
 	}
+
+	public static bool Vector3Equals(Vector3 a, Vector3 b){
+		return Vector3.SqrMagnitude(a - b) < 0.0001;
+	}
 }

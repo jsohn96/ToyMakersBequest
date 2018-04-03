@@ -666,6 +666,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25795312}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &28057734 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100040, guid: 744b26047d4b847edb1e4d5ee4843ae3, type: 3}
+  m_PrefabInternal: {fileID: 1713467894}
+--- !u!114 &28057736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 28057734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fbe9d0caf852bd46985929becf49f43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whoToLookAt: {fileID: 1272274110}
 --- !u!1 &35353212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6228,6 +6244,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 65b64918c7e914afd864aea894455f18, type: 2}
+    - target: {fileID: 400040, guid: 744b26047d4b847edb1e4d5ee4843ae3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 744b26047d4b847edb1e4d5ee4843ae3, type: 3}
   m_IsPrefabParent: 0
@@ -25756,6 +25776,7 @@ Transform:
   - {fileID: 1601745240}
   - {fileID: 2138150762}
   - {fileID: 1130952555}
+  - {fileID: 1743404759}
   m_Father: {fileID: 1924021102}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25793,6 +25814,10 @@ MonoBehaviour:
   _waterTankAudioClips:
   - {fileID: 8300000, guid: 0d5d4d866c559134f9e8003af5890983, type: 3}
   - {fileID: 8300000, guid: 9602ec21ef94f6145a64308dedbf8dd3, type: 3}
+  _waterTankLidSound: {fileID: 1743404760}
+  _waterTankLidClips:
+  - {fileID: 8300000, guid: a38753066c6d3f34ca8be4fbe3da4cf1, type: 3}
+  - {fileID: 8300000, guid: b7d2f069fff5b5a40906a4b16650905f, type: 3}
 --- !u!82 &1252236955
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35633,6 +35658,115 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &1743404758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1743404759}
+  - component: {fileID: 1743404760}
+  m_Layer: 0
+  m_Name: WaterTankLid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1743404759
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1743404758}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1252236953}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1743404760
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1743404758}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a38753066c6d3f34ca8be4fbe3da4cf1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1750628968
 GameObject:
   m_ObjectHideFlags: 0
@@ -40144,6 +40278,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1940969814}
   m_Mesh: {fileID: 4300078, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+--- !u!1 &1944724383 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100040, guid: 744b26047d4b847edb1e4d5ee4843ae3, type: 3}
+  m_PrefabInternal: {fileID: 331490667}
+--- !u!114 &1944724385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1944724383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fbe9d0caf852bd46985929becf49f43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whoToLookAt: {fileID: 1272274110}
 --- !u!1 &1948091717
 GameObject:
   m_ObjectHideFlags: 0

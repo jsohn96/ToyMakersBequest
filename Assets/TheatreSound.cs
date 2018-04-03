@@ -34,6 +34,10 @@ public class TheatreSound : MonoBehaviour {
 	[SerializeField] AudioClip[] _waterTankAudioClips;
 	int _whichTankSource = 0;
 
+	[SerializeField] AudioSource _waterTankLidSound;
+	// 0: open, 1: close
+	[SerializeField] AudioClip[] _waterTankLidClips;
+
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
 		_clappingSound.Play ();
@@ -113,5 +117,15 @@ public class TheatreSound : MonoBehaviour {
 			_waterTankDoorSounds[_whichTankSource].clip = _waterTankAudioClips [1];
 		}
 		_waterTankDoorSounds[_whichTankSource].Play ();
+	}
+
+	public void PlayWaterTankLidSound(bool open){
+		_waterTankLidSound.Stop ();
+		if (open) {
+			_waterTankLidSound.clip = _waterTankLidClips [0];
+		} else {
+			_waterTankLidSound.clip = _waterTankLidClips [1];
+		}
+		_waterTankLidSound.Play ();
 	}
 }
