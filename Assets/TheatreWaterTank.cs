@@ -39,11 +39,13 @@ public class TheatreWaterTank : MonoBehaviour {
 	public void OpenLid(bool open){
 		if (open) {
 			if (!_isOpen) {
+				//PlaySound HERE
 				WaterTankAnim.SetBool ("Open", true);
 				_isOpen = true;
 			}
 		} else {
 			if (_isOpen) {
+				//PLAY SOUND HERR
 				WaterTankAnim.SetBool ("Open", false);
 				_isOpen = false;
 			}
