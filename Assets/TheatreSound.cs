@@ -20,6 +20,9 @@ public class TheatreSound : MonoBehaviour {
 	[SerializeField] AudioSource _crowCawSound;
 
 	[SerializeField] AudioSource _kissSound;
+	[SerializeField] AudioSource _waterTankMoveSound;
+
+	[SerializeField] AudioSource _dancerEnterWaterSound;
 
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
@@ -48,6 +51,18 @@ public class TheatreSound : MonoBehaviour {
 	public void PlayKissSound(){
 		if (!_kissSound.isPlaying) {
 			_kissSound.Play ();
+		}
+	}
+
+	public void WaterTankMoveSound(){
+		if (!_waterTankMoveSound.isPlaying) {
+			_waterTankMoveSound.Play ();
+		}
+	}
+
+	public void PlayDancerEnterWaterSound(){
+		if (!_dancerEnterWaterSound.isPlaying) {
+			_dancerEnterWaterSound.Play ();
 		}
 	}
 }

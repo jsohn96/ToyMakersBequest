@@ -30,6 +30,8 @@ public class TheatreDancer : MonoBehaviour {
 	bool _stopMovement = false;
 	bool _isFirstStart = false;
 
+	[SerializeField] TheatreSound _theatreSound;
+
 	// Use this for initialization
 	void Start () {
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
@@ -155,6 +157,8 @@ public class TheatreDancer : MonoBehaviour {
 		yield return new WaitForSeconds (0.7f);
 		timer = 0f;
 		duration = 4f;
+		_theatreSound.PlayDancerEnterWaterSound ();
+
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
@@ -188,6 +192,8 @@ public class TheatreDancer : MonoBehaviour {
 		_dancerTransform.parent = _waterTankPlatformTransform;
 		float timer = 0f;
 		float duration = 4f;
+		bool playSoundOnce = false;
+
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
