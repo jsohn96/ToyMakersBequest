@@ -257,6 +257,7 @@ public class AltTheatre : LevelManager {
 
 			break;
 		case TheatreState.OpenTank:
+			_theatreChest.GiveBackControl ();
 			_theatreText.TriggerText (13);
 			break;
 		case TheatreState.magicianRight:

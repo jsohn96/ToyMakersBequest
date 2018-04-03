@@ -86,4 +86,8 @@ public class TheatreChest : MonoBehaviour {
 	public void ChestCloseSound(){
 		_theatreSound.PlayChestCloseSound ();
 	}
+
+	public void GiveBackControl(){
+		_takeAwayControl = false;
+	}
 }
