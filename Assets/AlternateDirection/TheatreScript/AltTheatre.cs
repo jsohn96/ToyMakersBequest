@@ -217,8 +217,8 @@ public class AltTheatre : LevelManager {
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set3 ();
 			_theaterAudiences [0].AudienceEnter ();
-			_theatreSound.WaterTankMoveSound ();
 			magician.BeginShow (false);
+			Invoke ("PlayWaterTankMoveSound", 1.5f);
 			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, ()=>{
 				MoveToNext();
 			}));
@@ -408,6 +408,10 @@ public class AltTheatre : LevelManager {
 	public void CallFrog(){
 		_theatreFrog.FrogJumpIntoWater ();
 	}
+
+				void PlayWaterTankMoveSound(){
+					_theatreSound.WaterTankMoveSound ();
+				}
 
 	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, System.Action action = null){
 		yield return new WaitForSeconds (initialDelay);

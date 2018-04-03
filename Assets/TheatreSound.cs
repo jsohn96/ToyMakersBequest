@@ -16,6 +16,7 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _bellFeedback;
 	[SerializeField] AudioSource _frogSound;
+	[SerializeField] AudioSource _frogPuddleSound;
 
 	[SerializeField] AudioSource _crowCawSound;
 
@@ -23,6 +24,14 @@ public class TheatreSound : MonoBehaviour {
 	[SerializeField] AudioSource _waterTankMoveSound;
 
 	[SerializeField] AudioSource _dancerEnterWaterSound;
+
+	[SerializeField] AudioSource _chestOpenSound;
+	[SerializeField] AudioSource _chestCloseShutSound;
+
+	[SerializeField] AudioSource[] _waterTankDoorSounds;
+	// 0: open, 1: close
+	[SerializeField] AudioClip[] _waterTankAudioClips;
+	int _whichTankSource = 0;
 
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
@@ -39,6 +48,10 @@ public class TheatreSound : MonoBehaviour {
 
 	public void PlayFrogSound(){
 		_frogSound.Play ();
+	}
+
+	public void PlayFrogPuddleSound(){
+		_frogPuddleSound.Play ();
 	}
 
 
@@ -64,5 +77,34 @@ public class TheatreSound : MonoBehaviour {
 		if (!_dancerEnterWaterSound.isPlaying) {
 			_dancerEnterWaterSound.Play ();
 		}
+	}
+
+	public void PlayChestOpenSound(){
+		if (!_chestOpenSound.isPlaying) {
+			_chestOpenSound.Play ();
+		}
+	}
+
+	public void PlayChestCloseEndSound(){
+		if (!_chestCloseShutSound.isPlaying) {
+			_chestCloseShutSound.Play ();
+		}
+	}
+
+	public void PlayWaterTankSound (bool open, bool isLeftDoor){
+		if (isLeftDoor == true) {
+			_whichTankSource = 0;
+		} else {
+			_whichTankSource = 1;
+		}
+
+		_waterTankDoorSounds[_whichTankSource].Stop ();
+		_waterTankDoorSounds [_whichTankSource].pitch = Random.Range (0.98f, 1.02f);
+		if(open){
+			_waterTankDoorSounds[_whichTankSource].clip = _waterTankAudioClips [0]; 
+		} else {
+			_waterTankDoorSounds[_whichTankSource].clip = _waterTankAudioClips [1];
+		}
+		_waterTankDoorSounds[_whichTankSource].Play ();
 	}
 }

@@ -41,6 +41,10 @@ public class frogSwirlTest : MonoBehaviour {
 		}
 	}
 
+	public void PlayFrogDunkSound(){
+		TheatreSound._instance.PlayFrogPuddleSound ();
+	}
+
 	public void ShrinkFrog(){
 		StartCoroutine (ShrinkFrogCoroutine ());
 	}

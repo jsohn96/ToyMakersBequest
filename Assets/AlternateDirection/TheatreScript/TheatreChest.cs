@@ -16,6 +16,8 @@ public class TheatreChest : MonoBehaviour {
 	[SerializeField] shaderGlowCustom _shaderGlowCustom;
 	[SerializeField] AltTheatre _myTheatre;
 
+	[SerializeField] TheatreSound _theatreSound;
+
 	// Use this for initialization
 //	void Start () {
 //		_boxCollider = GetComponent<BoxCollider> ();
@@ -71,5 +73,13 @@ public class TheatreChest : MonoBehaviour {
 	IEnumerator DelayBeforeFrogJumpOut(float duration){
 		yield return new WaitForSeconds (duration);
 		_myTheatre.CallFrog ();
+	}
+
+	public void ChestCloseEndSound(){
+		_theatreSound.PlayChestCloseEndSound ();
+	}
+
+	public void ChestOpenSound(){
+		_theatreSound.PlayChestOpenSound ();
 	}
 }

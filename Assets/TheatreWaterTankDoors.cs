@@ -21,6 +21,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	bool _callOnce = false;
 
 	bool _disableTouchInput = false;
+	[SerializeField] bool _isLeftDoor = false;
 
 	void Start(){
 		_openRot = transform.localRotation;
@@ -63,6 +64,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	}
 
 	IEnumerator CloseTank(){
+		TheatreSound._instance.PlayWaterTankSound (false, _isLeftDoor);
 		float timer = 0f;
 		float duration = 1.5f;
 		Quaternion _currentRot = transform.localRotation;
@@ -87,6 +89,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	}
 
 	IEnumerator OpenTank(){
+		TheatreSound._instance.PlayWaterTankSound (true, _isLeftDoor);
 		float timer = 0f;
 		float duration = 1.5f;
 		Quaternion _currentRot = transform.localRotation;

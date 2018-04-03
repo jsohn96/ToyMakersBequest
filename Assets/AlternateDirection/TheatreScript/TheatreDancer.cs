@@ -157,10 +157,16 @@ public class TheatreDancer : MonoBehaviour {
 		yield return new WaitForSeconds (0.7f);
 		timer = 0f;
 		duration = 4f;
-		_theatreSound.PlayDancerEnterWaterSound ();
+		bool playSoundOnce = false;
 
 		while (timer < duration) {
 			timer += Time.deltaTime;
+
+			if (timer > 0.5f) {
+				playSoundOnce = true;
+				_theatreSound.PlayDancerEnterWaterSound ();
+			}
+
 			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
 			yield return null;
 		}
@@ -196,6 +202,11 @@ public class TheatreDancer : MonoBehaviour {
 
 		while (timer < duration) {
 			timer += Time.deltaTime;
+			if (timer > 0.5f) {
+				playSoundOnce = true;
+				_theatreSound.PlayDancerEnterWaterSound ();
+			}
+
 			_waterTankPlatformTransform.localPosition = Vector3.Lerp (_waterTankPlatformUpLocalPos, _waterTankPlatformDownLocalPos, timer / duration);
 			yield return null;
 		}
