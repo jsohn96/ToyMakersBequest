@@ -33,15 +33,19 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 
 	[SerializeField] float _dragSensitivity = 10f;
-	[SerializeField] bool _isNotebook = false;
-	Camera _mainCamera;
+	[SerializeField] bool _isNotUsingMainCamera = false;
+	[SerializeField] Camera _mainCamera;
 	[SerializeField] Camera _nonMainCameraForRayCast;
-	int _3DBookLayerMask = 1 << 15;
+	[SerializeField] LayerMask _whichLayerMask;
 
 	Plane circlePlane;
 	List<float> snapToAngle;
 
 	[SerializeField] axisToRotate _mainAxis;
+	[Header("Same Direction Rotate Transforms")]
+	[SerializeField] Transform[] _sameRotation;
+
+	[Header("Reverse Rotation")]
 	[SerializeField] Transform[] _reverseRotation;
 	[SerializeField] float[] _reverseRelativeSpeed;
 	[SerializeField] axisToRotate[] _reverseAxisToRotate;
@@ -49,15 +53,12 @@ public class TheatreHeartTimer : MonoBehaviour {
 	float _directionFlip = 1.0f;
 	Vector3 curMousePos;
 
-	[SerializeField] TextContentTracker _textContentTracker;
-
 	int _thisInstanceID;
 
 	void Start(){
 		_thisInstanceID = transform.GetInstanceID ();
 
 		snapToAngle = new List<float> (10);
-		_mainCamera = Camera.main;
 
 		if (_flipDirection) {
 			_directionFlip = -1.0f;
@@ -110,12 +111,10 @@ public class TheatreHeartTimer : MonoBehaviour {
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
 			bool proceed = true;
-			if (_textContentTracker != null) {
-				proceed = !_textContentTracker._isDisplaying;
-			}
+
 			if (proceed) {
 				Ray mousePositionRay;
-				if (!_isNotebook) {
+				if (!_isNotUsingMainCamera) {
 					mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
 				} else {
 					mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
@@ -123,12 +122,14 @@ public class TheatreHeartTimer : MonoBehaviour {
 				RaycastHit hit;
 				dragPreviousMousePos = Input.mousePosition;
 				bool isHit;
-				if (!_isNotebook) {
-					isHit = Physics.Raycast (mousePositionRay, out hit);
+				if (!_isNotUsingMainCamera) {
+					isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
+					Debug.Log (isHit);
 				} else {
-					isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
+					isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
 				}
 				if (isHit && hit.collider.gameObject.tag == "DragRotation") {
+					Debug.Log ("click does register");
 					if (hit.transform.GetInstanceID() == _thisInstanceID) {
 						isDragStart = true;
 						//dragStartPos = hit.point;
@@ -212,6 +213,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 				isRotating = true;
 				accAngle = _dragSensitivity;
 				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
+
+				for (int i = 0; i < _sameRotation.Length; i++) {
+				}
 
 				bool positiveDirection;
 				if (rotateAxis.z > 0f) {

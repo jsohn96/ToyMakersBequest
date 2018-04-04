@@ -1453,7 +1453,7 @@ GameObject:
   - component: {fileID: 65396418}
   m_Layer: 18
   m_Name: Turn_left 2
-  m_TagString: Untagged
+  m_TagString: DragRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1526,17 +1526,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d7228a39ff379448e4d5be230eac91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneDirectional: 0
+  _oneDirectional: 1
   isDragStart: 0
   _dragSensitivity: 10
-  _isNotebook: 0
+  _isNotUsingMainCamera: 0
+  _mainCamera: {fileID: 961011381}
   _nonMainCameraForRayCast: {fileID: 0}
+  _whichLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
   _mainAxis: 0
+  _sameRotation:
+  - {fileID: 910310967}
   _reverseRotation: []
   _reverseRelativeSpeed: []
   _reverseAxisToRotate: 
   _flipDirection: 0
-  _textContentTracker: {fileID: 0}
 --- !u!65 &65396419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17310,7 +17315,7 @@ GameObject:
   - component: {fileID: 910310970}
   m_Layer: 18
   m_Name: Turn_right
-  m_TagString: Untagged
+  m_TagString: DragRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17383,17 +17388,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d7228a39ff379448e4d5be230eac91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneDirectional: 0
+  _oneDirectional: 1
   isDragStart: 0
   _dragSensitivity: 10
-  _isNotebook: 0
+  _isNotUsingMainCamera: 0
+  _mainCamera: {fileID: 961011381}
   _nonMainCameraForRayCast: {fileID: 0}
+  _whichLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
   _mainAxis: 0
+  _sameRotation:
+  - {fileID: 65396415}
   _reverseRotation: []
   _reverseRelativeSpeed: []
   _reverseAxisToRotate: 
   _flipDirection: 0
-  _textContentTracker: {fileID: 0}
 --- !u!65 &910310971
 BoxCollider:
   m_ObjectHideFlags: 0
