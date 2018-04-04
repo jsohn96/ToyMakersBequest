@@ -77,6 +77,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreText _theatreText;
 	[SerializeField] frogSwirlTest _frogSwirl;
 	[SerializeField] TheatreFrog _theatreFrog;
+	[SerializeField] StartSlider _startSlider;
 
 	int _doorCloseCnt = 0;
 
@@ -176,6 +177,8 @@ public class AltTheatre : LevelManager {
 	}
 
 	public void CheckStateMachine(){
+		_startSlider.SetSliderState ((int)currentSate, 35f);
+
 		switch (currentSate) {
 		case TheatreState.waitingToStart:
 			_theatreCameraControl.Activate ();

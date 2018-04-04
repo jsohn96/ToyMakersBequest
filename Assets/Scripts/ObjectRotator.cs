@@ -84,6 +84,6 @@ public class ObjectRotator : MonoBehaviour
 
 			// store mouse
 			_mouseReference = Input.mousePosition;
-			}
+		}
 	}
 }
