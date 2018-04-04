@@ -43,6 +43,8 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 	[SerializeField] axisToRotate _mainAxis;
 	[Header("Same Direction Rotate Transforms")]
+	[SerializeField] bool _hasOtherRotations = false;
+	[SerializeField] bool _rightHeart;
 	[SerializeField] Transform[] _sameRotation;
 
 	[Header("Reverse Rotation")]
@@ -55,7 +57,12 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 	int _thisInstanceID;
 
-	void Start(){
+	[SerializeField] TheatreHeartTimer _theOtherHalfHeartTimer;
+
+	bool _heartIsActive = false;
+
+	public void ActivateHeart(){
+		_heartIsActive = true;
 		_thisInstanceID = transform.GetInstanceID ();
 
 		snapToAngle = new List<float> (10);
@@ -80,8 +87,6 @@ public class TheatreHeartTimer : MonoBehaviour {
 			circlePlane = new Plane (transform.right, p);
 			//print ("init debug: " + p);
 		}
-
-
 	}
 
 	void OnDrawGizmosSelected() {
@@ -97,7 +102,26 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 
 	void Update(){
-		RotateWithMouse ();
+		if (Input.GetKeyDown (KeyCode.S)) {
+			ActivateHeart ();
+		}
+
+		if (_heartIsActive) {
+			RotateWithMouse ();
+
+			float forwardX = transform.forward.x;
+
+			if (_rightHeart) {
+				if (forwardX >= 0.9f) {
+					_heartIsActive = false;
+				}
+			} else {
+				if (forwardX <= -0.9f) {
+					_heartIsActive = false;
+				}
+			}
+			Debug.Log (transform.forward);
+		}
 	}
 
 	public bool GetIsRotating(){
@@ -129,9 +153,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 					isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
 				}
 				if (isHit && hit.collider.gameObject.tag == "DragRotation") {
-					Debug.Log ("click does register");
 					if (hit.transform.GetInstanceID() == _thisInstanceID) {
 						isDragStart = true;
+						_theOtherHalfHeartTimer.enabled = false;
 						//dragStartPos = hit.point;
 						float rayDistance;
 						if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
@@ -153,6 +177,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 		// end dragging: angle snap
 		if (Input.GetMouseButtonUp (0)) {
 			if (isDragStart) {
+				_theOtherHalfHeartTimer.enabled = true;
 				isDragStart = false;
 				//hitDist = 0;
 				accAngle = 0;
@@ -214,9 +239,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 				accAngle = _dragSensitivity;
 				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
 
-				for (int i = 0; i < _sameRotation.Length; i++) {
-					_sameRotation[i].Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
-				}
+
 
 				bool positiveDirection;
 				if (rotateAxis.z > 0f) {
@@ -227,6 +250,24 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 				if (rotateAxis.z == 0) {
 					rotateAxis.z = 1f;
+				}
+
+				if (_hasOtherRotations) {
+					for (int i = 0; i < _sameRotation.Length; i++) {
+						if (_rightHeart) {
+							if (positiveDirection) {
+								_sameRotation [i].Rotate (-accAngle * -_directionFlip * _sameRotation [i].right * 0.5f, Space.World);
+							} else {
+								_sameRotation [i].Rotate (-accAngle * _directionFlip * _sameRotation [i].right * 0.5f, Space.World);
+							}
+						} else {
+							if (positiveDirection) {
+								_sameRotation [i].Rotate (-accAngle * _directionFlip * _sameRotation [i].right * 0.5f, Space.World);
+							} else {
+								_sameRotation [i].Rotate (-accAngle * -_directionFlip * _sameRotation [i].right * 0.5f, Space.World);
+							}
+						}
+					}
 				}
 
 				for (int i = 0; i < _reverseRotation.Length; i++) {
