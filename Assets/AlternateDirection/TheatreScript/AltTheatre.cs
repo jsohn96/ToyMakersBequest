@@ -203,7 +203,7 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText (6);
 			break;
 		case TheatreState.magicianBoardTank:
-			_traversalUI.FadeIn ();
+			
 			_theatreWaterTank.Activate (false);
 			_theatreWaterTank.OpenLid (false);
 			magician.StepOnTank ();
@@ -214,6 +214,7 @@ public class AltTheatre : LevelManager {
 			magician.BeginShow (true);
 			break;
 		case TheatreState.waterTankDescend:
+			
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set3 ();
 			_theaterAudiences [0].AudienceEnter ();
@@ -227,6 +228,9 @@ public class AltTheatre : LevelManager {
 			magician.StepOffTank ();
 			break;
 		case TheatreState.magicianLeft:
+			_traversalUI.FadeIn ();
+			_theatreCameraControl.EnableScrollFOV();
+
 			magician.PointToLeft (true);
 			chest.Activate(true);
 			break;
@@ -410,9 +414,10 @@ public class AltTheatre : LevelManager {
 		_theatreFrog.FrogJumpIntoWater ();
 	}
 
-				void PlayWaterTankMoveSound(){
-					_theatreSound.WaterTankMoveSound ();
-				}
+	void PlayWaterTankMoveSound(){
+		_theatreSound.WaterTankMoveSound ();
+		_theatreCameraControl.MoveCameraToLookAtStage ();
+	}
 
 	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, System.Action action = null){
 		yield return new WaitForSeconds (initialDelay);

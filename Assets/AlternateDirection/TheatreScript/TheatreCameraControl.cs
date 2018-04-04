@@ -24,7 +24,9 @@ public class TheatreCameraControl : MonoBehaviour {
 	bool _isScrolling = false;
 	Vector3 _cameraTempPos;
 	Vector3 _cameraTempRot;
+	[Header("Camera Goal Position Values")]
 	[SerializeField] Vector3 _bottomCameraPos;
+	[SerializeField] Vector3 _stageCameraPos;
 	Vector3 _scrollDirectionMultiplier = new Vector3(0f, -10f, 0f);
 	float _angleDirectionMultiplier = 1f;
 
@@ -267,7 +269,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	IEnumerator MoveToTank(){
 		float timer = 0f;
-		float duration = 8f;
+		float duration = 6f;
 		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
 		Vector3 originEuler = _thisCamera.transform.eulerAngles;
 		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
@@ -288,6 +290,35 @@ public class TheatreCameraControl : MonoBehaviour {
 		CameraAngleCalculation ();
 		yield return null;
 		_altTheatre.MoveToNext ();
+	}
+
+	public void MoveCameraToLookAtStage(){
+		StartCoroutine (MoveToStage ());
+	}
+
+	IEnumerator MoveToStage(){
+		float timer = 0f;
+		float duration = 8f;
+		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+		Vector3 originEuler = _thisCamera.transform.eulerAngles;
+		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
+		//		_bottomCameraPos = _cameraTempPos;
+		//		_bottomCameraPos.y = _cameraMovementRange.Min;
+		_disableAllScroll = true;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _stageCameraPos, timer / duration);
+
+			CameraAngleCalculation ();
+			originEuler.x = _thisCamera.transform.eulerAngles.x;
+			goalEuler.x = originEuler.x;
+			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.transform.position = _stageCameraPos;
+		CameraAngleCalculation ();
+		yield return null;
+		//_altTheatre.MoveToNext ();
 	}
 
 	IEnumerator AdjustToScrollFOV(){
