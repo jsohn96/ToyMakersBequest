@@ -52,12 +52,15 @@ public class TheatreHeartTimer : MonoBehaviour {
 	[SerializeField] float[] _reverseRelativeSpeed;
 	[SerializeField] axisToRotate[] _reverseAxisToRotate;
 	[SerializeField] bool _flipDirection = false;
+	[SerializeField] AnimationCurve _curve;
 	float _directionFlip = 1.0f;
 	Vector3 curMousePos;
 
 	int _thisInstanceID;
 
 	[SerializeField] TheatreHeartTimer _theOtherHalfHeartTimer;
+
+	[SerializeField] Quaternion[] _timerTicks;
 
 	bool _heartIsActive = false;
 
@@ -112,21 +115,66 @@ public class TheatreHeartTimer : MonoBehaviour {
 			float forwardX = transform.forward.x;
 
 			if (_rightHeart) {
-				if (forwardX >= 0.9f) {
+				if (forwardX >= 0.98f) {
 					_heartIsActive = false;
+					SnapTickerIntoStart ();
+					_theOtherHalfHeartTimer.enabled = true;
+					_theOtherHalfHeartTimer.SnapTickerIntoStart ();
 				}
 			} else {
-				if (forwardX <= -0.9f) {
+				if (forwardX <= -0.98f) {
 					_heartIsActive = false;
+					SnapTickerIntoStart ();
+					_theOtherHalfHeartTimer.enabled = true;
+					_theOtherHalfHeartTimer.SnapTickerIntoStart ();
 				}
 			}
 			Debug.Log (transform.forward);
 		}
 	}
 
+	public void SnapTickerIntoStart(){
+		transform.localRotation = _timerTicks [3];
+		StartCoroutine (SnapTickerToStart ());
+	}
+
+
+
+	IEnumerator SnapTickerToStart(){
+		yield return new WaitForSeconds (0.5f);
+		float timer = 0f;
+		float duration = 1f;
+		while (duration > timer) {
+			transform.localRotation = Quaternion.Lerp (_timerTicks[3], _timerTicks [2], _curve.Evaluate(timer / duration));
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		transform.localRotation = _timerTicks [2];
+		yield return new WaitForSeconds (0.5f);
+
+		timer = 0f;
+		while (duration > timer) {
+			transform.localRotation = Quaternion.Lerp (_timerTicks[2], _timerTicks [1], _curve.Evaluate(timer / duration));
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		transform.localRotation = _timerTicks [1];
+		yield return new WaitForSeconds (0.5f);
+
+		timer = 0f;
+		while (duration > timer) {
+			transform.localRotation = Quaternion.Lerp (_timerTicks[1], _timerTicks [0], _curve.Evaluate(timer / duration));
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		transform.localRotation = _timerTicks [0];
+		yield return null;
+	}
+
 	public bool GetIsRotating(){
 		return isRotating;
 	}
+
 
 
 	void RotateWithMouse(){
