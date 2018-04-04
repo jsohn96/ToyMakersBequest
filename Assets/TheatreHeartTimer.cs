@@ -215,6 +215,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
 
 				for (int i = 0; i < _sameRotation.Length; i++) {
+					_sameRotation[i].Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
 				}
 
 				bool positiveDirection;
