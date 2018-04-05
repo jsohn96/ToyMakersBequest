@@ -79,6 +79,9 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreFrog _theatreFrog;
 	[SerializeField] StartSlider _startSlider;
 
+	[SerializeField] TheatreHeartTimer _heartTimer1, _heartTimer2;
+	[SerializeField] SpriteRenderer _heartArrowInstructions;
+
 	int _doorCloseCnt = 0;
 
 	// Use this for initialization
