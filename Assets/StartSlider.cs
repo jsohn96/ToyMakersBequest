@@ -17,7 +17,15 @@ public class StartSlider : MonoBehaviour {
 	bool _isLerping = false;
 
 	Vector3 _pointRotationAxis;
+	[SerializeField] float _xAxisRight;
+	[SerializeField] float _xAxisLeft;
 
+	bool _touchDown = false;
+	[SerializeField] Camera _mainCamera;
+
+//	float _previousDragNorm ;
+//	float _currentDragNorm;
+//
 	void Start () {
 		_hashID = Animator.StringToHash ("Slide");
 		_sliderAnim.Play (_hashID, -1, 1f);
@@ -39,6 +47,18 @@ public class StartSlider : MonoBehaviour {
 			}
 		}
 	}
+
+	void Update(){
+		if (_touchDown) {
+			float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
+			float normalizedLinMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
+			_sliderAnim.Play (_hashID, -1, normalizedLinMap);
+
+		}
+		if (Input.GetMouseButtonUp (0)) {
+			_touchDown = false;
+		}
+	}
 	
 	public void SetSliderState (float thisValue, float outOfThisTotal) {
 		if (_sliderStarted) {
@@ -50,7 +70,8 @@ public class StartSlider : MonoBehaviour {
 	}
 
 	void OnTouchDown(Vector3 hitPoint){
-		StartCoroutine (ResetSlider ());
+		_touchDown = true;
+//		StartCoroutine (ResetSlider ());
 	}
 
 	IEnumerator ResetSlider(){
