@@ -7,6 +7,7 @@ public class TraversalUI : MonoBehaviour {
 
 	[SerializeField] Image[] _buttonImages;
 	[SerializeField] ButtonSystem[] _buttonSystem;
+	[SerializeField] BoxCollider[] _tapSoundLayerCollider;
 
 	int _buttonImagesLength;
 	Color _fullColor = new Color(1.0f, 1f, 1f, 1f);
@@ -18,6 +19,7 @@ public class TraversalUI : MonoBehaviour {
 		_buttonImagesLength = _buttonImages.Length;
 		for (int i = 0; i < _buttonImagesLength; i++) {
 			_buttonImages [i].raycastTarget = false;
+			_tapSoundLayerCollider [i].enabled = false;
 		}
 	}
 
@@ -67,6 +69,7 @@ public class TraversalUI : MonoBehaviour {
 			for (int i = 0; i < _buttonImagesLength; i++) {
 				if (fadeIn) {
 					_buttonImages [i].raycastTarget = true;
+					_tapSoundLayerCollider [i].enabled = true;
 					_buttonImages [i].color = _fullColor;
 				} else {
 					_buttonImages [i].color = _emptyColor;
@@ -75,6 +78,7 @@ public class TraversalUI : MonoBehaviour {
 		} else {
 			if (fadeIn) {
 				_buttonImages [buttonIndex].raycastTarget = true;
+				_tapSoundLayerCollider [buttonIndex].enabled = true;
 				_buttonImages [buttonIndex].color = _fullColor;
 			} else {
 				_buttonImages [buttonIndex].color = _emptyColor;
@@ -89,9 +93,11 @@ public class TraversalUI : MonoBehaviour {
 		if(buttonIndex == 4){
 			for (int i = 0; i < _buttonImagesLength; i++) {
 				_buttonImages [i].raycastTarget = false;
+				_tapSoundLayerCollider [i].enabled = false;
 			}
 		} else {
 			_buttonImages[buttonIndex].raycastTarget = false;
+			_tapSoundLayerCollider [buttonIndex].enabled = false;
 		}
 		StartCoroutine (FadeButtons (false, buttonIndex));
 

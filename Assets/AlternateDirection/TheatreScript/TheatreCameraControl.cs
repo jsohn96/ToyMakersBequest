@@ -164,7 +164,10 @@ public class TheatreCameraControl : MonoBehaviour {
 		_scrollEasingToHalt = true;
 	}
 
-	void ScrollCamera(){
+	void ScrollCamera(bool lerpIt = false){
+		if (lerpIt) {
+			_isScrolling = true;
+		}
 		if (!_disableAllScroll) {
 			if (!_discreteMode) {
 				_acceleration = Input.mousePosition.y - _clickStartPosition.y;
@@ -222,11 +225,14 @@ public class TheatreCameraControl : MonoBehaviour {
 					}
 				}
 			}
-			CameraAngleCalculation ();
+			CameraAngleCalculation (lerpIt);
 		}
 	}
 
-	void CameraAngleCalculation(){
+	void CameraAngleCalculation(bool lerpIt = false){
+		if (lerpIt) {
+			_isScrolling = true;
+		}
 		_currentCameraYPos = _thisCamera.transform.position.y;
 		_cameraTempRot = _thisCamera.transform.eulerAngles;
 		float nonCurvedLinMapValue = MathHelpers.LinMapTo01 (
@@ -235,7 +241,12 @@ public class TheatreCameraControl : MonoBehaviour {
 			                             _currentCameraYPos);
 		float linMapCurvedAngle = _cameraAngleCurve.Evaluate(nonCurvedLinMapValue);
 		_cameraTempRot.x = MathHelpers.LinMapFrom01 (_cameraAngleRange.Min, _cameraAngleRange.Max, linMapCurvedAngle);
-		_thisCamera.transform.rotation = Quaternion.Euler(_cameraTempRot);
+
+		if (lerpIt) {
+			StartCoroutine (LerpAngle (_cameraTempRot));
+		} else if(!_isScrolling){
+			_thisCamera.transform.rotation = Quaternion.Euler (_cameraTempRot);
+		}
 
 		//Use the camera lin map calculation for FOV calculations as well
 		if (!_disableScrollFOV) {
@@ -249,6 +260,20 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 	}
 		
+	IEnumerator LerpAngle(Vector3 tempRotate){
+		float timer = 0f;
+		float duration = 2f;
+		Quaternion currentRotation = _thisCamera.transform.rotation;
+		Quaternion tempRotationQuat = Quaternion.Euler (tempRotate);
+		while(timer < duration){
+			_thisCamera.transform.rotation = Quaternion.Lerp(currentRotation, tempRotationQuat, timer/duration);
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		_thisCamera.transform.rotation = tempRotationQuat;
+		_isScrolling = false;
+		yield return null;
+	}
 
 	public void InitializeScroll(){
 		_clickStartPosition = Input.mousePosition;
@@ -316,7 +341,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _stageCameraPos;
-		CameraAngleCalculation ();
+		CameraAngleCalculation (true);
 		yield return null;
 		//_altTheatre.MoveToNext ();
 	}
@@ -326,7 +351,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			yield return null;
 		}
 		_disableAllScroll = false;
-		ScrollCamera ();
+		ScrollCamera (true);
 		float timer = 0f;
 		float duration = 2f;
 		float currentFOV = _thisCamera.fieldOfView;
