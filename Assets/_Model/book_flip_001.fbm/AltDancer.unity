@@ -10582,7 +10582,7 @@ Transform:
   - {fileID: 1940969815}
   - {fileID: 2104662672}
   m_Father: {fileID: 1316106787}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551526221
 GameObject:
@@ -15379,7 +15379,7 @@ Transform:
   - {fileID: 1486042058}
   - {fileID: 121198340}
   m_Father: {fileID: 1316106787}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &776544073
 MonoBehaviour:
@@ -17839,7 +17839,7 @@ Transform:
   m_LocalScale: {x: 0.33041257, y: 0.049953066, z: 0.33041257}
   m_Children: []
   m_Father: {fileID: 1316106787}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &921020261
 MeshRenderer:
@@ -21920,6 +21920,95 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1121838417}
   m_Mesh: {fileID: 4300004, guid: 24aa158c9b80c4ffbbdafbedaefd1522, type: 3}
+--- !u!1 &1122344215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1122344216}
+  - component: {fileID: 1122344217}
+  - component: {fileID: 1122344218}
+  m_Layer: 0
+  m_Name: ArrowRotate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122344216
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122344215}
+  m_LocalRotation: {x: -0.7774606, y: 0.6289317, z: 0, w: 0}
+  m_LocalPosition: {x: -0.00059, y: 0.01981, z: 0.0329}
+  m_LocalScale: {x: 0.003, y: 0.003, z: 0.3}
+  m_Children: []
+  m_Father: {fileID: 1316106787}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -179.99998, z: 353.743}
+--- !u!212 &1122344217
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122344215}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 9c331e3b7d91755498458736fd9bae0f, type: 3}
+  m_Color: {r: 1, g: 0.9682093, b: 0.8455882, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.52, y: 2.52}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+--- !u!114 &1122344218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122344215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0b49a641d0c4aff82c75ab36855ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myTransform: {fileID: 1122344216}
+  _targetSpeed: 70
+  _whichAxis: 2
+  _rotateOnStart: 1
 --- !u!1 &1122504313
 GameObject:
   m_ObjectHideFlags: 0
@@ -23427,7 +23516,7 @@ Transform:
   - {fileID: 1708497459}
   - {fileID: 2097876638}
   m_Father: {fileID: 1316106787}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1165554336
 MonoBehaviour:
@@ -27767,6 +27856,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1122344216}
   - {fileID: 1165554335}
   - {fileID: 776544072}
   - {fileID: 547178041}
@@ -40593,6 +40683,9 @@ MonoBehaviour:
   _frogSwirl: {fileID: 681455858}
   _theatreFrog: {fileID: 681455856}
   _startSlider: {fileID: 823878452}
+  _heartTimer1: {fileID: 110208834}
+  _heartTimer2: {fileID: 1174393556}
+  _heartArrowInstructions: {fileID: 1122344217}
 --- !u!4 &1924021102
 Transform:
   m_ObjectHideFlags: 0
