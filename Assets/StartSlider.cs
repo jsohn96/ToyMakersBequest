@@ -22,6 +22,7 @@ public class StartSlider : MonoBehaviour {
 
 	bool _touchDown = false;
 	[SerializeField] Camera _mainCamera;
+	[SerializeField] BoxCollider _draggableCollider;
 
 //	float _previousDragNorm ;
 //	float _currentDragNorm;
@@ -53,7 +54,10 @@ public class StartSlider : MonoBehaviour {
 			float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
 			float normalizedLinMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
 			_sliderAnim.Play (_hashID, -1, normalizedLinMap);
-
+			if (normalizedLinMap < 0.05f) {
+				_sliderStarted = true;
+				_draggableCollider.enabled = false;
+			}
 		}
 		if (Input.GetMouseButtonUp (0)) {
 			_touchDown = false;
