@@ -38,6 +38,11 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	[SerializeField] Vector3 _cameraStartPos;
 	[SerializeField] Vector3 _cameraStartRot;
+
+	[Header("Slider Slide Camera View Values")]
+	[SerializeField] Vector3 _sliderSlideCamPos;
+	[SerializeField] Vector3 _sliderSlideCamRot;
+		
 	[SerializeField] float _cameraStartFOV = 28f;
 
 	bool _initZoom = false;
@@ -67,8 +72,8 @@ public class TheatreCameraControl : MonoBehaviour {
 			_cameraZoomedOutRot = _thisCamera.transform.rotation;
 		} else {
 			_initZoom = true;
-			_thisCameraHeighttContainer.transform.position = _cameraStartPos;
-			_currentCameraYPos = _cameraStartPos.y;
+			_thisCameraHeighttContainer.transform.position = _sliderSlideCamPos;
+			_currentCameraYPos = _sliderSlideCamPos.y;
 			CameraAngleCalculation ();
 		}
 	}
@@ -112,6 +117,10 @@ public class TheatreCameraControl : MonoBehaviour {
 				_isScrolling = false;
 				_acceleration = 0.0f;
 			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.F)) {
+			MoveCameraToStartPosition ();
 		}
 	}
 
@@ -322,6 +331,10 @@ public class TheatreCameraControl : MonoBehaviour {
 		StartCoroutine (MoveToStage ());
 	}
 
+	public void MoveCameraToStartPosition(){
+		StartCoroutine (MoveToStartView ());
+	}
+
 	IEnumerator MoveToStage(){
 		float timer = 0f;
 		float duration = 8f;
@@ -345,6 +358,20 @@ public class TheatreCameraControl : MonoBehaviour {
 		CameraAngleCalculation (true);
 		yield return null;
 		//_altTheatre.MoveToNext ();
+	}
+
+	IEnumerator MoveToStartView(){
+		float timer = 0f;
+		float duration = 2f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_sliderSlideCamPos, _cameraStartPos, timer / duration);
+			_thisCamera.transform.rotation = Quaternion.Lerp (Quaternion.Euler(_sliderSlideCamRot), Quaternion.Euler(_cameraStartRot), timer / duration);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.transform.position = _cameraStartPos;
+		_thisCamera.transform.rotation = Quaternion.Euler (_cameraStartRot);
+		yield return null;
 	}
 
 	IEnumerator AdjustToScrollFOV(){
@@ -389,17 +416,17 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 		Quaternion tempRot = _thisCamera.transform.rotation;
 		float cameraTempFOV = _thisCamera.fieldOfView;
-		Quaternion startRot = Quaternion.Euler (_cameraStartRot);
+		Quaternion startRot = Quaternion.Euler (_sliderSlideCamRot);
 		Vector3 cameraTempPos = _thisCamera.transform.position;
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _cameraStartPos, timer / duration);
+			_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _sliderSlideCamPos, timer / duration);
 			_thisCamera.transform.rotation = Quaternion.Lerp (tempRot, startRot, timer / duration);
 			_thisCamera.fieldOfView = Mathf.Lerp (cameraTempFOV, _cameraStartFOV, timer / duration);
 			yield return null;
 		}
-		_thisCameraHeighttContainer.position = _cameraStartPos;
-		_thisCamera.transform.eulerAngles = _cameraStartRot;
+		_thisCameraHeighttContainer.position = _sliderSlideCamPos;
+		_thisCamera.transform.eulerAngles = _sliderSlideCamRot;
 		_thisCamera.fieldOfView = _cameraStartFOV;
 		yield return null;
 		_isScrolling = false;
@@ -415,14 +442,14 @@ public class TheatreCameraControl : MonoBehaviour {
 		_traversalUI.FadeOut (true);
 		float timer = 0f;
 		float duration = 5f;
-		_cameraStartPos = _thisCameraHeighttContainer.position;
+		_sliderSlideCamPos = _thisCameraHeighttContainer.position;
 		_cameraStartFOV = _thisCamera.fieldOfView;
-		_cameraStartRot = _thisCamera.transform.eulerAngles;
-		Quaternion startRot = Quaternion.Euler (_cameraStartRot);
+		_sliderSlideCamRot = _thisCamera.transform.eulerAngles;
+		Quaternion startRot = Quaternion.Euler (_sliderSlideCamRot);
 
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_thisCameraHeighttContainer.position = Vector3.Lerp (_cameraStartPos, _cameraZoomedOutViewPos, timer / duration);
+			_thisCameraHeighttContainer.position = Vector3.Lerp (_sliderSlideCamPos, _cameraZoomedOutViewPos, timer / duration);
 			_thisCamera.transform.rotation = Quaternion.Lerp (startRot, _cameraZoomedOutRot, timer / duration);
 			_thisCamera.fieldOfView = Mathf.Lerp (_cameraStartFOV, _cameraZoomedOutFOV, timer / duration);
 			yield return null;
