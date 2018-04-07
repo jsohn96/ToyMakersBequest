@@ -88,19 +88,21 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+
 			break;
 		case 1:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_myTheatre.BringInMusic ();
+			_myTheatre.CheckStateMachine ();
 			break;
 		case 2:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			_myTheatre.SetLight (2);
-			_myTheatre.BringInMusic ();
-			_myTheatre.CheckStateMachine ();
+
 			break;
 		case 3:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));

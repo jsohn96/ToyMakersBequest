@@ -23,6 +23,9 @@ public class StartSlider : MonoBehaviour {
 	bool _touchDown = false;
 	[SerializeField] Camera _mainCamera;
 	[SerializeField] BoxCollider _draggableCollider;
+	[SerializeField] TheatreCameraControl _theatreCameraControl;
+
+	[SerializeField] AltTheatre _myTheatre;
 
 //	float _previousDragNorm ;
 //	float _currentDragNorm;
@@ -57,6 +60,8 @@ public class StartSlider : MonoBehaviour {
 			if (normalizedLinMap < 0.05f) {
 				_sliderStarted = true;
 				_draggableCollider.enabled = false;
+				_touchDown = false;
+				TriggerStart ();
 			}
 		}
 		if (Input.GetMouseButtonUp (0)) {
@@ -76,6 +81,11 @@ public class StartSlider : MonoBehaviour {
 	void OnTouchDown(Vector3 hitPoint){
 		_touchDown = true;
 //		StartCoroutine (ResetSlider ());
+	}
+
+	void TriggerStart(){
+		_theatreCameraControl.MoveCameraToStartPosition ();
+		_myTheatre.CheckStateMachine ();
 	}
 
 	IEnumerator ResetSlider(){

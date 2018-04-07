@@ -81,7 +81,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	public void Activate(){
 		_initZoom = true;
 		AltTheatre.currentSate++;
-		_altTheatre.CheckStateMachine ();
+//		_altTheatre.CheckStateMachine ();
 		StartCoroutine (ZoomInCamera ());
 	}
 
@@ -361,8 +361,10 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator MoveToStartView(){
+		yield return new WaitForSeconds (1.5f);
+
 		float timer = 0f;
-		float duration = 2f;
+		float duration = 3f;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_sliderSlideCamPos, _cameraStartPos, timer / duration);
@@ -410,7 +412,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		float duration;
 		if (!_initClick) {
 			_initClick = true;
-			duration = 12f;
+			duration = 5f;
 		} else {
 			duration = 5f;
 		}

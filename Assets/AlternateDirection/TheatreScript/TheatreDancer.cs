@@ -30,20 +30,25 @@ public class TheatreDancer : MonoBehaviour {
 	bool _stopMovement = false;
 	bool _isFirstStart = false;
 
+	bool _startDancing = false;
+
 	[SerializeField] TheatreSound _theatreSound;
 
 	// Use this for initialization
 	void Start () {
 		_myTheatre = FindObjectOfType<AltTheatre> ().GetComponent<AltTheatre> ();
-		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
-			_dancerTransform.position = _startPosition;
-		}
+//		if (_startDancing) {
+			if (AltTheatre.currentSate == TheatreState.waitingToStart) {
+//			_dancerTransform.position = _startPosition;
+				_dancerTransform.parent = _waterTankPlatformTransform;
+			}
+//		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!_stopMovement) {
-			if (AltTheatre.currentSate == TheatreState.startShow || AltTheatre.currentSate == TheatreState.readyForDancerTank) {
+			if (AltTheatre.currentSate == TheatreState.readyForDancerTank) {
 				RotateInPlace ();
 				RotateAroundCenter ();
 				PlayStartDancing ();
@@ -52,6 +57,10 @@ public class TheatreDancer : MonoBehaviour {
 			}
 		}
 	}
+
+//	public void StartDancing(){
+//		_startDancing = true;
+//	}
 
 	void PlayEnterWater(){
 		_dancerAnim.Play ("dancer_enter_water");
@@ -68,7 +77,6 @@ public class TheatreDancer : MonoBehaviour {
 			_isFirstStart = true;
 			_dancerAnim.Play ("dancer_start");
 		}
-
 	}
 
 
@@ -114,12 +122,14 @@ public class TheatreDancer : MonoBehaviour {
 
 	IEnumerator DancerToCenter(){
 		yield return new WaitForSeconds (1.5f);
-		//_dancerTransform.parent = _waterTankPlatformTransform;
+//		_dancerTransform.parent = _waterTankPlatformTransform;
 		float timer = 0f;
 		float duration = 2f;
 		Vector3 centerPos = _centerLocator.position;
+
 		//duration = 3f;
 		_dancerTempPos = _dancerTransform.position;
+		centerPos.y = _dancerTempPos.y;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_dancerTransform.position = Vector3.Lerp (_dancerTempPos, centerPos, timer / duration);
@@ -152,7 +162,7 @@ public class TheatreDancer : MonoBehaviour {
 		}
 
 		_dancerTransform.localPosition = _firstWaterTankStart;
-		_dancerTransform.parent = _waterTankPlatformTransform;
+
 
 		yield return new WaitForSeconds (0.7f);
 		timer = 0f;

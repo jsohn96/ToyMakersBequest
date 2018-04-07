@@ -7,7 +7,7 @@ using UnityEngine;
 
 public enum TheatreState{
 	waitingToStart = -1,
-	startShow = 0,
+	startShow = 0, //toymaker to Life
 	readyForDancerTank,
 	dancerInTank,
 	magicianBoardTank,
@@ -53,7 +53,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] Vector3 _tankTopPos, _tankBottomPos;
 	[Header("Starting Platform")]
 	[SerializeField] Transform _startPlatform;
-	float _platformDuration = 5f;
+	float _platformDuration = 7f;
 	[SerializeField] Vector3 _platformBeginPos, _platformEndPos;
 
 	[Header("Interactive Scene Objects")]
@@ -101,7 +101,7 @@ public class AltTheatre : LevelManager {
 	}
 
 	void Start(){
-		_watertank.localPosition = _tankTopPos;
+//		_watertank.localPosition = _tankTopPos;
 		_startPlatform.localPosition = _platformBeginPos;
 	}
 
@@ -188,18 +188,25 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.startShow:
 
-
+			_theatreText.TriggerText (2);
 //			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 8f, () => {
+
+			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, 2f, () => {
 				magician.BowDown ();
 			}));
 			magician.GoToStart ();
-			StartCoroutine (DelayedSelfCall (18f));
+//			StartCoroutine (DelayedSelfCall (18f));
 			// call back function? 
+			StartCoroutine(DelayAction(17.5f, () => {
+				_theatreWaterTank.Activate (true);
+			}));
+			StartCoroutine (LerpPosition (_watertank, _watertank.localPosition, _tankTopPos, 6f, 1.5f, 0f, ()=>{
+				MoveToNext();
+			}));
 			break;
 		case TheatreState.readyForDancerTank:
-			_theatreWaterTank.Activate (true);
+			
 			break;
 		case TheatreState.dancerInTank:
 			//prevent the lid from closing
@@ -226,7 +233,7 @@ public class AltTheatre : LevelManager {
 			_theaterAudiences [0].AudienceEnter ();
 			magician.BeginShow (false);
 			Invoke ("PlayWaterTankMoveSound", 1.5f);
-			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, ()=>{
+			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, 0f, ()=>{
 				MoveToNext();
 			}));
 			break;
@@ -425,7 +432,7 @@ public class AltTheatre : LevelManager {
 		_theatreCameraControl.MoveCameraToLookAtStage ();
 	}
 
-	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, System.Action action = null){
+	IEnumerator LerpPosition (Transform transform, Vector3 origin, Vector3 goal, float duration, float initialDelay = 0f, float laterDelay = 0f, System.Action action = null){
 		yield return new WaitForSeconds (initialDelay);
 		float timer = 0f;
 		while (duration > timer) {
@@ -434,7 +441,14 @@ public class AltTheatre : LevelManager {
 			yield return null;
 		}
 		transform.localPosition = goal;
-		yield return null;
+		yield return new WaitForSeconds (laterDelay);
+		if (action != null) {
+			action ();
+		}
+	}
+
+	IEnumerator DelayAction(float delayDuration, System.Action action){
+		yield return new WaitForSeconds (delayDuration);
 		if (action != null) {
 			action ();
 		}
