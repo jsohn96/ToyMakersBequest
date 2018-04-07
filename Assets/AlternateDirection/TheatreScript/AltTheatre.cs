@@ -286,7 +286,7 @@ public class AltTheatre : LevelManager {
 			_theatreText.TriggerText (14);
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set5 ();
-			_theaterAudiences [2].AudienceEnter ();
+//			_theaterAudiences [2].AudienceEnter ();
 
 			magician.PointToRight (false);
 			_dancer.ExitCloset ();
@@ -309,19 +309,19 @@ public class AltTheatre : LevelManager {
 			// dancer go to center 
 			// magician back to original 
 //			_theatreLighting.Set4 ();
-			_theaterAudiences [2].AudienceLeave ();
+//			_theaterAudiences [2].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave2:
 //			_theatreLighting.Set3 ();
-			_theaterAudiences [1].AudienceLeave ();
+//			_theaterAudiences [1].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
 			break;
 		case TheatreState.audienceLeave3:
 //			_theatreLighting.Set6 ();
-			_theaterAudiences [0].AudienceLeave ();
+//			_theaterAudiences [0].AudienceLeave ();
 
 			_dancer.ElevateTankPlatform ();
 //			StartCoroutine(DelayedSelfCall(2));

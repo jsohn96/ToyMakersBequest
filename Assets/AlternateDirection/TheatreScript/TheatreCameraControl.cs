@@ -58,6 +58,8 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] TheatreText _theatreText;
 	[SerializeField] TapSoundPlayer _tapSoundPlayer;
 
+	bool _isLerping = false;
+
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
@@ -69,7 +71,6 @@ public class TheatreCameraControl : MonoBehaviour {
 			_currentCameraYPos = _cameraStartPos.y;
 			CameraAngleCalculation ();
 		}
-
 	}
 
 	public void Activate(){
@@ -166,7 +167,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	void ScrollCamera(bool lerpIt = false){
 		if (lerpIt) {
-			_isScrolling = true;
+			_isLerping = true;
 		}
 		if (!_disableAllScroll) {
 			if (!_discreteMode) {
@@ -231,7 +232,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	void CameraAngleCalculation(bool lerpIt = false){
 		if (lerpIt) {
-			_isScrolling = true;
+			_isLerping = true;
 		}
 		_currentCameraYPos = _thisCamera.transform.position.y;
 		_cameraTempRot = _thisCamera.transform.eulerAngles;
@@ -244,7 +245,7 @@ public class TheatreCameraControl : MonoBehaviour {
 
 		if (lerpIt) {
 			StartCoroutine (LerpAngle (_cameraTempRot));
-		} else if(!_isScrolling){
+		} else if(!_isLerping){
 			_thisCamera.transform.rotation = Quaternion.Euler (_cameraTempRot);
 		}
 
@@ -271,7 +272,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			yield return null;
 		}
 		_thisCamera.transform.rotation = tempRotationQuat;
-		_isScrolling = false;
+		_isLerping = false;
 		yield return null;
 	}
 
@@ -312,7 +313,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _bottomCameraPos;
-		CameraAngleCalculation ();
+		CameraAngleCalculation (true);
 		yield return null;
 		_altTheatre.MoveToNext ();
 	}
