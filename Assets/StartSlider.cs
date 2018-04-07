@@ -27,6 +27,8 @@ public class StartSlider : MonoBehaviour {
 
 	[SerializeField] AltTheatre _myTheatre;
 
+	float normalizedLinMap = 100f;
+
 //	float _previousDragNorm ;
 //	float _currentDragNorm;
 //
@@ -55,9 +57,10 @@ public class StartSlider : MonoBehaviour {
 	void Update(){
 		if (_touchDown) {
 			float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
-			float normalizedLinMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
+			float tempNormMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
+			normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
 			_sliderAnim.Play (_hashID, -1, normalizedLinMap);
-			if (normalizedLinMap < 0.05f) {
+			if (normalizedLinMap < 0.005f) {
 				_sliderStarted = true;
 				_draggableCollider.enabled = false;
 				_touchDown = false;
