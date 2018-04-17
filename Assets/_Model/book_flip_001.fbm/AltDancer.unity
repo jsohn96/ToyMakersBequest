@@ -8404,8 +8404,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 502451467}
-  - {fileID: 454537564}
   - {fileID: 1329843691}
+  - {fileID: 454537564}
   - {fileID: 2146989940}
   m_Father: {fileID: 2080680198}
   m_RootOrder: 8
@@ -12705,7 +12705,7 @@ Prefab:
     - target: {fileID: 224533391201798606, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -102.4325
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -12725,7 +12725,7 @@ Prefab:
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -292.0775
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -12745,7 +12745,7 @@ Prefab:
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -481.72253
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -12765,7 +12765,7 @@ Prefab:
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -671.36755
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1319477323318112, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -15480,6 +15480,9 @@ MonoBehaviour:
   _myTheatre: {fileID: 1924021101}
   _shaderGlowCustom: {fileID: 776544077}
   _isLeftDoor: 0
+  _firstClose: 0
+  _secondClose: 0
+  _otherWaterTankDoor: {fileID: 1165554336}
 --- !u!33 &776544074
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23707,6 +23710,9 @@ MonoBehaviour:
   _myTheatre: {fileID: 1924021101}
   _shaderGlowCustom: {fileID: 1165554340}
   _isLeftDoor: 0
+  _firstClose: 0
+  _secondClose: 0
+  _otherWaterTankDoor: {fileID: 776544073}
 --- !u!33 &1165554337
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -28362,7 +28368,7 @@ Transform:
   m_Children:
   - {fileID: 2117309053}
   m_Father: {fileID: 422984513}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1330671146
 GameObject:

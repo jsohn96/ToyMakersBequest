@@ -182,9 +182,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
-			bool proceed = true;
 
-			if (proceed) {
 				Ray mousePositionRay;
 				if (!_isNotUsingMainCamera) {
 					mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
@@ -217,7 +215,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 						preChangingTime = -1;
 					}
 				}
-			}
+
 		}
 
 

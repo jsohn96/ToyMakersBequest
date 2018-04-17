@@ -18,7 +18,11 @@ public enum TheatreState{
 	frogJump,
 	lookDownIntoTank,
 	CloseTankDoors,
+	CloseDoorOne,//new
+	CloseDoorTwo,//new
+	TurnHeartCrank, //new
 	OpenTank,
+	LookUpAtStageAgain, //new
 	magicianRight,
 	dancerShowUp,
 	dancerStartPath,
@@ -32,6 +36,9 @@ public enum TheatreState{
 	dancerDescend,
 	lookDownIntoTank2,
 	CloseTankDoors2,
+	CloseDoorOne2, //new
+	CloseDoorTwo2, //new
+	TurnHeartCrank2, //new
 	dancerLocked,
 	theatreEnd 
 }
@@ -268,14 +275,23 @@ public class AltTheatre : LevelManager {
 			_theatreWaterTank.OpenLid (false);
 			_tankDoor1.Activate (true);
 			_tankDoor2.Activate (true);
-			_tankDoor1.DisableTouchInput (true);
-			_tankDoor2.DisableTouchInput (true);
+//			_tankDoor1.DisableTouchInput (true);
+//			_tankDoor2.DisableTouchInput (true);
 			//MoveToNext();
 
+			break;
+		case TheatreState.CloseDoorOne:
+			break;
+		case TheatreState.CloseDoorTwo:
+			
+			break;
+		case TheatreState.TurnHeartCrank:
 			break;
 		case TheatreState.OpenTank:
 			_theatreChest.GiveBackControl ();
 			_theatreText.TriggerText (13);
+			break;
+		case TheatreState.LookUpAtStageAgain:
 			break;
 		case TheatreState.magicianRight:
 			_tankDoor1.Activate (false);
@@ -368,6 +384,12 @@ public class AltTheatre : LevelManager {
 			_tankDoor2.DisableTouchInput (true);
 
 			StartCoroutine (DelayedSelfCall (1.5f));
+			break;
+		case TheatreState.CloseDoorOne2:
+			break;
+		case TheatreState.CloseDoorTwo2:
+			break;
+		case TheatreState.TurnHeartCrank2:
 			break;
 		case TheatreState.dancerLocked:
 			_dancer.StopMovement ();
