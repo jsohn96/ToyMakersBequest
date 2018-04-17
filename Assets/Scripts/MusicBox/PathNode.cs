@@ -212,6 +212,9 @@ public class PathNode : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		if (_mainCamera == null) {
+			_mainCamera = Camera.main;
+		}
 		_activeIntersections = new List<GameObject> ();
 		_myNetWork = GetComponentInParent<PathNetwork> ();
 		_nodeTransform = gameObject.transform;
