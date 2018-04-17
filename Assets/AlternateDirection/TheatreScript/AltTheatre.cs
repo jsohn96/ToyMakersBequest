@@ -283,7 +283,8 @@ public class AltTheatre : LevelManager {
 		case TheatreState.CloseDoorOne:
 			break;
 		case TheatreState.CloseDoorTwo:
-			
+			_heartTimer1.ActivateHeart ();
+			_heartTimer2.ActivateHeart ();
 			break;
 		case TheatreState.TurnHeartCrank:
 			break;

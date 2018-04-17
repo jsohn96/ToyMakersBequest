@@ -64,6 +64,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 	bool _heartIsActive = false;
 
+
+	[SerializeField] AltTheatre _myTheatre;
+
 	public void ActivateHeart(){
 		_heartIsActive = true;
 		_thisInstanceID = transform.GetInstanceID ();
@@ -129,11 +132,11 @@ public class TheatreHeartTimer : MonoBehaviour {
 					_theOtherHalfHeartTimer.SnapTickerIntoStart ();
 				}
 			}
-			Debug.Log (transform.forward);
 		}
 	}
 
 	public void SnapTickerIntoStart(){
+		
 		transform.localRotation = _timerTicks [3];
 		StartCoroutine (SnapTickerToStart ());
 	}
