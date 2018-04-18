@@ -108,10 +108,10 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.S)) {
-			ActivateHeart ();
-		}
-
+//		if (Input.GetKeyDown (KeyCode.S)) {
+//			ActivateHeart ();
+//		}
+//
 		if (_heartIsActive) {
 			RotateWithMouse ();
 
@@ -122,6 +122,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 					_heartIsActive = false;
 					SnapTickerIntoStart ();
 					_theOtherHalfHeartTimer.enabled = true;
+					_myTheatre.MoveToNext ();
 					_theOtherHalfHeartTimer.SnapTickerIntoStart ();
 				}
 			} else {
@@ -130,13 +131,17 @@ public class TheatreHeartTimer : MonoBehaviour {
 					SnapTickerIntoStart ();
 					_theOtherHalfHeartTimer.enabled = true;
 					_theOtherHalfHeartTimer.SnapTickerIntoStart ();
+
 				}
 			}
 		}
 	}
 
 	public void SnapTickerIntoStart(){
-		
+		_theOtherHalfHeartTimer.enabled = true;
+		isDragStart = false;
+		isRotating = false;
+
 		transform.localRotation = _timerTicks [3];
 		StartCoroutine (SnapTickerToStart ());
 	}
@@ -144,7 +149,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 
 	IEnumerator SnapTickerToStart(){
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (1f);
 		float timer = 0f;
 		float duration = 1f;
 		while (duration > timer) {
@@ -153,7 +158,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 			yield return null;
 		}
 		transform.localRotation = _timerTicks [2];
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (1f);
 
 		timer = 0f;
 		while (duration > timer) {
@@ -162,7 +167,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 			yield return null;
 		}
 		transform.localRotation = _timerTicks [1];
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (1f);
 
 		timer = 0f;
 		while (duration > timer) {

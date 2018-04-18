@@ -187,6 +187,7 @@ public class AltTheatre : LevelManager {
 	}
 
 	public void CheckStateMachine(){
+		Debug.Log (currentSate);
 		_startSlider.SetSliderState ((int)currentSate, 35f);
 
 		switch (currentSate) {
@@ -287,19 +288,22 @@ public class AltTheatre : LevelManager {
 			_heartTimer2.ActivateHeart ();
 			break;
 		case TheatreState.TurnHeartCrank:
+			_theatreText.TriggerText (9);
 			break;
 		case TheatreState.OpenTank:
-			_theatreChest.GiveBackControl ();
-			_theatreText.TriggerText (13);
+//			_theatreChest.GiveBackControl ();
+//			_theatreCameraControl.EnableScrollFOV();
+//			_theatreText.TriggerText (13);
 			break;
 		case TheatreState.LookUpAtStageAgain:
+			_theatreCameraControl.MoveCameraToLookAtStage2 ();
 			break;
 		case TheatreState.magicianRight:
 			_tankDoor1.Activate (false);
 			_tankDoor2.Activate (false);
 
 			_traversalUI.FadeIn ();
-			_theatreCameraControl.EnableScrollFOV();
+//			_theatreCameraControl.EnableScrollFOV();
 			magician.PointToRight (true);
 			// dancer.enterScene();
 			cabinet.Activate (true);
@@ -307,7 +311,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.dancerShowUp:
 			// dancer shows up play dancer aniamtion
-			_theatreText.TriggerText (14);
+			_theatreText.TriggerText (13);
 			_theatreSound.PlayLightSwitch ();
 			_theatreLighting.Set5 ();
 //			_theaterAudiences [2].AudienceEnter ();
@@ -379,18 +383,23 @@ public class AltTheatre : LevelManager {
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			break;
 		case TheatreState.CloseTankDoors2:
+//			_tankDoor1.FinalActivation (true);
+//			_tankDoor2.FinalActivation (true);
 			_tankDoor1.FinalActivation (true);
 			_tankDoor2.FinalActivation (true);
-			_tankDoor1.DisableTouchInput (true);
-			_tankDoor2.DisableTouchInput (true);
+//			_tankDoor1.DisableTouchInput (true);
+//			_tankDoor2.DisableTouchInput (true);
 
-			StartCoroutine (DelayedSelfCall (1.5f));
+//			StartCoroutine (DelayedSelfCall (1.5f));
 			break;
 		case TheatreState.CloseDoorOne2:
 			break;
 		case TheatreState.CloseDoorTwo2:
+			_heartTimer1.ActivateHeart ();
+			_heartTimer2.ActivateHeart ();
 			break;
 		case TheatreState.TurnHeartCrank2:
+			_theatreText.TriggerText (30);
 			break;
 		case TheatreState.dancerLocked:
 			_dancer.StopMovement ();

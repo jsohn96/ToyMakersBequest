@@ -23,7 +23,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	bool _disableTouchInput = true;
 	[SerializeField] bool _isLeftDoor = false;
 
-
+	bool _tappedIn = false;
 	public bool _firstClose = false;
 	public bool _secondClose = false;
 
@@ -43,6 +43,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 			if (_firstClose) {
 				_firstClose = false;
+				_tappedIn = false;
 				_otherWaterTankDoor._firstClose = false;
 				_disableTouchInput = true;
 				//close Tank
@@ -64,20 +65,28 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			}
 
 			else {
-				if (_isOpen) {
-					_isOpen = false;
-					if (_tankDoorCoroutine != null) {
-						StopCoroutine (_tankDoorCoroutine);
+				if (!_waitForClose) {
+					if (_openBoth) {
+//						_myTheatre.MoveToNext ();
+						OpenTankCall ();
+						_otherWaterTankDoor.OpenTankCall ();
+						_waitForClose = true;
+						_openBoth = false;
+					} else if (_isOpen) {
+						_isOpen = false;
+						if (_tankDoorCoroutine != null) {
+							StopCoroutine (_tankDoorCoroutine);
+						}
+						_tankDoorCoroutine = CloseTank ();
+						StartCoroutine (_tankDoorCoroutine);
+					} else {
+						_isOpen = true;
+						if (_tankDoorCoroutine != null) {
+							StopCoroutine (_tankDoorCoroutine);
+						}
+						_tankDoorCoroutine = OpenTank ();
+						StartCoroutine (_tankDoorCoroutine);
 					}
-					_tankDoorCoroutine = CloseTank ();
-					StartCoroutine (_tankDoorCoroutine);
-				} else {
-					_isOpen = true;
-					if (_tankDoorCoroutine != null) {
-						StopCoroutine (_tankDoorCoroutine);
-					}
-					_tankDoorCoroutine = OpenTank ();
-					StartCoroutine (_tankDoorCoroutine);
 				}
 			}
 		}
@@ -133,7 +142,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 //			_shaderGlowCustom.TriggerFadeIn ();
 		}
 		_waitForClose = false;
-		if (_secondClose && !_firstClose) {
+		if (_secondClose && !_firstClose && _tappedIn) {
+			_tappedIn = false;
 			_secondClose = false;
 			_otherWaterTankDoor._secondClose = false;
 			_myTheatre.MoveToNext ();
@@ -160,6 +170,9 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			_callOnce = true;
 			_myTheatre.MoveToNext ();
 		}
+
+		_waitForClose = false;
+
 		if (_openBoth) {
 			_shaderGlowCustom.enabled = false;
 		}
@@ -168,6 +181,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	public void OpenTankCall(){
 		_isOpen = true;
+		_openBoth = false;
+		_waitForClose = true;
 		_tankDoorCoroutine = OpenTank ();
 		StartCoroutine (_tankDoorCoroutine);
 	}
@@ -184,9 +199,10 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		_disableTouchInput = false;
 		_isActivated = activate;
 		if (activate) {
-
+			_openBoth = true;
 			_firstClose = true;
 			_secondClose = true;
+			_tappedIn = true;
 
 //			if (_isOpen) {
 //				_isOpen = false;
@@ -201,16 +217,25 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	}
 
 	public void FinalActivation(bool finalActivate){
-		if(finalActivate) {
-			_finalWaterTankClose = true;
-			if (_isOpen) {
-				_isOpen = false;
-				if (_tankDoorCoroutine != null) {
-					StopCoroutine (_tankDoorCoroutine);
-				}
-				_tankDoorCoroutine = CloseTank ();
-				StartCoroutine (_tankDoorCoroutine);
-			}
+		_callOnce = false;
+		_disableTouchInput = false;
+		_isActivated = finalActivate;
+		if (finalActivate) {
+			_openBoth = true;
+			_firstClose = true;
+			_secondClose = true;
+			_tappedIn = true;
 		}
+//		if(finalActivate) {
+//			_finalWaterTankClose = true;
+//			if (_isOpen) {
+//				_isOpen = false;
+//				if (_tankDoorCoroutine != null) {
+//					StopCoroutine (_tankDoorCoroutine);
+//				}
+//				_tankDoorCoroutine = CloseTank ();
+//				StartCoroutine (_tankDoorCoroutine);
+//			}
+//		}
 	}
 }

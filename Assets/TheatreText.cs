@@ -160,7 +160,7 @@ public class TheatreText : MonoBehaviour {
 			_myTheatre.ActivateBothTankDoors ();
 			break;
 		case 13:
-			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;
@@ -246,7 +246,7 @@ public class TheatreText : MonoBehaviour {
 //			_myTheatre.MoveToNext ();
 			break;
 		case 29:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 

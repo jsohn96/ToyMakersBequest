@@ -27,6 +27,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[Header("Camera Goal Position Values")]
 	[SerializeField] Vector3 _bottomCameraPos;
 	[SerializeField] Vector3 _stageCameraPos;
+	[SerializeField] Vector3 _stageCameraPos2;
 	Vector3 _scrollDirectionMultiplier = new Vector3(0f, -10f, 0f);
 	float _angleDirectionMultiplier = 1f;
 
@@ -331,6 +332,10 @@ public class TheatreCameraControl : MonoBehaviour {
 		StartCoroutine (MoveToStage ());
 	}
 
+	public void MoveCameraToLookAtStage2(){
+		StartCoroutine (MoveToStage2 ());
+	}
+
 	public void MoveCameraToStartPosition(){
 		StartCoroutine (MoveToStartView ());
 	}
@@ -358,6 +363,31 @@ public class TheatreCameraControl : MonoBehaviour {
 		CameraAngleCalculation (true);
 		yield return null;
 		//_altTheatre.MoveToNext ();
+	}
+
+	IEnumerator MoveToStage2(){
+		float timer = 0f;
+		float duration = 5f;
+		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
+		Vector3 originEuler = _thisCamera.transform.eulerAngles;
+		Vector3 goalEuler = new Vector3 (18.292f, 0f, 0f);
+		//		_bottomCameraPos = _cameraTempPos;
+		//		_bottomCameraPos.y = _cameraMovementRange.Min;
+		_disableAllScroll = true;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _stageCameraPos2, timer / duration);
+
+			CameraAngleCalculation ();
+			originEuler.x = _thisCamera.transform.eulerAngles.x;
+			goalEuler.x = originEuler.x;
+			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.transform.position = _stageCameraPos2;
+		CameraAngleCalculation (true);
+		yield return null;
+		_altTheatre.MoveToNext ();
 	}
 
 	IEnumerator MoveToStartView(){
