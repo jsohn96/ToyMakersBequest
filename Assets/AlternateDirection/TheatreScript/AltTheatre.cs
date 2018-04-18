@@ -195,7 +195,7 @@ public class AltTheatre : LevelManager {
 			_theatreCameraControl.Activate ();
 			break;
 		case TheatreState.startShow:
-
+			magician.InitMagician ();
 			_theatreText.TriggerText (2);
 //			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
@@ -249,7 +249,7 @@ public class AltTheatre : LevelManager {
 			magician.StepOffTank ();
 			break;
 		case TheatreState.magicianLeft:
-			_traversalUI.FadeIn ();
+//			_traversalUI.FadeIn ();
 			_theatreCameraControl.EnableScrollFOV();
 
 			magician.PointToLeft (true);
@@ -267,7 +267,7 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 			break;
 		case TheatreState.lookDownIntoTank:
-			_traversalUI.FadeOut ();
+//			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
 			_theatreText.TriggerText (7);
@@ -302,7 +302,7 @@ public class AltTheatre : LevelManager {
 			_tankDoor1.Activate (false);
 			_tankDoor2.Activate (false);
 
-			_traversalUI.FadeIn ();
+//			_traversalUI.FadeIn ();
 //			_theatreCameraControl.EnableScrollFOV();
 			magician.PointToRight (true);
 			// dancer.enterScene();
@@ -379,7 +379,7 @@ public class AltTheatre : LevelManager {
 			break;
 		case TheatreState.lookDownIntoTank2:
 			_theatreWaterTank.OpenLid (false);
-			_traversalUI.FadeOut ();
+//			_traversalUI.FadeOut ();
 			_theatreCameraControl.MoveCameraToLookAtTank ();
 			break;
 		case TheatreState.CloseTankDoors2:

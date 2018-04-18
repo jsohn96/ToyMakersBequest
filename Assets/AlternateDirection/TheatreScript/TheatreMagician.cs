@@ -32,6 +32,8 @@ public class TheatreMagician : MonoBehaviour {
 		//_magicianTransform = gameObject.transform;
 		_kissImage.SetActive(false);
 		_kissPosition = _kissLocator.position;	
+		_magicianAnim.Play ("Init", 0, 0f);
+		_magicianAnim.speed = 0f;
 	}
 
 	void Start(){
@@ -105,6 +107,7 @@ public class TheatreMagician : MonoBehaviour {
 	}
 
 	public void BowDown(){
+		_magicianAnim.speed = 1f;
 		_magicianAnim.Play ("bowDown");
 	}
 
@@ -141,6 +144,16 @@ public class TheatreMagician : MonoBehaviour {
 		} else {
 			_magicianAnim.Play ("ReturnShow");
 		}
+	}
+
+	public void InitMagician(){
+		StartCoroutine (DelayInitAnim ());
+	}
+
+	IEnumerator DelayInitAnim(){
+		yield return new WaitForSeconds (2.5f);
+		_magicianAnim.speed = 0.6f;
+		_magicianAnim.Play ("Init");
 	}
 
 	IEnumerator DelayLightsOn() {

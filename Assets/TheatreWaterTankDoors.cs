@@ -27,6 +27,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	public bool _firstClose = false;
 	public bool _secondClose = false;
 
+	bool _hideOnce = false;
+
 	[SerializeField] TheatreWaterTankDoors _otherWaterTankDoor;
 
 	void Start(){
@@ -149,7 +151,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			_myTheatre.MoveToNext ();
 		}
 
-		if (_isActivated && !_callOnce) {
+		if (_isActivated && !_hideOnce) {
+			_hideOnce = true;
 			_myTheatre.HideDancer ();
 		}
 	}

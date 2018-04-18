@@ -442,7 +442,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		float duration;
 		if (!_initClick) {
 			_initClick = true;
-			duration = 5f;
+			duration = 9f;
 		} else {
 			duration = 5f;
 		}
