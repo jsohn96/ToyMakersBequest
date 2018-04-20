@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragRotation : MonoBehaviour {
+public class BackTickRotation : MonoBehaviour {
 
 	enum axisToRotate {
 		xAxis, yAxis, zAxis, drivenByMain
@@ -33,42 +33,59 @@ public class DragRotation : MonoBehaviour {
 
 
 	[SerializeField] float _dragSensitivity = 10f;
-	[SerializeField] bool _isNotebook = false;
-	Camera _mainCamera;
+	[SerializeField] bool _isNotUsingMainCamera = false;
+	[SerializeField] Camera _mainCamera;
 	[SerializeField] Camera _nonMainCameraForRayCast;
-	int _3DBookLayerMask = 1 << 15;
+	[SerializeField] LayerMask _whichLayerMask;
 
 	Plane circlePlane;
 	List<float> snapToAngle;
 
 	[SerializeField] axisToRotate _mainAxis;
-	[SerializeField] Transform[] _reverseRotation;
-	[SerializeField] float[] _reverseRelativeSpeed;
-	[SerializeField] axisToRotate[] _reverseAxisToRotate;
+
 	[SerializeField] bool _flipDirection = false;
+
+
 	float _directionFlip = 1.0f;
 	Vector3 curMousePos;
 
-	[SerializeField] TextContentTracker _textContentTracker;
-
 	int _thisInstanceID;
-	bool _axisCalculated = false;
 
-	void Start(){
+
+	bool _heartIsActive = false;
+
+
+	[SerializeField] AltTheatre _myTheatre;
+
+	bool _placedKey = false;
+	[SerializeField] MeshRenderer _keyMeshRenderer;
+	bool _pointingAtTrueEnding = false;
+
+	// Use this for initialization
+	void Start () {
+		_keyMeshRenderer.enabled = false;
+	}
+
+
+	void OnTouchDown(){
+		if (!_placedKey) {
+			_keyMeshRenderer.enabled = true;
+			ActivateRotate ();
+		}
+	}
+
+
+
+	void ActivateRotate(){
+		_heartIsActive = true;
 		_thisInstanceID = transform.GetInstanceID ();
 
 		snapToAngle = new List<float> (10);
-		_mainCamera = Camera.main;
 
 		if (_flipDirection) {
 			_directionFlip = -1.0f;
 		}
 
-//		CalculateAxis ();
-
-	}
-
-	void CalculateAxis(){
 		Vector3 p = transform.position;
 
 		// rotate around Y 
@@ -100,12 +117,30 @@ public class DragRotation : MonoBehaviour {
 
 
 	void Update(){
-		RotateWithMouse ();
+		if (Input.GetKeyDown (KeyCode.S)) {
+			ActivateRotate ();
+		}
+
+		if (_heartIsActive) {
+			RotateWithMouse ();
+
+		}
 	}
+
+	public void SetTicker(bool isTrueEnd){
+		isDragStart = false;
+		if (isTrueEnd) {
+			transform.localRotation = Quaternion.Euler (-180f, 0f, 15f);
+		} else {
+			transform.localRotation = Quaternion.Euler (0f, 180f, 0f);
+		}
+	}
+
 
 	public bool GetIsRotating(){
 		return isRotating;
 	}
+
 
 
 	void RotateWithMouse(){
@@ -113,45 +148,39 @@ public class DragRotation : MonoBehaviour {
 
 		// start dragging
 		if(Input.GetMouseButtonDown(0)){
-			if (!_axisCalculated) {
-				CalculateAxis ();
+
+			Ray mousePositionRay;
+			if (!_isNotUsingMainCamera) {
+				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
+			} else {
+				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
 			}
-			bool proceed = true;
-			if (_textContentTracker != null) {
-				proceed = !_textContentTracker._isDisplaying;
+			RaycastHit hit;
+			dragPreviousMousePos = Input.mousePosition;
+			bool isHit;
+			if (!_isNotUsingMainCamera) {
+				isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
+				Debug.Log (isHit);
+			} else {
+				isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
 			}
-			if (proceed) {
-				Ray mousePositionRay;
-				if (!_isNotebook) {
-					mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
-				} else {
-					mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
-				}
-				RaycastHit hit;
-				dragPreviousMousePos = Input.mousePosition;
-				bool isHit;
-				if (!_isNotebook) {
-					isHit = Physics.Raycast (mousePositionRay, out hit);
-				} else {
-					isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
-				}
-				if (isHit && hit.collider.gameObject.tag == "DragRotation") {
-					if (hit.transform.GetInstanceID() == _thisInstanceID) {
-						isDragStart = true;
-						//dragStartPos = hit.point;
-						float rayDistance;
-						if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
-							dragStartPos = mousePositionRay.GetPoint (rayDistance);
-						}
-						//print ("hit point :" + hit.point);
-						//hitDist = rayDistance;
-						// create a plane ;
-						//circlePlane = new Plane (transform.up, hit.point);
-						preAxis = new Vector3 (0, 0, 0);
-						preChangingTime = -1;
+			if (isHit && hit.collider.gameObject.tag == "DragRotation") {
+				if (hit.transform.GetInstanceID() == _thisInstanceID) {
+					isDragStart = true;
+					//dragStartPos = hit.point;
+					float rayDistance;
+					if (circlePlane.Raycast (mousePositionRay, out rayDistance)) {
+						dragStartPos = mousePositionRay.GetPoint (rayDistance);
 					}
+					//print ("hit point :" + hit.point);
+					//hitDist = rayDistance;
+					// create a plane ;
+					//circlePlane = new Plane (transform.up, hit.point);
+					preAxis = new Vector3 (0, 0, 0);
+					preChangingTime = -1;
 				}
 			}
+
 		}
 
 
@@ -186,14 +215,13 @@ public class DragRotation : MonoBehaviour {
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
 			if(rotateAxis != preAxis){
 				float deltaChangeTime = Time.time - preChangingTime;
 
 				if (deltaChangeTime <= 0.02f) {
-//					print("############# Axis Jitter !!!!!");
+					//					print("############# Axis Jitter !!!!!");
 					return;
 
 				} else {
@@ -220,6 +248,8 @@ public class DragRotation : MonoBehaviour {
 				accAngle = _dragSensitivity;
 				gameObject.transform.Rotate (-accAngle * _directionFlip * rotateAxis * 0.5f, Space.World);
 
+
+
 				bool positiveDirection;
 				if (rotateAxis.z > 0f) {
 					positiveDirection = true;
@@ -230,33 +260,7 @@ public class DragRotation : MonoBehaviour {
 				if (rotateAxis.z == 0) {
 					rotateAxis.z = 1f;
 				}
-
-				for (int i = 0; i < _reverseRotation.Length; i++) {
-					if (_reverseAxisToRotate [i] == axisToRotate.drivenByMain) {
-						_reverseRotation [i].Rotate ((-accAngle * _directionFlip * rotateAxis * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-					}
-					else if (positiveDirection) {
-						if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].up * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else if (_reverseAxisToRotate [i] == axisToRotate.zAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else if (_reverseAxisToRotate [i] == axisToRotate.xAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * _reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else {
-							return;
-						}
-					} else {
-						if (_reverseAxisToRotate [i] == axisToRotate.yAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else if (_reverseAxisToRotate [i] == axisToRotate.zAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].forward * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else if (_reverseAxisToRotate [i] == axisToRotate.xAxis) {
-							_reverseRotation [i].Rotate ((-accAngle * _directionFlip * -_reverseRotation [i].right * 0.5f * _reverseRelativeSpeed [i]), Space.World);
-						} else {
-							return;
-						}
-					}
-				}
+					
 				dragStartPos = curMousePos;
 				accAngle = 0;
 				if (_oneDirectional == 1) {

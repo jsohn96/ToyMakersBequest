@@ -134,7 +134,7 @@ public class AltTheatre : LevelManager {
 		}
 
 		if(Input.GetKeyDown(KeyCode.X)){
-			Time.timeScale = 20.0f;
+			Time.timeScale = 30.0f;
 		} else if (Input.GetKeyUp(KeyCode.X)){
 			Time.timeScale = 1.0f;
 		}
