@@ -87,23 +87,25 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 
+	public void ZoomOut(){
+		if (!_zoomedOut) {
+			_isZooming = true;
+			_zoomedOut = true;
+			StartCoroutine (ZoomOutCamera ());
+		}
+	}
+
+	public void ZoomIn(){
+		if (_zoomedOut) {
+			_isZooming = true;
+			StartCoroutine (ZoomInCamera ());
+		}
+	}
+
 	void Update(){
 		if (_initZoom && !_isZooming) {
 			if (_isScrolling) {
 				ScrollCamera ();
-			} else {
-				if (Input.GetMouseButtonDown (1)) {
-					if (!_zoomedOut) {
-						_isZooming = true;
-						_zoomedOut = true;
-						StartCoroutine (ZoomOutCamera ());
-					}
-				} else if (Input.GetMouseButtonDown (0)) {
-					if (_zoomedOut) {
-						_isZooming = true;
-						StartCoroutine (ZoomInCamera ());
-					}
-				}
 			}
 		}
 

@@ -36,12 +36,12 @@ public class TheatreMagician : MonoBehaviour {
 		_magicianAnim.speed = 0f;
 	}
 
-	void Start(){
-		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
-			_magicianTransform.position = _startPosition;
-			_magicianTransform.parent = _startPlatform;
-		}
-	}
+//	void Start(){
+//		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
+//			_magicianTransform.position = _startPosition;
+//			_magicianTransform.parent = _startPlatform;
+//		}
+//	}
 
 		
 	public void StepOnTank(){

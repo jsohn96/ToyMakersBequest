@@ -89,6 +89,8 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreHeartTimer _heartTimer1, _heartTimer2;
 	[SerializeField] SpriteRenderer _heartArrowInstructions;
 
+	[SerializeField] TheatreRotation _theatreRotation;
+
 	int _doorCloseCnt = 0;
 
 	// Use this for initialization
@@ -193,6 +195,7 @@ public class AltTheatre : LevelManager {
 		switch (currentSate) {
 		case TheatreState.waitingToStart:
 			_theatreCameraControl.Activate ();
+			_theatreRotation.StartInitRotation ();
 			break;
 		case TheatreState.startShow:
 			magician.InitMagician ();
