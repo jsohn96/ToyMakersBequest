@@ -18,6 +18,8 @@ public class TheatreBack : MonoBehaviour {
 	Vector3 _closedBackDoor = new Vector3(0f,0f,0f);
 	Vector3 _openBackDoor = new Vector3(0f, -150f, 0f);
 
+	[SerializeField] GameObject _keyDirection;
+
 	void Start(){
 		_thisBoxCollider = GetComponent<BoxCollider> ();
 	
@@ -39,7 +41,14 @@ public class TheatreBack : MonoBehaviour {
 		float duration = 3f;
 		Quaternion closedBackDoorQuat = Quaternion.Euler (_closedBackDoor);
 		Quaternion openBackDoorQuat = Quaternion.Euler (_openBackDoor);
+
+		bool injectKeyToggle = false;
+
 		while (timer < duration) {
+			if (!injectKeyToggle && timer >= 1.5f) {
+				injectKeyToggle = true;
+				_keyDirection.SetActive (true);
+			}
 			timer += Time.deltaTime;
 			_backCover.localRotation = Quaternion.Lerp (closedBackDoorQuat, openBackDoorQuat, timer / duration);
 			yield return null;
@@ -51,14 +60,15 @@ public class TheatreBack : MonoBehaviour {
 
 	public void TickTrueEnding(bool isTrueEnding){
 		if (isTrueEnding) {
-			_backAnimator.Play ("upper_gear_turn");
 			_theatreBackSlider.Activate ();
-		} else {
-			_backAnimator.Play ("lower_gear_stuck");
 		}
+//		} else {
+//			_backAnimator.Play ("lower_gear_stuck");
+//		}
 	}
 
 	public void ResumeSequence(){
+		_backAnimator.Play ("upper_gear_turn");
 		_theatreCameraControl.ZoomBack (false);
 		_theatreRotation.StartResumeRotation ();
 	}

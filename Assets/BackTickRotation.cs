@@ -60,7 +60,7 @@ public class BackTickRotation : MonoBehaviour {
 	bool _placedKey = false;
 	[SerializeField] MeshRenderer _keyMeshRenderer;
 	bool _pointingAtTrueEnding = false;
-
+	[SerializeField] Transform _keyDirections;
 
 
 	[SerializeField] TheatreBack _theatreBack;
@@ -68,16 +68,22 @@ public class BackTickRotation : MonoBehaviour {
 
 	[SerializeField] Transform _buttonTrueEnd;
 	[SerializeField] Transform _buttonfestivalBuild;
+	Vector3 _buttonPressedPos = new Vector3(0f, 0f, 0.00053f);
+	Vector3 _buttonReadyPos = new Vector3 (0f, 0f, -0.0012f);
 
 	// Use this for initialization
 	void Start () {
 		_keyMeshRenderer.enabled = false;
+
+		_buttonfestivalBuild.localPosition = _buttonPressedPos;
+		_buttonTrueEnd.localPosition = _buttonReadyPos;
 	}
 
 
 	void OnTouchDown(){
 		if (!_placedKey) {
 			_keyMeshRenderer.enabled = true;
+			_keyDirections.gameObject.SetActive (false);
 			ActivateRotate ();
 		}
 	}
@@ -140,10 +146,16 @@ public class BackTickRotation : MonoBehaviour {
 		if (isTrueEnd) {
 			transform.localRotation = Quaternion.Euler (-180f, 0f, 15f);
 			_theatreBack.TickTrueEnding (true);
+
+			_buttonfestivalBuild.localPosition = _buttonReadyPos;
+			_buttonTrueEnd.localPosition = _buttonPressedPos;
+
 		} else {
 			transform.localRotation = Quaternion.Euler (0f, 180f, 0f);
-
 			_theatreBack.TickTrueEnding (false);
+
+			_buttonfestivalBuild.localPosition = _buttonPressedPos;
+			_buttonTrueEnd.localPosition = _buttonReadyPos;
 		}
 	}
 
