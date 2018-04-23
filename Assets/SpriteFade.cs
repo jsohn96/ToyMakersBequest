@@ -18,7 +18,7 @@ public class SpriteFade : MonoBehaviour {
 
 	IEnumerator _fadeCoroutine;
 	bool _coroutineIsOngoing = false;
-	float _flickerDuration = 2.0f;
+	[SerializeField] float _flickerDuration = 2.0f;
 	float _pingPongTime = 0f;
 	bool _flickerIn = false;
 	[SerializeField] bool specificUseCaseForZoetrope = false;
@@ -45,7 +45,14 @@ public class SpriteFade : MonoBehaviour {
 			}
 			_fadeCoroutine = FadeSpriteIn (1f);
 			StartCoroutine (_fadeCoroutine);
+		} else {
+			_coroutineIsOngoing = true;
 		}
+	}
+
+	public void CallFadeSpriteIn(float delay = 0f){
+		_fadeCoroutine = FadeSpriteIn (delay);
+		StartCoroutine (_fadeCoroutine);
 	}
 	
 	void FixedUpdate () {

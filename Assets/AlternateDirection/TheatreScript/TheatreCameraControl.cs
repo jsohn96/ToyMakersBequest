@@ -43,6 +43,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[Header("Slider Slide Camera View Values")]
 	[SerializeField] Vector3 _sliderSlideCamPos;
 	[SerializeField] Vector3 _sliderSlideCamRot;
+	[SerializeField] StartSlider _startSlider;
 		
 	[SerializeField] float _cameraStartFOV = 28f;
 
@@ -84,7 +85,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		AltTheatre.currentSate++;
 
 
-//		StartCoroutine (ZoomInCamera ());
+		StartCoroutine (ZoomInCamera ());
 	}
 
 
@@ -492,6 +493,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		_thisCamera.transform.eulerAngles = _sliderSlideCamRot;
 		_thisCamera.fieldOfView = _cameraStartFOV;
 		yield return null;
+		_startSlider.Activate ();
 		_isScrolling = false;
 		_isZooming = false;
 		_zoomedOut = false;

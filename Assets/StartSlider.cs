@@ -29,9 +29,17 @@ public class StartSlider : MonoBehaviour {
 
 	float normalizedLinMap = 100f;
 
+	[SerializeField] SpriteFade _spriteFade;
+	bool _isActivated = false;
+
 //	float _previousDragNorm ;
 //	float _currentDragNorm;
 //
+	public void Activate(){
+		_isActivated = true;
+		_spriteFade.CallFadeSpriteIn (1f);
+	}
+
 	void Start () {
 		_hashID = Animator.StringToHash ("Slide");
 		_sliderAnim.Play (_hashID, -1, 1f);
@@ -39,32 +47,36 @@ public class StartSlider : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if (_sliderStarted) {
-			_sliderPoint.Rotate (_pointRotationAxis, -1f);
+		if (_isActivated) {
+			if (_sliderStarted) {
+				_sliderPoint.Rotate (_pointRotationAxis, -1f);
 
-			if (timer < duration) {
-				timer += Time.deltaTime / duration;
+				if (timer < duration) {
+					timer += Time.deltaTime / duration;
 
-				_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
-				_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
-			} else if(_isLerping) {
-				_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
-				_isLerping = false;
+					_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
+					_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
+				} else if (_isLerping) {
+					_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
+					_isLerping = false;
+				}
 			}
 		}
 	}
 
 	void Update(){
-		if (_touchDown) {
-			float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
-			float tempNormMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
-			normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
-			_sliderAnim.Play (_hashID, -1, normalizedLinMap);
-			if (normalizedLinMap < 0.005f) {
-				_sliderStarted = true;
-				_draggableCollider.enabled = false;
-				_touchDown = false;
-				TriggerStart ();
+		if (_isActivated) {
+			if (_touchDown) {
+				float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
+				float tempNormMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
+				normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
+				_sliderAnim.Play (_hashID, -1, normalizedLinMap);
+				if (normalizedLinMap < 0.005f) {
+					_sliderStarted = true;
+					_draggableCollider.enabled = false;
+					_touchDown = false;
+					TriggerStart ();
+				}
 			}
 		}
 		if (Input.GetMouseButtonUp (0)) {
@@ -82,11 +94,14 @@ public class StartSlider : MonoBehaviour {
 	}
 
 	void OnTouchDown(Vector3 hitPoint){
-		_touchDown = true;
+		if (_isActivated) {
+			_touchDown = true;
 //		StartCoroutine (ResetSlider ());
+		}
 	}
 
 	void TriggerStart(){
+		_spriteFade.TurnItOffForGood ();
 		_theatreCameraControl.MoveCameraToStartPosition ();
 		_myTheatre.CheckStateMachine ();
 	}

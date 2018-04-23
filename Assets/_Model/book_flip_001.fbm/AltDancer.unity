@@ -5034,13 +5034,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _magicianTransform: {fileID: 1716881202}
   _magicianAnim: {fileID: 846446396}
-  _startPosition: {x: -0.002342992, y: 13.09172, z: 18.59}
+  _startPosition: {x: -0.175952, y: 13.09172, z: 18.49014}
   _startPlatform: {fileID: 162573600}
   _waterTank: {fileID: 2104662672}
   _onWaterTank: {x: -0.002342992, y: 13.09172, z: 18.204}
   _stepOffWaterTank: {x: -0.004259986, y: 12.738, z: 18.36389}
   _kissLocator: {fileID: 1465194815}
-  _kissPosition: {x: -0.004259986, y: 12.738, z: 18.28065}
+  _kissPosition: {x: -0.00042599865, y: 12.738, z: 18.205946}
   _kissImage: {fileID: 1418862048}
 --- !u!95 &258194875
 Animator:
@@ -16996,6 +16996,7 @@ MonoBehaviour:
   _draggableCollider: {fileID: 823878450}
   _theatreCameraControl: {fileID: 961011383}
   _myTheatre: {fileID: 1924021101}
+  _spriteFade: {fileID: 1068172312}
 --- !u!1 &832054653
 GameObject:
   m_ObjectHideFlags: 0
@@ -19891,6 +19892,7 @@ MonoBehaviour:
   _cameraStartRot: {x: 11.82, y: 0, z: 0}
   _sliderSlideCamPos: {x: 0.023, y: 13.42, z: 17.755}
   _sliderSlideCamRot: {x: 9.7, y: 0, z: 0}
+  _startSlider: {fileID: 823878452}
   _cameraStartFOV: 20
   _surfaceBoxCollider: {fileID: 0}
   _traversalUI: {fileID: 1588321969}
@@ -22472,6 +22474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068172310}
   - component: {fileID: 1068172311}
+  - component: {fileID: 1068172312}
   m_Layer: 0
   m_Name: ArrowRotate1_yellow
   m_TagString: Untagged
@@ -22536,6 +22539,26 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &1068172312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1068172309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca123ca08c379b4cb79df66c0df41a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flicker: 1
+  _initFadeIn: 0
+  _sprite: {fileID: 1068172311}
+  _flickerRange:
+    _min: 0.4
+    _max: 1
+  _fadeDuration: 2
+  _flickerDuration: 1
+  specificUseCaseForZoetrope: 0
 --- !u!1 &1070060729
 GameObject:
   m_ObjectHideFlags: 0
@@ -38027,7 +38050,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 258194873}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00022297869, y: 0.0017628017, z: 0.00049415603}
+  m_LocalPosition: {x: 0.00022297869, y: 0.0017628017, z: -0.00602}
   m_LocalScale: {x: 0.2323888, y: 0.26292792, z: 0.232389}
   m_Children:
   - {fileID: 846446395}
