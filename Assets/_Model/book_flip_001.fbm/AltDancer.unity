@@ -12116,7 +12116,9 @@ GameObject:
   - component: {fileID: 587154701}
   - component: {fileID: 587154703}
   - component: {fileID: 587154702}
-  m_Layer: 0
+  - component: {fileID: 587154704}
+  - component: {fileID: 587154705}
+  m_Layer: 18
   m_Name: slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12179,6 +12181,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 587154700}
   m_Mesh: {fileID: 4300006, guid: 0e794b84918054366be4fa5aef736ca8, type: 3}
+--- !u!65 &587154704
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 587154700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.003, y: 0.003, z: 0.003}
+  m_Center: {x: 8.731149e-10, y: -0.00000012107193, z: -0.0003843611}
+--- !u!114 &587154705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 587154700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc341a15584e4f4b849baa7b81cd261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainCamera: {fileID: 961011381}
+  _sliderRange:
+    _min: 13.18946
+    _max: 13.35451
+  _theatreBack: {fileID: 988488816}
 --- !u!1 &595837076
 GameObject:
   m_ObjectHideFlags: 0
@@ -13563,7 +13593,7 @@ Prefab:
     - target: {fileID: 224533391201798606, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -102.4325
       objectReference: {fileID: 0}
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -13583,7 +13613,7 @@ Prefab:
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -292.0775
       objectReference: {fileID: 0}
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -13603,7 +13633,7 @@ Prefab:
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -481.72253
       objectReference: {fileID: 0}
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -13623,7 +13653,7 @@ Prefab:
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -671.36755
       objectReference: {fileID: 0}
     - target: {fileID: 1319477323318112, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -20767,6 +20797,7 @@ MonoBehaviour:
   _theatreRotation: {fileID: 436272218}
   _backCover: {fileID: 2040727023}
   _backAnimator: {fileID: 988488817}
+  _theatreBackSlider: {fileID: 587154705}
 --- !u!95 &988488817
 Animator:
   serializedVersion: 3

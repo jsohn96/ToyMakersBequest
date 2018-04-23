@@ -13,6 +13,8 @@ public class TheatreBack : MonoBehaviour {
 
 	[SerializeField] Animator _backAnimator;
 
+	[SerializeField] TheatreBackSlider _theatreBackSlider;
+
 	Vector3 _closedBackDoor = new Vector3(0f,0f,0f);
 	Vector3 _openBackDoor = new Vector3(0f, -150f, 0f);
 
@@ -50,8 +52,14 @@ public class TheatreBack : MonoBehaviour {
 	public void TickTrueEnding(bool isTrueEnding){
 		if (isTrueEnding) {
 			_backAnimator.Play ("upper_gear_turn");
+			_theatreBackSlider.Activate ();
 		} else {
 			_backAnimator.Play ("lower_gear_stuck");
 		}
+	}
+
+	public void ResumeSequence(){
+		_theatreCameraControl.ZoomBack (false);
+		_theatreRotation.StartInitRotation ();
 	}
 }

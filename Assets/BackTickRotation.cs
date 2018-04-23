@@ -167,7 +167,6 @@ public class BackTickRotation : MonoBehaviour {
 			bool isHit;
 			if (!_isNotUsingMainCamera) {
 				isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
-				Debug.Log (isHit);
 			} else {
 				isHit = Physics.Raycast (mousePositionRay, out hit, Mathf.Infinity, _whichLayerMask);
 			}
