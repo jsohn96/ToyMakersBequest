@@ -36,6 +36,10 @@ public class TheatreRotation : MonoBehaviour {
 		StartCoroutine (InitRotate ());
 	}
 
+	public void StartBackRotation(){
+		StartCoroutine (BackRotate ());
+	}
+
 	IEnumerator InitRotate(){
 //		yield return new WaitForSeconds (1f);
 		float duration = 6f;
@@ -48,6 +52,20 @@ public class TheatreRotation : MonoBehaviour {
 			yield return null;
 		}
 		transform.rotation = startRot;
+		yield return null;
+	}
+
+	IEnumerator BackRotate(){
+		float duration = 5f;
+		float timer = 0f;
+		Quaternion initRot = transform.rotation;
+		Quaternion backRot = Quaternion.Euler (Vector3.zero);
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			transform.rotation = Quaternion.Lerp (initRot, backRot, timer/duration);
+			yield return null;
+		}
+		transform.rotation = backRot;
 		yield return null;
 	}
 
