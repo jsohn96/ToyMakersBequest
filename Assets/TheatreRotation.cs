@@ -56,7 +56,7 @@ public class TheatreRotation : MonoBehaviour {
 	}
 
 	IEnumerator BackRotate(){
-		float duration = 5f;
+		float duration = 3f;
 		float timer = 0f;
 		Quaternion initRot = transform.rotation;
 		Quaternion backRot = Quaternion.Euler (Vector3.zero);

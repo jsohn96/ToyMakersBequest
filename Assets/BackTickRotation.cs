@@ -61,6 +61,10 @@ public class BackTickRotation : MonoBehaviour {
 	[SerializeField] MeshRenderer _keyMeshRenderer;
 	bool _pointingAtTrueEnding = false;
 
+
+
+	[SerializeField] TheatreBack _theatreBack;
+
 	// Use this for initialization
 	void Start () {
 		_keyMeshRenderer.enabled = false;
@@ -131,8 +135,11 @@ public class BackTickRotation : MonoBehaviour {
 		isDragStart = false;
 		if (isTrueEnd) {
 			transform.localRotation = Quaternion.Euler (-180f, 0f, 15f);
+			_theatreBack.TickTrueEnding (true);
 		} else {
 			transform.localRotation = Quaternion.Euler (0f, 180f, 0f);
+
+			_theatreBack.TickTrueEnding (false);
 		}
 	}
 

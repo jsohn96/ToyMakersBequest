@@ -10,20 +10,48 @@ public class TheatreBack : MonoBehaviour {
 
 	[SerializeField] Transform _backCover;
 
+
+	[SerializeField] Animator _backAnimator;
+
+	Vector3 _closedBackDoor = new Vector3(0f,0f,0f);
+	Vector3 _openBackDoor = new Vector3(0f, -150f, 0f);
+
 	void Start(){
 		_thisBoxCollider = GetComponent<BoxCollider> ();
-		Vector3 tempPos = _backCover.localPosition;
-		tempPos.x = 0f;
-		_backCover.localPosition = tempPos;
+	
+		_backCover.localRotation = Quaternion.Euler (_closedBackDoor);
 	}
 
 
 	void OnTouchDown(){
 		//rotateTheater to face center
 		// move camera to zoom in
-		_backCover.gameObject.SetActive(false);
 		_thisBoxCollider.enabled = false;
-
+		_theatreCameraControl.ZoomBack (true);
 		_theatreRotation.StartBackRotation ();
+		StartCoroutine (OpenBackDoor ());
+	}
+
+	IEnumerator OpenBackDoor(){
+		float timer = 0f;
+		float duration = 3f;
+		Quaternion closedBackDoorQuat = Quaternion.Euler (_closedBackDoor);
+		Quaternion openBackDoorQuat = Quaternion.Euler (_openBackDoor);
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_backCover.localRotation = Quaternion.Lerp (closedBackDoorQuat, openBackDoorQuat, timer / duration);
+			yield return null;
+		}
+		_backCover.localRotation = openBackDoorQuat;
+		yield return null;
+	}
+
+
+	public void TickTrueEnding(bool isTrueEnding){
+		if (isTrueEnding) {
+			_backAnimator.Play ("upper_gear_turn");
+		} else {
+			_backAnimator.Play ("lower_gear_stuck");
+		}
 	}
 }

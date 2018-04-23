@@ -440,6 +440,32 @@ public class TheatreCameraControl : MonoBehaviour {
 		yield return null;
 	}
 
+	public void ZoomBack(bool zoomingIn){
+		StartCoroutine(ZoomingBack(zoomingIn));
+	}
+
+	IEnumerator ZoomingBack(bool zoomingIn){
+		float timer = 0f;
+		float duration = 3f;
+		Vector3 zoomedInPos = new Vector3 (0.042f, 13.396f, 16.929f);
+		Vector3 initPos;
+		Vector3 goalPos;
+		if (zoomingIn) {
+			initPos = _thisCameraHeighttContainer.position;
+			goalPos = zoomedInPos;
+		} else {
+			initPos = zoomedInPos;
+			goalPos = _cameraZoomedOutViewPos;
+		}
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.position = Vector3.Slerp (initPos, goalPos, timer / duration);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.position = goalPos;
+		yield return null;
+	}
+
 	IEnumerator ZoomInCamera(){
 		float timer = 0f;
 		float duration;
