@@ -454,6 +454,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			initPos = _thisCameraHeighttContainer.position;
 			goalPos = zoomedInPos;
 		} else {
+			duration = 5f;
 			initPos = zoomedInPos;
 			goalPos = _cameraZoomedOutViewPos;
 		}

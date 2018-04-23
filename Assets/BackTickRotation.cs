@@ -65,6 +65,10 @@ public class BackTickRotation : MonoBehaviour {
 
 	[SerializeField] TheatreBack _theatreBack;
 
+
+	[SerializeField] Transform _buttonTrueEnd;
+	[SerializeField] Transform _buttonfestivalBuild;
+
 	// Use this for initialization
 	void Start () {
 		_keyMeshRenderer.enabled = false;

@@ -60,6 +60,6 @@ public class TheatreBack : MonoBehaviour {
 
 	public void ResumeSequence(){
 		_theatreCameraControl.ZoomBack (false);
-		_theatreRotation.StartInitRotation ();
+		_theatreRotation.StartResumeRotation ();
 	}
 }

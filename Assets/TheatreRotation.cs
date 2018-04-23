@@ -74,16 +74,17 @@ public class TheatreRotation : MonoBehaviour {
 	}
 
 	IEnumerator ResumeRotate(){
+		yield return new WaitForSeconds (2f);
 		float duration = 3f;
 		float timer = 0f;
 		Quaternion initRot = transform.rotation;
-		Quaternion backRot = Quaternion.Euler (Vector3.zero);
+		Quaternion startRot = Quaternion.Euler (_startRotation);
 		while (duration > timer) {
 			timer += Time.deltaTime;
-			transform.rotation = Quaternion.Lerp (initRot, backRot, timer/duration);
+			transform.rotation = Quaternion.Lerp (initRot, startRot, timer/duration);
 			yield return null;
 		}
-		transform.rotation = backRot;
+		transform.rotation = startRot;
 		yield return null;
 	}
 
