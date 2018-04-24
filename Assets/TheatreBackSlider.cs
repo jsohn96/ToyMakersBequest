@@ -10,6 +10,8 @@ public class TheatreBackSlider : MonoBehaviour {
 	[SerializeField] MinMax _sliderRange;
 	[SerializeField] TheatreBack _theatreBack;
 
+	[SerializeField] SpriteFade _arrowSliderSpriteFade;
+
 	float _zDifference;
 
 	float _snapValueUpperBound;
@@ -42,6 +44,7 @@ public class TheatreBackSlider : MonoBehaviour {
 					_isDown = false;
 					_isActivated = false;
 					_theatreBack.ResumeSequence ();
+					_arrowSliderSpriteFade.TurnItOffForGood ();
 				}
 				_tempSliderPosition.y = mouseY;
 				transform.position = _tempSliderPosition;
@@ -51,5 +54,6 @@ public class TheatreBackSlider : MonoBehaviour {
 
 	public void Activate(){
 		_isActivated = true;
+		_arrowSliderSpriteFade.CallFadeSpriteIn ();
 	}
 }

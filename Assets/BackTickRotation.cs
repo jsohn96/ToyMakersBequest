@@ -71,6 +71,8 @@ public class BackTickRotation : MonoBehaviour {
 	Vector3 _buttonPressedPos = new Vector3(0f, 0f, 0.00053f);
 	Vector3 _buttonReadyPos = new Vector3 (0f, 0f, -0.0012f);
 
+	[SerializeField] SpriteFade _arrowRotateKeySpriteFade;
+
 	// Use this for initialization
 	void Start () {
 		_keyMeshRenderer.enabled = false;
@@ -91,6 +93,7 @@ public class BackTickRotation : MonoBehaviour {
 
 
 	void ActivateRotate(){
+		_arrowRotateKeySpriteFade.CallFadeSpriteIn ();
 		_heartIsActive = true;
 		_thisInstanceID = transform.GetInstanceID ();
 
@@ -149,6 +152,8 @@ public class BackTickRotation : MonoBehaviour {
 
 			_buttonfestivalBuild.localPosition = _buttonReadyPos;
 			_buttonTrueEnd.localPosition = _buttonPressedPos;
+
+			_arrowRotateKeySpriteFade.TurnItOffForGood ();
 
 		} else {
 			transform.localRotation = Quaternion.Euler (0f, 180f, 0f);

@@ -38,12 +38,13 @@ public class StartSlider : MonoBehaviour {
 	public void Activate(){
 		_isActivated = true;
 		_spriteFade.CallFadeSpriteIn (1f);
+		_pointRotationAxis = _sliderPoint.forward;
 	}
 
 	void Start () {
 		_hashID = Animator.StringToHash ("Slide");
 		_sliderAnim.Play (_hashID, -1, 1f);
-		_pointRotationAxis = _sliderPoint.forward;
+
 	}
 
 	void FixedUpdate(){

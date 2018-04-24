@@ -31,6 +31,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 	[SerializeField] TheatreWaterTankDoors _otherWaterTankDoor;
 
+	[SerializeField] SpriteFade _spriteFade;
+
 	void Start(){
 		_openRot = transform.localRotation;
 //		_meshCollider = GetComponent<MeshCollider> ();
@@ -48,6 +50,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 				_tappedIn = false;
 				_otherWaterTankDoor._firstClose = false;
 				_disableTouchInput = true;
+				_spriteFade.TurnItOffForGood ();
 				//close Tank
 				if (_tankDoorCoroutine != null) {
 					StopCoroutine (_tankDoorCoroutine);
@@ -58,6 +61,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 			} else if (_secondClose) {
 				_disableTouchInput = true;
+				_spriteFade.TurnItOffForGood ();
 				//close Tank
 				if (_tankDoorCoroutine != null) {
 					StopCoroutine (_tankDoorCoroutine);
@@ -199,6 +203,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 
 	public void Activate(bool activate){
+		_spriteFade.CallFadeSpriteIn (0.5f);
+
 		_disableTouchInput = false;
 		_isActivated = activate;
 		if (activate) {

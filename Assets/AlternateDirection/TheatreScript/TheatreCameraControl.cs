@@ -85,7 +85,8 @@ public class TheatreCameraControl : MonoBehaviour {
 		AltTheatre.currentSate++;
 
 
-		//StartCoroutine (ZoomInCamera ());
+//		StartCoroutine (ZoomInCamera ());
+		_traversalUI.FadeInRotate();
 	}
 
 
@@ -452,6 +453,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		Vector3 initPos;
 		Vector3 goalPos;
 		if (zoomingIn) {
+			_traversalUI.FadeOutRotate ();
 			initPos = _thisCameraHeighttContainer.position;
 			goalPos = zoomedInPos;
 		} else {
@@ -470,6 +472,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator ZoomInCamera(){
+		_traversalUI.FadeOutRotate ();
 		float timer = 0f;
 		float duration;
 		if (!_initClick) {
@@ -525,5 +528,6 @@ public class TheatreCameraControl : MonoBehaviour {
 		yield return null;
 		_isScrolling = false;
 		_isZooming = false;
+		_traversalUI.FadeInRotate ();
 	}
 }
