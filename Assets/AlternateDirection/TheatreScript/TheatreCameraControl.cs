@@ -85,7 +85,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		AltTheatre.currentSate++;
 
 
-		StartCoroutine (ZoomInCamera ());
+		//StartCoroutine (ZoomInCamera ());
 	}
 
 
