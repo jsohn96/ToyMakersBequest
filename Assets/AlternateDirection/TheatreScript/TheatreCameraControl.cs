@@ -85,8 +85,8 @@ public class TheatreCameraControl : MonoBehaviour {
 		AltTheatre.currentSate++;
 
 
-//		StartCoroutine (ZoomInCamera ());
-		_traversalUI.FadeInRotate();
+		StartCoroutine (ZoomInCamera ());
+//		_traversalUI.FadeInRotate();
 	}
 
 
@@ -304,16 +304,15 @@ public class TheatreCameraControl : MonoBehaviour {
 		StartCoroutine (AdjustToScrollFOV());
 	}
 
-	public void MoveCameraToLookAtTank(){
-		StartCoroutine (MoveToTank ());
+	public void MoveCameraToLookAtTank(float duration = 6f){
+		StartCoroutine (MoveToTank (duration));
 	}
 
-	IEnumerator MoveToTank(){
+	IEnumerator MoveToTank(float duration = 6f){
 		float timer = 0f;
-		float duration = 6f;
 		_cameraTempPos = _thisCameraHeighttContainer.transform.position;
-		Vector3 originEuler = _thisCamera.transform.eulerAngles;
-		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
+//		Vector3 originEuler = _thisCamera.transform.eulerAngles;
+//		Vector3 goalEuler = new Vector3 (0f, 0f, 0f);
 //		_bottomCameraPos = _cameraTempPos;
 //		_bottomCameraPos.y = _cameraMovementRange.Min;
 		_disableAllScroll = true;
@@ -322,9 +321,9 @@ public class TheatreCameraControl : MonoBehaviour {
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _bottomCameraPos, timer / duration);
 
 			CameraAngleCalculation ();
-			originEuler.x = _thisCamera.transform.eulerAngles.x;
-			goalEuler.x = originEuler.x;
-			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
+//			originEuler.x = _thisCamera.transform.eulerAngles.x;
+//			goalEuler.x = originEuler.x;
+//			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _bottomCameraPos;
@@ -384,9 +383,9 @@ public class TheatreCameraControl : MonoBehaviour {
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (_cameraTempPos, _stageCameraPos2, timer / duration);
 
 			CameraAngleCalculation ();
-			originEuler.x = _thisCamera.transform.eulerAngles.x;
-			goalEuler.x = originEuler.x;
-			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
+//			originEuler.x = _thisCamera.transform.eulerAngles.x;
+//			goalEuler.x = originEuler.x;
+//			_thisCamera.transform.rotation = Quaternion.Slerp (Quaternion.Euler(originEuler), Quaternion.Euler(goalEuler), timer / duration);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _stageCameraPos2;
@@ -481,28 +480,57 @@ public class TheatreCameraControl : MonoBehaviour {
 		} else {
 			duration = 5f;
 		}
+		bool isTrueEnding = _altTheatre._trueEnding;
 		Quaternion tempRot = _thisCamera.transform.rotation;
 		float cameraTempFOV = _thisCamera.fieldOfView;
-		Quaternion startRot = Quaternion.Euler (_sliderSlideCamRot);
-		Vector3 cameraTempPos = _thisCamera.transform.position;
+		Vector3 cameraTempPos = _thisCameraHeighttContainer.position;
+		Quaternion startRot;
+
+		if (!isTrueEnding) {
+			startRot = Quaternion.Euler (_sliderSlideCamRot);
+		} else {
+			startRot = Quaternion.Euler (new Vector3 (2f, 0f, 0f));
+			_cameraStartFOV = 33.0549f;
+		}
+
 		while (timer < duration) {
 			timer += Time.deltaTime;
-			_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _sliderSlideCamPos, timer / duration);
+			if (!isTrueEnding) {
+				_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _sliderSlideCamPos, timer / duration);
+			} else {
+				_thisCameraHeighttContainer.position = Vector3.Lerp (cameraTempPos, _bottomCameraPos, timer / duration);
+			}
 			_thisCamera.transform.rotation = Quaternion.Lerp (tempRot, startRot, timer / duration);
 			_thisCamera.fieldOfView = Mathf.Lerp (cameraTempFOV, _cameraStartFOV, timer / duration);
+
+
 			yield return null;
 		}
-		_thisCameraHeighttContainer.position = _sliderSlideCamPos;
-		_thisCamera.transform.eulerAngles = _sliderSlideCamRot;
+
+		if (!isTrueEnding) {
+			_thisCameraHeighttContainer.position = _sliderSlideCamPos;
+			_thisCamera.transform.eulerAngles = _sliderSlideCamRot;
+			_startSlider.Activate ();
+			_traversalUI.FadeIn (true);
+			_isScrolling = false;
+			_isZooming = false;
+		} else {
+			_thisCamera.transform.rotation = startRot;
+			_thisCameraHeighttContainer.position = _bottomCameraPos;
+		}
 		_thisCamera.fieldOfView = _cameraStartFOV;
-		yield return null;
-		_startSlider.Activate ();
-		_isScrolling = false;
-		_isZooming = false;
+
+
 		_zoomedOut = false;
 		_tapSoundPlayer._activateSounds = true;
 		_initClick = true;
-		_traversalUI.FadeIn (true);
+
+		if (isTrueEnding) {
+			_altTheatre.MoveToNext ();
+			yield return new WaitForSeconds (1f);
+			MoveCameraToLookAtStage2 ();
+		}
+		yield return null;
 	}
 
 	IEnumerator ZoomOutCamera(){
@@ -530,4 +558,5 @@ public class TheatreCameraControl : MonoBehaviour {
 		_isZooming = false;
 		_traversalUI.FadeInRotate ();
 	}
+
 }

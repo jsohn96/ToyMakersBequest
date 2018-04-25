@@ -42,6 +42,7 @@ public enum TheatreState{
 	dancerLocked,
 	theatreEnd,
 	BeginPart2,
+	DancerReturnToPosition,
 	BringDancerBackUp,
 	DancerMeetsMagician,
 	DancerDancesWithMagician,
@@ -159,14 +160,14 @@ public class AltTheatre : LevelManager {
 	}
 
 	public void MoveToNext(){
-		if (currentSate < TheatreState.theatreEnd) {
+		if (!_trueEnding && currentSate < TheatreState.theatreEnd) {
 			currentSate += 1;
 			CheckStateMachine ();
 			Debug.Log ("Current Theatre State: " + currentSate);
 		} else if (_trueEnding && currentSate < TheatreState.CountStars) {
-			if (currentSate <= TheatreState.theatreEnd) {
-				currentSate = TheatreState.BeginPart2;
-			}
+//			if (currentSate < TheatreState.theatreEnd) {
+//				currentSate = TheatreState.theatreEnd;
+//			}
 			Debug.Log ("Current Theatre State: " + currentSate);
 			currentSate += 1;
 			CheckStateMachine ();
@@ -419,11 +420,14 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.TurnHeartCrank2:
 				_theatreText.TriggerText (30);
+				_dancer.StopMovement (true);
 				break;
 			case TheatreState.dancerLocked:
-				_dancer.StopMovement ();
+				_dancer.Drown ();
+//				_dancer.StopMovement (true);
 				break;
 			case TheatreState.theatreEnd:
+				
 				_theatreCoin.BeginGlow ();
 				_traversalUI.FadeIn ();
 				_theatreCameraControl.EnableScrollFOV ();
@@ -439,27 +443,32 @@ public class AltTheatre : LevelManager {
 			switch (currentSate) {
 			case TheatreState.BeginPart2:
 //				_theatreCameraControl.MoveCameraToLookAtStage2 ();
+//				_theatreCameraControl.MoveCameraToLookAtTank(5f);
 				_theatreCameraControl.ZoomIn ();
 //				_theatreRotation.StartInitRotation ();
 				break;
+			case TheatreState.DancerReturnToPosition:
+//				_dancer.DancerEnterWater ();
+//				_dancer.ElevateTankPlatform ();
+				break;
 			case TheatreState.BringDancerBackUp:
-				_dancer.ElevateTankPlatform ();
+				_dancer.ElevateTankPlatform (6f);
 				break;
 			case TheatreState.DancerMeetsMagician:
-				_theatreCameraControl.Activate ();
-				_theatreRotation.StartInitRotation ();
+//				_theatreCameraControl.Activate ();
+//				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.DancerDancesWithMagician:
-				_theatreCameraControl.Activate ();
-				_theatreRotation.StartInitRotation ();
+//				_theatreCameraControl.Activate ();
+//				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.LiftUpAboveWhileDancing:
-				_theatreCameraControl.Activate ();
-				_theatreRotation.StartInitRotation ();
+//				_theatreCameraControl.Activate ();
+//				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.CountStars:
-				_theatreCameraControl.Activate ();
-				_theatreRotation.StartInitRotation ();
+//				_theatreCameraControl.Activate ();
+//				_theatreRotation.StartInitRotation ();
 				break;
 			}
 		}

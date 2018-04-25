@@ -67,6 +67,10 @@ public class TheatreDancer : MonoBehaviour {
 		_dancerAnim.SetBool("isReadyToEnter", false);
 	}
 
+	public void DancerEnterWater(){
+		_dancerAnim.Play ("dancer_enter_water");
+	}
+
 
 	void PlayGoInTank(){
 		_dancerAnim.SetBool("isReadyToEnter", true);
@@ -90,6 +94,11 @@ public class TheatreDancer : MonoBehaviour {
 		StartCoroutine (DancerToCenter ());
 	}
 
+	public void Drown(){
+		_dancerAnim.speed = 1f;
+		_dancerAnim.Play ("dancer_drown");
+	}
+
 
 
 
@@ -103,11 +112,15 @@ public class TheatreDancer : MonoBehaviour {
 
 	}
 
-	public void ElevateTankPlatform(){
-		StartCoroutine (ElevateWaterTankPlatform ());
+	public void ElevateTankPlatform(float duration = 3f){
+		StartCoroutine (ElevateWaterTankPlatform (duration));
 	}
 
-	public void StopMovement(){
+	public void StopMovement(bool drownPrep = false){
+		if (drownPrep) {
+			_dancerAnim.Play ("dancer_drown", 0, 0f);
+			_dancerAnim.speed = 0f;
+		}
 		_stopMovement = true;
 	}
 
@@ -190,9 +203,8 @@ public class TheatreDancer : MonoBehaviour {
 		PlayEnterWater ();
 	}
 
-	IEnumerator ElevateWaterTankPlatform(){
+	IEnumerator ElevateWaterTankPlatform(float duration){
 		float timer = 0f;
-		float duration = 3f;
 
 		while (timer < duration) {
 			timer += Time.deltaTime;
