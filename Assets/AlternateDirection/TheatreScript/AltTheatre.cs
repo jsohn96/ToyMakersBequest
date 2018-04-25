@@ -40,7 +40,13 @@ public enum TheatreState{
 	CloseDoorTwo2, //new
 	TurnHeartCrank2, //new
 	dancerLocked,
-	theatreEnd 
+	theatreEnd,
+	BeginPart2,
+	BringDancerBackUp,
+	DancerMeetsMagician,
+	DancerDancesWithMagician,
+	LiftUpAboveWhileDancing,
+	CountStars
 }
 
 public class AltTheatre : LevelManager {
@@ -92,6 +98,8 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreRotation _theatreRotation;
 
 	int _doorCloseCnt = 0;
+
+	public bool _trueEnding = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -151,10 +159,17 @@ public class AltTheatre : LevelManager {
 	}
 
 	public void MoveToNext(){
-		if(currentSate < TheatreState.theatreEnd){
+		if (currentSate < TheatreState.theatreEnd) {
 			currentSate += 1;
-			CheckStateMachine();
-			Debug.Log("Current Theatre State: " + currentSate);
+			CheckStateMachine ();
+			Debug.Log ("Current Theatre State: " + currentSate);
+		} else if (_trueEnding && currentSate < TheatreState.CountStars) {
+			if (currentSate <= TheatreState.theatreEnd) {
+				currentSate = TheatreState.BeginPart2;
+			}
+			Debug.Log ("Current Theatre State: " + currentSate);
+			currentSate += 1;
+			CheckStateMachine ();
 		}
 	}
 
@@ -192,232 +207,261 @@ public class AltTheatre : LevelManager {
 		Debug.Log (currentSate);
 		_startSlider.SetSliderState ((int)currentSate, 35f);
 
-		switch (currentSate) {
-		case TheatreState.waitingToStart:
-			_theatreCameraControl.Activate ();
-			_theatreRotation.StartInitRotation ();
-			break;
-		case TheatreState.startShow:
-			magician.InitMagician ();
-			_theatreText.TriggerText (2);
+		if (!_trueEnding) {
+			switch (currentSate) {
+			case TheatreState.waitingToStart:
+				_theatreCameraControl.Activate ();
+				_theatreRotation.StartInitRotation ();
+				break;
+			case TheatreState.startShow:
+				magician.InitMagician ();
+				_theatreText.TriggerText (2);
 //			_theatreSound.PlayLightSwitch ();
 			//magician.GoToStart ();
 
-			StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, 2f, () => {
-				magician.BowDown ();
-			}));
-			magician.GoToStart ();
+				StartCoroutine (LerpPosition (_startPlatform, _platformBeginPos, _platformEndPos, _platformDuration, 4f, 2f, () => {
+					magician.BowDown ();
+				}));
+				magician.GoToStart ();
 //			StartCoroutine (DelayedSelfCall (18f));
 			// call back function? 
-			StartCoroutine(DelayAction(17.5f, () => {
-				_theatreWaterTank.Activate (true);
-			}));
-			StartCoroutine (LerpPosition (_watertank, _watertank.localPosition, _tankTopPos, 6f, 1.5f, 0f, ()=>{
-				MoveToNext();
-			}));
-			break;
-		case TheatreState.readyForDancerTank:
+				StartCoroutine (DelayAction (17.5f, () => {
+					_theatreWaterTank.Activate (true);
+				}));
+				StartCoroutine (LerpPosition (_watertank, _watertank.localPosition, _tankTopPos, 6f, 1.5f, 0f, () => {
+					MoveToNext ();
+				}));
+				break;
+			case TheatreState.readyForDancerTank:
 			
-			break;
-		case TheatreState.dancerInTank:
+				break;
+			case TheatreState.dancerInTank:
 			//prevent the lid from closing
-			_theatreWaterTank.DisableLid (true);
-			_dancer.FirstDancerEnterTank ();
+				_theatreWaterTank.DisableLid (true);
+				_dancer.FirstDancerEnterTank ();
 
-			_theatreText.TriggerText (6);
-			break;
-		case TheatreState.magicianBoardTank:
+				_theatreText.TriggerText (6);
+				break;
+			case TheatreState.magicianBoardTank:
 			
-			_theatreWaterTank.Activate (false);
-			_theatreWaterTank.OpenLid (false);
-			magician.StepOnTank ();
-			magician.PointToCenter (false);
-			_theatreCameraControl.EnableScrollFOV();
-			break;
-		case TheatreState.magicianBeginShow:
-			magician.BeginShow (true);
-			break;
-		case TheatreState.waterTankDescend:
+				_theatreWaterTank.Activate (false);
+				_theatreWaterTank.OpenLid (false);
+				magician.StepOnTank ();
+				magician.PointToCenter (false);
+				_theatreCameraControl.EnableScrollFOV ();
+				break;
+			case TheatreState.magicianBeginShow:
+				magician.BeginShow (true);
+				break;
+			case TheatreState.waterTankDescend:
 			
-			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set3 ();
-			_theaterAudiences [0].AudienceEnter ();
-			magician.BeginShow (false);
-			Invoke ("PlayWaterTankMoveSound", 1.5f);
-			StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, 0f, ()=>{
-				MoveToNext();
-			}));
-			break;
-		case TheatreState.magicianPrepareFrog:
-			magician.StepOffTank ();
-			break;
-		case TheatreState.magicianLeft:
+				_theatreSound.PlayLightSwitch ();
+				_theatreLighting.Set3 ();
+				_theaterAudiences [0].AudienceEnter ();
+				magician.BeginShow (false);
+				Invoke ("PlayWaterTankMoveSound", 1.5f);
+				StartCoroutine (LerpPosition (_watertank, _tankTopPos, _tankBottomPos, _waterTankDuration, 1.5f, 0f, () => {
+					MoveToNext ();
+				}));
+				break;
+			case TheatreState.magicianPrepareFrog:
+				magician.StepOffTank ();
+				break;
+			case TheatreState.magicianLeft:
 //			_traversalUI.FadeIn ();
-			_theatreCameraControl.EnableScrollFOV();
+				_theatreCameraControl.EnableScrollFOV ();
 
-			magician.PointToLeft (true);
-			chest.Activate(true);
-			break;
-		case TheatreState.frogJump:
-			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set4 ();
-			_theaterAudiences [1].AudienceEnter ();
+				magician.PointToLeft (true);
+				chest.Activate (true);
+				break;
+			case TheatreState.frogJump:
+				_theatreSound.PlayLightSwitch ();
+				_theatreLighting.Set4 ();
+				_theaterAudiences [1].AudienceEnter ();
 
-			magician.PointToLeft (false);
-			_theatreWaterTank.OpenLid (true);
+				magician.PointToLeft (false);
+				_theatreWaterTank.OpenLid (true);
 			// frog.jumpout
 			//magician go back to center position 
 			//MoveToNext();
-			break;
-		case TheatreState.lookDownIntoTank:
+				break;
+			case TheatreState.lookDownIntoTank:
 //			_traversalUI.FadeOut ();
-			_theatreCameraControl.MoveCameraToLookAtTank ();
+				_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
-			_theatreText.TriggerText (7);
-			break;
-		case TheatreState.CloseTankDoors:
-			_theatreWaterTank.OpenLid (false);
-			_tankDoor1.Activate (true);
-			_tankDoor2.Activate (true);
+				_theatreText.TriggerText (7);
+				break;
+			case TheatreState.CloseTankDoors:
+				_theatreWaterTank.OpenLid (false);
+				_tankDoor1.Activate (true);
+				_tankDoor2.Activate (true);
 //			_tankDoor1.DisableTouchInput (true);
 //			_tankDoor2.DisableTouchInput (true);
 			//MoveToNext();
 
-			break;
-		case TheatreState.CloseDoorOne:
-			break;
-		case TheatreState.CloseDoorTwo:
-			_heartTimer1.ActivateHeart ();
-			_heartTimer2.ActivateHeart ();
-			break;
-		case TheatreState.TurnHeartCrank:
-			_theatreText.TriggerText (9);
-			break;
-		case TheatreState.OpenTank:
+				break;
+			case TheatreState.CloseDoorOne:
+				break;
+			case TheatreState.CloseDoorTwo:
+				_heartTimer1.ActivateHeart ();
+				_heartTimer2.ActivateHeart ();
+				break;
+			case TheatreState.TurnHeartCrank:
+				_theatreText.TriggerText (9);
+				break;
+			case TheatreState.OpenTank:
 //			_theatreChest.GiveBackControl ();
 //			_theatreCameraControl.EnableScrollFOV();
 //			_theatreText.TriggerText (13);
-			break;
-		case TheatreState.LookUpAtStageAgain:
-			_theatreCameraControl.MoveCameraToLookAtStage2 ();
-			break;
-		case TheatreState.magicianRight:
-			_tankDoor1.Activate (false);
-			_tankDoor2.Activate (false);
+				break;
+			case TheatreState.LookUpAtStageAgain:
+				_theatreCameraControl.MoveCameraToLookAtStage2 ();
+				break;
+			case TheatreState.magicianRight:
+				_tankDoor1.Activate (false);
+				_tankDoor2.Activate (false);
 
 //			_traversalUI.FadeIn ();
 //			_theatreCameraControl.EnableScrollFOV();
-			magician.PointToRight (true);
+				magician.PointToRight (true);
 			// dancer.enterScene();
-			cabinet.Activate (true);
+				cabinet.Activate (true);
 
-			break;
-		case TheatreState.dancerShowUp:
+				break;
+			case TheatreState.dancerShowUp:
 			// dancer shows up play dancer aniamtion
-			_theatreText.TriggerText (13);
-			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set5 ();
+				_theatreText.TriggerText (13);
+				_theatreSound.PlayLightSwitch ();
+				_theatreLighting.Set5 ();
 //			_theaterAudiences [2].AudienceEnter ();
 
-			magician.PointToRight (false);
-			_dancer.ExitCloset ();
+				magician.PointToRight (false);
+				_dancer.ExitCloset ();
 			// dancer.showUp();
 			//_dancer.HideDancer (false);
 			// enable network connection 
-			break;
-		case TheatreState.dancerStartPath:
+				break;
+			case TheatreState.dancerStartPath:
 			// after animation ends, activate path
-			magician.EnterKissPosition ();
-			network.SetPathActive (true);
-			break;
-		case TheatreState.dancerKissing:
-			StartCoroutine (KissSepuence ());
-			break;
-		case TheatreState.audienceLeave1:
+				magician.EnterKissPosition ();
+				network.SetPathActive (true);
+				break;
+			case TheatreState.dancerKissing:
+				StartCoroutine (KissSepuence ());
+				break;
+			case TheatreState.audienceLeave1:
 			// dancer|magician return to idle 
-			magician.ExitKissPosition ();
-			_dancer.EndKiss ();
+				magician.ExitKissPosition ();
+				_dancer.EndKiss ();
 			// dancer go to center 
 			// magician back to original 
 //			_theatreLighting.Set4 ();
 //			_theaterAudiences [2].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
-			break;
-		case TheatreState.audienceLeave2:
+				break;
+			case TheatreState.audienceLeave2:
 //			_theatreLighting.Set3 ();
 //			_theaterAudiences [1].AudienceLeave ();
 
 //			StartCoroutine(DelayedSelfCall(2f));
-			break;
-		case TheatreState.audienceLeave3:
+				break;
+			case TheatreState.audienceLeave3:
 //			_theatreLighting.Set6 ();
 //			_theaterAudiences [0].AudienceLeave ();
 
-			_dancer.ElevateTankPlatform ();
+				_dancer.ElevateTankPlatform ();
 //			StartCoroutine(DelayedSelfCall(2));
-			break;
-		case TheatreState.magicianReturnToPosition:
+				break;
+			case TheatreState.magicianReturnToPosition:
 			//magician.ExitKissPosition ();
-			_frogSwirl.ShrinkFrog ();
-			StartCoroutine(DelayedSelfCall(5));
-			break;
-		case TheatreState.restartPerformanceNextDay:
-			_theatreSound.PlayLightSwitch ();
-			_theatreLighting.Set2 ();
-			_theatreText.TriggerText (25);
-			magician.BeginShow (true, true);
-			break;
-		case TheatreState.readyForDancerTank2:
-			_theatreWaterTank.Activate (true);
-			break;
-		case TheatreState.dancerDescend:
+				_frogSwirl.ShrinkFrog ();
+				StartCoroutine (DelayedSelfCall (5));
+				break;
+			case TheatreState.restartPerformanceNextDay:
+				_theatreSound.PlayLightSwitch ();
+				_theatreLighting.Set2 ();
+				_theatreText.TriggerText (25);
+				magician.BeginShow (true, true);
+				break;
+			case TheatreState.readyForDancerTank2:
+				_theatreWaterTank.Activate (true);
+				break;
+			case TheatreState.dancerDescend:
 //			_theatreLighting.Set6 ();
 //			_theatreSound.PlayLightSwitch ();
 //			_theatreWaterTank.OpenLid (true);
-			magician.BeginShow (false);
-			_theatreText.TriggerText (27);
-			_dancer.SecondDancerEnterTank ();
+				magician.BeginShow (false);
+				_theatreText.TriggerText (27);
+				_dancer.SecondDancerEnterTank ();
 
-			break;
-		case TheatreState.lookDownIntoTank2:
-			_theatreWaterTank.OpenLid (false);
+				break;
+			case TheatreState.lookDownIntoTank2:
+				_theatreWaterTank.OpenLid (false);
 //			_traversalUI.FadeOut ();
-			_theatreCameraControl.MoveCameraToLookAtTank ();
-			break;
-		case TheatreState.CloseTankDoors2:
+				_theatreCameraControl.MoveCameraToLookAtTank ();
+				break;
+			case TheatreState.CloseTankDoors2:
 //			_tankDoor1.FinalActivation (true);
 //			_tankDoor2.FinalActivation (true);
-			_tankDoor1.FinalActivation (true);
-			_tankDoor2.FinalActivation (true);
+				_tankDoor1.FinalActivation (true);
+				_tankDoor2.FinalActivation (true);
 //			_tankDoor1.DisableTouchInput (true);
 //			_tankDoor2.DisableTouchInput (true);
 
 //			StartCoroutine (DelayedSelfCall (1.5f));
-			break;
-		case TheatreState.CloseDoorOne2:
-			break;
-		case TheatreState.CloseDoorTwo2:
-			_heartTimer1.ActivateHeart ();
-			_heartTimer2.ActivateHeart ();
-			break;
-		case TheatreState.TurnHeartCrank2:
-			_theatreText.TriggerText (30);
-			break;
-		case TheatreState.dancerLocked:
-			_dancer.StopMovement ();
-			break;
-		case TheatreState.theatreEnd:
-			_theatreCoin.BeginGlow ();
-			_traversalUI.FadeIn ();
-			_theatreCameraControl.EnableScrollFOV ();
+				break;
+			case TheatreState.CloseDoorOne2:
+				break;
+			case TheatreState.CloseDoorTwo2:
+				_heartTimer1.ActivateHeart ();
+				_heartTimer2.ActivateHeart ();
+				break;
+			case TheatreState.TurnHeartCrank2:
+				_theatreText.TriggerText (30);
+				break;
+			case TheatreState.dancerLocked:
+				_dancer.StopMovement ();
+				break;
+			case TheatreState.theatreEnd:
+				_theatreCoin.BeginGlow ();
+				_traversalUI.FadeIn ();
+				_theatreCameraControl.EnableScrollFOV ();
 			//Stop Dancer Here
 //			_dancer.HideDancer (true);
-			_tankDoor1.OpenTankCall ();
-			_tankDoor2.OpenTankCall ();
-			_theatreMusic.EndMusic ();
-			_theatreText.TriggerText (35);
-			break;
+				_tankDoor1.OpenTankCall ();
+				_tankDoor2.OpenTankCall ();
+				_theatreMusic.EndMusic ();
+				_theatreText.TriggerText (35);
+				break;
+			}
+		} else {
+			switch (currentSate) {
+			case TheatreState.BeginPart2:
+//				_theatreCameraControl.MoveCameraToLookAtStage2 ();
+				_theatreCameraControl.ZoomIn ();
+//				_theatreRotation.StartInitRotation ();
+				break;
+			case TheatreState.BringDancerBackUp:
+				_dancer.ElevateTankPlatform ();
+				break;
+			case TheatreState.DancerMeetsMagician:
+				_theatreCameraControl.Activate ();
+				_theatreRotation.StartInitRotation ();
+				break;
+			case TheatreState.DancerDancesWithMagician:
+				_theatreCameraControl.Activate ();
+				_theatreRotation.StartInitRotation ();
+				break;
+			case TheatreState.LiftUpAboveWhileDancing:
+				_theatreCameraControl.Activate ();
+				_theatreRotation.StartInitRotation ();
+				break;
+			case TheatreState.CountStars:
+				_theatreCameraControl.Activate ();
+				_theatreRotation.StartInitRotation ();
+				break;
+			}
 		}
 	}
 

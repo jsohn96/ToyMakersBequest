@@ -19,6 +19,7 @@ public class TheatreBack : MonoBehaviour {
 	Vector3 _openBackDoor = new Vector3(0f, -150f, 0f);
 
 	[SerializeField] GameObject _keyDirection;
+	[SerializeField] AltTheatre _myTheatre;
 
 	void Start(){
 		_thisBoxCollider = GetComponent<BoxCollider> ();
@@ -68,6 +69,7 @@ public class TheatreBack : MonoBehaviour {
 	}
 
 	public void ResumeSequence(){
+		_myTheatre._trueEnding = true;
 		_backAnimator.Play ("upper_gear_turn");
 		_theatreCameraControl.ZoomBack (false);
 		_theatreRotation.StartResumeRotation ();
