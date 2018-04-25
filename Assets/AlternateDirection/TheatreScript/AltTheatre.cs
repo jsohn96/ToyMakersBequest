@@ -452,7 +452,8 @@ public class AltTheatre : LevelManager {
 //				_dancer.ElevateTankPlatform ();
 				break;
 			case TheatreState.BringDancerBackUp:
-				_dancer.ElevateTankPlatform (6f);
+				_theatreWaterTank.OpenLid (true);
+				_dancer.ElevateTankPlatform (5f);
 				break;
 			case TheatreState.DancerMeetsMagician:
 //				_theatreCameraControl.Activate ();

@@ -529,6 +529,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			_altTheatre.MoveToNext ();
 			yield return new WaitForSeconds (1f);
 			MoveCameraToLookAtStage2 ();
+			_altTheatre.MoveToNext ();
 		}
 		yield return null;
 	}
