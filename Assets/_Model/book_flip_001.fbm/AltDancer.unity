@@ -23361,6 +23361,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8ca11461c1eec4ae3922fd3d49dc1932, type: 2}
+    - target: {fileID: 100000, guid: 5a7476284688c4f4e938a8f4fc268010, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a7476284688c4f4e938a8f4fc268010, type: 3}
   m_IsPrefabParent: 0
@@ -23368,6 +23372,34 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5a7476284688c4f4e938a8f4fc268010, type: 3}
   m_PrefabInternal: {fileID: 1093429095}
+--- !u!1 &1093429097 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 5a7476284688c4f4e938a8f4fc268010, type: 3}
+  m_PrefabInternal: {fileID: 1093429095}
+--- !u!114 &1093429098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1093429097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273f1825c4e3e6b4485eed24239ce981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _theaterBackTransform: {fileID: 1513559196}
+--- !u!65 &1093429099
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1093429097}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.037960004, y: 0.056541756, z: 0.008607021}
+  m_Center: {x: 0.000000008381903, y: -0.00000012200326, z: -0.000000005355105}
 --- !u!1 &1098654461
 GameObject:
   m_ObjectHideFlags: 0
@@ -34435,6 +34467,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98249a8cf030341eb9b57d68421fd4a0, type: 3}
   m_IsPrefabParent: 0
+--- !u!4 &1513559196 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400026, guid: 98249a8cf030341eb9b57d68421fd4a0, type: 3}
+  m_PrefabInternal: {fileID: 1513559195}
 --- !u!1001 &1514759374
 Prefab:
   m_ObjectHideFlags: 0
@@ -44458,7 +44494,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1965427791}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.0000000027008353, y: 0, z: -0.0010963917}
+  m_LocalPosition: {x: -0.0000000027008353, y: 0, z: -0.00119}
   m_LocalScale: {x: 0.4994847, y: 0.7671777, z: 0.49948457}
   m_Children: []
   m_Father: {fileID: 1982961424}
