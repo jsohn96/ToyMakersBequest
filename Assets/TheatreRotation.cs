@@ -6,6 +6,7 @@ public class TheatreRotation : MonoBehaviour {
 
 	[SerializeField] Vector3 _initRotation;
 	[SerializeField] Vector3 _startRotation;
+	[SerializeField] AltTheatre _myTheatre;
 	Vector3 _rotateAxis;
 	bool _rotateRight = false;
 	bool _rotateLeft = false;
@@ -85,6 +86,7 @@ public class TheatreRotation : MonoBehaviour {
 			yield return null;
 		}
 		transform.rotation = startRot;
+		_myTheatre.MoveToNext ();
 		yield return null;
 	}
 
