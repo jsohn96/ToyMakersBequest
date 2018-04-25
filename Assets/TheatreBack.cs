@@ -21,6 +21,12 @@ public class TheatreBack : MonoBehaviour {
 	[SerializeField] GameObject _keyDirection;
 	[SerializeField] AltTheatre _myTheatre;
 
+	bool _isActivated = false;
+
+	public void Activate(){
+		_isActivated = true;
+	}
+
 	void Start(){
 		_thisBoxCollider = GetComponent<BoxCollider> ();
 	
@@ -29,12 +35,14 @@ public class TheatreBack : MonoBehaviour {
 
 
 	void OnTouchDown(){
-		//rotateTheater to face center
-		// move camera to zoom in
-		_thisBoxCollider.enabled = false;
-		_theatreCameraControl.ZoomBack (true);
-		_theatreRotation.StartBackRotation ();
-		StartCoroutine (OpenBackDoor ());
+		if (_isActivated) {
+			//rotateTheater to face center
+			// move camera to zoom in
+			_thisBoxCollider.enabled = false;
+			_theatreCameraControl.ZoomBack (true);
+			_theatreRotation.StartBackRotation ();
+			StartCoroutine (OpenBackDoor ());
+		}
 	}
 
 	IEnumerator OpenBackDoor(){

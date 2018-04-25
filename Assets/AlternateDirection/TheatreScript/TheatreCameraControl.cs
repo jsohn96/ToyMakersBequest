@@ -90,7 +90,6 @@ public class TheatreCameraControl : MonoBehaviour {
 
 
 		StartCoroutine (ZoomInCamera ());
-//		_traversalUI.FadeInRotate();
 	}
 
 

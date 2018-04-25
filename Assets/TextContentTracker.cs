@@ -60,6 +60,8 @@ public class TextContentTracker : MonoBehaviour {
 
 	[SerializeField] Image _backButton;
 
+	[SerializeField] TouchInput _touchInput;
+
 	// Use this for initialization
 	void Start () {
 		_defaultRectTransformPos = Vector3.zero;
@@ -76,7 +78,7 @@ public class TextContentTracker : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+//	void Update () {
 //		if (Input.GetKeyDown (KeyCode.Space)) {
 //			DisplayUI (1);
 //		}
@@ -84,36 +86,36 @@ public class TextContentTracker : MonoBehaviour {
 //			ShowNextText ();
 //		}
 
-		if (_nextArrow.enabled) {
-			_nextArrow.color = Color.Lerp (_emptyColor, _whiteColor, Mathf.PingPong(Time.time, 1f));
-		}
-		if (!_nextArrowOnce && _audioTimer.IsOffCooldown && _txtCnt < _currentIndexLength ) {
-			_nextArrow.enabled = true;
-			_nextArrowOnce = true;
-		}
-	}
+//		if (_nextArrow.enabled) {
+//			_nextArrow.color = Color.Lerp (_emptyColor, _whiteColor, Mathf.PingPong(Time.time, 1f));
+//		}
+//		if (!_nextArrowOnce && _audioTimer.IsOffCooldown && _txtCnt < _currentIndexLength ) {
+//			_nextArrow.enabled = true;
+//			_nextArrowOnce = true;
+//		}
+//	}
 
-	public void ShowNextText(){
-		if (_nextArrowOnce) {
-			StartCoroutine (FadeTMPIn (_tmpCrawls [_currentIndex].textMeshPros [_txtCnt]));
-			_audioTimer.CooldownTime = _tmpCrawls [_currentIndex].voLengths [_txtCnt];
-			_audioTimer.Reset ();
-			_nextArrowOnce = false;
-			if (_audioSource.isPlaying) {
-				_audioSource.Stop ();
-			}
-			_audioSource.clip = _tmpCrawls [_currentIndex].voClips [_txtCnt];
-			_audioSource.Play ();
-
-			_nextArrow.enabled = false;
-			if (_txtCnt < _currentIndexLength - 1) {
-				_nextArrow.rectTransform.anchoredPosition = _tmpCrawls [_currentIndex].arrowPositions [_txtCnt];
-			} else {
-				_backButton.enabled = true;
-			}
-			_txtCnt++;
-		}
-	}
+//	public void ShowNextText(){
+//		if (_nextArrowOnce) {
+//			StartCoroutine (FadeTMPIn (_tmpCrawls [_currentIndex].textMeshPros [_txtCnt]));
+//			_audioTimer.CooldownTime = _tmpCrawls [_currentIndex].voLengths [_txtCnt];
+//			_audioTimer.Reset ();
+//			_nextArrowOnce = false;
+//			if (_audioSource.isPlaying) {
+//				_audioSource.Stop ();
+//			}
+//			_audioSource.clip = _tmpCrawls [_currentIndex].voClips [_txtCnt];
+//			_audioSource.Play ();
+//
+//			_nextArrow.enabled = false;
+//			if (_txtCnt < _currentIndexLength - 1) {
+//				_nextArrow.rectTransform.anchoredPosition = _tmpCrawls [_currentIndex].arrowPositions [_txtCnt];
+//			} else {
+//				_backButton.enabled = true;
+//			}
+//			_txtCnt++;
+//		}
+//	}
 		
 	void ReadjustTextUI(int index){
 		_textMeshPro [index].enabled = true;
@@ -123,11 +125,15 @@ public class TextContentTracker : MonoBehaviour {
 	}
 
 	public void DisplayUI(int index){
-		_backButton.enabled = false;
+		if (_touchInput) {
+			_touchInput.enabled = false;
+		}
+
+		_backButton.enabled = true;
 		_currentIndex = index;
 		_currentIndexLength = _tmpCrawls [_currentIndex].textMeshPros.Length;
 		_txtCnt = 0;
-		ShowNextText ();
+//		ShowNextText ();
 		_scrollView.SetActive (true);
 		ReadjustTextUI (index);
 		if (_uiCoroutine != null) {
@@ -140,13 +146,16 @@ public class TextContentTracker : MonoBehaviour {
 
 	public void CloseUI(){
 		if (_isDisplaying) {
+			if (_touchInput) {
+				_touchInput.enabled = true;
+			}
 			_isDisplaying = false;
 			_uiMask.color = _emptyColor;
 			for (int i = 0; i < _txtCnt; i++) {
 				_tmpCrawls [_currentIndex].textMeshPros [i].color = _emptyColor;
 				_tmpCrawls [_currentIndex].textMeshPros [i].enabled = false;
 			}
-			_nextArrow.enabled = false;
+//			_nextArrow.enabled = false;
 			_nextArrowOnce = false;
 			_thisRectTransform.anchoredPosition3D = _defaultRectTransformPos;
 			if (_uiCoroutine != null) {

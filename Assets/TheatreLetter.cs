@@ -5,8 +5,13 @@ using UnityEngine;
 public class TheatreLetter : MonoBehaviour {
 	
 	bool _pickedUp = false;
+	bool _putLetterAway = false;
+	bool _readLetter = false;
 
 	[SerializeField] Transform _theaterBackTransform;
+	[SerializeField] TheatreBack _theatreBack;
+
+	[SerializeField] TextContentTracker _textContentTracker;
 
 	[Header("Close Up Values")]
 	Vector3 _closeUpScale = new Vector3(1.32f, 1.32f, 1.32f);
@@ -18,29 +23,27 @@ public class TheatreLetter : MonoBehaviour {
 	Vector3 _finalRotation = new Vector3 (1.334f, 88.621f, 0.118f);
 
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	void OnTouchDown(Vector3 hit) {
 		if (!_pickedUp) {
 			_pickedUp = true;
 			transform.parent = _theaterBackTransform;
 			StartCoroutine (PickingUpLetter ());
 		} else {
-			//TODO: Handle other stuff here
+			if (!_readLetter) {
+				_textContentTracker.DisplayUI (0);	
+				_readLetter = true;
+			}
+			else if (!_putLetterAway) {
+				_putLetterAway = true;
+				StartCoroutine (PutLetterAway ());
+				_theatreBack.Activate ();
+			}
 		}
 	}
 
 	IEnumerator PickingUpLetter(){
 		float timer = 0f;
-		float duration = 3f;
+		float duration = 0.7f;
 		Vector3 originPos = transform.localPosition;
 		Quaternion originRot = transform.localRotation;
 		Vector3 originScale = transform.localScale;
@@ -56,6 +59,24 @@ public class TheatreLetter : MonoBehaviour {
 		transform.localScale = _closeUpScale;
 		transform.localRotation = Quaternion.Euler (_closeUpRot);
 		transform.localPosition = _closeUpPos;
+		yield return null;
+	}
+
+	IEnumerator PutLetterAway(){
+		float timer = 0f;
+		float duration = 1f;
+		float mapValue;
+		Quaternion closeUpRotQuat = Quaternion.Euler (_closeUpRot);
+		Quaternion finalRotQuat = Quaternion.Euler (_finalRotation);
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			mapValue = timer / duration;
+			transform.localRotation = Quaternion.Lerp (closeUpRotQuat, finalRotQuat, mapValue);
+			transform.localPosition = Vector3.Slerp (_closeUpPos, _finalPosition, mapValue);
+			yield return null;
+		}
+		transform.localRotation = finalRotQuat;
+		transform.localPosition = _finalPosition;
 		yield return null;
 	}
 }
