@@ -20227,6 +20227,8 @@ MonoBehaviour:
   _sliderSlideCamRot: {x: 9.7, y: 0, z: 0}
   _startSlider: {fileID: 823878452}
   _cameraStartFOV: 20
+  _topPos: {x: 0.023, y: 13.651, z: 16.979}
+  _topFOV: 23.3
   _surfaceBoxCollider: {fileID: 0}
   _traversalUI: {fileID: 1588321969}
   _theatreText: {fileID: 0}
@@ -21342,6 +21344,7 @@ GameObject:
   - component: {fileID: 1016203948}
   - component: {fileID: 1016203950}
   - component: {fileID: 1016203949}
+  - component: {fileID: 1016203951}
   m_Layer: 0
   m_Name: main_stage
   m_TagString: Untagged
@@ -21410,6 +21413,24 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1016203947}
   m_Mesh: {fileID: 4300030, guid: 77ddd601b4e574b7b9c3868c81965277, type: 3}
+--- !u!114 &1016203951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1016203947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd3313007203d24ca8c19150b54449d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toBeChildTransforms:
+  - {fileID: 1315806399}
+  - {fileID: 47722037}
+  - {fileID: 1940969815}
+  - {fileID: 629874895}
+  - {fileID: 1716881202}
+  _localGoalY: 0.1071
 --- !u!1 &1018115213
 GameObject:
   m_ObjectHideFlags: 0
@@ -43600,6 +43621,7 @@ MonoBehaviour:
   _heartTimer2: {fileID: 1174393556}
   _heartArrowInstructions: {fileID: 1122344217}
   _theatreRotation: {fileID: 436272218}
+  _theatreMainStageElevation: {fileID: 1016203951}
   _trueEnding: 0
 --- !u!4 &1924021102
 Transform:

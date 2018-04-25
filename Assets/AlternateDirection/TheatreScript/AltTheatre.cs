@@ -98,6 +98,8 @@ public class AltTheatre : LevelManager {
 
 	[SerializeField] TheatreRotation _theatreRotation;
 
+	[SerializeField] TheatreMainStageElevation _theatreMainStageElevation;
+
 	int _doorCloseCnt = 0;
 
 	public bool _trueEnding = false;
@@ -456,14 +458,20 @@ public class AltTheatre : LevelManager {
 				_dancer.ElevateTankPlatform (5f);
 				break;
 			case TheatreState.DancerMeetsMagician:
+				_theatreMainStageElevation.BringEveryoneUnderWing ();
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
+				MoveToNext();
 				break;
 			case TheatreState.DancerDancesWithMagician:
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
+				StartCoroutine(LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
+				MoveToNext();
 				break;
 			case TheatreState.LiftUpAboveWhileDancing:
+				_theatreMainStageElevation.BeginElevation (8f);
+				_theatreCameraControl.MoveCameraToTopPosition (7f);
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
 				break;

@@ -47,6 +47,10 @@ public class TheatreCameraControl : MonoBehaviour {
 		
 	[SerializeField] float _cameraStartFOV = 28f;
 
+	[Header("Top Values")]
+	[SerializeField] Vector3 _topPos;
+	[SerializeField] float _topFOV = 23.3f;
+
 	bool _initZoom = false;
 	bool _initClick = false;
 	bool _zoomedOut = false;
@@ -344,6 +348,10 @@ public class TheatreCameraControl : MonoBehaviour {
 		StartCoroutine (MoveToStartView ());
 	}
 
+	public void MoveCameraToTopPosition(float duration){
+		StartCoroutine (MoveToTop (duration));
+	}
+
 	IEnumerator MoveToStage(){
 		float timer = 0f;
 		float duration = 8f;
@@ -407,6 +415,32 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 		_thisCameraHeighttContainer.transform.position = _cameraStartPos;
 		_thisCamera.transform.rotation = Quaternion.Euler (_cameraStartRot);
+		yield return null;
+	}
+
+	IEnumerator MoveToTop(float duration){
+		yield return new WaitForSeconds (0.5f);
+		Vector3 originPos = _thisCameraHeighttContainer.transform.position;
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topPos, timer / duration);
+//			_thisCamera.transform.rotation = Quaternion.Lerp (Quaternion.Euler(_sliderSlideCamRot), Quaternion.Euler(_cameraStartRot), timer / duration);
+			CameraAngleCalculation ();
+			yield return null;
+		}
+		_thisCameraHeighttContainer.transform.position = _topPos;
+		CameraAngleCalculation ();
+//		_thisCamera.transform.rotation = Quaternion.Euler (_cameraStartRot);
+		yield return new WaitForSeconds(1f);
+		timer = 0f;
+		float currentFOV = _thisCamera.fieldOfView;
+		while (timer < 4f) {
+			timer += Time.deltaTime;
+			_thisCamera.fieldOfView = Mathf.Lerp (currentFOV, _topFOV, timer / 4f);
+			yield return null;
+		}
+		_thisCamera.fieldOfView = _topFOV;
 		yield return null;
 	}
 
