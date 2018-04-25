@@ -474,8 +474,10 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.MoveCameraToTopPosition (7f);
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
+				MoveToNext();
 				break;
 			case TheatreState.CountStars:
+				Events.G.Raise (new TheatreActivateStarsEvent ());
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
 				break;

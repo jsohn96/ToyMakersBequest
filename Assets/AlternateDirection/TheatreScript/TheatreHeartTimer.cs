@@ -69,7 +69,10 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 	[SerializeField] SpriteFade _spriteFade;
 
+	[SerializeField] BoxCollider _thisBoxCollider;
+
 	public void ActivateHeart(){
+		_thisBoxCollider.enabled = true;
 		_spriteFade.CallFadeSpriteIn (0f);
 		_heartIsActive = true;
 		_thisInstanceID = transform.GetInstanceID ();
@@ -141,6 +144,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 	}
 
 	public void SnapTickerIntoStart(){
+		_thisBoxCollider.enabled = false;
 		_spriteFade.TurnItOffForGood ();
 
 		_theOtherHalfHeartTimer.enabled = true;

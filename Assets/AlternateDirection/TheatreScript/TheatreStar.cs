@@ -14,20 +14,24 @@ public class TheatreStar : MonoBehaviour {
 
 	[SerializeField] bool _connectLines = false;
 	[SerializeField] TheatreStarLine _theatreStarLine;
+	bool _isActivated = false;
 
 	void Start(){
 		_rateOfGlow = Random.Range (5f, 9f);
 	}
 
 	void OnTouchDown(){
-		if (_connectLines) {
+		if (_isActivated) {
 			if (!_isGlowing) {
-				_theatreStarLine.AddStarToLine (transform.position);
+				if (_connectLines) {
+					_theatreStarLine.AddStarToLine (transform.position);	
+				}
+				Events.G.Raise (new TheatreFadeOutStarsEvent ());
 			}
+			_isGlowing = true;
+			_spriteRenderer.color = _fullColor;
+			_timer = 0f;
 		}
-		_isGlowing = true;
-		_spriteRenderer.color = _fullColor;
-		_timer = 0f;
 	}
 
 	void OnMouseOver(){
@@ -49,5 +53,17 @@ public class TheatreStar : MonoBehaviour {
 			_timer += Time.deltaTime / _rateOfGlow;
 			_spriteRenderer.color = Color.Lerp (_fullColor, _emptyColor, _starGlowCurve.Evaluate(Mathf.PingPong(_timer, 1f)));
 		}
+	}
+
+	void ActivateStars(TheatreActivateStarsEvent e){
+		_isActivated = true;
+	}
+
+	void OnEnable(){
+		Events.G.AddListener<TheatreActivateStarsEvent> (ActivateStars);
+	}
+
+	void OnDisable(){
+		Events.G.RemoveListener<TheatreActivateStarsEvent> (ActivateStars);
 	}
 }

@@ -43,3 +43,9 @@ public class TheatreFrogClickEvent:GameEvent{
 public class DancerMoveOnPathEvent:GameEvent{
 	
 }
+
+public class TheatreFadeOutStarsEvent:GameEvent{
+}
+
+public class TheatreActivateStarsEvent:GameEvent{
+}

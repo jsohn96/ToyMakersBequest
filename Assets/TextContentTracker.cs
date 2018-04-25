@@ -61,6 +61,7 @@ public class TextContentTracker : MonoBehaviour {
 	[SerializeField] Image _backButton;
 
 	[SerializeField] TouchInput _touchInput;
+	[SerializeField] TraversalUI _traversalUI;
 
 	// Use this for initialization
 	void Start () {
@@ -127,6 +128,7 @@ public class TextContentTracker : MonoBehaviour {
 	public void DisplayUI(int index){
 		if (_touchInput) {
 			_touchInput.enabled = false;
+			_traversalUI.FadeOutRotate ();
 		}
 
 		_backButton.enabled = true;
@@ -148,6 +150,7 @@ public class TextContentTracker : MonoBehaviour {
 		if (_isDisplaying) {
 			if (_touchInput) {
 				_touchInput.enabled = true;
+				_traversalUI.FadeInRotate ();
 			}
 			_isDisplaying = false;
 			_uiMask.color = _emptyColor;
