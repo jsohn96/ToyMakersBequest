@@ -82,7 +82,7 @@ public class TheatreText : MonoBehaviour {
 			return;
 		}
 		_textMeshPro.text = _strings [cnt];
-		_markBackgroundTMP.text = "<mark=#000000A0><color=#000000A0>"+_strings [cnt]+"</color></mark>";
+		_markBackgroundTMP.text = "<mark=#000000FF><color=#00000000>      "+_strings [cnt]+"</color></mark>";
 		switch (cnt) {
 		case 0:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
