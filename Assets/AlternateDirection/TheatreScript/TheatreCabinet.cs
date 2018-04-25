@@ -32,6 +32,7 @@ public class TheatreCabinet : MonoBehaviour {
 	}
 
 	void OnTouchDown(){
+		print ("click cabinet");
 		
 		if (!_isOpen) {
 			_cabinetAnimator.SetBool ("Open", true);
