@@ -16,6 +16,7 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _bellFeedback;
 	[SerializeField] AudioSource _frogSound;
+	[SerializeField] AudioSource _frogLandingSound;
 	[SerializeField] AudioSource _frogPuddleSound;
 
 	[SerializeField] AudioSource _crowCawSound;
@@ -38,6 +39,8 @@ public class TheatreSound : MonoBehaviour {
 	// 0: open, 1: close
 	[SerializeField] AudioClip[] _waterTankLidClips;
 
+	[SerializeField] AudioSource _magicRevealSound;
+
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
 		_clappingSound.Play ();
@@ -53,6 +56,10 @@ public class TheatreSound : MonoBehaviour {
 
 	public void PlayFrogSound(){
 		_frogSound.Play ();
+	}
+
+	public void PlayFrogLandingSOund(){
+		_frogLandingSound.Play ();
 	}
 
 	public void PlayFrogPuddleSound(){
@@ -127,5 +134,11 @@ public class TheatreSound : MonoBehaviour {
 			_waterTankLidSound.clip = _waterTankLidClips [1];
 		}
 		_waterTankLidSound.Play ();
+	}
+
+	public void PlayMagicRevealSound(){
+		if (!_magicRevealSound.isPlaying) {
+			_magicRevealSound.Play ();
+		}
 	}
 }

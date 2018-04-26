@@ -20,6 +20,8 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 
 	BoxCollider bCol;
 
+	[SerializeField] TheatreSound _theatreSound;
+
 
 	// Use this for initialization
 	void Awake(){
@@ -36,6 +38,15 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		}
 		_frogIdx = GetComponentInParent<PathNode> ().readNodeInfo ().index;
 
+	}
+
+
+	public void PlayFrogCroak(){
+		_theatreSound.PlayFrogSound ();
+	}
+
+	public void PlayFrogLandingSound(){
+		_theatreSound.PlayFrogLandingSOund ();
 	}
 
 	// Update is called once per frame
