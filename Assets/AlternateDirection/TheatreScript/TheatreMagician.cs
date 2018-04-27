@@ -16,7 +16,6 @@ public class TheatreMagician : MonoBehaviour {
 	[SerializeField] GameObject _kissImage;
 
 	Vector3 _tempPos;
-	[SerializeField] TheatreSound _theatreSound;
 
 	//Vector3 _endPosition;
 	bool _isMoving;
@@ -122,7 +121,6 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void PointToLeft(bool isPointing){
 		if (isPointing) {
-			_theatreSound.PlayMagicRevealSound ();
 			_magicianAnim.Play ("mg_pointLeft");
 		} else {
 			_magicianAnim.Play ("mg_pointLeft_to_center");
@@ -131,7 +129,6 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void PointToRight(bool isPointing){
 		if (isPointing) {
-			_theatreSound.PlayMagicRevealSound ();
 			_magicianAnim.Play ("mg_pointRight");
 		} else {
 			_magicianAnim.Play ("mg_pointRight_to_center");
@@ -140,7 +137,6 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void BeginShow(bool isPointing, bool noLightsOn = false){
 		if (isPointing) {
-			_theatreSound.PlayMagicRevealSound ();
 			_magicianAnim.Play ("StartShow");
 			if (!noLightsOn) {
 				StartCoroutine (DelayLightsOn ());

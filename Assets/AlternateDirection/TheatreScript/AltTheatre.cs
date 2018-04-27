@@ -40,6 +40,7 @@ public enum TheatreState{
 	CloseDoorTwo2, //new
 	TurnHeartCrank2, //new
 	dancerLocked,
+	dancerDrownStall,
 	theatreEnd,
 	BeginPart2,
 	DancerReturnToPosition,
@@ -435,8 +436,8 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.EnableScrollFOV ();
 			//Stop Dancer Here
 //			_dancer.HideDancer (true);
-				_tankDoor1.OpenTankCall ();
-				_tankDoor2.OpenTankCall ();
+//				_tankDoor1.OpenTankCall ();
+//				_tankDoor2.OpenTankCall ();
 				_theatreMusic.EndMusic ();
 				_theatreText.TriggerText (35);
 				break;

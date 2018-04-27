@@ -73,11 +73,12 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			else {
 				if (!_waitForClose) {
 					if (_openBoth) {
-//						_myTheatre.MoveToNext ();
+						_myTheatre.MoveToNext ();
 						OpenTankCall ();
 						_otherWaterTankDoor.OpenTankCall ();
 						_waitForClose = true;
 						_openBoth = false;
+
 					} else if (_isOpen) {
 						_isOpen = false;
 						if (_tankDoorCoroutine != null) {

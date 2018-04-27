@@ -22,6 +22,8 @@ public class TheatreLetter : MonoBehaviour {
 	Vector3 _finalPosition = new Vector3 (0.127255f, 0.075102f, -0.02881f);
 	Vector3 _finalRotation = new Vector3 (1.334f, 88.621f, 0.118f);
 
+	[SerializeField] TraversalUI _traversalUI;
+
 
 	void OnTouchDown(Vector3 hit) {
 		if (!_pickedUp) {
@@ -30,8 +32,8 @@ public class TheatreLetter : MonoBehaviour {
 			StartCoroutine (PickingUpLetter ());
 		} else {
 			if (!_readLetter) {
-				_textContentTracker.DisplayUI (0);	
-				_readLetter = true;
+//				_textContentTracker.DisplayUI (0);	
+//				_readLetter = true;
 			}
 			else if (!_putLetterAway) {
 				_putLetterAway = true;
@@ -59,10 +61,14 @@ public class TheatreLetter : MonoBehaviour {
 		transform.localScale = _closeUpScale;
 		transform.localRotation = Quaternion.Euler (_closeUpRot);
 		transform.localPosition = _closeUpPos;
+
+		_textContentTracker.DisplayUI (0);	
+		_readLetter = true;
 		yield return null;
 	}
 
 	IEnumerator PutLetterAway(){
+		_traversalUI.FadeInRotate ();
 		float timer = 0f;
 		float duration = 1f;
 		float mapValue;

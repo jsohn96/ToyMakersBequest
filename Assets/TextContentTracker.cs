@@ -150,7 +150,6 @@ public class TextContentTracker : MonoBehaviour {
 		if (_isDisplaying) {
 			if (_touchInput) {
 				_touchInput.enabled = true;
-				_traversalUI.FadeInRotate ();
 			}
 			_isDisplaying = false;
 			_uiMask.color = _emptyColor;
