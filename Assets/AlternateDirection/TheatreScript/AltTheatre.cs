@@ -44,7 +44,6 @@ public enum TheatreState{
 	dancerDrownStall,
 	theatreEnd,
 	BeginPart2,
-	DancerReturnToPosition,
 	BringDancerBackUp,
 	DancerMeetsMagician,
 	DancerDancesWithMagician,
@@ -454,13 +453,10 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.ZoomIn ();
 //				_theatreRotation.StartInitRotation ();
 				break;
-			case TheatreState.DancerReturnToPosition:
-//				_dancer.DancerEnterWater ();
-//				_dancer.ElevateTankPlatform ();
-				break;
 			case TheatreState.BringDancerBackUp:
 				_theatreWaterTank.OpenLid (true);
 				_dancer.ElevateTankPlatform (5f);
+				StartCoroutine(DelayedSelfCall (5f));
 				break;
 			case TheatreState.DancerMeetsMagician:
 				_theatreMainStageElevation.BringEveryoneUnderWing ();
@@ -471,7 +467,7 @@ public class AltTheatre : LevelManager {
 			case TheatreState.DancerDancesWithMagician:
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
-				StartCoroutine(LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
+				StartCoroutine (LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
 				MoveToNext();
 				break;
 			case TheatreState.LiftUpAboveWhileDancing:
