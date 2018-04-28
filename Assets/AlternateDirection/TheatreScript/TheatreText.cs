@@ -180,7 +180,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 			break;
 		case 17:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]+ 2.0f));
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;

@@ -27,6 +27,7 @@ public enum TheatreState{
 	dancerShowUp,
 	dancerStartPath,
 	dancerKissing,
+	postKissRegret,
 	audienceLeave1,
 	audienceLeave2,
 	audienceLeave3,
@@ -353,6 +354,9 @@ public class AltTheatre : LevelManager {
 			case TheatreState.dancerKissing:
 				StartCoroutine (KissSepuence ());
 				break;
+			case TheatreState.postKissRegret:
+				_theatreText.TriggerText (18);
+				break;
 			case TheatreState.audienceLeave1:
 			// dancer|magician return to idle 
 				magician.ExitKissPosition ();
@@ -490,7 +494,7 @@ public class AltTheatre : LevelManager {
 		magician.Kiss ();
 		_dancer.Kiss ();
 		yield return new WaitForSeconds (5f);
-		_theatreSound.PlayKissSound ();
+//		_theatreSound.PlayKissSound ();
 		//_dancer.PlayKiss ();
 		_theatreText.TriggerText (17);
 		yield return 0;

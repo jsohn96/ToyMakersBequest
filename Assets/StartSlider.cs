@@ -52,15 +52,16 @@ public class StartSlider : MonoBehaviour {
 			if (_sliderStarted) {
 				_sliderPoint.Rotate (_pointRotationAxis, -1f);
 
-				if (timer < duration) {
-					timer += Time.deltaTime / duration;
-
-					_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
-					_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
-				} else if (_isLerping) {
-					_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
-					_isLerping = false;
-				}
+//				if (timer < duration) {
+//					timer += Time.deltaTime / duration;
+//
+//					_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
+//					_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
+//				}
+//				else if (_isLerping) {
+//					_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
+//					_isLerping = false;
+//				}
 			}
 		}
 	}
@@ -70,7 +71,8 @@ public class StartSlider : MonoBehaviour {
 			if (_touchDown) {
 				float mouseX = _mainCamera.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, transform.position.z)).x;
 				float tempNormMap = MathHelpers.LinMapTo01 (_xAxisLeft, _xAxisRight, mouseX);
-				normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
+				normalizedLinMap = tempNormMap;
+//				normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
 				_sliderAnim.Play (_hashID, -1, normalizedLinMap);
 				if (normalizedLinMap < 0.005f) {
 					_sliderStarted = true;
@@ -87,11 +89,14 @@ public class StartSlider : MonoBehaviour {
 	
 	public void SetSliderState (float thisValue, float outOfThisTotal) {
 		if (_sliderStarted) {
-			_isLerping = true;
-			timer = 0f;
-			_originNormalizedValue = _sliderAnim.GetCurrentAnimatorStateInfo (0).normalizedTime;
-			_goalNormalizedValue = thisValue / outOfThisTotal;
+			_sliderAnim.Play (_hashID, -1, 0f);
 		}
+//		if (_sliderStarted) {
+//			_isLerping = true;
+//			timer = 0f;
+//			_originNormalizedValue = _sliderAnim.GetCurrentAnimatorStateInfo (0).normalizedTime;
+//			_goalNormalizedValue = thisValue / outOfThisTotal;
+//		}
 	}
 
 	void OnTouchDown(Vector3 hitPoint){
