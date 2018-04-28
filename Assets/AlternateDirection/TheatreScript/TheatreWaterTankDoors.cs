@@ -204,11 +204,11 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 
 
 	public void Activate(bool activate){
-		_spriteFade.CallFadeSpriteIn (0.5f);
 
 		_disableTouchInput = false;
 		_isActivated = activate;
 		if (activate) {
+			_spriteFade.CallFadeSpriteIn (0.5f);
 			_openBoth = true;
 			_firstClose = true;
 			_secondClose = true;
@@ -231,6 +231,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		_disableTouchInput = false;
 		_isActivated = finalActivate;
 		if (finalActivate) {
+			_spriteFade.CallFadeSpriteIn (0.5f);
 			_openBoth = true;
 			_firstClose = true;
 			_secondClose = true;

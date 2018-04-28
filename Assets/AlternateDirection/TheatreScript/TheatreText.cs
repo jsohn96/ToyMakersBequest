@@ -14,6 +14,8 @@ public class TheatreText : MonoBehaviour {
 	[SerializeField] AudioClip[] _voClips;
 	float [] _voClipLengths;
 
+	[SerializeField] TheatreCameraControl _theatreCameraControl;
+
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
 		"echoing throughout the stage.", //1
@@ -66,6 +68,11 @@ public class TheatreText : MonoBehaviour {
 		for (int i = 0; i < _textLength; i++) {
 			_voClipLengths[i] = _voClips[i].length + 0.5f;
 		}
+	}
+
+	public IEnumerator DelayTriggerText(float duration, int index = -1){
+		yield return new WaitForSeconds(duration);
+		TriggerText (index);
 	}
 
 
@@ -200,24 +207,28 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreCameraControl.LookAtBird (1);
 			break;
 		case 21:
 			_myTheatre.MoveToNext ();
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreCameraControl.LookAtBird (2);
 			break;
 		case 22:
 			_myTheatre.MoveToNext ();
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreCameraControl.LookAtBird (3);
 			break;
 		case 23:
 			_myTheatre.SetLight (0);
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreCameraControl.LookAtBird (0);
 			break;
 		case 24:
 			_myTheatre.MoveToNext ();

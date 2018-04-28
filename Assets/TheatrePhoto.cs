@@ -57,6 +57,7 @@ public class TheatrePhoto : MonoBehaviour {
 
 
 	IEnumerator PutAwayPhoto(){
+		_boxCollider.enabled = false;
 //		_endRotQuat = Quaternion.Euler (_endRot);
 //		Vector3 originPos = transform.position;
 //		Quaternion originRot = transform.rotation;

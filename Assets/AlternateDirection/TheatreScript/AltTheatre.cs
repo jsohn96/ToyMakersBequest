@@ -141,13 +141,13 @@ public class AltTheatre : LevelManager {
 //		}
 
 		if (Input.GetKeyDown (KeyCode.Z)) {
-			Time.timeScale = 5.0f;
+			Time.timeScale = 7.0f;
 		} else if (Input.GetKeyUp (KeyCode.Z)) {
 			Time.timeScale = 1.0f;
 		}
 
 		if(Input.GetKeyDown(KeyCode.X)){
-			Time.timeScale = 30.0f;
+			Time.timeScale = 20.0f;
 		} else if (Input.GetKeyUp(KeyCode.X)){
 			Time.timeScale = 1.0f;
 		}
@@ -355,7 +355,7 @@ public class AltTheatre : LevelManager {
 				StartCoroutine (KissSepuence ());
 				break;
 			case TheatreState.postKissRegret:
-				_theatreText.TriggerText (18);
+				StartCoroutine (_theatreText.DelayTriggerText (1.5f, 18));
 				break;
 			case TheatreState.audienceLeave1:
 			// dancer|magician return to idle 

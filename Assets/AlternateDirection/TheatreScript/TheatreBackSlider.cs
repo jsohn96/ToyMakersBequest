@@ -15,12 +15,14 @@ public class TheatreBackSlider : MonoBehaviour {
 	float _zDifference;
 
 	float _snapValueUpperBound;
+	float _snapValueLowerBound;
 
 	bool _isActivated = false;
 
 	void Start(){
 		float snapOffsetValue = (_sliderRange.Max - _sliderRange.Min) * 0.1f;
 		_snapValueUpperBound = _sliderRange.Max - snapOffsetValue;
+		_snapValueLowerBound = _sliderRange.Min - snapOffsetValue;
 	}
 
 	void OnTouchDown(Vector3 point){
@@ -45,6 +47,8 @@ public class TheatreBackSlider : MonoBehaviour {
 					_isActivated = false;
 					_theatreBack.ResumeSequence ();
 					_arrowSliderSpriteFade.TurnItOffForGood ();
+				} else if (mouseY <= _snapValueLowerBound) {
+					mouseY = _sliderRange.Min;
 				}
 				_tempSliderPosition.y = mouseY;
 				transform.position = _tempSliderPosition;

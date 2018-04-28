@@ -69,6 +69,18 @@ public class TheatreCameraControl : MonoBehaviour {
 	[SerializeField] TheatreText _theatreText;
 	[SerializeField] TapSoundPlayer _tapSoundPlayer;
 
+
+	[Header("Bird Values")]
+	bool _recordedStageValue = false;
+	Quaternion _preBirdRot;
+	float _preBirdFOV;
+	Vector3 _birdOneRot = new Vector3 (14.1f, -9.65f, -2.924f);
+	float _birdOneFOV = 20f;
+	Vector3 _birdTwoRot = new Vector3(5.83f, 7.73f, 1.13f);
+	float _birdTwoFOV = 20f;
+	Vector3 _birdThreeRot = new Vector3 (18.864f, 18.63f, 0.4465f);
+	float _birdThreeFOV = 26f;
+
 	bool _isLerping = false;
 
 	void Start () {
@@ -593,4 +605,46 @@ public class TheatreCameraControl : MonoBehaviour {
 		_traversalUI.FadeInRotate ();
 	}
 
+	//which Bird 1, 2, 3 (anything else points back to stage)
+	public void LookAtBird(int whichBird){
+		if (!_recordedStageValue) {
+			_preBirdFOV = _thisCamera.fieldOfView;
+			_preBirdRot = _thisCamera.transform.rotation;
+			_recordedStageValue = true;
+		}
+		StartCoroutine (CameraLookAtBird (whichBird));
+	}
+
+	IEnumerator CameraLookAtBird(int whichBird){
+		float timer = 0f;
+		float duration = 0.4f;
+		Quaternion currentQuaternion = _thisCamera.transform.localRotation;
+		float currentFOV = _thisCamera.fieldOfView;
+		Quaternion tempQuaternion;
+		float tempGoalFOV;
+		if (whichBird == 1) {
+			tempQuaternion = Quaternion.Euler (_birdOneRot);
+			tempGoalFOV = _birdOneFOV;
+		} else if (whichBird == 2) {
+			tempQuaternion = Quaternion.Euler (_birdTwoRot);
+			tempGoalFOV = _birdTwoFOV;
+		} else if (whichBird == 3) {
+			tempQuaternion = Quaternion.Euler (_birdThreeRot);
+			tempGoalFOV = _birdThreeFOV;
+		} else {
+			duration = 3f;
+			tempQuaternion = _preBirdRot;
+			tempGoalFOV = _preBirdFOV;
+		}
+
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			_thisCamera.transform.localRotation = Quaternion.Slerp (currentQuaternion, tempQuaternion, timer / duration);
+			_thisCamera.fieldOfView = Mathf.Lerp (currentFOV, tempGoalFOV, timer / duration);
+			yield return null;
+		}
+		_thisCamera.transform.localRotation = tempQuaternion;
+		_thisCamera.fieldOfView = tempGoalFOV;
+		yield return null;
+	}
 }

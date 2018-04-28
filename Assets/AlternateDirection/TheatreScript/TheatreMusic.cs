@@ -24,5 +24,6 @@ public class TheatreMusic : AudioSourceController {
 
 	public void EndMusic(){
 		Stop (_theatreMusic);
+		Play (_ambientRoomTone);
 	}
 }
