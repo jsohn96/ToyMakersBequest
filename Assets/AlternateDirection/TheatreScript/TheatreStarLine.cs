@@ -6,7 +6,10 @@ public class TheatreStarLine : MonoBehaviour {
 	LineRenderer _lineRenderer;
 	int _currentCnt = 0;
 
-	// Use this for initialization
+	int _tempLineCnt = 0;
+
+
+
 	void Start () {
 		_lineRenderer = GetComponent<LineRenderer> ();
 	}
@@ -17,4 +20,5 @@ public class TheatreStarLine : MonoBehaviour {
 		_lineRenderer.SetPosition (_currentCnt, pos);
 		_currentCnt++;
 	}
+		
 }
