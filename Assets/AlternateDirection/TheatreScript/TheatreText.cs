@@ -16,6 +16,8 @@ public class TheatreText : MonoBehaviour {
 
 	[SerializeField] TheatreCameraControl _theatreCameraControl;
 
+	[SerializeField] TheatreZoomHandle[] _theatreZoomHandles;
+
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
 		"echoing throughout the stage.", //1
@@ -193,42 +195,53 @@ public class TheatreText : MonoBehaviour {
 			break;
 		case 18:
 			_myTheatre.SetLight (6);
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]+1f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreCameraControl.ChangeFOV (15f, _voClipLengths [cnt] + 4f);
 			break;
 		case 19:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1.0f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+
+			_theatreZoomHandles [0].Initialize ();
+			_theatreZoomHandles [1].Initialize ();
+			_theatreZoomHandles [2].Initialize ();
 			break;
 		case 20:
 			_myTheatre.MoveToNext ();
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_theatreCameraControl.LookAtBird (1);
+//			_theatreCameraControl.LookAtBird (1);
+			_theatreZoomHandles [0].LensIn ();
 			break;
 		case 21:
 			_myTheatre.MoveToNext ();
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_theatreCameraControl.LookAtBird (2);
+//			_theatreCameraControl.LookAtBird (2);
+			_theatreZoomHandles [1].LensIn ();
 			break;
 		case 22:
 			_myTheatre.MoveToNext ();
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_theatreCameraControl.LookAtBird (3);
+//			_theatreCameraControl.LookAtBird (3);
+			_theatreZoomHandles [2].LensIn ();
 			break;
 		case 23:
 			_myTheatre.SetLight (0);
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_theatreCameraControl.LookAtBird (0);
+//			_theatreCameraControl.LookAtBird (0);
+			_theatreZoomHandles [0].ClearOut ();
+			_theatreZoomHandles [1].ClearOut ();
+			_theatreZoomHandles [2].ClearOut ();
 			break;
 		case 24:
 			_myTheatre.MoveToNext ();
@@ -238,6 +251,7 @@ public class TheatreText : MonoBehaviour {
 			break;
 		case 25:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
+			_theatreCameraControl.ChangeFOV (30f, _voClipLengths[cnt]);
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;

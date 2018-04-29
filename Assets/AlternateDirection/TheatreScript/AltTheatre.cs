@@ -313,11 +313,11 @@ public class AltTheatre : LevelManager {
 			case TheatreState.TurnHeartCrank:
 				_theatreText.TriggerText (9);
 				break;
-			case TheatreState.OpenTank:
+//			case TheatreState.OpenTank:
 //			_theatreChest.GiveBackControl ();
 //			_theatreCameraControl.EnableScrollFOV();
 //			_theatreText.TriggerText (13);
-				break;
+//				break;
 			case TheatreState.LookUpAtStageAgain:
 				_theatreCameraControl.MoveCameraToLookAtStage2 ();
 				break;

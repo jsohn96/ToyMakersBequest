@@ -54,6 +54,10 @@ public class TheatreDancer : MonoBehaviour {
 				PlayStartDancing ();
 			} else if (AltTheatre.currentSate >= TheatreState.dancerInTank) {
 				RotateInPlace ();
+			} 
+		} else {
+			if (AltTheatre.currentSate == TheatreState.readyForDancerTank2) {
+				_stopMovement = false;
 			}
 		}
 	}

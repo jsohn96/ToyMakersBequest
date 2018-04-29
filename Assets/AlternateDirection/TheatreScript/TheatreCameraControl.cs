@@ -652,4 +652,21 @@ public class TheatreCameraControl : MonoBehaviour {
 		_thisCamera.fieldOfView = tempGoalFOV;
 		yield return null;
 	}
+
+
+	public void ChangeFOV(float fov, float duration){
+		StartCoroutine (ChangingFOV (fov, duration));
+	}
+
+	IEnumerator ChangingFOV(float fov, float duration){
+		float timer = 0f;
+		float originFOV = _thisCamera.fieldOfView;
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			_thisCamera.fieldOfView = Mathf.Lerp (originFOV, fov, timer / duration);
+			yield return null;
+		}
+		_thisCamera.fieldOfView = fov;
+		yield return null;
+	}
 }

@@ -63,7 +63,7 @@ public class TheatrePhoto : MonoBehaviour {
 //		Quaternion originRot = transform.rotation;
 //		Vector3 tempPos;
 //		Quaternion tempRot;
-		float duration = 1f;
+		float duration = 0.8f;
 		float timer = 0f;
 		float tempLinMap;
 		while (duration > timer) {

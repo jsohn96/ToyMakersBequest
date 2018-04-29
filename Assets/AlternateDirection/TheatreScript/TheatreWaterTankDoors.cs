@@ -32,6 +32,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	[SerializeField] TheatreWaterTankDoors _otherWaterTankDoor;
 
 	[SerializeField] SpriteFade _spriteFade;
+	bool _finalActivation = false;
 
 	void Start(){
 		_openRot = transform.localRotation;
@@ -73,8 +74,10 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 			else {
 				if (!_waitForClose) {
 					if (_openBoth) {
-						_myTheatre.MoveToNext ();
 						OpenTankCall ();
+						if (_finalActivation) {
+							_myTheatre.MoveToNext ();
+						}
 						_otherWaterTankDoor.OpenTankCall ();
 						_waitForClose = true;
 						_openBoth = false;
@@ -230,7 +233,8 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		_callOnce = false;
 		_disableTouchInput = false;
 		_isActivated = finalActivate;
-		if (finalActivate) {
+		_finalActivation = finalActivate;
+		if (_isActivated) {
 			_spriteFade.CallFadeSpriteIn (0.5f);
 			_openBoth = true;
 			_firstClose = true;

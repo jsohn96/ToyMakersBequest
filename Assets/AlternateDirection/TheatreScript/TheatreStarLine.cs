@@ -5,10 +5,7 @@ using UnityEngine;
 public class TheatreStarLine : MonoBehaviour {
 	LineRenderer _lineRenderer;
 	int _currentCnt = 0;
-
 	int _tempLineCnt = 0;
-
-
 
 	void Start () {
 		_lineRenderer = GetComponent<LineRenderer> ();
