@@ -85,6 +85,8 @@ public class TheatreCameraControl : MonoBehaviour {
 
 	bool _isLerping = false;
 
+	[SerializeField] TheatreMusic _theatreMusic;
+
 	void Start () {
 		if (AltTheatre.currentSate == TheatreState.waitingToStart) {
 			_thisCameraHeighttContainer.position = _cameraZoomedOutViewPos;
@@ -101,7 +103,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	public void Activate(){
 		_initZoom = true;
 		AltTheatre.currentSate++;
-
+		_theatreMusic.PlayCelloSkratch();
 
 		StartCoroutine (ZoomInCamera ());
 	}

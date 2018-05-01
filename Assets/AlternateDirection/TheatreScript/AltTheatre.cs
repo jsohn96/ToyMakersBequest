@@ -245,6 +245,8 @@ public class AltTheatre : LevelManager {
 				_dancer.FirstDancerEnterTank ();
 
 				_theatreText.TriggerText (6);
+				_theatreMusic.PrepareDevelop (MusicVerses.Verse1);
+
 				break;
 			case TheatreState.magicianBoardTank:
 			
@@ -290,6 +292,7 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 				break;
 			case TheatreState.lookDownIntoTank:
+				_theatreMusic.PrepareDevelop (MusicVerses.Verse2);
 //			_traversalUI.FadeOut ();
 				_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
@@ -355,6 +358,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.postKissRegret:
 				StartCoroutine (_theatreText.DelayTriggerText (1.5f, 18));
+				_theatreMusic.PrepareDevelop (MusicVerses.Verse4);
 				break;
 			case TheatreState.audienceLeave1:
 			// dancer|magician return to idle 
