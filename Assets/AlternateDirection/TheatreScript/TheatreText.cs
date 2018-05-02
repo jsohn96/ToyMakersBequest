@@ -54,7 +54,15 @@ public class TheatreText : MonoBehaviour {
 		"Two.", //32
 		"Three.", //33
 		"But this was not like every other day.", //34
-		"Today, things were different." //35
+		"Today, things were different.", //35
+
+		"She wasn't breathing.", //36
+		"I tried to save her", // 37
+		"But she remained motionless in my arms.", //38
+		"But then,", //39
+		"with a cough", //40
+		"she came back", //41
+		"Her most daring escape ever." //42
 	};
 	int cnt = 0;
 
