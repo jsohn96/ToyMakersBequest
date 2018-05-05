@@ -20,6 +20,7 @@ public class TheatrePhoto : MonoBehaviour {
 	[SerializeField] BoxCollider _boxCollider;
 
 	[SerializeField] AltTheatre _myTheatre;
+	[SerializeField] TheatreLighting _theatreLighting;
 
 
 	public void TakeFlashPhoto(){
@@ -38,6 +39,7 @@ public class TheatrePhoto : MonoBehaviour {
 				if ((timer / duration) > 0.1f) {
 					_audioSource.Play ();
 					_photoSpriteRenderer.enabled = true;
+					_theatreLighting.Set7 ();
 					once = true;
 				}
 			}

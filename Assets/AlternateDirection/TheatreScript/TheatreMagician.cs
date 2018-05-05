@@ -75,6 +75,9 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void ExitKissPosition(){
 		_magicianAnim.SetBool ("isBackToIdle", true);
+	}
+
+	public void ReturnToNextDayPosition(){
 		_dontTriggerNextScene = true;
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 	}

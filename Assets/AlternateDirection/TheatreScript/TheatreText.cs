@@ -19,7 +19,7 @@ public class TheatreText : MonoBehaviour {
 	[SerializeField] TheatreZoomHandle[] _theatreZoomHandles;
 
 	[SerializeField] AudienceHeadFollow[] _audience;
-
+	[SerializeField] TheatreLighting _theatreLighting;
 
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
@@ -121,7 +121,6 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-			_myTheatre.SetLight (2);
 
 			break;
 		case 3:
@@ -207,7 +206,6 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 			break;
 		case 18:
-			_myTheatre.SetLight (6);
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
@@ -217,7 +215,7 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1.0f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
-
+			_theatreLighting.Set8 ();
 			_theatreZoomHandles [0].Initialize ();
 			_theatreZoomHandles [1].Initialize ();
 			_theatreZoomHandles [2].Initialize ();
@@ -250,7 +248,6 @@ public class TheatreText : MonoBehaviour {
 			_audience [2].PlayKissReaction ();
 			break;
 		case 23:
-			_myTheatre.SetLight (0);
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
@@ -258,6 +255,7 @@ public class TheatreText : MonoBehaviour {
 			_theatreZoomHandles [0].ClearOut ();
 			_theatreZoomHandles [1].ClearOut ();
 			_theatreZoomHandles [2].ClearOut ();
+			_theatreLighting.SingularSpotLight (true);
 			break;
 		case 24:
 			_myTheatre.MoveToNext ();

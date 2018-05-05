@@ -191,18 +191,6 @@ public class AltTheatre : LevelManager {
 		_theatreMusic.BeginMusic ();
 	}
 
-	public void SetLight(int index){
-		_theatreSound.PlayLightSwitch ();
-		if (index == 0) {
-			_theatreLighting.DisableAll ();
-		}
-		else if (index == 2) {
-			_theatreLighting.Set2 ();
-		} else {
-			_theatreLighting.Set4 ();
-		}
-	}
-
 	public void MagicianFinishGreet(){
 		magician.PointToCenter (true);
 	}
@@ -214,10 +202,12 @@ public class AltTheatre : LevelManager {
 		if (!_trueEnding) {
 			switch (currentSate) {
 			case TheatreState.waitingToStart:
+				_theatreLighting.Set2 ();
 				_theatreCameraControl.Activate ();
 				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.startShow:
+				_theatreLighting.Set3 ();
 				magician.InitMagician ();
 				_theatreText.TriggerText (2);
 //			_theatreSound.PlayLightSwitch ();
@@ -260,9 +250,8 @@ public class AltTheatre : LevelManager {
 				magician.BeginShow (true);
 				break;
 			case TheatreState.waterTankDescend:
-			
+				_theatreLighting.Set4 ();
 				_theatreSound.PlayLightSwitch ();
-				_theatreLighting.Set3 ();
 				_theaterAudiences [0].AudienceEnter ();
 				magician.BeginShow (false);
 				Invoke ("PlayWaterTankMoveSound", 1.5f);
@@ -279,10 +268,10 @@ public class AltTheatre : LevelManager {
 
 				magician.PointToLeft (true);
 				chest.Activate (true);
+				_theatreLighting.ChestLight (true);
 				break;
 			case TheatreState.frogJump:
 				_theatreSound.PlayLightSwitch ();
-				_theatreLighting.Set4 ();
 				_theaterAudiences [1].AudienceEnter ();
 
 				magician.PointToLeft (false);
@@ -292,6 +281,7 @@ public class AltTheatre : LevelManager {
 			//MoveToNext();
 				break;
 			case TheatreState.lookDownIntoTank:
+				_theatreLighting.ChestLight (false);
 				_theatreMusic.PrepareDevelop (MusicVerses.Verse2);
 //			_traversalUI.FadeOut ();
 				_theatreCameraControl.MoveCameraToLookAtTank ();
@@ -299,6 +289,7 @@ public class AltTheatre : LevelManager {
 				_theatreText.TriggerText (7);
 				break;
 			case TheatreState.CloseTankDoors:
+				_theatreLighting.Set5 ();
 				_theatreWaterTank.OpenLid (false);
 				_tankDoor1.Activate (true);
 				_tankDoor2.Activate (true);
@@ -333,13 +324,15 @@ public class AltTheatre : LevelManager {
 				magician.PointToRight (true);
 			// dancer.enterScene();
 				cabinet.Activate (true);
+				_theatreLighting.CabinetLight (true);
 
 				break;
 			case TheatreState.dancerShowUp:
+				_theatreLighting.Set6 ();
 			// dancer shows up play dancer aniamtion
 				_theatreText.TriggerText (13);
 				_theatreSound.PlayLightSwitch ();
-				_theatreLighting.Set5 ();
+				_theatreLighting.Set6 ();
 //			_theaterAudiences [2].AudienceEnter ();
 
 				magician.PointToRight (false);
@@ -362,8 +355,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.audienceLeave1:
 			// dancer|magician return to idle 
-				magician.ExitKissPosition ();
-				_dancer.EndKiss ();
+
 			// dancer go to center 
 			// magician back to original 
 //			_theatreLighting.Set4 ();
@@ -380,18 +372,21 @@ public class AltTheatre : LevelManager {
 			case TheatreState.audienceLeave3:
 //			_theatreLighting.Set6 ();
 //			_theaterAudiences [0].AudienceLeave ();
-
+				magician.ExitKissPosition ();
+				_dancer.EndKiss ();
 				_dancer.ElevateTankPlatform ();
 //			StartCoroutine(DelayedSelfCall(2));
 				break;
 			case TheatreState.magicianReturnToPosition:
+				magician.ReturnToNextDayPosition ();
+				_dancer.DancerBackToCenterNextDay ();
 			//magician.ExitKissPosition ();
 				_frogSwirl.ShrinkFrog ();
 				StartCoroutine (DelayedSelfCall (5));
 				break;
 			case TheatreState.restartPerformanceNextDay:
 				_theatreSound.PlayLightSwitch ();
-				_theatreLighting.Set2 ();
+				_theatreLighting.Set9 ();
 				_theatreText.TriggerText (25);
 				magician.BeginShow (true, true);
 				break;
@@ -437,7 +432,7 @@ public class AltTheatre : LevelManager {
 //				_dancer.StopMovement (true);
 				break;
 			case TheatreState.theatreEnd:
-				
+				_theatreLighting.Set10 ();
 				_theatreCoin.BeginGlow ();
 				_traversalUI.FadeIn ();
 				_theatreCameraControl.EnableScrollFOV ();

@@ -95,6 +95,10 @@ public class TheatreDancer : MonoBehaviour {
 
 	public void EndKiss(){
 		_dancerAnim.SetBool ("isBack", true);
+
+	}
+
+	public void DancerBackToCenterNextDay(){
 		StartCoroutine (DancerToCenter ());
 	}
 

@@ -15,7 +15,7 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light[] _nextLights7;
 	[SerializeField] Light[] _nextLights8;
 	[SerializeField] Light[] _nextLights9;
-	[SerializeField] Light[] _nextLights10;
+	[SerializeField] Light _intermissionLight;
 
 	[SerializeField] Light _chestLight;
 	[SerializeField] Light _cabinetLight;
@@ -24,7 +24,7 @@ public class TheatreLighting : MonoBehaviour {
 
 	void Start(){
 		_viewingLightToBeTurnedOff.enabled = false;
-		DisableAll ();
+		Set1 ();
 	}
 
 	public void MoveToNextLights(){
@@ -75,9 +75,7 @@ public class TheatreLighting : MonoBehaviour {
 		for (int i = 0; i < _nextLights9.Length; i++) {
 			_nextLights9 [i].enabled = false;
 		}
-		for (int i = 0; i < _nextLights10.Length; i++) {
-			_nextLights10 [i].enabled = false;
-		}
+
 	}
 
 	void Update(){
@@ -112,9 +110,6 @@ public class TheatreLighting : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Alpha0)) {
 			Set10 ();
 		}
-		if (Input.GetKeyDown (KeyCode.Minus)) {
-			Set11 ();
-		}
 	}
 
 	public void Set1()
@@ -126,7 +121,7 @@ public class TheatreLighting : MonoBehaviour {
 	}
 
 	public void Set2()
-	{
+	{Debug.Log ("qwewq");
 		DisableAll ();
 		for (int i = 0; i < _nextLights.Length; i++) {
 			_nextLights [i].enabled = true;
@@ -160,6 +155,7 @@ public class TheatreLighting : MonoBehaviour {
 	public void Set6()
 	{
 		DisableAll ();
+		CabinetLight (false);
 		for (int i = 0; i < _nextLights5.Length; i++) {
 			_nextLights5 [i].enabled = true;
 		}
@@ -168,6 +164,7 @@ public class TheatreLighting : MonoBehaviour {
 	public void Set7()
 	{
 		DisableAll ();
+
 		for (int i = 0; i < _nextLights6.Length; i++) {
 			_nextLights6 [i].enabled = true;
 		}
@@ -197,12 +194,29 @@ public class TheatreLighting : MonoBehaviour {
 		}
 	}
 
-	public void Set11()
+	public void IntermissionLight()
 	{
-		DisableAll ();
-		for (int i = 0; i < _nextLights10.Length; i++) {
-			_nextLights10 [i].enabled = true;
+		StartCoroutine(IntermissionLightFadeOn());
+	}
+
+	IEnumerator IntermissionLightFadeOn(){
+		float duration = 5f;
+		float timer = 0f;
+		float goalIntensity = _intermissionLight.intensity;
+		bool once = false;
+		_intermissionLight.intensity = 0f;
+		_intermissionLight.enabled = true;
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			_intermissionLight.intensity = Mathf.Lerp (0f, goalIntensity, timer / duration);
+			if (!once && timer >= 3f) {
+				DisableAll ();
+				once = true;
+			}
+			yield return null;
 		}
+		_intermissionLight.intensity = goalIntensity;
+		yield return null;
 	}
 
 	public void ChestLight(bool on){
