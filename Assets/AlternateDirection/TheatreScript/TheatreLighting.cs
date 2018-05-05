@@ -11,6 +11,16 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light[] _nextLights3;
 	[SerializeField] Light[] _nextLights4;
 	[SerializeField] Light[] _nextLights5;
+	[SerializeField] Light[] _nextLights6;
+	[SerializeField] Light[] _nextLights7;
+	[SerializeField] Light[] _nextLights8;
+	[SerializeField] Light[] _nextLights9;
+	[SerializeField] Light[] _nextLights10;
+
+	[SerializeField] Light _chestLight;
+	[SerializeField] Light _cabinetLight;
+
+	[SerializeField] Light _singularSpotLight;
 
 	void Start(){
 		_viewingLightToBeTurnedOff.enabled = false;
@@ -53,6 +63,21 @@ public class TheatreLighting : MonoBehaviour {
 		for (int i = 0; i < _nextLights5.Length; i++) {
 			_nextLights5 [i].enabled = false;
 		}
+		for (int i = 0; i < _nextLights6.Length; i++) {
+			_nextLights6 [i].enabled = false;
+		}
+		for (int i = 0; i < _nextLights7.Length; i++) {
+			_nextLights7 [i].enabled = false;
+		}
+		for (int i = 0; i < _nextLights8.Length; i++) {
+			_nextLights8 [i].enabled = false;
+		}
+		for (int i = 0; i < _nextLights9.Length; i++) {
+			_nextLights9 [i].enabled = false;
+		}
+		for (int i = 0; i < _nextLights10.Length; i++) {
+			_nextLights10 [i].enabled = false;
+		}
 	}
 
 	void Update(){
@@ -74,6 +99,21 @@ public class TheatreLighting : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha6)) {
 			Set6 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha7)) {
+			Set7 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha8)) {
+			Set8 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha9)) {
+			Set9 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha0)) {
+			Set10 ();
+		}
+		if (Input.GetKeyDown (KeyCode.Minus)) {
+			Set11 ();
 		}
 	}
 
@@ -122,6 +162,71 @@ public class TheatreLighting : MonoBehaviour {
 		DisableAll ();
 		for (int i = 0; i < _nextLights5.Length; i++) {
 			_nextLights5 [i].enabled = true;
+		}
+	}
+
+	public void Set7()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights6.Length; i++) {
+			_nextLights6 [i].enabled = true;
+		}
+	}
+
+	public void Set8()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights7.Length; i++) {
+			_nextLights7 [i].enabled = true;
+		}
+	}
+
+	public void Set9()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights8.Length; i++) {
+			_nextLights8 [i].enabled = true;
+		}
+	}
+
+	public void Set10()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights9.Length; i++) {
+			_nextLights9 [i].enabled = true;
+		}
+	}
+
+	public void Set11()
+	{
+		DisableAll ();
+		for (int i = 0; i < _nextLights10.Length; i++) {
+			_nextLights10 [i].enabled = true;
+		}
+	}
+
+	public void ChestLight(bool on){
+		if (on) {
+			_chestLight.enabled = true;
+		} else {
+			_chestLight.enabled = false;
+		}
+	}
+
+	public void CabinetLight(bool on){
+		if (on) {
+			_cabinetLight.enabled = true;
+		} else {
+			_cabinetLight.enabled = false;
+		}
+	}
+
+	public void SingularSpotLight(bool on){
+		if (on) {
+			DisableAll ();
+			_singularSpotLight.enabled = true;
+		} else {
+			_singularSpotLight.enabled = false;
 		}
 	}
 
