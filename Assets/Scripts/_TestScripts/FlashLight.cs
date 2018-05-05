@@ -37,9 +37,11 @@ namespace Test{
 
 		bool _flashLightEnabled = false;
 
+		[SerializeField] AudioSource _celloSkratch;
+
 		void Awake(){
-			_offTimer = new Timer (1.0f / 30.0f);
-			_onTimer = new Timer (1.0f / 30.0f);
+			_offTimer = new Timer (1.0f / 48.0f);
+			_onTimer = new Timer (1.0f / 48.0f);
 			_boxCollider = GetComponent<BoxCollider> ();
 		}
 
@@ -107,21 +109,33 @@ namespace Test{
 
 			_isFlashing = true;
 			_fxPro.DOFParams.FocalLengthMultiplier = 0.0f;
-			yield return new WaitForSeconds (2f);
-			_onTimer.CooldownTime = (1.0f / 36.0f);
-			_offTimer.CooldownTime = (1.0f / 36.0f);
+
 			_began36fps = true;
-			yield return new WaitForSeconds (1f);
 			_ZcrankHandler.enabled = false;
 			_began48fps = true;
 			_onTimer.CooldownTime = (1.0f / 48.0f);
 			_offTimer.CooldownTime = (1.0f / 48.0f);
-			yield return new WaitForSeconds (1f);
+			yield return new WaitForSeconds (0.7f);
+			_celloSkratch.Play ();
+			yield return new WaitForSeconds (3.3f);
 			_gameTitle.SetActive (true);
+
 			yield return new WaitForSeconds (4f);
 			_gameTitle.SetActive (false);
 			yield return new WaitForSeconds (1f);
+			StartCoroutine (CelloVolumeOut (1f));
 			yield return StartCoroutine(StateManager._stateManager.ChangeLevel (2));
+		}
+
+		IEnumerator CelloVolumeOut(float duration){
+			float timer = 0f;
+			while (duration > timer) {
+				_celloSkratch.volume = 1f - (timer / duration);
+				timer += Time.deltaTime;
+				yield return null;
+			}
+			_celloSkratch.volume = 0f;
+			yield return null;
 		}
 
 		void TurnOnlight(){

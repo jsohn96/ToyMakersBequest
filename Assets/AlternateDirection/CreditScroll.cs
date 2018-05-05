@@ -15,6 +15,8 @@ public class CreditScroll : MonoBehaviour {
 	Color _emptyColor;
 	Color _goalColor;
 
+	[SerializeField] AudioSource _audioSource;
+
 	void Start(){
 		StartCoroutine (DelayBeforeScroll ());
 		StartCoroutine (DelaySpeedUp ());
@@ -24,6 +26,14 @@ public class CreditScroll : MonoBehaviour {
 			_emptyColor.a = 0.0f;
 			_tmp.color = _emptyColor;
 		}
+
+		if (_audioSource != null) {
+			Invoke ("PlayMusic", 2f);
+		}
+	}
+
+	void PlayMusic(){
+		_audioSource.Play ();
 	}
 
 	void Update(){

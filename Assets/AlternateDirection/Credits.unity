@@ -122,8 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 64592399}
   - component: {fileID: 64592398}
-  - component: {fileID: 64592397}
-  - component: {fileID: 64592396}
   - component: {fileID: 64592395}
   m_Layer: 0
   m_Name: Main Camera
@@ -134,20 +132,6 @@ GameObject:
   m_IsActive: 1
 --- !u!81 &64592395
 AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 64592394}
-  m_Enabled: 1
---- !u!124 &64592396
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 64592394}
-  m_Enabled: 1
---- !u!92 &64592397
-Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -183,7 +167,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -253,6 +237,7 @@ MonoBehaviour:
   _delaySpeedUpDuration: 6
   _creditTransform: {fileID: 399167277}
   _tmp: {fileID: 868847064}
+  _audioSource: {fileID: 0}
 --- !u!1 &636884193
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +322,7 @@ MonoBehaviour:
   _delaySpeedUpDuration: 5
   _creditTransform: {fileID: 636884194}
   _tmp: {fileID: 0}
+  _audioSource: {fileID: 929903938}
 --- !u!1 &722346018
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,7 +724,7 @@ GameObject:
   - component: {fileID: 929903937}
   - component: {fileID: 929903938}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,10 +753,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f1704318a365f684a8742bd4e579082a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
