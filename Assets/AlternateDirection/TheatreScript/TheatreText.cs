@@ -18,6 +18,9 @@ public class TheatreText : MonoBehaviour {
 
 	[SerializeField] TheatreZoomHandle[] _theatreZoomHandles;
 
+	[SerializeField] AudienceHeadFollow[] _audience;
+
+
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
 		"echoing throughout the stage.", //1
@@ -144,6 +147,8 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_audience [0].PlayClap ();
+			_audience [1].PlayClap ();
 			break;
 		case 7:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
@@ -224,6 +229,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (1);
 			_theatreZoomHandles [0].LensIn ();
+			_audience [0].PlayKissReaction ();
 			break;
 		case 21:
 			_myTheatre.MoveToNext ();
@@ -232,6 +238,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (2);
 			_theatreZoomHandles [1].LensIn ();
+			_audience [1].PlayKissReaction ();
 			break;
 		case 22:
 			_myTheatre.MoveToNext ();
@@ -240,6 +247,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (3);
 			_theatreZoomHandles [2].LensIn ();
+			_audience [2].PlayKissReaction ();
 			break;
 		case 23:
 			_myTheatre.SetLight (0);
