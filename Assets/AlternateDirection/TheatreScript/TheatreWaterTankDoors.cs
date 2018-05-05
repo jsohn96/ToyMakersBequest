@@ -185,7 +185,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 		_waitForClose = false;
 
 		if (_openBoth) {
-			_shaderGlowCustom.enabled = false;
+//			_shaderGlowCustom.enabled = false;
 		}
 	}
 
@@ -201,7 +201,7 @@ public class TheatreWaterTankDoors : MonoBehaviour {
 	public void DisableTouchInput(bool disable){
 		_disableTouchInput = disable;
 		if (!disable) {
-			_shaderGlowCustom.TriggerFadeIn ();
+//			_shaderGlowCustom.TriggerFadeIn ();
 		}
 	}
 
