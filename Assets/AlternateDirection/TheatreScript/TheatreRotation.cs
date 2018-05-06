@@ -17,13 +17,13 @@ public class TheatreRotation : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if(Input.GetKey(KeyCode.LeftArrow)){
-			transform.Rotate (_rotateAxis, 1f);
-		}
-
-		if(Input.GetKey(KeyCode.RightArrow)){
-			transform.Rotate (_rotateAxis, -1f);
-		}
+//		if(Input.GetKey(KeyCode.LeftArrow)){
+//			transform.Rotate (_rotateAxis, 1f);
+//		}
+//
+//		if(Input.GetKey(KeyCode.RightArrow)){
+//			transform.Rotate (_rotateAxis, -1f);
+//		}
 
 		if (_rotateRight) {
 			transform.Rotate (_rotateAxis, -1f);

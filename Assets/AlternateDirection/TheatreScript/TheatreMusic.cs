@@ -32,7 +32,9 @@ public class TheatreMusic : AudioSourceController {
 	 * 3: Verse 2 Loop
 	 * 4: Verse 4 Opening
 	 * 5: Verse 4 Loop
-	 * 6: Outro 
+	 * 6: Outro Opening
+	 * 7: Outro Loop
+	 * 8: Outro End
 	*/
 	[SerializeField] AudioClip[] _theatreMusicClips;
 	bool _loopableState = false;
@@ -101,6 +103,7 @@ public class TheatreMusic : AudioSourceController {
 			_loopableState = true;
 //			_simpleMusicPlayer [2].Stop ();
 		} else if (_currentVerse == MusicVerses.Verse4) {
+			_currentVerse = MusicVerses.Outro;
 			FillAndPlay (6);
 			_loopableState = true;
 //			_simpleMusicPlayer [3].Stop ();
@@ -142,6 +145,10 @@ public class TheatreMusic : AudioSourceController {
 				_currentVerse = MusicVerses.Verse4;
 				_loopableState = false;
 				_develop = false;
+			} else if (_currentVerse == MusicVerses.Outro) {
+				FillAndPlay (8);
+				_loopableState = false;
+				_develop = false;
 			}
 		} else {
 			Debug.Log ("will loop");
@@ -154,6 +161,8 @@ public class TheatreMusic : AudioSourceController {
 			} else if (_currentVerse == MusicVerses.Verse2) {
 				Debug.Log ("will Loop3");
 				FillAndPlay (5);
+			} else if (_currentVerse == MusicVerses.Outro) {
+				FillAndPlay (7);
 			}
 		}
 	}

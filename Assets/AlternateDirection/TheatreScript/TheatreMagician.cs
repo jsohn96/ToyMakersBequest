@@ -116,7 +116,8 @@ public class TheatreMagician : MonoBehaviour {
 
 	public void PointToCenter(bool isPointing){
 		if (isPointing) {
-			_magicianAnim.Play ("mg_greet");
+//			_magicianAnim.Play ("mg_greet");
+			_magicianAnim.SetBool("StopBow", true);
 		} else {
 			_magicianAnim.Play ("mg_pointCenter_back_center");
 		}

@@ -20,6 +20,8 @@ public class TheatreText : MonoBehaviour {
 
 	[SerializeField] AudienceHeadFollow[] _audience;
 	[SerializeField] TheatreLighting _theatreLighting;
+	[SerializeField] TheatreMusic _theatreMusic;
+	[SerializeField] TheatreSound _theatreSound;
 
 	string[] _strings = new string[]{
 		"I can still remember the voice from the loudspeaker", //0
@@ -189,6 +191,7 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreSound.PlayApplauseSound ();
 			break;
 		case 15:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
@@ -216,6 +219,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			_theatreLighting.Set8 ();
+			_theatreSound.PlayLightSwitch ();
 			_theatreZoomHandles [0].Initialize ();
 			_theatreZoomHandles [1].Initialize ();
 			_theatreZoomHandles [2].Initialize ();
@@ -226,6 +230,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (1);
+			_theatreSound.PlayCrowCawSound();
 			_theatreZoomHandles [0].LensIn ();
 			_audience [0].PlayKissReaction ();
 			break;
@@ -235,6 +240,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (2);
+			_theatreSound.PlayCrowCawSound();
 			_theatreZoomHandles [1].LensIn ();
 			_audience [1].PlayKissReaction ();
 			break;
@@ -244,6 +250,7 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 //			_theatreCameraControl.LookAtBird (3);
+			_theatreSound.PlayCrowCawSound();
 			_theatreZoomHandles [2].LensIn ();
 			_audience [2].PlayKissReaction ();
 			break;
@@ -256,6 +263,7 @@ public class TheatreText : MonoBehaviour {
 			_theatreZoomHandles [1].ClearOut ();
 			_theatreZoomHandles [2].ClearOut ();
 			_theatreLighting.SingularSpotLight (true);
+			_theatreSound.PlayLightSwitch ();
 			break;
 		case 24:
 			_myTheatre.MoveToNext ();
@@ -304,6 +312,7 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
+			_theatreMusic.PrepareDevelop (MusicVerses.Outro);
 			break;
 		case 33:
 			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt]));

@@ -41,6 +41,8 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _magicRevealSound;
 
+	[SerializeField] AudioSource _theatreApplauseSound;
+
 	public void PlayClapSound(int intensityIndex){
 		_clappingSound.clip = _clapClips [intensityIndex];
 		_clappingSound.Play ();
@@ -68,6 +70,11 @@ public class TheatreSound : MonoBehaviour {
 
 
 	public void PlayCrowCawSound(){
+		StartCoroutine (DelayedCawSound ());
+	}
+
+	IEnumerator DelayedCawSound(){
+		yield return new WaitForSeconds (0.4f);
 		if (!_crowCawSound.isPlaying) {
 			_crowCawSound.Play ();
 		}
@@ -106,6 +113,12 @@ public class TheatreSound : MonoBehaviour {
 	public void PlayChestCloseSound(){
 		if (!_chestCloseSound.isPlaying) {
 			_chestCloseSound.Play ();
+		}
+	}
+
+	public void PlayApplauseSound(){
+		if (!_theatreApplauseSound.isPlaying) {
+			_theatreApplauseSound.Play ();
 		}
 	}
 

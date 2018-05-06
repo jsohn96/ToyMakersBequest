@@ -203,11 +203,13 @@ public class AltTheatre : LevelManager {
 			switch (currentSate) {
 			case TheatreState.waitingToStart:
 				_theatreLighting.Set2 ();
+				_theatreSound.PlayLightSwitch ();
 				_theatreCameraControl.Activate ();
 				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.startShow:
 				_theatreLighting.Set3 ();
+				_theatreSound.PlayLightSwitch ();
 				magician.InitMagician ();
 				_theatreText.TriggerText (2);
 //			_theatreSound.PlayLightSwitch ();
@@ -269,9 +271,9 @@ public class AltTheatre : LevelManager {
 				magician.PointToLeft (true);
 				chest.Activate (true);
 				_theatreLighting.ChestLight (true);
+				_theatreSound.PlayLightSwitch ();
 				break;
 			case TheatreState.frogJump:
-				_theatreSound.PlayLightSwitch ();
 				_theaterAudiences [1].AudienceEnter ();
 
 				magician.PointToLeft (false);
@@ -282,6 +284,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.lookDownIntoTank:
 				_theatreLighting.ChestLight (false);
+				_theatreSound.PlayLightSwitch ();
 				_theatreMusic.PrepareDevelop (MusicVerses.Verse2);
 //			_traversalUI.FadeOut ();
 				_theatreCameraControl.MoveCameraToLookAtTank ();
@@ -325,10 +328,9 @@ public class AltTheatre : LevelManager {
 			// dancer.enterScene();
 				cabinet.Activate (true);
 				_theatreLighting.CabinetLight (true);
-
+				_theatreSound.PlayLightSwitch ();
 				break;
 			case TheatreState.dancerShowUp:
-				_theatreLighting.Set6 ();
 			// dancer shows up play dancer aniamtion
 				_theatreText.TriggerText (13);
 				_theatreSound.PlayLightSwitch ();
@@ -433,6 +435,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.theatreEnd:
 				_theatreLighting.Set10 ();
+				_theatreSound.PlayLightSwitch ();
 				_theatreCoin.BeginGlow ();
 				_traversalUI.FadeIn ();
 				_theatreCameraControl.EnableScrollFOV ();
@@ -450,15 +453,18 @@ public class AltTheatre : LevelManager {
 //				_theatreCameraControl.MoveCameraToLookAtStage2 ();
 //				_theatreCameraControl.MoveCameraToLookAtTank(5f);
 				_theatreCameraControl.ZoomIn ();
+				TheatrePart2Music._instance.BeginPlay ();
 //				_theatreRotation.StartInitRotation ();
 				break;
 			case TheatreState.BringDancerBackUp:
+				TheatrePart2Music._instance.PlayMelody (true);
 				_theatreWaterTank.OpenLid (true);
 				_dancer.ElevateTankPlatform (5f);
 				StartCoroutine(DelayedSelfCall (5f));
 				break;
 			case TheatreState.DancerMeetsMagician:
 				_theatreMainStageElevation.BringEveryoneUnderWing ();
+
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
 				MoveToNext();
@@ -470,6 +476,7 @@ public class AltTheatre : LevelManager {
 				MoveToNext();
 				break;
 			case TheatreState.LiftUpAboveWhileDancing:
+				
 				_theatreMainStageElevation.BeginElevation (8f);
 				_theatreCameraControl.MoveCameraToTopPosition (7f);
 //				_theatreCameraControl.Activate ();
@@ -477,6 +484,9 @@ public class AltTheatre : LevelManager {
 				MoveToNext();
 				break;
 			case TheatreState.CountStars:
+				TheatrePart2Music._instance.PlayAccompany (false);
+				TheatrePart2Music._instance.PlayMelody (false);
+				TheatrePart2Music._instance.PlayPiano (true);
 				Events.G.Raise (new TheatreActivateStarsEvent ());
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
