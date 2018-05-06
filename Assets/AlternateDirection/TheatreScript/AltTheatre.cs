@@ -276,8 +276,8 @@ public class AltTheatre : LevelManager {
 				_theatreSound.PlayLightSwitch ();
 				break;
 			case TheatreState.frogJump:
-				_theaterAudiences [1].AudienceEnter ();
-				_theaterAudiences [0].Clap ();
+				//_theaterAudiences [1].AudienceEnter ();
+				_theaterAudiences[1].Clap();
 				magician.PointToLeft (false);
 				_theatreWaterTank.OpenLid (true);
 			// frog.jumpout
@@ -324,9 +324,11 @@ public class AltTheatre : LevelManager {
 				_tankDoor1.Activate (false);
 				_tankDoor2.Activate (false);
 
+
 //			_traversalUI.FadeIn ();
 //			_theatreCameraControl.EnableScrollFOV();
 				magician.PointToRight (true);
+				StartCoroutine (_lilipads.FlipBack ());
 			// dancer.enterScene();
 				cabinet.Activate (true);
 				_theatreLighting.CabinetLight (true);

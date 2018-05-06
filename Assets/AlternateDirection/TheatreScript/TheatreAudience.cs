@@ -10,6 +10,7 @@ public class TheatreAudience : MonoBehaviour {
 
 	[SerializeField] TheatreSound _theatreSound;
 	[SerializeField] AltTheatre _myTheatre;
+	[SerializeField] AudienceHeadFollow _audienceAnimation;
 
 	void Start(){
 //		_goalAngle = transform.rotation;
@@ -61,5 +62,6 @@ public class TheatreAudience : MonoBehaviour {
 
 	public void Clap(){
 		_theatreSound.PlayCrowCawSound();
+		_audienceAnimation.PlayClap ();
 	}
 }

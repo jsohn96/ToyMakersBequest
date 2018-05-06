@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreLilipadsBehaviour : MonoBehaviour {
-	[SerializeField] GameObject[] _lilipads;
+	[SerializeField] lilipadAnimationBehaviour[] _lilipads;
 	Vector3 _originPos;
 	Vector3 _finalPos;
 	float _moveSpeed = 0.001f;
@@ -26,11 +26,23 @@ public class TheatreLilipadsBehaviour : MonoBehaviour {
 				transform.position = _finalPos;
 			}
 		}
+//
+//		if (Input.GetKeyDown (KeyCode.A)) {
+//			StartCoroutine (FlipBack ());
+//		}
 	}
 
 	public void GoUp(){
 		if (!_isUp) {
 			_isUp = true;
 		}
+	}
+
+	public IEnumerator FlipBack(){
+		for (int i = 0; i < 6; i++) {
+			_lilipads [i].Flipback ();
+			yield return new WaitForSeconds (0.3f);
+		}
+		
 	}
 }
