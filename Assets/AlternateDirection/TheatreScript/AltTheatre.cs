@@ -435,11 +435,11 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.dancerLocked:
 				_dancer.Drown ();
+				_theatreSound.PlayWaterDrown ();
 //				_dancer.StopMovement (true);
 				break;
 			case TheatreState.theatreEnd:
 				_theatreLighting.Set10 ();
-				_theatreSound.PlayLightSwitch ();
 				_theatreCoin.BeginGlow ();
 				_traversalUI.FadeIn ();
 				_theatreCameraControl.EnableScrollFOV ();

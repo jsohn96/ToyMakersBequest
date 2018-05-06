@@ -11,6 +11,8 @@ public class TheatreRotation : MonoBehaviour {
 	bool _rotateRight = false;
 	bool _rotateLeft = false;
 
+	[SerializeField] TheatreSound _theatreSound;
+
 	void Start () {
 		transform.rotation = Quaternion.Euler (_initRotation);
 		_rotateAxis = transform.up;
@@ -47,6 +49,7 @@ public class TheatreRotation : MonoBehaviour {
 
 	IEnumerator InitRotate(){
 //		yield return new WaitForSeconds (1f);
+		_theatreSound.PlayTheatreRotateSound (true);
 		float duration = 6f;
 		float timer = 0f;
 		Quaternion initRot = Quaternion.Euler (_initRotation);
@@ -57,10 +60,12 @@ public class TheatreRotation : MonoBehaviour {
 			yield return null;
 		}
 		transform.rotation = startRot;
+		_theatreSound.PlayTheatreRotateSound (false);
 		yield return null;
 	}
 
 	IEnumerator BackRotate(){
+		_theatreSound.PlayTheatreRotateSound (true);
 		float duration = 3f;
 		float timer = 0f;
 		Quaternion initRot = transform.rotation;
@@ -71,11 +76,13 @@ public class TheatreRotation : MonoBehaviour {
 			yield return null;
 		}
 		transform.rotation = backRot;
+		_theatreSound.PlayTheatreRotateSound (false);
 		yield return null;
 	}
 
 	IEnumerator ResumeRotate(){
 		yield return new WaitForSeconds (4f);
+		_theatreSound.PlayTheatreRotateSound (true);
 		float duration = 4f;
 		float timer = 0f;
 		Quaternion initRot = transform.rotation;
@@ -87,11 +94,13 @@ public class TheatreRotation : MonoBehaviour {
 		}
 		transform.rotation = startRot;
 		_myTheatre.MoveToNext ();
+		_theatreSound.PlayTheatreRotateSound (false);
 		yield return null;
 	}
 
 
 	public void OnPointerUp(Direction whichDirection){
+		_theatreSound.PlayTheatreRotateSound (false);
 		switch (whichDirection) {
 		case Direction.right:
 			_rotateRight = false;
@@ -105,6 +114,7 @@ public class TheatreRotation : MonoBehaviour {
 	}
 
 	public void OnPointerDown(Direction whichDirection){
+		_theatreSound.PlayTheatreRotateSound (true);
 		switch (whichDirection) {
 		case Direction.right:
 			_rotateRight = true;

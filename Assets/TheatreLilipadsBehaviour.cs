@@ -6,7 +6,6 @@ public class TheatreLilipadsBehaviour : MonoBehaviour {
 	[SerializeField] lilipadAnimationBehaviour[] _lilipads;
 	Vector3 _originPos;
 	Vector3 _finalPos;
-	float _moveSpeed = 0.001f;
 	bool _isUp = false;
 
 
@@ -16,26 +15,24 @@ public class TheatreLilipadsBehaviour : MonoBehaviour {
 		_finalPos = _originPos;
 		_finalPos.y += 0.013f;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (_isUp) { 
-			if (Vector3.Distance (transform.position, _finalPos) >= 0.001f) {
-				transform.position = Vector3.MoveTowards (transform.position, _finalPos, _moveSpeed);
-			} else {
-				transform.position = _finalPos;
-			}
-		}
-//
-//		if (Input.GetKeyDown (KeyCode.A)) {
-//			StartCoroutine (FlipBack ());
-//		}
-	}
 
 	public void GoUp(){
 		if (!_isUp) {
 			_isUp = true;
+			StartCoroutine (MoveLilyPadsUp ());
 		}
+	}
+
+	IEnumerator MoveLilyPadsUp(){
+		float timer = 0f;
+		float duration = 0.5f;
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			transform.position = Vector3.Lerp (_originPos, _finalPos, timer/duration);
+			yield return null;
+		}
+		transform.position = _finalPos;
+		yield return null;
 	}
 
 	public IEnumerator FlipBack(){

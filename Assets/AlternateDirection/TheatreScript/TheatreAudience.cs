@@ -61,7 +61,7 @@ public class TheatreAudience : MonoBehaviour {
 	}
 
 	public void Clap(){
-		_theatreSound.PlayCrowCawSound();
+//		_theatreSound.PlayCrowCawSound();
 		_audienceAnimation.PlayClap ();
 	}
 }

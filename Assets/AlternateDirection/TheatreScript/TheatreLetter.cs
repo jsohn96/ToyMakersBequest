@@ -23,11 +23,13 @@ public class TheatreLetter : MonoBehaviour {
 	Vector3 _finalRotation = new Vector3 (1.334f, 88.621f, 0.118f);
 
 	[SerializeField] TraversalUI _traversalUI;
+	[SerializeField] TheatreSound _theatreSound;
 
 
 	void OnTouchDown(Vector3 hit) {
 		if (!_pickedUp) {
 			_pickedUp = true;
+			_theatreSound.PlayNoteSound (true);
 			transform.parent = _theaterBackTransform;
 			StartCoroutine (PickingUpLetter ());
 		} else {
@@ -36,6 +38,7 @@ public class TheatreLetter : MonoBehaviour {
 //				_readLetter = true;
 			}
 			else if (!_putLetterAway) {
+				_theatreSound.PlayNoteSound (false);
 				_putLetterAway = true;
 				StartCoroutine (PutLetterAway ());
 				_theatreBack.Activate ();

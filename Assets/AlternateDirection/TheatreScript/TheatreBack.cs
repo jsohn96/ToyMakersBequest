@@ -20,6 +20,7 @@ public class TheatreBack : MonoBehaviour {
 
 	[SerializeField] GameObject _keyDirection;
 	[SerializeField] AltTheatre _myTheatre;
+	[SerializeField] TheatreSound _theatreSound;
 
 	bool _isActivated = false;
 
@@ -50,7 +51,7 @@ public class TheatreBack : MonoBehaviour {
 		float duration = 3f;
 		Quaternion closedBackDoorQuat = Quaternion.Euler (_closedBackDoor);
 		Quaternion openBackDoorQuat = Quaternion.Euler (_openBackDoor);
-
+		_theatreSound.PlayOpenBack ();
 		bool injectKeyToggle = false;
 
 		while (timer < duration) {
@@ -68,6 +69,7 @@ public class TheatreBack : MonoBehaviour {
 
 
 	public void TickTrueEnding(bool isTrueEnding){
+		_theatreSound.PlaySnapSound ();
 		if (isTrueEnding) {
 			_theatreBackSlider.Activate ();
 		}
@@ -78,6 +80,7 @@ public class TheatreBack : MonoBehaviour {
 
 	public void ResumeSequence(){
 		_myTheatre._trueEnding = true;
+		_theatreSound.PlayGearTick ();
 		_backAnimator.Play ("upper_gear_turn");
 		_theatreCameraControl.ZoomBack (false);
 		_theatreRotation.StartResumeRotation ();

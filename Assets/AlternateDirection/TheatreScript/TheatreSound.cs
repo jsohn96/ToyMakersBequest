@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheatreSound : MonoBehaviour {
+public class TheatreSound : AudioSourceController {
 	public static TheatreSound _instance;
 
 	void Start(){
 		_instance = this;
 	}
-
-	[SerializeField] AudioSource _clappingSound;
-	[SerializeField] AudioClip[] _clapClips = new AudioClip[4];
-
+		
 	[SerializeField] AudioSource _lightSwitch;
 
 	[SerializeField] AudioSource _bellFeedback;
@@ -43,10 +40,26 @@ public class TheatreSound : MonoBehaviour {
 
 	[SerializeField] AudioSource _theatreApplauseSound;
 
-	public void PlayClapSound(int intensityIndex){
-		_clappingSound.clip = _clapClips [intensityIndex];
-		_clappingSound.Play ();
-	}
+
+
+	[SerializeField] AudioSource _notePaperSound;
+	[SerializeField] AudioClip _notePickUp;
+	[SerializeField] AudioClip _notePutAway;
+
+	[SerializeField] AudioSource _snapSound;
+	[SerializeField] AudioSystem _gearTurn;
+
+	[SerializeField] AudioSystem _theatreRotateSound;
+
+	[Header("All Purpose Sound Group")]
+	[SerializeField] AudioSource _allPurposeSound;
+	[SerializeField] AudioClip _heartBeat;
+	[SerializeField] AudioClip _waterDrown;
+	[SerializeField] AudioClip _openBack;
+	[SerializeField] AudioClip _gearStuck;
+
+
+
 
 	public void PlayLightSwitch(){
 		_lightSwitch.Play ();
@@ -153,5 +166,60 @@ public class TheatreSound : MonoBehaviour {
 		if (!_magicRevealSound.isPlaying) {
 			_magicRevealSound.Play ();
 		}
+	}
+
+	public void PlayNoteSound(bool pickUp){
+		if (pickUp) {
+			_notePaperSound.clip = _notePickUp;
+			_notePaperSound.Play ();
+		} else {
+			_notePaperSound.clip = _notePutAway;
+			_notePaperSound.Play ();
+		}
+	}
+
+	public void PlaySnapSound(){
+		if (!_snapSound.isPlaying) {
+			_snapSound.Play ();
+		}
+	}
+
+	public void PlayTheatreRotateSound(bool on){
+		if (on) {
+			Play (_theatreRotateSound);
+		} else {
+			Pause (_theatreRotateSound);
+		}
+	}
+
+	public void PlayGearTick(){
+		StartCoroutine (PlayGearFade());
+	}
+
+	IEnumerator PlayGearFade(){
+		Play (_gearTurn);
+		yield return new WaitForSeconds (4f);
+		Stop (_gearTurn);
+	}
+
+	//all purpose Sound Group
+	public void PlayHeartBeat(){
+		_allPurposeSound.clip = _heartBeat;
+		_allPurposeSound.Play ();
+	}
+
+	public void PlayWaterDrown(){
+		_allPurposeSound.clip = _waterDrown;
+		_allPurposeSound.Play ();
+	}
+
+	public void PlayOpenBack(){
+		_allPurposeSound.clip = _openBack;
+		_allPurposeSound.Play ();
+	}
+
+	public void PlayGearStuck(){
+		_allPurposeSound.clip = _gearStuck;
+		_allPurposeSound.Play ();
 	}
 }

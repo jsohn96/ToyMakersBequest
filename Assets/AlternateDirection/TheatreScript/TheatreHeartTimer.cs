@@ -71,6 +71,8 @@ public class TheatreHeartTimer : MonoBehaviour {
 
 	[SerializeField] BoxCollider _thisBoxCollider;
 
+	[SerializeField] TheatreSound _theatreSound;
+
 	public void ActivateHeart(){
 		_thisBoxCollider.enabled = true;
 		_spriteFade.CallFadeSpriteIn (0f);
@@ -166,6 +168,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 			timer += Time.deltaTime;
 			yield return null;
 		}
+		if (_theatreSound != null) {
+			_theatreSound.PlayHeartBeat ();
+		}
 		transform.localRotation = _timerTicks [2];
 		yield return new WaitForSeconds (1f);
 
@@ -175,6 +180,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 			timer += Time.deltaTime;
 			yield return null;
 		}
+		if (_theatreSound != null) {
+			_theatreSound.PlayHeartBeat ();
+		}
 		transform.localRotation = _timerTicks [1];
 		yield return new WaitForSeconds (1f);
 
@@ -183,6 +191,9 @@ public class TheatreHeartTimer : MonoBehaviour {
 			transform.localRotation = Quaternion.Lerp (_timerTicks[1], _timerTicks [0], _curve.Evaluate(timer / duration));
 			timer += Time.deltaTime;
 			yield return null;
+		}
+		if (_theatreSound != null) {
+			_theatreSound.PlayHeartBeat ();
 		}
 		transform.localRotation = _timerTicks [0];
 		yield return null;

@@ -11,7 +11,7 @@ public class TheatreBackSlider : MonoBehaviour {
 	[SerializeField] TheatreBack _theatreBack;
 
 	[SerializeField] SpriteFade _arrowSliderSpriteFade;
-
+	[SerializeField] TheatreSound _theatreSound;
 	float _zDifference;
 
 	float _snapValueUpperBound;
@@ -46,6 +46,7 @@ public class TheatreBackSlider : MonoBehaviour {
 					_isDown = false;
 					_isActivated = false;
 					_theatreBack.ResumeSequence ();
+					_theatreSound.PlaySnapSound ();
 					_arrowSliderSpriteFade.TurnItOffForGood ();
 				} else if (mouseY <= _snapValueLowerBound) {
 					mouseY = _sliderRange.Min;
