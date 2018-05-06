@@ -100,6 +100,7 @@ public class AltTheatre : LevelManager {
 	[SerializeField] TheatreRotation _theatreRotation;
 
 	[SerializeField] TheatreMainStageElevation _theatreMainStageElevation;
+	[SerializeField] TheatreLilipadsBehaviour _lilipads;
 
 	int _doorCloseCnt = 0;
 
@@ -263,6 +264,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.magicianPrepareFrog:
 				magician.StepOffTank ();
+				_lilipads.GoUp ();
 				break;
 			case TheatreState.magicianLeft:
 //			_traversalUI.FadeIn ();
@@ -275,7 +277,7 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.frogJump:
 				_theaterAudiences [1].AudienceEnter ();
-
+				_theaterAudiences [0].Clap ();
 				magician.PointToLeft (false);
 				_theatreWaterTank.OpenLid (true);
 			// frog.jumpout

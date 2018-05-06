@@ -49,11 +49,14 @@ public class TheatreChest : MonoBehaviour {
 	}
 
 	public void Activate(bool activate){
+		Debug.Log ("Chest activation");
 		isActivated = activate;
 		if (activate) {
+			chestAnim.SetBool ("Forward", true);
 //			_shaderGlowCustom.TriggerFadeIn ();
 			if (_isOpen) {
 				chestAnim.SetBool ("Open", false);
+
 				_isOpen = false;
 			}
 		}
