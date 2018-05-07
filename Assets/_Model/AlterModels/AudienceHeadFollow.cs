@@ -5,11 +5,13 @@ using UnityEngine;
 // include the audience head turn 
 // audience behaviour 
 
-public class AudienceHeadFollow : MonoBehaviour {
+public class AudienceHeadFollow : AudioSourceController {
 	[SerializeField] bool _isHeadIKActive = true;
 	[SerializeField] string _reactName;
 	[SerializeField] Transform _target; 
 	Animator _audienceAnim;
+
+	[SerializeField] AudioSystem _clapSound;
 
 	// Use this for initialization
 	void Awake () {
@@ -17,10 +19,8 @@ public class AudienceHeadFollow : MonoBehaviour {
 		_audienceAnim = GetComponent<Animator> ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-
+	public void MakeClapSound(){
+		SwapClip (_clapSound, false);
 	}
 
 	void OnAnimatorIK()
