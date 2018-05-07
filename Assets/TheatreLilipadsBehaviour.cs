@@ -25,7 +25,7 @@ public class TheatreLilipadsBehaviour : MonoBehaviour {
 
 	IEnumerator MoveLilyPadsUp(){
 		float timer = 0f;
-		float duration = 0.5f;
+		float duration = 1f;
 		while (duration > timer) {
 			timer += Time.deltaTime;
 			transform.position = Vector3.Lerp (_originPos, _finalPos, timer/duration);
