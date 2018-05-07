@@ -22,7 +22,8 @@ public enum TapSoundTags {
 	mediumAluminum,
 	star,
 	metalCoin,
-	smallCharacterWood
+	smallCharacterWood,
+	paper
 }
 
 public class TapSoundPlayer : AudioSourceController {
@@ -77,6 +78,7 @@ public class TapSoundPlayer : AudioSourceController {
 	int _metalCoinClipLength = 0;
 	// small character wood
 	[SerializeField] AudioClip _smallCharacterWoodClip;
+	[SerializeField] AudioClip _paperClip;
 
 	public bool _activateSounds = false;
 	bool _needToResetPitch = false;
@@ -209,6 +211,12 @@ public class TapSoundPlayer : AudioSourceController {
 			case TapSoundTags.smallCharacterWood:
 				_audioSources [_audioSourceCnt].clip = _smallCharacterWoodClip;
 				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.98f, 1.02f);
+				_needToResetPitch = true;
+				_audioSources [_audioSourceCnt].Play ();
+				break;
+			case TapSoundTags.paper:
+				_audioSources [_audioSourceCnt].clip = _paperClip;
+				_audioSources [_audioSourceCnt].pitch = RandomPitch (0.97f, 1.03f);
 				_needToResetPitch = true;
 				_audioSources [_audioSourceCnt].Play ();
 				break;

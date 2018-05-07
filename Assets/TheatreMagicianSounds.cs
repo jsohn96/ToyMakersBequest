@@ -13,4 +13,8 @@ public class TheatreMagicianSounds : MonoBehaviour {
 	public void ShootPhoto(){
 		_theatrePhoto.TakeFlashPhoto ();
 	}
+
+	public void PlayNeckWoodSound(){
+		_theatreSound.PlayNeckWood ();
+	}
 }

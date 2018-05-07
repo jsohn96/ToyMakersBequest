@@ -57,6 +57,7 @@ public class TheatreSound : AudioSourceController {
 	[SerializeField] AudioClip _waterDrown;
 	[SerializeField] AudioClip _openBack;
 	[SerializeField] AudioClip _gearStuck;
+	[SerializeField] AudioClip _magicianNeckWoodClip;
 
 
 
@@ -220,6 +221,11 @@ public class TheatreSound : AudioSourceController {
 
 	public void PlayGearStuck(){
 		_allPurposeSound.clip = _gearStuck;
+		_allPurposeSound.Play ();
+	}
+
+	public void PlayNeckWood(){
+		_allPurposeSound.clip = _magicianNeckWoodClip;
 		_allPurposeSound.Play ();
 	}
 }

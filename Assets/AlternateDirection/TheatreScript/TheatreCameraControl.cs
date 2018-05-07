@@ -577,7 +577,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		}
 
 		_zoomedOut = false;
-		_tapSoundPlayer._activateSounds = true;
+//		_tapSoundPlayer._activateSounds = true;
 		_initClick = true;
 
 		if (isTrueEnding) {
@@ -587,7 +587,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator ZoomOutCamera(){
-		_tapSoundPlayer._activateSounds = false;
+//		_tapSoundPlayer._activateSounds = false;
 		_traversalUI.FadeOut (true);
 		float timer = 0f;
 		float duration = 5f;
