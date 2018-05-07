@@ -15,7 +15,7 @@ public class TapTouchInput : AudioSourceController {
 	// Update is called once per frame
 	void Update () {
 
-		#if UNITY_EDITOR
+//		#if UNITY_EDITOR
 		if (
 //			 Input.GetMouseButton(0) || 
 			Input.GetMouseButtonDown(0) 
@@ -50,7 +50,7 @@ public class TapTouchInput : AudioSourceController {
 //			}
 		}
 
-		#endif
+//		#endif
 
 		if (Input.touchCount > 0) {
 //			touchesOld = new GameObject[touchList.Count];

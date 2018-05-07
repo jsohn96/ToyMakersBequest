@@ -13,7 +13,7 @@ public class TouchInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		#if UNITY_EDITOR
+//		#if UNITY_EDITOR
 		if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0)) {
 			touchesOld = new GameObject[touchList.Count];
 			touchList.CopyTo (touchesOld);
@@ -43,7 +43,7 @@ public class TouchInput : MonoBehaviour {
 			}
 		}
 
-		#endif
+//		#endif
 
 		if (Input.touchCount > 0) {
 			touchesOld = new GameObject[touchList.Count];
