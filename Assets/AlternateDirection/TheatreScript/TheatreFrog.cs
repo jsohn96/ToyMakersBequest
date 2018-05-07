@@ -161,16 +161,23 @@ public class TheatreFrog : MonoBehaviour {
 	}
 
 	void FoundIconMatch(){
-		TheatreSound._instance.PlayBellFeedback ();
+		
 		tempGoneIndex.Clear ();
 		_currentIcon = -1;
 		if (_matchedCouple + 1 < 3) {
 			_matchedCouple += 1;
 		} 
+
+		StartCoroutine (CorrectFeedback ());
 //		else {
 //			Debug.Log ("All matches found !! Frog in water");
 //			_myTheatre.MoveToNext ();
 //		}
+	}
+
+	IEnumerator CorrectFeedback(){
+		yield return new WaitForSeconds (1f);
+		TheatreSound._instance.PlayBellFeedback ();
 	}
 
 	void DancerOnBoardHandle(DancerOnBoard e){
