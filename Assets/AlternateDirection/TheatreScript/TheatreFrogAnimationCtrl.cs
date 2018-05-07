@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TheatreFrogAnimationCtrl : MonoBehaviour {
 	Animator _frogAnim;
+	[SerializeField] GameObject _lilipadEffect;
+	ParticleSystem[] _lilipadParticles;
 	[SerializeField] GameObject _frog;
 	[SerializeField] int _frogIdx = -1;
 	bool _isFrogUp = false;
@@ -28,6 +30,7 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		_frogAnim = GetComponent<Animator> ();
 		bCol = GetComponent<BoxCollider> ();
 		bCol.enabled = false;
+		_lilipadParticles = _lilipadEffect.GetComponentsInChildren<ParticleSystem> ();
 
 	}
 
@@ -109,6 +112,8 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 		} else {
 			_frogAnim.Play ("frog_lilipad_flipBack");
 		}
+
+
 //		if (_isPreviousUp != _isFrogUp) {
 //			_isPreviousUp = _isFrogUp;
 //
@@ -153,6 +158,10 @@ public class TheatreFrogAnimationCtrl : MonoBehaviour {
 			}
 			Events.G.Raise (new TheatreFrogClickEvent (_frogIdx, _iconIdx));
 			_isClicked = true;
+			for (int i = 0; i < _lilipadParticles.Length; i++) {
+				_lilipadParticles [i].Play ();
+			}
+
 		}
 
 	}
