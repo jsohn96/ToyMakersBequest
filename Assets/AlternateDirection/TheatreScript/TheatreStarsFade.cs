@@ -53,7 +53,7 @@ public class TheatreStarsFade : MonoBehaviour {
 
 		if (_whichValue >= 4) {
 			yield return new WaitForSeconds (2f);
-			SceneManager.LoadScene (7);
+			SceneManager.LoadScene (3);
 		}
 		yield return null;
 	}
