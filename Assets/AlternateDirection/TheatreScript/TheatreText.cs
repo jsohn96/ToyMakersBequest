@@ -333,12 +333,12 @@ public class TheatreText : MonoBehaviour {
 			break;
 		// Part 2 Break Point
 		case 36:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 3f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 10f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;
 		case 37:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 3f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;

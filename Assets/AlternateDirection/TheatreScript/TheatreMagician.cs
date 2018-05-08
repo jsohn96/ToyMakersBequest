@@ -44,7 +44,13 @@ public class TheatreMagician : MonoBehaviour {
 //			_magicianTransform.parent = _startPlatform;
 //		}
 //	}
+	public void PauseAnim(){
+		_magicianAnim.speed = 0f;
+	}
 
+	public void ResumeAnim(){
+		_magicianAnim.speed = 1f;
+	}
 		
 	public void StepOnTank(){
 		_magicianTransform.parent = _waterTank;

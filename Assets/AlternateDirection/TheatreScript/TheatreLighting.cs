@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreLighting : MonoBehaviour {
-	[SerializeField] Light _viewingLightToBeTurnedOff;
-
 	[SerializeField] Light[] _initialLights;
 	[SerializeField] Light[] _nextLights;
 	[SerializeField] Light[] _nextLights2;
@@ -21,9 +19,9 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light _cabinetLight;
 
 	[SerializeField] Light _singularSpotLight;
+	[SerializeField] Light _singularSpotLight2;
 
 	void Start(){
-		_viewingLightToBeTurnedOff.enabled = false;
 		Set1 ();
 	}
 
@@ -36,7 +34,7 @@ public class TheatreLighting : MonoBehaviour {
 		}
 	}
 
-	public void DisableAll(){
+	public void DisableAll(bool exception = false){
 //		if (_initialLights != null) {
 			for (int i = 0; i < _initialLights.Length; i++) {
 				_initialLights [i].enabled = false;
@@ -74,6 +72,9 @@ public class TheatreLighting : MonoBehaviour {
 		}
 		for (int i = 0; i < _nextLights9.Length; i++) {
 			_nextLights9 [i].enabled = false;
+		}
+		if (!exception) {
+			_intermissionLight.enabled = false;
 		}
 
 	}
@@ -210,7 +211,7 @@ public class TheatreLighting : MonoBehaviour {
 			timer += Time.deltaTime;
 			_intermissionLight.intensity = Mathf.Lerp (0f, goalIntensity, timer / duration);
 			if (!once && timer >= 3f) {
-				DisableAll ();
+				DisableAll (true);
 				once = true;
 			}
 			yield return null;
@@ -242,6 +243,32 @@ public class TheatreLighting : MonoBehaviour {
 		} else {
 			_singularSpotLight.enabled = false;
 		}
+	}
+
+	public void SingularSpotLight2(bool on){
+		if (on) {
+			_singularSpotLight2.intensity = 4.5f;
+			DisableAll ();
+			_singularSpotLight2.enabled = true;
+		} else {
+			_singularSpotLight2.enabled = false;
+		}
+	}
+
+	public void FadeSingularSpotLight2(float duration){
+		StartCoroutine (FadingSingularSpot2 (duration));
+	}
+
+	IEnumerator FadingSingularSpot2(float duration){
+		yield return new WaitForSeconds (1.5f);
+		float timer = 0f;
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			_singularSpotLight2.intensity = Mathf.Lerp (4.5f, 0f, timer/duration);
+			yield return null;
+		}
+		_singularSpotLight2.intensity = 0f;
+		yield return null;
 	}
 
 	#region Debug

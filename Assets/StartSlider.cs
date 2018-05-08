@@ -31,7 +31,7 @@ public class StartSlider : MonoBehaviour {
 
 	[SerializeField] SpriteFade _spriteFade;
 	bool _isActivated = false;
-
+	bool _skipOnce = false;
 //	float _previousDragNorm ;
 //	float _currentDragNorm;
 //
@@ -52,16 +52,16 @@ public class StartSlider : MonoBehaviour {
 			if (_sliderStarted) {
 				_sliderPoint.Rotate (_pointRotationAxis, -1f);
 
-//				if (timer < duration) {
-//					timer += Time.deltaTime / duration;
-//
-//					_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
-//					_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
-//				}
-//				else if (_isLerping) {
-//					_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
-//					_isLerping = false;
-//				}
+				if (timer < duration) {
+					timer += Time.deltaTime / duration;
+
+					_currentNormalizedValue = Mathf.Lerp (_originNormalizedValue, _goalNormalizedValue, timer);
+					_sliderAnim.Play (_hashID, -1, _currentNormalizedValue);
+				}
+				else if (_isLerping) {
+					_sliderAnim.Play (_hashID, -1, _goalNormalizedValue);
+					_isLerping = false;
+				}
 			}
 		}
 	}
@@ -75,10 +75,13 @@ public class StartSlider : MonoBehaviour {
 //				normalizedLinMap = tempNormMap < normalizedLinMap ? tempNormMap : normalizedLinMap;
 				_sliderAnim.Play (_hashID, -1, normalizedLinMap);
 				if (normalizedLinMap < 0.005f) {
+					_touchDown = false;
+					_originNormalizedValue = 0f;
+					_sliderAnim.Play (_hashID, -1, 0f);
 					_sliderStarted = true;
 					_draggableCollider.enabled = false;
-					_touchDown = false;
 					TriggerStart ();
+					_skipOnce = true;
 				}
 			}
 		}
@@ -91,12 +94,16 @@ public class StartSlider : MonoBehaviour {
 		if (_sliderStarted) {
 			_sliderAnim.Play (_hashID, -1, 0f);
 		}
-//		if (_sliderStarted) {
-//			_isLerping = true;
-//			timer = 0f;
-//			_originNormalizedValue = _sliderAnim.GetCurrentAnimatorStateInfo (0).normalizedTime;
-//			_goalNormalizedValue = thisValue / outOfThisTotal;
-//		}
+		if (_sliderStarted) {
+			_isLerping = true;
+			timer = 0f;
+			if (!_skipOnce) {
+				_originNormalizedValue = _sliderAnim.GetCurrentAnimatorStateInfo (0).normalizedTime;
+			} else {
+				_skipOnce = false;
+			}
+			_goalNormalizedValue = thisValue / outOfThisTotal;
+		}
 	}
 
 	void OnTouchDown(Vector3 hitPoint){

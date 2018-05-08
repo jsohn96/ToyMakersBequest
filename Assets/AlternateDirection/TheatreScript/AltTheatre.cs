@@ -44,10 +44,14 @@ public enum TheatreState{
 	dancerDrownStall,
 	theatreEnd,
 	BeginPart2,
+	TimeForTheatreRotationToSettle,
+	ZoomCameraPart2,
 	Part2DramaticPause1,
 	BringDancerBackUp,
 	DancerFallMagicianCatch,
 	GoUpToTop,
+	BeforeDancerWakeUp,
+	ButThen,
 	DancerWakeUp,
 	StartCircling,
 	CountStars
@@ -200,7 +204,7 @@ public class AltTheatre : LevelManager {
 
 	public void CheckStateMachine(){
 		Debug.Log (currentSate);
-		_startSlider.SetSliderState ((int)currentSate, 35f);
+		_startSlider.SetSliderState ((int)currentSate, 42f);
 
 		if (!_trueEnding) {
 			switch (currentSate) {
@@ -455,16 +459,24 @@ public class AltTheatre : LevelManager {
 		} else {
 			switch (currentSate) {
 			case TheatreState.BeginPart2:
-				_theatreCameraControl.ZoomIn ();
+				StartCoroutine(DelayedSelfCall (1f));
+				break;
+			case TheatreState.TimeForTheatreRotationToSettle:
+				_theatreLighting.SingularSpotLight2 (true);
+				_theatreSound.PlayLightSwitch ();
 				TheatrePart2Music._instance.BeginPlay ();
-//				_theatreRotation.StartInitRotation ();
+				StartCoroutine(DelayedSelfCall (3f));
+				break;
+			case TheatreState.ZoomCameraPart2:
+				_theatreCameraControl.ZoomIn ();
 
 				break;
 			case TheatreState.Part2DramaticPause1:
-				StartCoroutine(DelayedSelfCall (2f));
+				StartCoroutine(DelayedSelfCall (3.5f));
+				_theatreText.TriggerText (36);
 				break;
 			case TheatreState.BringDancerBackUp:
-				_theatreText.TriggerText (36);
+				
 				_theatreWaterTank.OpenLid (true);
 				_dancer.ElevateTankPlatform (5f);
 				_dancer.P2GoUp ();
@@ -473,7 +485,7 @@ public class AltTheatre : LevelManager {
 				StartCoroutine(DelayedSelfCall (5f));
 				break;
 			case TheatreState.DancerFallMagicianCatch:
-				
+				_theatreWaterTank.OpenLid (false);
 				// dancer fall 
 				_dancer.StartFall();
 				// magician catch & move to the correct position 
@@ -481,23 +493,35 @@ public class AltTheatre : LevelManager {
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();
 				// end of animation go to the next 
-				StartCoroutine(DelayedSelfCall (5f));
+				StartCoroutine(DelayedSelfCall (15.5f));
 				break;
 			case TheatreState.GoUpToTop:
 				TheatrePart2Music._instance.PlayMelody (true);
 				StartCoroutine (LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
 				// move stage to the top 
 				_theatreMainStageElevation.BringEveryoneUnderWing ();
-				_theatreMainStageElevation.BeginElevation (8f);
-				_theatreCameraControl.MoveCameraToTopPosition (7f);
+				_theatreMainStageElevation.BeginElevation (12f);
+				_theatreCameraControl.MoveCameraToTopPosition (12f);
 				// play idle for both --> auto transition 
-
+				_theatreLighting.FadeSingularSpotLight2(9f);
 				// reaeches end go to the next 
-				StartCoroutine(DelayedSelfCall (8f));
-				
+				break;
+			case TheatreState.BeforeDancerWakeUp:
+				// pause magician animation
+				magician.PauseAnim();
+				_theatreLighting.SingularSpotLight2 (true);
+				TheatrePart2Music._instance.StopAll ();
+				_theatreSound.PlayLightSwitch ();
+				_theatreText.TriggerText (39);
+				StartCoroutine(DelayedSelfCall (1f));
+				break;
+			case TheatreState.ButThen:
+				_theatreCameraControl.CallTopZoom ();
+				//zoom the camera in
 				break;
 			case TheatreState.DancerWakeUp:
-
+				magician.ResumeAnim ();
+				TheatrePart2Music._instance.PlayMelody (false);
 				// dancer wake up 
 				_dancer.WakeUp();
 				// magician wake up

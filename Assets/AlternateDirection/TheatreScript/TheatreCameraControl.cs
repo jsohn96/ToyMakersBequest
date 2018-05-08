@@ -51,6 +51,7 @@ public class TheatreCameraControl : MonoBehaviour {
 	[Header("Top Values")]
 	[SerializeField] Vector3 _topPos;
 	[SerializeField] Vector3 _topRot;
+	[SerializeField] Vector3 _topPosClose = new Vector3 (0.023f, 13.711f, 17.742f);
 	[SerializeField] float _topFOV = 23.3f;
 
 	bool _initZoom = false;
@@ -434,15 +435,16 @@ public class TheatreCameraControl : MonoBehaviour {
 	}
 
 	IEnumerator MoveToTop(float duration){
-		yield return new WaitForSeconds (1f);
 		Vector3 originPos = _thisCameraHeighttContainer.transform.position;
 		Quaternion originRot = _thisCamera.transform.rotation;
 		Quaternion goalTopRot = Quaternion.Euler (_topRot);
+		float currentFOV = _thisCamera.fieldOfView;
 		float timer = 0f;
 		while (timer < duration) {
 			timer += Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topPos, timer / duration);
 			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalTopRot, timer / duration);
+			_thisCamera.fieldOfView = Mathf.Lerp (currentFOV, _topFOV, timer / duration);
 //			_thisCamera.transform.localRotation = Quaternion.Lerp (Quaternion.Euler(_sliderSlideCamRot), Quaternion.Euler(_top), timer / duration);
 //			CameraAngleCalculation ();
 			yield return null;
@@ -450,17 +452,25 @@ public class TheatreCameraControl : MonoBehaviour {
 		_thisCameraHeighttContainer.transform.position = _topPos;
 //		CameraAngleCalculation ();
 		_thisCamera.transform.rotation = goalTopRot;
+		_thisCamera.fieldOfView = _topFOV;
 //		_thisCamera.transform.localRotation = Quaternion.Euler (_cameraStartRot);
+		yield return null;
+	}
 
-		yield return new WaitForSeconds(1f);
-		timer = 0f;
-		float currentFOV = _thisCamera.fieldOfView;
-		while (timer < 4f) {
-			timer += Time.deltaTime;
-			_thisCamera.fieldOfView = Mathf.Lerp (currentFOV, _topFOV, timer / 4f);
+	public void CallTopZoom(){
+		StartCoroutine (TopZoom ());
+	}
+
+	IEnumerator TopZoom(){
+		float timer = 0f;
+		Vector3 originPos = _thisCameraHeighttContainer.transform.position;
+		while (timer < 1f) {
+			timer+= Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topPosClose, timer);
 			yield return null;
 		}
-		_thisCamera.fieldOfView = _topFOV;
+		_thisCameraHeighttContainer.transform.position = _topPosClose;
+		_altTheatre.MoveToNext ();
 		yield return null;
 	}
 

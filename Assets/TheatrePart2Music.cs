@@ -15,20 +15,53 @@ public class TheatrePart2Music : AudioSourceController {
 	[SerializeField] AudioSource _piano;
 	[SerializeField] AudioSource _melody;
 	[SerializeField] AudioSource _accompany;
-
+	[SerializeField] AudioSource _accompanyExtend;
+	bool _waitForEnd = false;
+	bool _repeatOnce = false;
+	[SerializeField] AltTheatre _myTheatre;
 
 	void Awake () {
 		_instance = this;
 		DontDestroyOnLoad (this);
 	}
+
+	void FixedUpdate(){
+		if (_waitForEnd) {
+			if (_repeatOnce) {
+				if (!_accompanyExtend.isPlaying) {
+					_myTheatre.MoveToNext ();
+					_waitForEnd = false;
+				}
+			} else if (!_accompany.isPlaying) {
+				_accompanyExtend.Play ();
+				_repeatOnce = true;
+				
+			}
+		}
+	}
 		
-	public void BeginPlay(){
-		_melody.volume = 0f;
+	public void BeginPlay(bool includeMelody = false){
 		_piano.volume = 0f;
 		_accompany.volume = 1f;
-		_piano.Play ();
-		_melody.Play ();
-		_accompany.Play ();
+		if (includeMelody) {
+			_melody.volume = 1f;
+			_accompany.loop = true;
+			_accompany.PlayDelayed (1f);
+			_piano.PlayDelayed (1f);
+			_melody.PlayDelayed (1f);
+			_waitForEnd = false;
+		} else {
+			_accompany.loop = false;
+			_melody.volume = 0f;
+			_waitForEnd = true;
+			_accompany.Play ();
+		}
+	}
+
+	public void StopAll(){
+		_piano.Stop();
+		_melody.Stop ();
+		_accompany.Stop();
 	}
 
 	IEnumerator VolumeChange(bool on, WhichPart2 part2){
