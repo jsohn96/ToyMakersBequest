@@ -51,8 +51,14 @@ public class TheatreCameraControl : MonoBehaviour {
 	[Header("Top Values")]
 	[SerializeField] Vector3 _topPos;
 	[SerializeField] Vector3 _topRot;
-	[SerializeField] Vector3 _topPosClose = new Vector3 (0.023f, 13.711f, 17.742f);
+	Vector3 _topPosClose = new Vector3 (0.065f, 13.68f, 17.819f);
+	Vector3 _topRotClose = new Vector3 (10.51f, -8.293f, 0f);
 	[SerializeField] float _topFOV = 23.3f;
+
+	Vector3 _topDancePos = new Vector3 (0.011f, 13.685f, 17.047f);
+	Vector3 _topDanceRot = new Vector3 (2.825f, 0.926f, 0f);
+	Vector3 _topStarRot = new Vector3(-3.494f, 0.927f, -0.101f);
+	float _topStarFov = 38.8f;
 
 	bool _initZoom = false;
 	bool _initClick = false;
@@ -464,13 +470,51 @@ public class TheatreCameraControl : MonoBehaviour {
 	IEnumerator TopZoom(){
 		float timer = 0f;
 		Vector3 originPos = _thisCameraHeighttContainer.transform.position;
+		Quaternion originRot = _thisCamera.transform.rotation;
+		Quaternion goalRot = Quaternion.Euler(_topRotClose);
 		while (timer < 1f) {
 			timer+= Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topPosClose, timer);
+			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, timer);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _topPosClose;
+		_thisCamera.transform.rotation = goalRot;
 		_altTheatre.MoveToNext ();
+		yield return null;
+	}
+
+	public void CallTopDance(){
+		StartCoroutine (TopDance ());
+
+	}
+
+	IEnumerator TopDance(){
+		yield return new WaitForSeconds (12f);
+		float timer = 0f;
+		Vector3 originPos = _thisCameraHeighttContainer.transform.position;
+		Quaternion originRot = _thisCamera.transform.rotation;
+		Quaternion goalRot = Quaternion.Euler (_topDanceRot);
+		ChangeFOV (_topStarFov, 16f);
+		while (timer < 6f) {
+			timer+= Time.deltaTime;
+			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topDancePos, timer/6f);
+			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, timer / 6f);
+			yield return null;
+		}
+		_thisCameraHeighttContainer.transform.position = _topDancePos;
+		_thisCamera.transform.rotation = goalRot;
+		yield return new WaitForSeconds (1.5f);
+		timer = 0f;
+		originRot = goalRot;
+		goalRot = Quaternion.Euler (_topStarRot);
+
+		while (timer < 4f) {
+			timer += Time.deltaTime;
+			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, timer / 4f);
+			yield return null;
+		}
+		_thisCamera.transform.rotation = goalRot;
 		yield return null;
 	}
 

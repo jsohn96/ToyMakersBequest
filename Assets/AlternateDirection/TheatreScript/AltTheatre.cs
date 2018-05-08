@@ -520,8 +520,8 @@ public class AltTheatre : LevelManager {
 				//zoom the camera in
 				break;
 			case TheatreState.DancerWakeUp:
+				_theatreText.TriggerText (40);
 				magician.ResumeAnim ();
-				TheatrePart2Music._instance.PlayMelody (false);
 				// dancer wake up 
 				_dancer.WakeUp();
 				// magician wake up
@@ -529,10 +529,14 @@ public class AltTheatre : LevelManager {
 				// put in the circle gameobject 
 
 				//MoveToNext();
-				StartCoroutine(DelayedSelfCall (13f));
-
+				StartCoroutine(DelayedSelfCall (12f));
+				_theatreCameraControl.CallTopDance ();
 				break;
 			case TheatreState.StartCircling:
+				_theatreLighting.FadeSingularSpotLight2(12f);
+
+
+				TheatrePart2Music._instance.BeginPlay (true);
 				// start rotating around the circle 
 				_dancer.EnterCircle ();
 				magician.EnterCircle ();
