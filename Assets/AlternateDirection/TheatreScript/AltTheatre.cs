@@ -44,6 +44,7 @@ public enum TheatreState{
 	dancerDrownStall,
 	theatreEnd,
 	BeginPart2,
+	Part2DramaticPause1,
 	BringDancerBackUp,
 	DancerFallMagicianCatch,
 	GoUpToTop,
@@ -459,9 +460,11 @@ public class AltTheatre : LevelManager {
 //				_theatreRotation.StartInitRotation ();
 
 				break;
+			case TheatreState.Part2DramaticPause1:
+				StartCoroutine(DelayedSelfCall (2f));
+				break;
 			case TheatreState.BringDancerBackUp:
-				TheatrePart2Music._instance.PlayMelody (true);
-			
+				_theatreText.TriggerText (36);
 				_theatreWaterTank.OpenLid (true);
 				_dancer.ElevateTankPlatform (5f);
 				_dancer.P2GoUp ();
@@ -481,6 +484,7 @@ public class AltTheatre : LevelManager {
 				StartCoroutine(DelayedSelfCall (5f));
 				break;
 			case TheatreState.GoUpToTop:
+				TheatrePart2Music._instance.PlayMelody (true);
 				StartCoroutine (LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
 				// move stage to the top 
 				_theatreMainStageElevation.BringEveryoneUnderWing ();

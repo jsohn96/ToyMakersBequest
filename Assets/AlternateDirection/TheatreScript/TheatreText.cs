@@ -61,9 +61,10 @@ public class TheatreText : MonoBehaviour {
 		"But this was not like every other day.", //34
 		"Today, things were different.", //35
 
-		"She wasn't breathing.", //36
-		"I tried to save her", // 37
-		"But she remained motionless in my arms.", //38
+		"I tried to save her", // 36
+		"but she wasn't breathing.", //37
+
+		"She remained motionless in my arms.", //38
 		"But then,", //39
 		"with a cough", //40
 		"she came back", //41
@@ -326,6 +327,42 @@ public class TheatreText : MonoBehaviour {
 			StartCoroutine (DelayedTankActivation (_voClipLengths [cnt]));
 			break;
 		case 35:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		// Part 2 Break Point
+		case 36:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 3f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 37:
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 1f));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 38:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 39:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 40:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 41:
+			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
+			_audioSource.clip = _voClips [cnt];
+			_audioSource.Play ();
+			break;
+		case 42:
 			StartCoroutine (DisappearAfterDuration (_voClipLengths [cnt], cnt));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();

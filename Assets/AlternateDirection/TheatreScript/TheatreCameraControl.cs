@@ -532,7 +532,7 @@ public class TheatreCameraControl : MonoBehaviour {
 			_initClick = true;
 			duration = 9f;
 		} else {
-			duration = 5f;
+			duration = 8f;
 		}
 		bool isTrueEnding = _altTheatre._trueEnding;
 		Quaternion tempRot = _thisCamera.transform.rotation;
