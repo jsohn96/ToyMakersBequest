@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreMainStageElevation : MonoBehaviour {
+	[SerializeField] TheatrePulley[] _pulleys;
 	[SerializeField] Transform _danceInCircleParent;
 	[SerializeField] Transform _dancerTrans;
 	[SerializeField] Transform _magicianTrans;
@@ -38,6 +39,9 @@ public class TheatreMainStageElevation : MonoBehaviour {
 	}
 
 	IEnumerator Elevate(float duration){
+		// start puley rotate 
+		_pulleys[0].StartRotate();
+		_pulleys[1].StartRotate();
 		float timer = 0f;
 		Vector3 originLocalPosition = transform.localPosition;
 		while (duration > timer) {
@@ -47,6 +51,10 @@ public class TheatreMainStageElevation : MonoBehaviour {
 		}
 		transform.localPosition = _goalElevation;
 		yield return null;
+
+		// stop pulley rotate
+		_pulleys[0].StopRotate();
+		_pulleys[1].StopRotate();
 	}
 
 	public void DanceInCircle(){

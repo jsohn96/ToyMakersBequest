@@ -21509,6 +21509,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 832752861}
+  - component: {fileID: 832752862}
   m_Layer: 0
   m_Name: Pulley_Right
   m_TagString: Untagged
@@ -21533,6 +21534,18 @@ Transform:
   m_Father: {fileID: 2080680198}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &832752862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 832752860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211823a13e7e446bb90d20f0a5485252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheel: {fileID: 23975031}
 --- !u!1 &838011152
 GameObject:
   m_ObjectHideFlags: 0
@@ -26753,6 +26766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd3313007203d24ca8c19150b54449d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pulleys:
+  - {fileID: 1290862797}
+  - {fileID: 832752862}
   _danceInCircleParent: {fileID: 126417305}
   _dancerTrans: {fileID: 1315806399}
   _magicianTrans: {fileID: 1716881202}
@@ -35836,6 +35852,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1290862796}
+  - component: {fileID: 1290862797}
   m_Layer: 0
   m_Name: Pulley_Left
   m_TagString: Untagged
@@ -35860,6 +35877,18 @@ Transform:
   m_Father: {fileID: 2080680198}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1290862797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1290862795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211823a13e7e446bb90d20f0a5485252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheel: {fileID: 1577279739}
 --- !u!1 &1292161940
 GameObject:
   m_ObjectHideFlags: 0
