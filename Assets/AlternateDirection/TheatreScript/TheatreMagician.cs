@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TheatreMagician : MonoBehaviour {
+	[SerializeField] Transform _magicianCicleLocator;
+	[SerializeField] Transform _catchDancerLocator;
 	[SerializeField] Transform _magicianTransform;
 	[SerializeField] Animator _magicianAnim;
 	AltTheatre _myTheatre;
@@ -82,6 +84,24 @@ public class TheatreMagician : MonoBehaviour {
 		StartCoroutine (MoveMagician (_magicianTransform.position, _stepOffWaterTank, 3f));
 	}
 
+	// part II animations 
+	public void CatchDancer(){
+		// move to catch position 
+		_dontTriggerNextScene = true;
+		StartCoroutine (MoveMagician (_magicianTransform.position, _catchDancerLocator.position, 1.2f));
+		_magicianAnim.Play("CatchDancer");
+	}
+
+	public void WakeUp(){
+		_magicianAnim.SetTrigger ("trigger_wakeup");
+
+	}
+
+	public void EnterCircle(){
+		_magicianAnim.SetTrigger ("trigger_entercircle");
+		StartCoroutine (MoveMagician (_magicianTransform.position, _magicianCicleLocator.position, 1.5f));
+		// move to the circle position 
+	}
 	IEnumerator MoveMagician(Vector3 start, Vector3 end, float duration){
 		float timer = 0f;
 		while (timer < duration) {

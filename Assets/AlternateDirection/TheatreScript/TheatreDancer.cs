@@ -8,6 +8,7 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] Transform _dancerTransform;
 	[SerializeField] Transform _closetLocator;
 	[SerializeField] Transform _centerLocator;
+	[SerializeField] Transform _DancerCircleLocator;
 
 	[SerializeField] Vector3 _startPosition;
 	Vector3 _stillRotateAxis = new Vector3 (0f,1f,0f);
@@ -18,6 +19,10 @@ public class TheatreDancer : MonoBehaviour {
 	[SerializeField] Vector3 _firstWaterTankStart;
 	[Header("Kissing Locato")]
 	[SerializeField] Transform _kissLocator;
+
+	bool _isRotateToFaceMagician = false;
+	Quaternion _finalAngle;
+
 
 
 	Vector3 _waterTankPlatformUpLocalPos = new Vector3 (0f, 0.01476911f, -0.001706005f);
@@ -43,6 +48,8 @@ public class TheatreDancer : MonoBehaviour {
 				_dancerTransform.parent = _waterTankPlatformTransform;
 			}
 //		}
+
+		_finalAngle = Quaternion.Euler (0, -135, 0);
 	}
 	
 	// Update is called once per frame
@@ -60,6 +67,16 @@ public class TheatreDancer : MonoBehaviour {
 				_stopMovement = false;
 			}
 		}
+
+		if (_isRotateToFaceMagician) {
+			if (Quaternion.Angle (transform.localRotation, _finalAngle) >= 0.01f) {
+				transform.localRotation = Quaternion.Lerp (transform.localRotation, _finalAngle, Time.deltaTime * 0.6f);
+			} else {
+				transform.localRotation = _finalAngle;
+			}
+		}
+
+
 	}
 
 //	public void StartDancing(){
@@ -108,6 +125,29 @@ public class TheatreDancer : MonoBehaviour {
 	}
 
 
+	public void P2GoUp(){
+		// trnsite to final position 
+		if(!_isRotateToFaceMagician){
+			_isRotateToFaceMagician = true;
+		}
+		_dancerAnim.Play ("p2_GoUp");
+	}
+
+	public void StartFall(){
+		_dancerAnim.SetTrigger ("trigger_fall");
+	}
+
+	public void WakeUp(){
+		_dancerAnim.SetTrigger ("trigger_wakeup");
+
+	}
+
+	public void EnterCircle(){
+		
+		_dancerAnim.SetTrigger ("trigger_entercircle");
+		StartCoroutine (MoveDancer (_dancerTransform.position, _DancerCircleLocator.position, 1.5f));
+
+	}
 
 
 	public void FirstDancerEnterTank(){
@@ -258,5 +298,16 @@ public class TheatreDancer : MonoBehaviour {
 
 	public void HideDancer(bool hide){
 		_dancerVisibilityGameObject.SetActive (!hide);
+	}
+
+	IEnumerator MoveDancer(Vector3 start, Vector3 end, float duration){
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			_dancerTransform.position = Vector3.Slerp (start, end, timer / duration);
+			yield return null;
+		}
+		_dancerTransform.position = end;
+		yield return null;
 	}
 }

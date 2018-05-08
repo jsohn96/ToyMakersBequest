@@ -45,9 +45,10 @@ public enum TheatreState{
 	theatreEnd,
 	BeginPart2,
 	BringDancerBackUp,
-	DancerMeetsMagician,
-	DancerDancesWithMagician,
-	LiftUpAboveWhileDancing,
+	DancerFallMagicianCatch,
+	GoUpToTop,
+	DancerWakeUp,
+	StartCircling,
 	CountStars
 }
 
@@ -269,7 +270,6 @@ public class AltTheatre : LevelManager {
 			case TheatreState.magicianLeft:
 //			_traversalUI.FadeIn ();
 				_theatreCameraControl.EnableScrollFOV ();
-
 				magician.PointToLeft (true);
 				chest.Activate (true);
 				_theatreLighting.ChestLight (true);
@@ -454,40 +454,66 @@ public class AltTheatre : LevelManager {
 		} else {
 			switch (currentSate) {
 			case TheatreState.BeginPart2:
-//				_theatreCameraControl.MoveCameraToLookAtStage2 ();
-//				_theatreCameraControl.MoveCameraToLookAtTank(5f);
 				_theatreCameraControl.ZoomIn ();
 				TheatrePart2Music._instance.BeginPlay ();
 //				_theatreRotation.StartInitRotation ();
+
 				break;
 			case TheatreState.BringDancerBackUp:
 				TheatrePart2Music._instance.PlayMelody (true);
+			
 				_theatreWaterTank.OpenLid (true);
 				_dancer.ElevateTankPlatform (5f);
+				_dancer.P2GoUp ();
+				// TODO: dancer rotates to the final rotation pos 
+
 				StartCoroutine(DelayedSelfCall (5f));
 				break;
-			case TheatreState.DancerMeetsMagician:
-				_theatreMainStageElevation.BringEveryoneUnderWing ();
-
-//				_theatreCameraControl.Activate ();
-//				_theatreRotation.StartInitRotation ();
-				MoveToNext();
-				break;
-			case TheatreState.DancerDancesWithMagician:
-//				_theatreCameraControl.Activate ();
-//				_theatreRotation.StartInitRotation ();
-				StartCoroutine (LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
-				MoveToNext();
-				break;
-			case TheatreState.LiftUpAboveWhileDancing:
+			case TheatreState.DancerFallMagicianCatch:
 				
+				// dancer fall 
+				_dancer.StartFall();
+				// magician catch & move to the correct position 
+				magician.CatchDancer();
+//				_theatreCameraControl.Activate ();
+//				_theatreRotation.StartInitRotation ();
+				// end of animation go to the next 
+				StartCoroutine(DelayedSelfCall (5f));
+				break;
+			case TheatreState.GoUpToTop:
+				StartCoroutine (LerpPosition (_startPlatform, _platformEndPos, _platformBeginPos, 4f));
+				// move stage to the top 
+				_theatreMainStageElevation.BringEveryoneUnderWing ();
 				_theatreMainStageElevation.BeginElevation (8f);
 				_theatreCameraControl.MoveCameraToTopPosition (7f);
-//				_theatreCameraControl.Activate ();
-//				_theatreRotation.StartInitRotation ();
-				MoveToNext();
+				// play idle for both --> auto transition 
+
+				// reaeches end go to the next 
+				StartCoroutine(DelayedSelfCall (8f));
+				
+				break;
+			case TheatreState.DancerWakeUp:
+
+				// dancer wake up 
+				_dancer.WakeUp();
+				// magician wake up
+				magician.WakeUp();
+				// put in the circle gameobject 
+
+				//MoveToNext();
+				StartCoroutine(DelayedSelfCall (13f));
+
+				break;
+			case TheatreState.StartCircling:
+				// start rotating around the circle 
+				_dancer.EnterCircle ();
+				magician.EnterCircle ();
+				StartCoroutine(DelayedSelfCall (5f));
+				//MoveToNext();
+
 				break;
 			case TheatreState.CountStars:
+				_theatreMainStageElevation.DanceInCircle ();
 				TheatrePart2Music._instance.PlayAccompany (false);
 				TheatrePart2Music._instance.PlayMelody (false);
 				TheatrePart2Music._instance.PlayPiano (true);
