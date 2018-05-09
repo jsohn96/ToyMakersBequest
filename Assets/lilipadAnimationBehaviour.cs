@@ -24,7 +24,7 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 		_bCol.enabled = false;
 		_downPos = _lilipad.localPosition;
 		_upPos = _downPos;
-		_upPos.z -= 1.1f;
+		_upPos.z -= 0.9f;
 	}
 	
 	// Update is called once per frame
