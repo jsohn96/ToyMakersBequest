@@ -21,6 +21,11 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light _singularSpotLight;
 	[SerializeField] Light _singularSpotLight2;
 	[SerializeField] Light _overallPointLight;
+	[SerializeField] Light[] _lilySpotLight;
+	bool[] _lilyCallRecord = new bool[] {true, false, false, false, false};
+	int _whichLilyAreWeOn = 0;
+	[SerializeField] TheatreSound _theatreSound;
+
 	void Start(){
 		Set1 ();
 		_overallPointLight.enabled = false;
@@ -77,7 +82,9 @@ public class TheatreLighting : MonoBehaviour {
 		if (!exception) {
 			_intermissionLight.enabled = false;
 		}
-
+		for (int i = 0; i < 5; i++) {
+			_lilySpotLight [i].enabled = false;
+		}
 	}
 
 	void Update(){
@@ -287,6 +294,38 @@ public class TheatreLighting : MonoBehaviour {
 		}
 		_overallPointLight.intensity = 0.65f;
 		yield return null;
+	}
+
+	public void LilySpotLight(int index){
+		if (index == _whichLilyAreWeOn) {
+			_whichLilyAreWeOn++;
+			if (index > 0) {
+				_lilyCallRecord [index-1] = true;
+			}
+			for (int i = index; i < 5; i++) {
+				if (!_lilyCallRecord [i]) {
+					index = i;
+					_whichLilyAreWeOn = index;
+					break;
+				}
+			}
+		} else {
+			if (index > 0) {
+				_lilyCallRecord [index-1] = true;
+			}
+		}
+
+
+		if (index != 6) {
+			_theatreSound.PlayLightSwitch ();
+			for (int i = 0; i < 5; i++) {
+				if (i == index) {
+					_lilySpotLight [i].enabled = true;
+				} else {
+					_lilySpotLight [i].enabled = false;
+				}
+			}
+		}
 	}
 
 	#region Debug

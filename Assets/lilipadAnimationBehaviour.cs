@@ -16,6 +16,9 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 	bool _isUp = false;
 	bool _isClickActive = false;
 
+	[SerializeField] TheatreLighting _theatreLighting;
+	[SerializeField] int _thisPadIndex;
+
 	// Use this for initialization
 	void Awake () {
 		//_lilipad = gameObject.transform;
@@ -60,6 +63,7 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 	}
 
 	IEnumerator ClickLilipad(){
+		_theatreLighting.LilySpotLight (_thisPadIndex+1);
 		float timer = 0f;
 		float duration = 0.5f;
 		while (duration > timer) {
