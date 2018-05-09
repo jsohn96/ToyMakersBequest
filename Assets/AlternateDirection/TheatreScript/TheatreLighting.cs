@@ -23,7 +23,7 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light _overallPointLight;
 	[SerializeField] Light[] _lilySpotLight;
 	bool[] _lilyCallRecord = new bool[] {true, false, false, false, false};
-	int _whichLilyAreWeOn = 0;
+	int _whichLilyAreWeOn = 1;
 	[SerializeField] TheatreSound _theatreSound;
 
 	void Start(){
@@ -302,30 +302,31 @@ public class TheatreLighting : MonoBehaviour {
 			if (index > 0) {
 				_lilyCallRecord [index-1] = true;
 			}
-			for (int i = index; i < 5; i++) {
+			for (int i = index-1; i < 5; i++) {
 				if (!_lilyCallRecord [i]) {
 					index = i;
-					_whichLilyAreWeOn = index;
+					_whichLilyAreWeOn = i+1;
 					break;
 				}
 			}
+			if (index != 7) {
+				_theatreSound.PlayLightSwitch ();
+				for (int i = 0; i < 5; i++) {
+					if (i == index) {
+						_lilySpotLight [i].enabled = true;
+					} else {
+						_lilySpotLight [i].enabled = false;
+					}
+				}
+			}
 		} else {
-			if (index > 0) {
+			if (index > 0 && index != 7) {
 				_lilyCallRecord [index-1] = true;
 			}
 		}
 
 
-		if (index != 6) {
-			_theatreSound.PlayLightSwitch ();
-			for (int i = 0; i < 5; i++) {
-				if (i == index) {
-					_lilySpotLight [i].enabled = true;
-				} else {
-					_lilySpotLight [i].enabled = false;
-				}
-			}
-		}
+
 	}
 
 	#region Debug
