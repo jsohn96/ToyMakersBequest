@@ -279,7 +279,7 @@ public class TheatreHeartTimer : MonoBehaviour {
 			//print ("z pos chack: " + (va.z - vb.z));
 			//rotate from b to a
 			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-			print ("Debug: rotate axis " + rotateAxis);
+//			print ("Debug: rotate axis " + rotateAxis);
 
 			// remove rotate jitter (changing axis direction abruptly)
 			if(rotateAxis != preAxis){

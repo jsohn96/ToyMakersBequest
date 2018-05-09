@@ -297,12 +297,13 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.MoveCameraToLookAtTank ();
 			//MoveToNext();
 				_theatreText.TriggerText (7);
+				_tankDoor1.Activate (true);
+				_tankDoor2.Activate (true);
 				break;
 			case TheatreState.CloseTankDoors:
 				_theatreLighting.Set5 ();
 				_theatreWaterTank.OpenLid (false);
-				_tankDoor1.Activate (true);
-				_tankDoor2.Activate (true);
+				_theatreWaterTank.DisableLid (true);
 //			_tankDoor1.DisableTouchInput (true);
 //			_tankDoor2.DisableTouchInput (true);
 			//MoveToNext();
@@ -408,6 +409,7 @@ public class AltTheatre : LevelManager {
 //			_theatreLighting.Set6 ();
 //			_theatreSound.PlayLightSwitch ();
 //			_theatreWaterTank.OpenLid (true);
+				_theatreWaterTank.DisableLid (true);
 				magician.BeginShow (false);
 				_theatreText.TriggerText (27);
 				_dancer.SecondDancerEnterTank ();
@@ -416,13 +418,14 @@ public class AltTheatre : LevelManager {
 			case TheatreState.lookDownIntoTank2:
 				_theatreWaterTank.OpenLid (false);
 //			_traversalUI.FadeOut ();
+				_tankDoor1.FinalActivation (true);
+				_tankDoor2.FinalActivation (true);
 				_theatreCameraControl.MoveCameraToLookAtTank ();
 				break;
 			case TheatreState.CloseTankDoors2:
 //			_tankDoor1.FinalActivation (true);
 //			_tankDoor2.FinalActivation (true);
-				_tankDoor1.FinalActivation (true);
-				_tankDoor2.FinalActivation (true);
+
 //			_tankDoor1.DisableTouchInput (true);
 //			_tankDoor2.DisableTouchInput (true);
 
@@ -460,6 +463,7 @@ public class AltTheatre : LevelManager {
 			switch (currentSate) {
 			case TheatreState.BeginPart2:
 				StartCoroutine(DelayedSelfCall (1f));
+				_theatreWaterTank.DisableLid (true);
 				break;
 			case TheatreState.TimeForTheatreRotationToSettle:
 				_theatreLighting.SingularSpotLight2 (true);
@@ -485,6 +489,7 @@ public class AltTheatre : LevelManager {
 				StartCoroutine(DelayedSelfCall (5f));
 				break;
 			case TheatreState.DancerFallMagicianCatch:
+				_theatreWaterTank.DisableLid (true);
 				_theatreWaterTank.OpenLid (false);
 				// dancer fall 
 				_dancer.StartFall();
@@ -540,7 +545,7 @@ public class AltTheatre : LevelManager {
 				// start rotating around the circle 
 				_dancer.EnterCircle ();
 				magician.EnterCircle ();
-				StartCoroutine(DelayedSelfCall (5f));
+				StartCoroutine(DelayedSelfCall (9f));
 				//MoveToNext();
 
 				break;
