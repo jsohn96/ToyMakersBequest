@@ -533,8 +533,8 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.CallTopDance ();
 				break;
 			case TheatreState.StartCircling:
-				_theatreLighting.FadeSingularSpotLight2(12f);
-
+				_theatreLighting.FadeSingularSpotLight2 (12f);
+				_theatreLighting.FadeOverallPointLight (12f);
 
 				TheatrePart2Music._instance.BeginPlay (true);
 				// start rotating around the circle 
@@ -546,9 +546,9 @@ public class AltTheatre : LevelManager {
 				break;
 			case TheatreState.CountStars:
 				_theatreMainStageElevation.DanceInCircle ();
-				TheatrePart2Music._instance.PlayAccompany (false);
-				TheatrePart2Music._instance.PlayMelody (false);
-				TheatrePart2Music._instance.PlayPiano (true);
+//				TheatrePart2Music._instance.PlayAccompany (false);
+//				TheatrePart2Music._instance.PlayMelody (false);
+//				TheatrePart2Music._instance.PlayPiano (true);
 				Events.G.Raise (new TheatreActivateStarsEvent ());
 //				_theatreCameraControl.Activate ();
 //				_theatreRotation.StartInitRotation ();

@@ -20,7 +20,7 @@ public class TheatreLighting : MonoBehaviour {
 
 	[SerializeField] Light _singularSpotLight;
 	[SerializeField] Light _singularSpotLight2;
-
+	[SerializeField] Light _overallPointLight;
 	void Start(){
 		Set1 ();
 	}
@@ -268,6 +268,23 @@ public class TheatreLighting : MonoBehaviour {
 			yield return null;
 		}
 		_singularSpotLight2.intensity = 0f;
+		yield return null;
+	}
+
+	public void FadeOverallPointLight(float duration){
+		StartCoroutine (FadingOverallPointLight (duration));
+	}
+
+	IEnumerator FadingOverallPointLight(float duration){
+		_overallPointLight.intensity = 0f;
+		_overallPointLight.enabled = true;
+		float timer = 0f;
+		while (duration > timer) {
+			timer += Time.deltaTime;
+			_overallPointLight.intensity = Mathf.Lerp (0f, 0.65f, timer/duration);
+			yield return null;
+		}
+		_overallPointLight.intensity = 0.65f;
 		yield return null;
 	}
 

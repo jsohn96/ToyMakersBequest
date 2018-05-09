@@ -16618,7 +16618,7 @@ Prefab:
     - target: {fileID: 224533391201798606, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -102.4325
       objectReference: {fileID: 0}
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -16638,7 +16638,7 @@ Prefab:
     - target: {fileID: 224751820202800070, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -292.0775
       objectReference: {fileID: 0}
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -16658,7 +16658,7 @@ Prefab:
     - target: {fileID: 224397736576739610, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -481.72253
       objectReference: {fileID: 0}
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
@@ -16678,7 +16678,7 @@ Prefab:
     - target: {fileID: 224022054849565790, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -671.36755
       objectReference: {fileID: 0}
     - target: {fileID: 1319477323318112, guid: 4c5010c4e8f1ddf488f7eff7cbca8a5e, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -28838,6 +28838,7 @@ MonoBehaviour:
   _cabinetLight: {fileID: 1311148933}
   _singularSpotLight: {fileID: 1169186712}
   _singularSpotLight2: {fileID: 1760171398}
+  _overallPointLight: {fileID: 1540372232}
 --- !u!4 &1105666113
 Transform:
   m_ObjectHideFlags: 0
@@ -28870,6 +28871,7 @@ Transform:
   - {fileID: 1719314107}
   - {fileID: 54841787}
   - {fileID: 342562462}
+  - {fileID: 1540372231}
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: -2.651, y: 0, z: 0}
@@ -42619,6 +42621,71 @@ MeshFilter:
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: b2d303ff7dfa34660a43cd99a0c1025b, type: 3}
   m_PrefabInternal: {fileID: 1541431798}
+--- !u!1 &1540372230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1540372231}
+  - component: {fileID: 1540372232}
+  m_Layer: 0
+  m_Name: OverallPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1540372231
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1540372230}
+  m_LocalRotation: {x: 0.20374782, y: 0.13053592, z: -0.12095481, w: 0.9627134}
+  m_LocalPosition: {x: 0.25, y: 12.46, z: 2.33}
+  m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1105666113}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 25.080002, y: 12.89, z: -11.444}
+--- !u!108 &1540372232
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1540372230}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.9981618, g: 1, b: 0.875, a: 1}
+  m_Intensity: 0.65
+  m_Range: 1
+  m_SpotAngle: 22
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1001 &1541431798
 Prefab:
   m_ObjectHideFlags: 0
@@ -46974,7 +47041,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294965247
+    m_Bits: 4292868095
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
