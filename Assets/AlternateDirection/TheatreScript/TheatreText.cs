@@ -189,13 +189,13 @@ public class TheatreText : MonoBehaviour {
 			_audioSource.Play ();
 			break;
 		case 14:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 3.5f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			_theatreSound.PlayApplauseSound ();
 			break;
 		case 15:
-			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 2.5f));
+			StartCoroutine (CallNextAfterDuration (_voClipLengths [cnt] + 3f));
 			_audioSource.clip = _voClips [cnt];
 			_audioSource.Play ();
 			break;
