@@ -195,6 +195,8 @@ public class PathNode : MonoBehaviour {
 	bool _glowInfoSent = false;
 	[SerializeField] shaderGlowCustom _shaderGlowCustom;
 
+	[SerializeField] bool _disableRotation = false;
+
 	public float _betweenTransitionLerpDuration = 0.25f;
 
 	void OnEnable(){
@@ -689,24 +691,25 @@ public class PathNode : MonoBehaviour {
 	}
 
 	void ClickWithMouse(){
-		
-		//Vector3 forward = _mainCamera.transform.TransformDirection (Vector3.forward);
+		if (!_disableRotation) {
+			//Vector3 forward = _mainCamera.transform.TransformDirection (Vector3.forward);
 //		if (_isInterLocked && _intersectionPart!= null && _intersectionPart.transform.parent != transform.parent) {
 //			Debug.Log ("change parent");
 //			_intersectionPart.transform.parent = transform.parent;
 //		}
-		if(Input.GetMouseButtonDown(0) && _ControlColor != ButtonColor.None){
-			Ray mousePositionRay;
-			mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			//dragPreviousMousePos = Input.mousePosition;
-			bool isHit = Physics.Raycast (mousePositionRay, out hit);
-			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				//print ("git the circle: " + hit.point);
-				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
-					RotateNode();
-					hitDist = hit.distance;
-					//Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
+			if (Input.GetMouseButtonDown (0) && _ControlColor != ButtonColor.None) {
+				Ray mousePositionRay;
+				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				//dragPreviousMousePos = Input.mousePosition;
+				bool isHit = Physics.Raycast (mousePositionRay, out hit);
+				if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+					//print ("git the circle: " + hit.point);
+					if (hit.collider.gameObject.GetComponentInParent<PathNode> ()._nodeIndex == _nodeIndex) {
+						RotateNode ();
+						hitDist = hit.distance;
+						//Events.G.Raise(new MBTurnColorCircle(_ControlColor, _nodeIndex));
+					}
 				}
 			}
 		}
@@ -714,54 +717,54 @@ public class PathNode : MonoBehaviour {
 
 	// TODO: put into camera selection manager or something 
 	void RotateWithMouse(){
-		
+		if (!_disableRotation) {
 
-		// start dragging
-		if(Input.GetMouseButtonDown(0)){
+			// start dragging
+			if (Input.GetMouseButtonDown (0)) {
 			
-			Ray mousePositionRay;
-			if (!_isNotebook) {
-				mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
-			} else {
-				mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
-			}
-			RaycastHit hit;
-			dragPreviousMousePos = Input.mousePosition;
-			bool isHit;
-			if (!_isNotebook) {
-				isHit = Physics.Raycast (mousePositionRay, out hit);
-			} else {
-				isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
-			}
+				Ray mousePositionRay;
+				if (!_isNotebook) {
+					mousePositionRay = _mainCamera.ScreenPointToRay (Input.mousePosition);
+				} else {
+					mousePositionRay = _nonMainCameraForRayCast.ScreenPointToRay (Input.mousePosition);
+				}
+				RaycastHit hit;
+				dragPreviousMousePos = Input.mousePosition;
+				bool isHit;
+				if (!_isNotebook) {
+					isHit = Physics.Raycast (mousePositionRay, out hit);
+				} else {
+					isHit = Physics.Raycast (mousePositionRay, out hit, _3DBookLayerMask);
+				}
 
-			if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
-				//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
-				if(hit.collider.gameObject.GetComponentInParent<PathNode>()._nodeIndex == _nodeIndex){
+				if (isHit && hit.collider.gameObject.tag == "RotateCircle") {
+					//Debug.Log (hit.collider.gameObject.name + ": this is the tag");
+					if (hit.collider.gameObject.GetComponentInParent<PathNode> ()._nodeIndex == _nodeIndex) {
 
-					isDragStart = true;
-					dragStartPos = hit.point;
-					circlePlane = new Plane (Vector3.up, hit.point);
-					preAxis = new Vector3 (0, 0, 0);
-					preChangingTime = -1;
+						isDragStart = true;
+						dragStartPos = hit.point;
+						circlePlane = new Plane (Vector3.up, hit.point);
+						preAxis = new Vector3 (0, 0, 0);
+						preChangingTime = -1;
 
-					if (_isControlActive) {
-						if (_isInterLocked && _intersectionPart!= null ) {
-							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-							_intersectionPart.transform.parent = gameObject.transform;
-						}
-
-						if (_activeIntersections != null && _activeIntersections.Count > 0) {
-							//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
-							foreach(GameObject itsc in _activeIntersections){
-								itsc.transform.parent = gameObject.transform;
+						if (_isControlActive) {
+							if (_isInterLocked && _intersectionPart != null) {
+								//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+								_intersectionPart.transform.parent = gameObject.transform;
 							}
-						}
 
-						//isDragStart = true;
-						if (_shaderGlowCustom != null) {
-							_shaderGlowCustom.lightOn ();
-						}
-						Events.G.Raise (new PathGlowEvent (isDragStart));
+							if (_activeIntersections != null && _activeIntersections.Count > 0) {
+								//Debug.Log ("Click on Node: " + _nodeIndex + " changing intersection");
+								foreach (GameObject itsc in _activeIntersections) {
+									itsc.transform.parent = gameObject.transform;
+								}
+							}
+
+							//isDragStart = true;
+							if (_shaderGlowCustom != null) {
+								_shaderGlowCustom.lightOn ();
+							}
+							Events.G.Raise (new PathGlowEvent (isDragStart));
 //						dragStartPos = hit.point;
 //						//print ("hit point :" + hit.point);
 //						hitDist = hit.distance;
@@ -769,142 +772,142 @@ public class PathNode : MonoBehaviour {
 //						circlePlane = new Plane (Vector3.up, hit.point);
 //						preAxis = new Vector3 (0, 0, 0);
 //						preChangingTime = -1;
+						} else {
+							// lock behaviour  + sound
+							// TODO: if the node is locked, after dragging larger than 5degrees, go back to the original position 
+							Debug.Log ("Not contorl active");
+							lastRestAngle = transform.localRotation;
+							isTempDisable = false;
+							Events.G.Raise (new PathNodeStuckEvent ());
+							isShaking = true;
+						}
+
+						//debugPos1 = hit.point;
+					}
+
+				}
+			}
+
+			// end dragging: angle snap
+			if (Input.GetMouseButtonUp (0)) {
+				if (isDragStart) {
+					isDragStart = false;
+					if (_isControlActive && !isShaking) {
+						if (_shaderGlowCustom != null) {
+							_shaderGlowCustom.lightOff ();
+						}
+						Events.G.Raise (new PathGlowEvent (isDragStart));
+						//hitDist = 0;
+						accAngle = 0;
+
+						if (_isSnapEnable) {
+							float tempAngle = transform.localEulerAngles.z;
+							tempAngle = DampAngle (tempAngle);
+							float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
+							//print ("Release drag final angle: " + AngleSnap (tempAngle));
+							isRotating = true;
+							originAngle = transform.localRotation;
+							finalAngle = transform.localRotation;
+							finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
+
+						}
+
+
+						Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
 					} else {
-						// lock behaviour  + sound
-						// TODO: if the node is locked, after dragging larger than 5degrees, go back to the original position 
-						Debug.Log("Not contorl active");
-						lastRestAngle = transform.localRotation;
-						isTempDisable = false;
-						Events.G.Raise (new PathNodeStuckEvent ());
-						isShaking = true;
+						accAngle = 0;
+						transform.localRotation = lastRestAngle;
+						isShaking = false;
 					}
 
-					//debugPos1 = hit.point;
+
 				}
-
 			}
-		}
 
-		// end dragging: angle snap
-		if (Input.GetMouseButtonUp (0)) {
-			if (isDragStart) {
-				isDragStart = false;
-				if (_isControlActive && !isShaking) {
-					if (_shaderGlowCustom != null) {
-						_shaderGlowCustom.lightOff ();
-					}
-					Events.G.Raise (new PathGlowEvent (isDragStart));
-					//hitDist = 0;
-					accAngle = 0;
+			if (isDragStart && !isTempDisable) {
 
-					if (_isSnapEnable) {
-						float tempAngle = transform.localEulerAngles.z;
-						tempAngle = DampAngle (tempAngle);
-						float snapAngleDelta = AngleSnapTo (tempAngle) - tempAngle;
-						//print ("Release drag final angle: " + AngleSnap (tempAngle));
-						isRotating = true;
-						originAngle = transform.localRotation;
-						finalAngle = transform.localRotation;
-						finalAngle = originAngle * Quaternion.Euler (0, 0, snapAngleDelta);
-
-					}
-
-
-					Events.G.Raise (new MBNodeRotate (_nodeIndex, false, 0));
-				} else {
-					accAngle = 0;
-					transform.localRotation = lastRestAngle;
-					isShaking = false;
+				Vector3 curMousePos = Vector3.zero;
+				Ray ray = _mainCamera.ScreenPointToRay (Input.mousePosition);
+				float rayDistance;
+				if (circlePlane.Raycast (ray, out rayDistance)) {
+					curMousePos = ray.GetPoint (rayDistance);
 				}
-
-
-			}
-		}
-
-		if (isDragStart && !isTempDisable) {
-
-			Vector3 curMousePos = Vector3.zero;
-			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-			float rayDistance;
-			if (circlePlane.Raycast (ray, out rayDistance)) {
-				curMousePos = ray.GetPoint(rayDistance);
-			}
 
 		
-			// TODO: z needs to be switched to any customized axis
-			Vector3 va = Vector3.Normalize(dragStartPos - gameObject.transform.position);
-			va.y = 0;
-			Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
-			vb.y = 0;
-			//print ("z pos chack: " + (va.z - vb.z));
-			//rotate from b to a
-			rotateAxis = Vector3.Normalize(Vector3.Cross (vb, va));
-			//print ("Debug: rotate axis " + rotateAxis);
+				// TODO: z needs to be switched to any customized axis
+				Vector3 va = Vector3.Normalize (dragStartPos - gameObject.transform.position);
+				va.y = 0;
+				Vector3 vb = Vector3.Normalize (curMousePos - gameObject.transform.position);
+				vb.y = 0;
+				//print ("z pos chack: " + (va.z - vb.z));
+				//rotate from b to a
+				rotateAxis = Vector3.Normalize (Vector3.Cross (vb, va));
+				//print ("Debug: rotate axis " + rotateAxis);
 
-			// remove rotate jitter (changing axis direction abruptly)
-			if(rotateAxis != preAxis){
-				float deltaChangeTime = Time.time - preChangingTime;
+				// remove rotate jitter (changing axis direction abruptly)
+				if (rotateAxis != preAxis) {
+					float deltaChangeTime = Time.time - preChangingTime;
 
-				if (deltaChangeTime <= 0.4f) {
-					//print("############# Axis Jitter !!!!!");
-					return;
+					if (deltaChangeTime <= 0.4f) {
+						//print("############# Axis Jitter !!!!!");
+						return;
 
+					} else {
+						preAxis = rotateAxis;
+						preChangingTime = Time.time;
+					}
+				}
+
+				// determine the angle with the mouse position offset 
+				float dragDistance = Vector3.Distance (Input.mousePosition, dragPreviousMousePos);
+				//print ("Jitter test drag distance: " + dragDistance);
+				float distanceToCenter = Vector3.Distance (dragStartPos, transform.position);
+				float angle = dragDistance * dragSensitivity * Mathf.Rad2Deg * (5 / distanceToCenter);
+
+				dragPreviousMousePos = Input.mousePosition;
+
+				// get the angle 
+				//
+				//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
+				accAngle += angle;
+				//print ("Angle Check: " + angle);
+				if (rotateAxis.y > 0f) {
+					rotateAxis = Vector3.back;
 				} else {
-					preAxis = rotateAxis;
-					preChangingTime = Time.time;
+					rotateAxis = Vector3.forward;
 				}
-			}
+				if (_isControlActive && !isShaking) {
+					if (accAngle >= _dragSensitivity) {
+						accAngle = _dragSensitivity;
 
-			// determine the angle with the mouse position offset 
-			float dragDistance = Vector3.Distance(Input.mousePosition, dragPreviousMousePos);
-			//print ("Jitter test drag distance: " + dragDistance);
-			float distanceToCenter = Vector3.Distance (dragStartPos, transform.position);
-			float angle = dragDistance * dragSensitivity * Mathf.Rad2Deg * (5/distanceToCenter);
+						gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
+						dragStartPos = curMousePos;
+						accAngle = 0;
 
-			dragPreviousMousePos = Input.mousePosition;
-
-			// get the angle 
-			//
-			//float angle = Mathf.Acos(Vector3.Dot(va, vb))*Mathf.Rad2Deg;
-			accAngle += angle;
-			//print ("Angle Check: " + angle);
-			if (rotateAxis.y > 0f) {
-				rotateAxis = Vector3.back;
-			} else {
-				rotateAxis = Vector3.forward;
-			}
-			if (_isControlActive && !isShaking) {
-				if (accAngle >= _dragSensitivity) {
-					accAngle = _dragSensitivity;
-
-					gameObject.transform.Rotate (-accAngle * rotateAxis * 0.5f, Space.Self);
-					dragStartPos = curMousePos;
-					accAngle = 0;
-
-					Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
-				} 
+						Events.G.Raise (new MBNodeRotate (_nodeIndex, true, 0));
+					} 
 				
-			} else {
-				// when contorl is not active 
-				Debug.Log("### not rotate angle check: " + angle * 0.1);
-				gameObject.transform.Rotate (-angle * rotateAxis * 0.05f, Space.Self);
-				dragStartPos = curMousePos;
-				if(accAngle >= 50f){
-					// shake node back to normal 
-					isDragStart = false;
-					gameObject.transform.localRotation = lastRestAngle;
-					accAngle = 0;
-					isShaking = false;
+				} else {
+					// when contorl is not active 
+					Debug.Log ("### not rotate angle check: " + angle * 0.1);
+					gameObject.transform.Rotate (-angle * rotateAxis * 0.05f, Space.Self);
+					dragStartPos = curMousePos;
+					if (accAngle >= 50f) {
+						// shake node back to normal 
+						isDragStart = false;
+						gameObject.transform.localRotation = lastRestAngle;
+						accAngle = 0;
+						isShaking = false;
 					
+					}
 				}
-			}
 
 
 
 
-		}// end of dragging code 
+			}// end of dragging code 
 
-
+		}
 
 	}
 

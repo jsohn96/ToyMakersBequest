@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TheatrePart2Music : AudioSourceController {
 
@@ -19,10 +20,32 @@ public class TheatrePart2Music : AudioSourceController {
 	bool _waitForEnd = false;
 	bool _repeatOnce = false;
 	[SerializeField] AltTheatre _myTheatre;
+	bool _allowedSurvivalOnce = false;
 
 	void Awake () {
 		_instance = this;
+
 		DontDestroyOnLoad (this);
+
+		SceneManager.activeSceneChanged += DestroyOnScene;
+	}
+
+	void OnDisable(){
+		SceneManager.activeSceneChanged -= DestroyOnScene;
+	}
+
+	void DestroyOnScene(Scene oldScene, Scene newScene){
+		if (_allowedSurvivalOnce) {
+			if (newScene.buildIndex != 3) {
+				Debug.Log (newScene.buildIndex + " build inidex");
+
+				Destroy (gameObject);
+			}
+		} else {
+			_allowedSurvivalOnce = true;
+		}
+
+
 	}
 
 	void FixedUpdate(){
@@ -42,11 +65,11 @@ public class TheatrePart2Music : AudioSourceController {
 		
 	public void BeginPlay(bool includeMelody = false){
 		_piano.volume = 0f;
-		_accompany.volume = 1f;
+		_accompany.volume = 0.8f;
 		if (includeMelody) {
-			_melody.volume = 1f;
+			_melody.volume = 0.8f;
 			_accompany.loop = true;
-			_piano.volume = 0.5f;
+			_piano.volume = 0.4f;
 			_accompany.PlayDelayed (0f);
 			_piano.PlayDelayed (0f);
 			_melody.PlayDelayed (0f);
