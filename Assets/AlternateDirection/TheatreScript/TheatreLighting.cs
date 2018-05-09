@@ -23,6 +23,7 @@ public class TheatreLighting : MonoBehaviour {
 	[SerializeField] Light _overallPointLight;
 	void Start(){
 		Set1 ();
+		_overallPointLight.enabled = false;
 	}
 
 	public void MoveToNextLights(){

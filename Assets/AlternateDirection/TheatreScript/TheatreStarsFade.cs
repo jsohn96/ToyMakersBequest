@@ -9,7 +9,7 @@ public class TheatreStarsFade : MonoBehaviour {
 	[SerializeField] Image _fadeImage;
 	Color _imageColor;
 
-	float[] _fadeValues = new float[]{0.3f, 0.6f, 0.7f, 0.85f, 1f};
+	float[] _fadeValues = new float[]{0.3f, 0.6f, 0.7f, 0.85f, 0.92f, 0.95f, 1f};
 	int _whichValue = -1;
 
 	IEnumerator _fadeCoroutine;
@@ -27,7 +27,7 @@ public class TheatreStarsFade : MonoBehaviour {
 	}
 
 	void FadeAway(TheatreFadeOutStarsEvent e){
-		if (_whichValue < 4) {
+		if (_whichValue < 6) {
 			if (_fadeCoroutine != null) {
 				StopCoroutine (_fadeCoroutine);
 			}
@@ -51,7 +51,7 @@ public class TheatreStarsFade : MonoBehaviour {
 		}
 		_fadeImage.color = _imageColor;
 
-		if (_whichValue >= 4) {
+		if (_whichValue >= 6) {
 			yield return new WaitForSeconds (2f);
 			SceneManager.LoadScene (3);
 		}

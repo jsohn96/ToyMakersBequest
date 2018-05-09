@@ -46,9 +46,10 @@ public class TheatrePart2Music : AudioSourceController {
 		if (includeMelody) {
 			_melody.volume = 1f;
 			_accompany.loop = true;
-			_accompany.PlayDelayed (1f);
-			_piano.PlayDelayed (1f);
-			_melody.PlayDelayed (1f);
+			_piano.volume = 0.5f;
+			_accompany.PlayDelayed (0f);
+			_piano.PlayDelayed (0f);
+			_melody.PlayDelayed (0f);
 			_waitForEnd = false;
 		} else {
 			_accompany.loop = false;

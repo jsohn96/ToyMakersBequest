@@ -70,6 +70,7 @@ public class TextContentTracker : MonoBehaviour {
 		_emptyColor.a = 0.0f;
 		_whiteColor = Color.white;
 		if(!_isDisplaying){
+			_entireBackImage.raycastTarget = false;
 			//_entireBackImage.color = _emptyColor;
 			_uiBackground.color = _emptyColor;
 			_uiMask.color = _emptyColor;
@@ -194,6 +195,7 @@ public class TextContentTracker : MonoBehaviour {
 		}
 		_uiBackground.color = _backGroundColor;
 		_entireBackImage.color = _backGroundColor;
+		_entireBackImage.raycastTarget = true;
 		_isDisplaying = true;
 		yield return null;
 	}
@@ -209,6 +211,7 @@ public class TextContentTracker : MonoBehaviour {
 		}
 		_uiBackground.color = _emptyColor;
 		_entireBackImage.color = _emptyColor;
+		_entireBackImage.raycastTarget = false;
 		_scrollView.SetActive (false);
 		yield return null;
 	}
