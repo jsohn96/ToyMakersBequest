@@ -475,7 +475,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		while (timer < 1f) {
 			timer+= Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topPosClose, timer);
-			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, (timer-0.5f)/0.5f);
+			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, (timer-0.2f)/0.8f);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _topPosClose;
@@ -499,7 +499,7 @@ public class TheatreCameraControl : MonoBehaviour {
 		while (timer < 6f) {
 			timer+= Time.deltaTime;
 			_thisCameraHeighttContainer.transform.position = Vector3.Slerp (originPos, _topDancePos, timer/6f);
-			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, (timer-3f) / 3f);
+			_thisCamera.transform.rotation = Quaternion.Lerp (originRot, goalRot, (timer-1f) / 5f);
 			yield return null;
 		}
 		_thisCameraHeighttContainer.transform.position = _topDancePos;
