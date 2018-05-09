@@ -10,6 +10,8 @@ public class TheatreStar : MonoBehaviour {
 	Color _fullColor = new Color (1f,1f,1f,0.7f);
 	Color _emptyColor = new Color(1f,1f,1f,0f);
 
+	Color _dimColor = new Color(1f,1f,1f, 0.3f);
+
 	float _timer = 0f;
 	float _rateOfGlow;
 
@@ -51,8 +53,13 @@ public class TheatreStar : MonoBehaviour {
 
 	void Update(){
 		if (_isGlowing) {
-			_timer += Time.deltaTime / _rateOfGlow;
-			_spriteRenderer.color = Color.Lerp (_fullColor, _emptyColor, _starGlowCurve.Evaluate(Mathf.PingPong(_timer, 1f)));
+			if (!_isClicked) {
+				_timer += Time.deltaTime / _rateOfGlow;
+				_spriteRenderer.color = Color.Lerp (_dimColor, _emptyColor, _starGlowCurve.Evaluate (Mathf.PingPong (_timer, 1f)));
+			} else {
+				_timer += Time.deltaTime / _rateOfGlow;
+				_spriteRenderer.color = Color.Lerp (_fullColor, _emptyColor, _starGlowCurve.Evaluate (Mathf.PingPong (_timer, 1f)));
+			}
 		}
 	}
 

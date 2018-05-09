@@ -533,7 +533,7 @@ public class AltTheatre : LevelManager {
 				_theatreCameraControl.CallTopDance ();
 				break;
 			case TheatreState.StartCircling:
-				_theatreLighting.FadeSingularSpotLight2 (12f);
+//				_theatreLighting.FadeSingularSpotLight2 (12f);
 				_theatreLighting.FadeOverallPointLight (12f);
 
 				TheatrePart2Music._instance.BeginPlay (true);

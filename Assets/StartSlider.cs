@@ -78,10 +78,10 @@ public class StartSlider : MonoBehaviour {
 					_touchDown = false;
 					_originNormalizedValue = 0f;
 					_sliderAnim.Play (_hashID, -1, 0f);
+					_skipOnce = true;
 					_sliderStarted = true;
 					_draggableCollider.enabled = false;
 					TriggerStart ();
-					_skipOnce = true;
 				}
 			}
 		}
