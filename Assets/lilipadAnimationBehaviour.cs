@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class lilipadAnimationBehaviour : MonoBehaviour {
 	[SerializeField] Transform _lilipad;
+	[SerializeField] GameObject _hidePath;
 	float _rotateSpeed = 4f;
 	bool _isFlipback = false;
 	Quaternion _originAngle;
@@ -28,6 +29,10 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 		_downPos = _lilipad.localPosition;
 		_upPos = _downPos;
 		_upPos.z -= 0.9f;
+		if (_hidePath != null) {
+			_hidePath.SetActive (false);
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -55,6 +60,9 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 
 	public void Flipback(){
 		if (!_isFlipback) {
+			if (_hidePath != null) {
+				_hidePath.SetActive (true);
+			}
 			_isFlipback = true;
 			_originAngle = _lilipad.localRotation;
 			_finalAngle = _originAngle * Quaternion.Euler (180, 0, 0);
@@ -94,6 +102,8 @@ public class lilipadAnimationBehaviour : MonoBehaviour {
 		if (!_isClickActive) {
 			_isClickActive = true;
 			_bCol.enabled = true;
+
+
 		}
 	}
 }
