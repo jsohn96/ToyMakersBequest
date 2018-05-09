@@ -72,6 +72,7 @@ public class TheatreFrog : MonoBehaviour {
 		_myTheatre.MoveToNext ();
 		_chestFrog.SetActive (true);
 		_frogAnim.Play ("frog_jumpIntoWater");
+		SetFrogControl (false);
 	}
 
 	void ActivateFrogControl(){

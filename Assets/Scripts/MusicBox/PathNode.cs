@@ -9,7 +9,8 @@ public enum ButtonColor{
 	None,
 	RotatableObject,
 	Branch,
-	Descend
+	Descend,
+	Lilipad
 
 };
 
@@ -176,6 +177,7 @@ public class PathNode : MonoBehaviour {
 	[SerializeField] bool _isSnapEnable = true;
 	[SerializeField] bool _isCheckSameAsControl = false;
 
+	[SerializeField] bool _isLiliPadNode = false;
 
 	// for clock maze structure
 	[SerializeField] List<GameObject> _activeIntersections;
@@ -229,6 +231,9 @@ public class PathNode : MonoBehaviour {
 		// static node 
 		if (_ControlColor == ButtonColor.None) {
 			_isCorrectConnection = true;
+		} else if (_ControlColor == ButtonColor.Lilipad) {
+			_isCheckConnectionActive = false;
+			_isCorrectConnection = false;
 		} else {
 			_isCorrectConnection = false;
 		}
@@ -238,6 +243,8 @@ public class PathNode : MonoBehaviour {
 			//print("Check interlock section");
 			
 		}
+
+
 
 		if (!_isInterLocked && !_isControlActive) {
 			print ("ERROR: non interlock nodes should be active : " +_nodeIndex);
@@ -294,6 +301,12 @@ public class PathNode : MonoBehaviour {
 			_isCheckConnectionActive = checkConnectionActive;
 		}
 			
+	}
+
+	public void ActivateCheck(){
+		if (!_isCheckConnectionActive) {
+			_isCheckConnectionActive = true;
+		}
 	}
 
 	// Update is called once per frame

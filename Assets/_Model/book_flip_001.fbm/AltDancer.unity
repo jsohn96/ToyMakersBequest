@@ -1968,6 +1968,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -3528,7 +3529,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 126417304}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3564,7 +3565,7 @@ BoxCollider:
   m_GameObject: {fileID: 126417304}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3659,7 +3660,8 @@ GameObject:
   - component: {fileID: 140252731}
   - component: {fileID: 140252732}
   - component: {fileID: 140252733}
-  m_Layer: 0
+  - component: {fileID: 140252734}
+  m_Layer: 18
   m_Name: PathNode3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3694,7 +3696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 1
+  _ControlColor: 7
   _nodeIndex: 3
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 2002636076}
@@ -3714,6 +3716,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -3732,6 +3735,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 1330885974}
+  _pn: {fileID: 0}
+--- !u!65 &140252734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 140252730}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &142396795
 GameObject:
   m_ObjectHideFlags: 0
@@ -4678,6 +4694,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -5397,6 +5414,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -5663,6 +5681,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -6085,6 +6104,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -7544,6 +7564,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -10060,6 +10081,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -12481,7 +12503,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 30
   m_TargetDisplay: 0
 --- !u!224 &470775639
 RectTransform:
@@ -15991,6 +16013,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -16124,6 +16147,106 @@ MonoBehaviour:
   - {x: 9.529694, y: 0.100598335, z: 0.0000020008747}
   modes: 000000000000000000000000
   loop: 0
+--- !u!1001 &626220896
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2117309053}
+    m_Modifications:
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.009
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.02938
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.01892
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.22498795
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.9743616
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_Name
+      value: starSprite (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _tapSoundPlayer
+      value: 
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _thisSoundTag
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078137902305080, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _theatreStarsFade
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _connectLines
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _theatreStarLine
+      value: 
+      objectReference: {fileID: 2117309055}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.0100010475
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.009999619
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.015497257
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &626220897 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9,
+    type: 2}
+  m_PrefabInternal: {fileID: 626220896}
 --- !u!1 &627004047
 GameObject:
   m_ObjectHideFlags: 0
@@ -17213,6 +17336,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -18214,6 +18338,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -18323,7 +18448,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 697716928}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -18359,7 +18484,7 @@ BoxCollider:
   m_GameObject: {fileID: 697716928}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -19658,6 +19783,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -19726,6 +19852,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -21221,6 +21348,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -22793,6 +22921,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -23922,6 +24051,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -24057,6 +24187,7 @@ GameObject:
   - component: {fileID: 944413313}
   - component: {fileID: 944413314}
   - component: {fileID: 944413315}
+  - component: {fileID: 944413316}
   m_Layer: 0
   m_Name: PathNode6
   m_TagString: Untagged
@@ -24092,7 +24223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 1
+  _ControlColor: 7
   _nodeIndex: 6
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 393508133}
@@ -24112,6 +24243,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -24130,6 +24262,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 346259354}
+  _pn: {fileID: 0}
+--- !u!65 &944413316
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944413312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &951446606
 GameObject:
   m_ObjectHideFlags: 0
@@ -25626,7 +25771,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 982483024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -25662,7 +25807,7 @@ BoxCollider:
   m_GameObject: {fileID: 982483024}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -26794,6 +26939,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -28241,6 +28387,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29011,6 +29158,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29101,7 +29249,8 @@ GameObject:
   - component: {fileID: 1116127529}
   - component: {fileID: 1116127530}
   - component: {fileID: 1116127531}
-  m_Layer: 0
+  - component: {fileID: 1116127532}
+  m_Layer: 18
   m_Name: PathNode2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29136,7 +29285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 0
+  _ControlColor: 7
   _nodeIndex: 2
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 1133213950}
@@ -29156,6 +29305,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29174,6 +29324,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 1082344594}
+  _pn: {fileID: 0}
+--- !u!65 &1116127532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1116127528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1118070272
 GameObject:
   m_ObjectHideFlags: 0
@@ -29823,7 +29986,8 @@ GameObject:
   - component: {fileID: 1132398125}
   - component: {fileID: 1132398126}
   - component: {fileID: 1132398127}
-  m_Layer: 0
+  - component: {fileID: 1132398128}
+  m_Layer: 18
   m_Name: PathNode4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29858,7 +30022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 1
+  _ControlColor: 7
   _nodeIndex: 4
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 683249458}
@@ -29878,6 +30042,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -29896,6 +30061,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 401333424}
+  _pn: {fileID: 0}
+--- !u!65 &1132398128
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132398124}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1133051031
 GameObject:
   m_ObjectHideFlags: 0
@@ -30878,6 +31056,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -33595,6 +33774,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -34713,6 +34893,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -36454,6 +36635,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -36904,7 +37086,8 @@ GameObject:
   - component: {fileID: 1342385888}
   - component: {fileID: 1342385889}
   - component: {fileID: 1342385890}
-  m_Layer: 0
+  - component: {fileID: 1342385891}
+  m_Layer: 18
   m_Name: PathNode1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36939,7 +37122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 2
+  _ControlColor: 7
   _nodeIndex: 1
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 457179120}
@@ -36959,6 +37142,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -36977,6 +37161,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 2132622918}
+  _pn: {fileID: 0}
+--- !u!65 &1342385891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1342385887}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1345695764
 GameObject:
   m_ObjectHideFlags: 0
@@ -37922,6 +38119,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -40933,6 +41131,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -41241,7 +41440,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507620172}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -41277,7 +41476,7 @@ BoxCollider:
   m_GameObject: {fileID: 1507620172}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -42217,6 +42416,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -42538,6 +42738,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -45876,6 +46077,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -47156,6 +47358,106 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1763826117}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1764883778
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2117309053}
+    m_Modifications:
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.01229
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.04546
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.01728
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.22498795
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.9743616
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_Name
+      value: starSprite (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _tapSoundPlayer
+      value: 
+      objectReference: {fileID: 676692538}
+    - target: {fileID: 114639783899878486, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _thisSoundTag
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078137902305080, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817583696514736, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245118289085256, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _theatreStarsFade
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _connectLines
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322354290471718, guid: be1b33221fdd66b44ab7ded003d158b9,
+        type: 2}
+      propertyPath: _theatreStarLine
+      value: 
+      objectReference: {fileID: 2117309055}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.0100010475
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.009999619
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.015497257
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: be1b33221fdd66b44ab7ded003d158b9, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1764883779 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4961620043522738, guid: be1b33221fdd66b44ab7ded003d158b9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1764883778}
 --- !u!1 &1766302276
 GameObject:
   m_ObjectHideFlags: 0
@@ -48267,7 +48569,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1812102314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -48303,7 +48605,7 @@ BoxCollider:
   m_GameObject: {fileID: 1812102314}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -48714,6 +49016,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -50529,6 +50832,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52200,6 +52504,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52437,6 +52742,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -52754,6 +53060,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -53685,6 +53992,7 @@ GameObject:
   - component: {fileID: 1987651117}
   - component: {fileID: 1987651118}
   - component: {fileID: 1987651119}
+  - component: {fileID: 1987651120}
   m_Layer: 0
   m_Name: PathNode5
   m_TagString: Untagged
@@ -53720,7 +54028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 961011381}
-  _ControlColor: 1
+  _ControlColor: 7
   _nodeIndex: 5
   _GreenMat: {fileID: 2100000, guid: 2bf1e43ebecc64f428eed470ab8c7db2, type: 2}
   _cylinderRenderer: {fileID: 750165989}
@@ -53740,6 +54048,7 @@ MonoBehaviour:
   _branchNodes: []
   _isSnapEnable: 1
   _isCheckSameAsControl: 0
+  _isLiliPadNode: 0
   _activeIntersections: []
   _dragSensitivity: 10
   _isNotebook: 0
@@ -53758,6 +54067,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lilipad: {fileID: 1962502936}
+  _pn: {fileID: 0}
+--- !u!65 &1987651120
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1987651116}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 6, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1993477816 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1437026965752378, guid: eb90238acf75c481fa62f24a764ca883,
@@ -57753,6 +58075,8 @@ Transform:
   - {fileID: 286867864}
   - {fileID: 194779316}
   - {fileID: 1821426794}
+  - {fileID: 1764883779}
+  - {fileID: 626220897}
   m_Father: {fileID: 1329843691}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -58103,7 +58427,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2132622918}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: lilipadRot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,30 +16,52 @@ public class TheatreLilipadsBehaviour : MonoBehaviour {
 		_finalPos.y += 0.013f;
 	}
 
-	public void GoUp(){
-		if (!_isUp) {
-			_isUp = true;
-			StartCoroutine (MoveLilyPadsUp ());
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.B)) {
+			GoUp ();
 		}
 	}
 
-	IEnumerator MoveLilyPadsUp(){
-		float timer = 0f;
-		float duration = 1f;
-		while (duration > timer) {
-			timer += Time.deltaTime;
-			transform.position = Vector3.Lerp (_originPos, _finalPos, timer/duration);
-			yield return null;
+	public void GoUp(){
+		if (!_isUp) {
+			_isUp = true;
+			StartCoroutine (MoveLilipadsUp());
 		}
-		transform.position = _finalPos;
-		yield return null;
 	}
+
+	IEnumerator MoveLilipadsUp(){
+		for (int i = 5; i >= 0; i--) {
+			StartCoroutine (_lilipads [i].MoveLilipadUp ());
+			yield return new WaitForSeconds (0.2f);
+		}
+	}
+
+
+
+//	IEnumerator MoveLilyPadsUp(){
+//		float timer = 0f;
+//		float duration = 1f;
+//		while (duration > timer) {
+//			timer += Time.deltaTime;
+//			transform.position = Vector3.Lerp (_originPos, _finalPos, timer/duration);
+//			yield return null;
+//		}
+//		transform.position = _finalPos;
+//		yield return null;
+//	}
 
 	public IEnumerator FlipBack(){
 		for (int i = 0; i < 6; i++) {
 			_lilipads [i].Flipback ();
 			yield return new WaitForSeconds (0.3f);
 		}
+	
 		
+	}
+
+	public void ActivateClickLilipads(){
+		for (int i = 0; i < 6; i++) {
+			_lilipads [i].ActivateClick ();
+		}
 	}
 }
